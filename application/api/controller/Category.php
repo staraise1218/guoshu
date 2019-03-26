@@ -76,8 +76,9 @@ class Category extends Base {
 	 * @return [type] [description]
 	 */
 	public function goodslist(){
-		$city_code = I('city_code');
 		$cat_id = I('cat_id');
+		$city_code = I('city_code');
+		$page = I('page', 1);
 
 		$goodslist = Db::name('goods')
 			->where('cat_id', $cat_id)
@@ -86,6 +87,8 @@ class Category extends Base {
 			->where('prom_type', 0)  // 普通商品
 			->order('sort asc, goods_id desc')
 			->field('goods_id, goods_name, subtitle, store_count, original_img, shop_price')
+			->page($page)
+			->limit(15)
 			->select();
 
 		response_success($goodslist);
