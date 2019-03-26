@@ -41,6 +41,7 @@ class Category extends Base {
 	 */
 	public function getCatesGoods(){
 		$cat_id = input('cat_id');
+		$city_code = input('city_code');
 
 		$subcatelist = Db::name('goods_category')
 			->where('is_show', 1)
@@ -54,6 +55,7 @@ class Category extends Base {
 			foreach ($subcatelist as $k => $item) {
 				$goodslist = Db::name('goods')
 					->where('cat_id', $item['id'])
+					->where('city_code', $city_code)
 					->where('is_on_sale', 1) 
 					->where('prom_type', 0)  // 普通商品
 					->order('sort asc, goods_id desc')
