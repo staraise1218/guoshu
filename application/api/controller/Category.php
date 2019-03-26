@@ -71,6 +71,7 @@ class Category extends Base {
 		response_success($list);
 	}
 
+
 	/**
 	 * [goodslist 获取二级分类下的商品]
 	 * @return [type] [description]
