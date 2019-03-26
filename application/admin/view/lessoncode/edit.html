@@ -1,0 +1,77 @@
+<include file="public/layout" />
+<load href="__ROOT__/public/plugins/Ueditor/ueditor.config.js"/>
+<load href="__ROOT__/public/plugins/Ueditor/ueditor.all.min.js"/>
+<script type="text/javascript" charset="utf-8" src="__ROOT__/public/plugins/Ueditor/lang/zh-cn/zh-cn.js"></script>
+<script src="__ROOT__/public/static/js/layer/laydate/laydate.js"></script>
+
+<style type="text/css">
+html, body {overflow: visible;}
+</style>  
+<body style="background-color: #FFF; overflow: auto;">
+<div id="toolTipLayer" style="position: absolute; z-index: 9999; display: none; visibility: visible; left: 95px; top: 573px;"></div>
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+  <div class="fixed-bar">
+    <div class="item-title"><a class="back" href="javascript:history.back();" title="返回列表"><i class="fa fa-arrow-circle-o-left"></i></a>
+      <div class="subject">
+        <h3>课程码管理 - 修改</h3>
+      </div>
+    </div>
+  </div>
+  <form class="form-horizontal" id="add_post" method="post">    
+    <div class="ncap-form-default">
+      <dl class="row">
+        <dt class="tit">
+          <label><em>*</em>标题</label>
+        </dt>
+        <dd class="opt">
+          <input type="text" value="{$info.title}" name="title" class="input-txt" value="{$info.title}">
+          <span class="err" id="err_title"></span>
+          <p class="notic"></p>
+        </dd>
+        
+      </dl> 
+      <div class="bot"><a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" id="submitBtn">确认提交</a></div>
+    </div>
+    <input type="hidden" name="id" value="{$info.id}">
+  </form>
+</div>
+<script type="text/javascript">
+
+
+    $(document).on("click", '#submitBtn', function () {
+        verifyForm();
+    });
+    function verifyForm(){
+        $('span.err').hide();
+        $.ajax({
+            type: "POST",
+            url: "{:U('lessoncode/edit')}",
+            data: $('#add_post').serialize(),
+            dataType: "json",
+            error: function () {
+                layer.alert("服务器繁忙, 请联系管理员!");
+            },
+            success: function (data) {
+                if (data.status === 1) {
+                    layer.msg(data.msg, {icon: 1,time: 1000}, function() {
+                        location.href = "{:U('Admin/lessoncode/index')}";
+                    });
+                } else if(data.status === 0) {
+                    layer.msg(data.msg, {icon: 2,time: 5000});
+
+                    $.each(data.result, function(index, item) {
+                        $('#err_' + index).text(item).show();
+                    });
+                } else {
+                    layer.msg(data.msg, {icon: 2,time: 1000});
+                }
+            }
+        });
+    }
+
+    
+</script>
+</body>
+</html>
