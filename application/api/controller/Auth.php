@@ -3,7 +3,7 @@
 namespace app\api\controller;
 use think\Db;
 use app\api\logic\SmsLogic;
-use app\api\logic\RongyunLogic;
+use app\common\logic\CurlLogic;
 
 class Auth extends Base {
 
@@ -196,6 +196,27 @@ class Auth extends Base {
             response_success(array('code'=>$code), '发送成功');
         } else {
             response_error('', $error);
+        }
+    }
+
+    /**
+     * [getOpenid 微信小程序用，通过code获取openid]
+     * @return [type] [description]
+     */
+    public function getOpenid(){
+        $code = input('code');
+        if($code == '') return '';
+
+        $url = 'https://api.weixin.qq.com/sns/jscode2session?appid=wxc0b7441de48a2dd4&secret=6359f387e7ed6a6fd131f3ed436283cc&js_code='.$code.'&grant_type=authorization_code';
+
+        $CurlLogic = new CurlLogic();
+        $result = $CurlLogic->url($url)->data();
+
+        $result = json_decode($result, true);
+        if($result['opendid']){
+            response_success($result);
+        } else {
+            response_error($result);
         }
     }
 }
