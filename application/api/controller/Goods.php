@@ -76,4 +76,31 @@ class Goods extends Base {
         response_success($goods);
 	}
 
+	/**
+	 * [recommendgoodslist 推荐的商品]
+	 * @return [type] [description]
+	 */
+	public function recommendgoodslist(){
+		// $cat_id = I('cat_id');
+		$city_code = I('city_code');
+
+		$where = array(
+			'city_code' => $city_code, // 城市
+			'is_on_sale' => 1, // 上架中
+			'prom_type' => 0, // 普通商品
+			'is_recommend' => 1
+		);
+		// $cat_id && $where['cat_id'] = $cat_id;
+
+		$goodslist = Db::name('goods')
+			->where($where)
+			->order('sort asc, goods_id desc')
+			->field('goods_id, goods_name, subtitle, store_count, original_img, shop_price')
+			->page($page)
+			->limit(15)
+			->select();
+
+		response_success($goodslist);
+	}
+
 }
