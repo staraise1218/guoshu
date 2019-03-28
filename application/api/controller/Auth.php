@@ -213,7 +213,7 @@ class Auth extends Base {
         $result = $CurlLogic->url($url)->data();
 
         $result = json_decode($result, true);
-        if($result['opendid']){
+        if($result['openid']){
             response_success($result);
         } else {
             response_error($result);
