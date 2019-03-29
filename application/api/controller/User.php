@@ -6,6 +6,7 @@ use think\Db;
 use app\api\logic\FileLogic;
 use app\api\logic\SmsLogic;
 use app\common\logic\UsersLogic;
+use app\common\logic\ActivityLogic;
 
 class User extends Base {
 
@@ -167,6 +168,25 @@ class User extends Base {
         $coupon_list = $data['result'];
         
         response_success($coupon_list);
+    }
+
+    /**
+     * 领优惠券
+     */
+    public function getCoupon()
+    {
+        $user_id = input('user_id/d');
+        $coupon_id = I('coupon_id/d');
+
+        $activityLogic = new ActivityLogic();
+        $result = $activityLogic->get_coupon($coupon_id, $user_id);
+
+        if($result['status'] == 1){
+            response_success('', '领取成功');
+        } else {
+            response_error('', $result['msg']);
+        }
+        
     }
 
 
