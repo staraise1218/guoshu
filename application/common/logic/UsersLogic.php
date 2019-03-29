@@ -527,7 +527,7 @@ class UsersLogic extends Model
      * 获取订单商品
      */
     public function get_order_goods($order_id){
-        $sql = "SELECT go.rec_id, og.goods_num, og.goods_price, g.goods_id, g.original_img FROM __PREFIX__order_goods og LEFT JOIN __PREFIX__goods g ON g.goods_id = og.goods_id WHERE order_id = :order_id";
+        $sql = "SELECT og.rec_id, og.goods_num, og.goods_price, g.goods_id, g.original_img FROM __PREFIX__order_goods og LEFT JOIN __PREFIX__goods g ON g.goods_id = og.goods_id WHERE order_id = :order_id";
         $bind['order_id'] = $order_id;
         $goods_list = DB::query($sql,$bind);
 
