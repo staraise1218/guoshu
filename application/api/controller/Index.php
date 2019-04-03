@@ -58,6 +58,42 @@ class Index extends Base {
 		response_success($result);
 	}
 
+	/**
+	 * [getCateGoods 获取分类下的商品]
+	 * @return [type] [description]
+	 */
+	public function getTopCateGoods(){
+		$cat_id = input('cat_id');
+		$city_code = input('city_code');
+
+		$subcatelist = Db::name('goods_category')
+			->where('is_show', 1)
+			->where('parent_id', $cat_id)
+			->order('sort_order')
+			->field('id, name')
+			->select();
+
+		if($subcatelist){
+			$list = array();
+			foreach ($subcatelist as $k => $item) {
+				$goodslist = Db::name('goods')
+					->where('cat_id', $item['id'])
+					->where('city_code', $city_code)
+					->where('is_on_sale', 1) 
+					->where('prom_type', 0)  // 普通商品
+					->order('sort asc, goods_id desc')
+					->field('goods_id, goods_name, subtitle, store_count, original_img, shop_price')
+					->select();
+				if($goodslist) {
+					$item['goodslist'] = $goodslist;
+					$list[] = $item;
+				}
+			}
+		}
+
+		response_success($list);
+	}
+
 	// 首页通过分类获取商品列表
 	public function getGoodsByCat(){
 		$cat_id = I('cat_id');

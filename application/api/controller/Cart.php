@@ -326,7 +326,7 @@ class Cart extends Base {
         $dosubmit           = I('dosubmit', 0);
 
         mb_strlen($user_note) > 60 && response_error('', '备注超出限制可输入字符长度！');
-        if(!$address_id) response_error('', '请填写收货地址'); 
+        if(!$address_id && $dosubmit == 1) response_error('', '请填写收货地址'); 
         $address = Db::name('UserAddress')->where("address_id", $address_id)->find();
         $cartLogic = new CartLogic();
         $pay = new Pay();
