@@ -753,7 +753,7 @@ class CartLogic extends Model
         }
 
 
-        $cartList = $Cart->field('id, goods_num, selected, goods_id')
+        $cartList = $Cart->field('id, goods_num, member_goods_price, goods_price, selected, goods_id')
                         ->with(['goods'=>function($query){
                             $query->field('goods_id, goods_name, subtitle, shop_price, original_img');
                         }])
