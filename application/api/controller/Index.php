@@ -20,7 +20,7 @@ class Index extends Base {
         $city_code = I('city_code');
 
 		// 获取所有的广告图片
-		$bannerList = $adv = $jingcaiAdv = array();
+		$bannerList = $adv = $shareGoods = array();
         $adList = Db::name('ad')
             ->where('enabled', 1)
             ->field('ad_name, ad_link, ad_code, pid')
@@ -32,8 +32,8 @@ class Index extends Base {
         		($item['pid'] == 1 ) && $bannerList[] = $item;
         		// 首页广告位图片：团购入口，邀请好友得红包入口
         		($item['pid'] == 2 ) && $adv[] = $item;
-        		// 精彩大礼小图
-        		($item['pid'] == 4 ) && $jingcaiAdv[] = $item;
+        		// 分享商品
+        		($item['pid'] == 4 ) && $shareGoods[] = $item;
         	}
         }
 
@@ -42,24 +42,40 @@ class Index extends Base {
 			->where('is_show', 1)
 			->where('parent_id', 0)
 			->order('sort_order')
-			->field('id, name, image')
+			->field('id, name, icon, image')
 			->select();
 
 
 		// 秒杀时间段
-        $time_space = flash_sale_time_space();
+        // $time_space = flash_sale_time_space();
+       
+        // 团购列表
+        $group_by_where = array(
+            'gb.start_time'=>array('lt', time()),
+            'gb.end_time'=>array('gt', time()),
+            'g.is_on_sale'=>1,
+            'g.city_code'=>$city_code,
+        );
 
-	
+        $grouplist = Db::name('group_buy')->alias('gb')
+            ->join('goods g', 'gb.goods_id=g.goods_id AND g.prom_type=2')
+            ->where($group_by_where)
+            ->limit(12)
+            ->order('id desc')
+            ->field('gb.goods_id, gb.price, gb.goods_price, g.original_img, g.store_count')
+            ->select();
+
         $result['bannerList'] = $bannerList;
         $result['categoryList'] = $categoryList;
+        $result['grouplist'] = $grouplist;
         $result['adv'] = $adv;
-        $result['jingcaiAdv'] = $jingcaiAdv;
-       	$result['time_space'] = $time_space;
+        $result['shareGoods'] = $shareGoods;
+       	// $result['time_space'] = $time_space;
 		response_success($result);
 	}
 
 	/**
-	 * [getCateGoods 获取分类下的商品]
+	 * [getCateGoods 获取顶级分类下的子分类带商品列表]
 	 * @return [type] [description]
 	 */
 	public function getTopCateGoods(){
@@ -70,7 +86,7 @@ class Index extends Base {
 			->where('is_show', 1)
 			->where('parent_id', $cat_id)
 			->order('sort_order')
-			->field('id, name')
+			->field('id, name, image')
 			->select();
 
 		if($subcatelist){

@@ -65,6 +65,28 @@
 
       <dl class="row">
         <dt class="tit">
+          <label>分类小图标</label>
+        </dt>
+        <dd class="opt">
+          <div class="input-file-show">
+            <span class="show">
+                <a id="img_a_icon" target="_blank" class="nyroModal" rel="gal" href="{$goods_category_info.icon}">
+                  <i id="img_i_icon" class="fa fa-picture-o" onmouseover="layer.tips('<img src={$goods_category_info.icon}>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"></i>
+                </a>
+            </span>
+            <span class="type-file-box">
+                <input type="text" id="icon" name="icon" value="{$goods_category_info.icon}" class="type-file-text">
+                <input type="button" name="button" id="button1" value="选择上传..." class="type-file-button">
+                <input class="type-file-file" onClick="GetUploadify(1,'','category','icon_call_back')" size="30" hidefocus="true" nc_type="change_site_logo" title="点击前方预览图可查看大图，点击按钮选择文件并提交表单后上传生效">
+            </span>
+          </div>
+          <span class="err"></span>
+          <p class="notic"><strong style="color:orange;"></strong></p>
+        </dd>
+      </dl> 
+
+      <dl class="row">
+        <dt class="tit">
           <label>分类展示图片</label>
         </dt>
         <dd class="opt">
@@ -81,7 +103,7 @@
             </span>
           </div>
           <span class="err"></span>
-          <p class="notic"><strong style="color:orange;">此分类图片用于手机端显示, 并有且仅是第三级分类上传的图片才有效</strong></p>
+          <p class="notic"><strong style="color:orange;"></strong></p>
         </dd>
       </dl>
       <dl class="row">
@@ -127,6 +149,13 @@ function img_call_back(fileurl_tmp)
   $("#image").val(fileurl_tmp);
   $("#img_a").attr('href', fileurl_tmp);
   $("#img_i").attr('onmouseover', "layer.tips('<img src="+fileurl_tmp+">',this,{tips: [1, '#fff']});");
+}
+
+function icon_call_back(fileurl_tmp)
+{
+  $("#icon").val(fileurl_tmp);
+  $("#img_a_icon").attr('href', fileurl_tmp);
+  $("#img_i_icon").attr('onmouseover', "layer.tips('<img src="+fileurl_tmp+">',this,{tips: [1, '#fff']});");
 }
 </script>
 </body>
