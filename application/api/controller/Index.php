@@ -42,7 +42,7 @@ class Index extends Base {
 			->where('is_show', 1)
 			->where('parent_id', 0)
 			->order('sort_order')
-			->field('id, name, icon, image')
+			->field('id, name, icon, image, index_image')
 			->select();
 
 
@@ -64,12 +64,40 @@ class Index extends Base {
             ->order('id desc')
             ->field('gb.goods_id, gb.price, gb.goods_price, g.original_img, g.store_count')
             ->select();
+        // 首页下方分类商品
+        $topCateGoods = array();
+        foreach ($categoryList as $item) {
+			$cat_id_arr = getCatGrandson ($item['id']);
+			$where = array(
+				'city_code' => $city_code, // 城市
+				'is_on_sale' => 1, // 上架中
+				'prom_type' => 0, // 普通商品
+				'cat_id' => array('in', $cat_id_arr),
+			);
+
+			$goodslist = Db::name('goods')
+				->where($where)
+				->order('sort asc, goods_id desc')
+				->field('goods_id, goods_name, subtitle, store_count, original_img, shop_price')
+				->limit(6)
+				->select();
+			$topCateGoods[] = array(
+				'cat_id' => $item['id'],
+				'cat_name' => $item['name'],
+				'index_image' => $item['index_image'],
+				'goodslist' => $goodslist,
+			);
+        }
+
+
+
 
         $result['bannerList'] = $bannerList;
         $result['categoryList'] = $categoryList;
         $result['grouplist'] = $grouplist;
         $result['adv'] = $adv;
         $result['shareGoods'] = $shareGoods;
+        $result['topCateGoods'] = $topCateGoods;
        	// $result['time_space'] = $time_space;
 		response_success($result);
 	}
