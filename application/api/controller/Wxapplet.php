@@ -22,7 +22,7 @@ class Wxapplet {
 		if($order['paystatus'] == 1) response_error('', '该订单已支付');
 
 		$total_amount = $order['price'];
-p($order);
+
     	//②、统一下单
         $input = new \WxPayUnifiedOrder();
         $input->SetBody("购买商品");
@@ -37,7 +37,7 @@ p($order);
         $input->SetOpenid($openId);
         $config = new \WxPayConfig();
         $order = \WxPayApi::unifiedOrder($config, $input);
-
+p($order);
         $JsApiPay = new \JsApiPay();
         $jsApiParameters = $JsApiPay->GetJsApiParameters($order);
         echo $jsApiParameters;
