@@ -10,9 +10,9 @@ use think\Db;
 * 
 **/
 
-require_once "./plugins/weixin/lib/WxPay.Api.php";
-require_once './plugins/weixin/lib/WxPay.Notify.php';
-require_once "./plugins/weixin/WxPay.Config.php";
+require_once "./plugins/payment/wxapplet/lib/WxPay.Api.php";
+require_once './plugins/payment/wxapplet/lib/WxPay.Notify.php';
+require_once "./plugins/payment/wxapplet/WxPay.Config.php";
 // require_once 'log.php';
 
 class WxappletBuyGoodsCallback extends \WxPayNotify
