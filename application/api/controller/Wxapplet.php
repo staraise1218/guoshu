@@ -35,6 +35,7 @@ class Wxapplet {
         $input->SetNotify_url("http://guoshu.staraise.com.cn/api/WxappletBuyGoodsCallback/exec");
         $input->SetTrade_type("JSAPI");
         $input->SetOpenid($openId);
+        $input->SetSignType('MD5');
         $config = new \WxPayConfig();
         $order = \WxPayApi::unifiedOrder($config, $input);
 p($order);
