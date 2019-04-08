@@ -40,6 +40,6 @@ class Wxapplet {
 
         $JsApiPay = new \JsApiPay();
         $jsApiParameters = $JsApiPay->GetJsApiParameters($order);
-        echo $jsApiParameters;
+        response_success(json_decode($jsApiParameters, true));
     }
 }
