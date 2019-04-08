@@ -26,9 +26,8 @@ class Wxapplet {
     	//②、统一下单
         $input = new \WxPayUnifiedOrder();
         $input->SetBody("购买商品");
-        $input->SetAttach("购买商品");
         $input->SetOut_trade_no($order_sn);
-        $input->SetTotal_fee($order['price']*100);
+        $input->SetTotal_fee(100);
         $input->SetTime_start(date("YmdHis"));
         $input->SetTime_expire(date("YmdHis", time() + 600));
         $input->SetGoods_tag("购买商品");

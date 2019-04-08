@@ -62,7 +62,7 @@ class Index extends Base {
             ->where($group_by_where)
             ->limit(12)
             ->order('id desc')
-            ->field('gb.goods_id, gb.price, gb.goods_price, g.original_img, g.store_count')
+            ->field('gb.goods_id, gb.price, gb.goods_price, g.goods_name, g.subtitle, g.original_img, g.store_count')
             ->select();
 
         // 首页下方分类商品
