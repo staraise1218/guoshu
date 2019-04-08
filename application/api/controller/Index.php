@@ -58,12 +58,13 @@ class Index extends Base {
         );
 
         $grouplist = Db::name('group_buy')->alias('gb')
-            ->join('goods g', 'gb.goods_id=g.goods_id AND g.prom_type=2')
+            ->join('goods g', 'gb.goods_id=g.goods_id')
             ->where($group_by_where)
             ->limit(12)
             ->order('id desc')
             ->field('gb.goods_id, gb.price, gb.goods_price, g.original_img, g.store_count')
             ->select();
+
         // 首页下方分类商品
         $topCateGoods = array();
         foreach ($categoryList as $item) {

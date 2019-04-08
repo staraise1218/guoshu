@@ -162,7 +162,6 @@ class Auth extends Base {
 
             // 将信息写入用户表
             $userData = array(
-                'uuid' => $uuid,
                 'nickname' => $nickname,
                 'reg_time' => time(),
                 'last_login' => time(),
