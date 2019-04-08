@@ -25,19 +25,19 @@ class Wxapplet {
 
     	//②、统一下单
         $input = new \WxPayUnifiedOrder();
-        $input->SetBody("视频课程");
-        $input->SetAttach("视频课程");
+        $input->SetBody("购买商品");
+        $input->SetAttach("购买商品");
         $input->SetOut_trade_no($order_sn);
         $input->SetTotal_fee($order['price']*100);
         $input->SetTime_start(date("YmdHis"));
         $input->SetTime_expire(date("YmdHis", time() + 600));
-        $input->SetGoods_tag("视频课程");
+        $input->SetGoods_tag("购买商品");
         $input->SetNotify_url("http://guoshu.staraise.com.cn/api/WxappletBuyGoodsCallback/exec");
         $input->SetTrade_type("JSAPI");
         $input->SetOpenid($openId);
         $config = new \WxPayConfig();
         $order = \WxPayApi::unifiedOrder($config, $input);
-
+p($order);
         $JsApiPay = new \JsApiPay();
         $jsApiParameters = $JsApiPay->GetJsApiParameters($order);
         echo $jsApiParameters;
