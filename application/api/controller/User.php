@@ -190,4 +190,17 @@ class User extends Base {
     }
 
 
+    // 分享小程序日志记录 return status: 0 无红包 1 有红包
+    public function shareSystemLog(){
+        $user_id = I('user_id');
+
+        $data = array(
+            'user_id' => $user_id,
+            'createtime' => time(),
+        );
+        Db::name('sharesystem_log')->insert($data);
+
+        response_success(array('status'=>0));
+    }
+
 }
