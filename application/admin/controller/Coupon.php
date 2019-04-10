@@ -240,6 +240,11 @@ class Coupon extends Base {
     public function del_coupon(){
         //获取优惠券ID
         $cid = I('get.id/d');
+        // 查询优惠券是否被用
+        $count = M('coupon_list')->where(array('cid'=>$cid))->count();
+        if($count){
+            $this->ajaxReturn(['status' => 0, 'msg' => '优惠券已发放，不可删除']);
+        }
         //查询是否存在优惠券
         $row = M('coupon')->where(array('id'=>$cid))->delete();
         if (!$row) {

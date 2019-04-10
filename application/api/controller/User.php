@@ -194,13 +194,49 @@ class User extends Base {
     public function shareSystemLog(){
         $user_id = I('user_id');
 
+        // 将分享日志写入表中
         $data = array(
             'user_id' => $user_id,
             'createtime' => time(),
         );
         Db::name('sharesystem_log')->insert($data);
 
-        response_success(array('status'=>0));
+        // 查看系统设置的分享红包
+        $redpack = Db::name('redpack')
+                        ->where('type', 1) // 分享小程序红包
+                        ->where('status', 1) // 有效状态
+                        ->where('send_start_time', ['lt', time()]) // 发放开始时间
+                        ->where('send_end_time', ['gt', time()]) // 发放结束时间
+                        ->where('use_start_time', ['lt', time()]) // 使用开始时间
+                        ->where('use_end_time', ['gt', time()]) // 使用结束时间
+                        ->find();
+
+        // 如果分享小程序可以得红包，则判断是否满足分享10次
+        if($redpack){  
+            // 判断用户是否已经得到该红包
+            $is_has = Db::name('user_redpack')->where('rid', $redpack['id'])->count();
+            if($is_has) response_success(array('status'=>0));
+
+            // 如果没有得到该红包就继续
+            $count = Db::name('sharesystem_log')
+                ->where('createtime', ['egt', $redpack['send_start_time']])
+                ->where('createtime', ['elt', $redpack['send_end_time']])
+                ->count();
+
+            if($count >= 10){
+                $data = array(
+                    'rid' => $redpack['id'],
+                    'type' => $redpack['type'],
+                    'uid' => $user_id,
+                    'send_time' => time(),
+                );
+                Db::name('user_redpack')
+                    ->insert($data);
+                response_success(array('status'=>1));
+            }
+        } else {
+            response_success(array('status'=>0));
+        }
     }
 
 }
