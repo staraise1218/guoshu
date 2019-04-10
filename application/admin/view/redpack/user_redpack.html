@@ -94,7 +94,7 @@
                                 <div style="text-align: left; width: 240px;">{$list.name}</div>
                             </td>
                             <td align="left" class="">
-                                <div style="text-align: center; width: 80px;">{$coupon_type[$list[type]]}</div>
+                                <div style="text-align: center; width: 80px;">{$redpack_type[$list[type]]}</div>
                             </td>
                             <td align="left" class="">
                                 <div style="text-align: center; width: 150px;">{$list.order_sn}</div>
@@ -118,7 +118,9 @@
                             </if>
                             <td align="left" class="handle">
                                 <div style="text-align: center; width: 170px; max-width:170px;">
-                                    <a class="btn red" href="{:U('Admin/redpack/coupon_list_del',array('id'=>$list['id']))}"><i class="fa fa-trash-o"></i>删除</a>
+                                    <if condition="$list['status'] eq 0">
+                                    <a class="btn red" href="{:U('Admin/redpack/user_redpack_del',array('id'=>$list['id']))}"><i class="fa fa-trash-o"></i>删除</a>
+                                    </if>
                                 </div>
                             </td>
                             <td align="" class="" style="width: 100%;">

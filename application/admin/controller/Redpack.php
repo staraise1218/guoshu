@@ -261,7 +261,7 @@ class Redpack extends Base {
                 "LEFT JOIN __PREFIX__users u ON u.user_id = l.uid WHERE l.rid = :rid".    //联合用户表去查询用户名
                 " limit {$Page->firstRow} , {$Page->listRows}";
         $user_redpack = DB::query($sql,['rid' => $rid]);
-        $this->assign('redpack_type',C('COUPON_TYPE'));
+        $this->assign('redpack_type',C('REDPACK_TYPE'));
         $this->assign('type',$check_redpack['type']);       
         $this->assign('lists',$user_redpack);            	
     	$this->assign('page',$show);
