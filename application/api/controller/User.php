@@ -216,6 +216,8 @@ class User extends Base {
             // 判断用户是否已经得到该红包
             $is_has = Db::name('user_redpack')->where('rid', $redpack['id'])->count();
             if($is_has) response_success(array('status'=>0));
+            // 判断发放红包数量是否已满额
+            if(($redpack['createnum'] > 0) && ($redpack['send_num'] == $redpack['createnum'])) response_success(array('status'=>0));
 
             // 如果没有得到该红包就继续
             $count = Db::name('sharesystem_log')
@@ -230,13 +232,13 @@ class User extends Base {
                     'uid' => $user_id,
                     'send_time' => time(),
                 );
-                Db::name('user_redpack')
-                    ->insert($data);
+                Db::name('user_redpack')->insert($data); // 分享小程序符合条件赠送红包
+                Db::name('redpack')->setInc('send_num', 1); // 红包表记录赠送数量
                 response_success(array('status'=>1));
             }
-        } else {
-            response_success(array('status'=>0));
         }
+
+        response_success(array('status'=>0));
     }
 
 }

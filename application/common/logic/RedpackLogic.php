@@ -13,7 +13,7 @@ use think\Db;
  * Class CatsLogic
  * @package common\Logic
  */
-class CouponLogic extends Model
+class RedpackLogic extends Model
 {
     /**
      * 获取发放有效的优惠券金额
@@ -123,7 +123,7 @@ class CouponLogic extends Model
      * @param array $goods_cat_id||限定商品分类ID数组
      * @return array
      */
-    public function getUserAbleCouponList($user_id, $goods_ids = array(), $goods_cat_id = array())
+    public function getUserAbleRedpackList($user_id, $goods_ids = array(), $goods_cat_id = array())
     {
         $CouponList = new CouponList();
         $Coupon = new Coupon();

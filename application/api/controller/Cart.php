@@ -199,8 +199,9 @@ class Cart extends Base {
         $cartGoodsId = get_arr_column($cartGoodsList,'goods_id');
         $cartGoodsCatId = get_arr_column($cartGoodsList,'cat_id');
         $cartPriceInfo = $cartLogic->getCartPriceInfo($cartList['cartList']);  //初始化数据。商品总额/节约金额/商品总共数量
-        $userCouponList = $couponLogic->getUserAbleCouponList($user_id, $cartGoodsId, $cartGoodsCatId);//用户可用的优惠券列表
         $cartList = array_merge($cartList,$cartPriceInfo);
+        //用户可用的优惠券列表
+        $userCouponList = $couponLogic->getUserAbleCouponList($user_id, $cartGoodsId, $cartGoodsCatId);
         $userCartCouponList = $cartLogic->getCouponCartList($cartList, $userCouponList);
 
         $result['address'] = $address; // 地址
@@ -314,6 +315,7 @@ class Cart extends Base {
         $address_id         = I("address_id/d"); //  收货地址id
         $invoice_title      = I('invoice_title');  // 发票
         $taxpayer           = I('taxpayer');       // 纳税人识别号
+        $user_redpack_id    = I("user_redpack_id/d"); //  用户红包id
         $coupon_id          = I("coupon_id/d"); //  优惠券id
         $pay_points         = I("pay_points/d",0); //  使用积分
         $user_money         = I("user_money/f",0); //  使用余额

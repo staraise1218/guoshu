@@ -69,12 +69,45 @@ class Goods extends Base {
         // $this->assign('spec_goods_price', json_encode($spec_goods_price,true)); // 规格 对应 价格 库存表
         // $goods['commentStatistics'] = $goodsLogic->commentStatistics($goods_id);// 获取某个商品的评论统计
       	$goods['sale_num'] = M('order_goods')->where(['goods_id'=>$goods_id,'is_send'=>1])->sum('goods_num');
+      	// 获取商品评论
+      	$goods['goodsCommentList'] = $this->goodsComment($goods_id);
         //当前用户收藏
         // $collect = M('goods_collect')->where(array("goods_id"=>$goods_id ,"user_id"=>$user_id))->count();
         // $goods_collect_count = M('goods_collect')->where(array("goods_id"=>$goods_id))->count(); //商品收藏数
         $goods['goods_content'] = $goods['goods_content'] ? htmlspecialchars_decode($goods['goods_content']) : '';
         response_success($goods);
 	}
+
+
+    /**
+     * 商品评论ajax分页
+     */
+    public function goodsComment($goods_id){        
+        $commentType = I('commentType','1'); // 1 全部 2好评 3 中评 4差评
+        $where = ['is_show'=>1,'goods_id'=>$goods_id,'parent_id'=>0];
+        if($commentType==5){
+            $where['img'] = ['<>',''];
+        }else{
+        	$typeArr = array('1'=>'0,1,2,3,4,5','2'=>'4,5','3'=>'3','4'=>'0,1,2');
+            $where['ceil((deliver_rank + goods_rank + service_rank) / 3)'] = ['in',$typeArr[$commentType]];
+        }
+
+       
+        $list = M('Comment')->alias('c')
+        	->join('__USERS__ u','u.user_id = c.user_id','LEFT')
+        	->where($where)
+        	->order("add_time desc")
+        	->field('u.nickname, u.head_pic, c.content, c.goods_rank, c.is_anonymous, c.img')
+        	->limit(1)
+        	->select();
+         
+        
+        foreach($list as $k => $v){
+            $list[$k]['img'] = $v['img'] ? unserialize($v['img']) : array(); // 晒单图片
+            $replyList[$v['comment_id']] = M('Comment')->where(['is_show'=>1,'goods_id'=>$goods_id,'parent_id'=>$v['comment_id']])->order("add_time desc")->select();
+        }
+        return $list;     
+    }    
 
 	/**
 	 * [recommendgoodslist 推荐的商品]
