@@ -5,6 +5,7 @@ namespace app\api\controller;
 use app\common\logic\GoodsLogic;
 use app\common\logic\GoodsPromFactory;
 use app\common\model\SpecGoodsPrice;
+use app\common\logic\CartLogic;
 use think\Db;
 
 class Goods extends Base {
@@ -75,6 +76,9 @@ class Goods extends Base {
         // $collect = M('goods_collect')->where(array("goods_id"=>$goods_id ,"user_id"=>$user_id))->count();
         // $goods_collect_count = M('goods_collect')->where(array("goods_id"=>$goods_id))->count(); //商品收藏数
         $goods['goods_content'] = $goods['goods_content'] ? htmlspecialchars_decode($goods['goods_content']) : '';
+
+        $cartLogic = new CartLogic();
+ 		$goods['cart_num'] = $cartLogic->getUserCartGoodsTypeNum();//获取用户购物车商品总数
         response_success($goods);
 	}
 

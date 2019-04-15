@@ -42,7 +42,7 @@ class Order extends Base
             ->order($order_str)
             ->where($where)
             ->page($page)
-            ->limit(1)
+            ->limit(10)
             ->select();
 
         //获取订单商品
