@@ -4,7 +4,6 @@ namespace app\api\controller;
 
 
 use app\common\logic\CartLogic;
-
 use app\common\logic\Integral;
 use app\common\logic\Pay;
 use app\common\logic\PlaceOrder;
@@ -36,7 +35,7 @@ class Cart extends Base {
         $cartLogic->setCityCode($city_code);
 
         $cartList = $cartLogic->getCartList();//用户购物车
-        $userCartGoodsTypeNum = $cartLogic->getUserCartGoodsTypeNum();//获取用户购物车商品总数
+        $userCartGoodsTypeNum = $cartLogic->getUserCartGoodsNum();//获取用户购物车商品总数
 
         response_success($cartList);
     }

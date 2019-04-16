@@ -77,6 +77,7 @@ class Goods extends Base {
         // $goods_collect_count = M('goods_collect')->where(array("goods_id"=>$goods_id))->count(); //商品收藏数
         $goods['goods_content'] = $goods['goods_content'] ? htmlspecialchars_decode($goods['goods_content']) : '';
 
+        // 购物车商品数量
         $cartLogic = new CartLogic();
  		$goods['cart_num'] = $cartLogic->getUserCartGoodsTypeNum();//获取用户购物车商品总数
         response_success($goods);

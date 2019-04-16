@@ -32,6 +32,8 @@ class PlaceOrder
     private $promType;
     private $promId;
 
+    private $extraParams;
+
     /**
      * PlaceOrder constructor.
      * @param Pay $pay
@@ -76,6 +78,10 @@ class PlaceOrder
     private function setPromId($prom_id)
     {
         $this->promId = $prom_id;
+    }
+    private function extraParams($params)
+    {
+        $this->extraParams = $params;
     }
 
     public function addNormalOrder()
