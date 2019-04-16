@@ -246,7 +246,7 @@ class Order extends Base
 
         $OrderLogic = new OrderLogic();
         $OrderLogic->setUserId($user_id);
-        $data = $OrderLogic->del_order($user_id, $order_id);
+        $data = $OrderLogic->delOrder($order_id);
         
         if($data['status'] == 1){
             response_success('', '删除成功');
