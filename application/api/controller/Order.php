@@ -265,7 +265,7 @@ class Order extends Base
         $data = confirm_order($order_id, $user_id);
 
         if ($data['status'] != 1) {
-            success_error('', $data['msg']);
+            response_error('', $data['msg']);
         } else {
             response_success('', '操作成功');
         }
