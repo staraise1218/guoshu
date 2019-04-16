@@ -119,7 +119,7 @@ class Order extends Base
         $this->assign('order_list',$order_list);
         if ($request->isAjax()) {
             return $this->fetch('ajax_team_list');
-//            $this->ajaxReturn(['status'=>1,'msg'=>'获取成功','result'=>$order_list]);
+            //$this->ajaxReturn(['status'=>1,'msg'=>'获取成功','result'=>$order_list]);
         }
         return $this->fetch();
     }
@@ -235,24 +235,39 @@ class Order extends Base
             response_error('', $data['msg']);
         }
     }
+
     /**
-     * 确定收货成功
+     * [del_order 取消后可删除订单]
+     * @return [type] [description]
      */
-    public function order_confirm()
-    {
-        $id = I('id/d', 0);
-        $data = confirm_order($id, $this->user_id);
-        if(request()->isAjax()){
-            $this->ajaxReturn($data);
-        }
-        if ($data['status'] != 1) {
-            $this->error($data['msg'],U('Mobile/Order/order_list'));
+    public function del_order(){
+        $user_id = I('user_id');
+        $order_id = I('order_id');
+
+        $OrderLogic = new OrderLogic();
+        $OrderLogic->setUserId($user_id);
+        $data = $OrderLogic->del_order($user_id, $order_id);
+        
+        if($data['status'] == 1){
+            response_success('', '删除成功');
         } else {
-            $model = new UsersLogic();
-            $order_goods = $model->get_order_goods($id);
-            $this->assign('order_goods', $order_goods);
-            return $this->fetch();
-            exit;
+            response_error('', $data['msg']);
+        }
+    }
+    /**
+     * 确定收货
+     */
+    public function receive_order()
+    {
+        $user_id = I('user_id');
+        $order_id = I('order_id');
+
+        $data = confirm_order($order_id, $user_id);
+
+        if ($data['status'] != 1) {
+            success_error('', $data['msg']);
+        } else {
+            response_success('', '操作成功');
         }
     }
     //订单支付后取消订单

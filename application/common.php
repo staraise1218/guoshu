@@ -690,6 +690,7 @@ function orderBtn($order_id = 0, $order = array())
         'comment_btn' => 0, // 评价按钮
         'shipping_btn' => 0, // 查看物流
         'return_btn' => 0, // 退货按钮 (联系客服)
+        'del_btn' => 0, // 删除订单，取消后的订单可删除
     );
 
 
@@ -742,6 +743,10 @@ function orderBtn($order_id = 0, $order = array())
     
     if($order['order_status'] == 3 && ($order['pay_status'] == 1 || $order['pay_status'] == 4)){
     	$btn_arr['cancel_info'] = 1; // 取消订单详情
+    }
+
+    if($order['order_status'] == 3 && $order_status == 5){
+        $btn_arr['del_btn'] = 1; // 可删除订单
     }
 
     return $btn_arr;
@@ -921,16 +926,14 @@ function confirm_order($id,$user_id = 0){
     $data['order_status'] = 2; // 已收货
     $data['pay_status'] = 1; // 已付款
     $data['confirm_time'] = time(); // 收货确认时间
-    if($order['pay_code'] == 'cod'){
-        $data['pay_time'] = time();
-    }
+    $data['pay_time'] = time();
     $row = M('order')->where(array('order_id'=>$id))->save($data);
     if(!$row)
         return array('status'=>-3,'msg'=>'操作失败');
 
-    order_give($order);// 调用送礼物方法, 给下单这个人赠送相应的礼物
+    // order_give($order);// 调用送礼物方法, 给下单这个人赠送相应的礼物
     //分销设置
-    M('rebate_log')->where("order_id", $id)->save(array('status'=>2,'confirm'=>time()));
+    // M('rebate_log')->where("order_id", $id)->save(array('status'=>2,'confirm'=>time()));
     return array('status'=>1,'msg'=>'操作成功','url'=>U('Order/order_detail',['id'=>$id]));
 }
 
