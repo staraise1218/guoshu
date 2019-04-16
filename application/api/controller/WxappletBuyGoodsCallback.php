@@ -117,6 +117,12 @@ class WxappletBuyGoodsCallback extends \WxPayNotify
 	}
 
 
+	public function testpay(){
+		$order_sn = I('order_sn');
+		$this->operation($order_sn);
+
+		response_success('', '支付成功');
+	}
 
 	public function operation($order_sn){
 		// 启动事务
