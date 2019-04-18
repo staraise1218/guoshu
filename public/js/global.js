@@ -2,7 +2,7 @@
  * 获取省份
  */
 function get_province(){
-    var url = '/index.php?m=Admin&c=Api&a=getRegion&level=1&parent_id=0';
+    var url = '/index.php?m=Admin&c=Api&a=getRegion&level=1&parent_code="000000"';
     $.ajax({
         type : "GET",
         url  : url,
@@ -23,13 +23,11 @@ function get_province(){
  * @param t  省份select对象
  */
 function get_city(t){
-    var parent_id = $(t).val();
-    if(!parent_id > 0){
-        return;
-    }
+    var parent_code = $(t).val();
+
     $('#district').empty().css('display','none');
     $('#twon').empty().css('display','none');
-    var url = '/index.php?m=Home&c=Api&a=getRegion&level=2&parent_id='+ parent_id;
+    var url = '/index.php?m=Api&c=region&a=getRegion&parent_code='+ parent_code;
     $.ajax({
         type : "GET",
         url  : url,
@@ -49,13 +47,13 @@ function get_city(t){
  * @param t  城市select对象
  */
 function get_area(t){
-    var parent_id = $(t).val();
-    if(!parent_id > 0){
+    var parent_code = $(t).val();
+    if(parent_code == ''){
         return;
     }
     $('#district').empty().css('display','inline');
     $('#twon').empty().css('display','none');
-    var url = '/index.php?m=Home&c=Api&a=getRegion&level=3&parent_id='+ parent_id;
+    var url = '/index.php?m=Api&c=region&a=getRegion&parent_code='+ parent_code;
     $.ajax({
         type : "GET",
         url  : url,
@@ -71,9 +69,9 @@ function get_area(t){
 }
 
 // 获取最后一级乡镇
-function get_twon(obj){
-    var parent_id = $(obj).val();
-    var url = '/index.php?m=Home&c=Api&a=getTwon&parent_id='+ parent_id;
+/*function get_twon(obj){
+    var parent_code = $(obj).val();
+    var url = '/index.php?m=Api&c=region&a=getTwonparent_code;
     $.ajax({
         type : "GET",
         url  : url,
@@ -86,7 +84,7 @@ function get_twon(obj){
             }
         }
     });
-}
+}*/
 
 
 /**

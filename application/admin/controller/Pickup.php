@@ -14,7 +14,7 @@ use think\Db;
 class Pickup extends Base {
 
     public function index(){
-		$p = M('region')->where(array('parent_id'=>0,'level'=> 1))->select();
+		$p = M('region2')->where(array('parentCode'=>'000000'))->select();
 		$this->assign('province',$p);
         return $this->fetch();
     }
@@ -27,17 +27,17 @@ class Pickup extends Base {
 		$order_by_mode = I('post.order_by_mode','desc');
 		$key_word = I('post.key_word');
 		$pickup_where = array();
-		if(!empty($province_id)){
-			$pickup_where['p.province_id'] = $province_id;
-		}
-		if(!empty($city_id)){
-			$pickup_where['p.city_id'] = $city_id;
-		}
-		if(!empty($district_id)){
-			$pickup_where['p.district_id'] = $district_id;
-		}
+		// if(!empty($province_id)){
+		// 	$pickup_where['p.province_id'] = $province_id;
+		// }
+		// if(!empty($city_id)){
+		// 	$pickup_where['p.city_id'] = $city_id;
+		// }
+		// if(!empty($district_id)){
+		// 	$pickup_where['p.district_id'] = $district_id;
+		// }
 		if(!empty($key_word)){
-			$pickup_where['p.pickup_name'] = array('like',$key_word);
+			$pickup_where['p.pickup_name'] = array('like',"%$key_word%");
 		}
 
 		$count = DB::name('pick_up')->alias('p')->where($pickup_where)->count();
@@ -47,14 +47,15 @@ class Pickup extends Base {
 		$pickupList = DB::name('pick_up')
 				->alias('p')
 				->field('p.*,r1.name as province_name,r2.name as city_name,r3.name as district_name,s.suppliers_name')
-				->join('__REGION__ r1','r1.id = p.province_id','LEFT')
-				->join('__REGION__ r2','r2.id = p.city_id','LEFT')
-				->join('__REGION__ r3','r3.id = p.district_id','LEFT')
+				->join('__REGION2__ r1','r1.code = p.province_code','LEFT')
+				->join('__REGION2__ r2','r2.code = p.city_code','LEFT')
+				->join('__REGION2__ r3','r3.code = p.district_code','LEFT')
 				->join('__SUPPLIERS__ s','s.suppliers_id = p.suppliersid','LEFT')
 				->where($pickup_where)
 				->order($order_by_field.' '.$order_by_mode)
 				->limit($Page->firstRow.','.$Page->listRows)
 				->select();
+
 		$this->assign('pickupList',$pickupList);
 		$this->assign('page',$show);// 赋值分页输出
 		$this->assign('pager',$Page);
@@ -100,9 +101,9 @@ class Pickup extends Base {
 		$id = I('get.pickup_id');
 		$pickup = M('pick_up')->where(array('pickup_id'=>$id))->find();
 		//获取省份
-		$p = M('region')->where(array('parent_id'=>0,'level'=> 1))->select();
-		$c = M('region')->where(array('parent_id'=>$pickup['province_id'],'level'=> 2))->select();
-		$d = M('region')->where(array('parent_id'=>$pickup['city_id']))->select();
+		$p = M('region2')->where(array('parentCode'=>'000000'))->select();
+		$c = M('region2')->where(array('parentCode'=>$pickup['province_code']))->select();
+		$d = M('region2')->where(array('parentCode'=>$pickup['city_code']))->select();
 		$suppliers = M('suppliers')->where(array('is_check'=>1))->select();
 
 		$this->assign('province',$p);
@@ -119,5 +120,15 @@ class Pickup extends Base {
 		M('pick_up')->where(array('pickup_id' => $id))->delete();
 		$return_arr = array('status' => 1, 'msg' => '操作成功', 'data' => '',);
 		$this->ajaxReturn($return_arr);
+	}
+
+	public function ajaxChangeStatus(){
+		$status = I('status');
+		$pickup_id = I('pickup_id');
+
+		Db::name('pick_up')->where('pickup_id', $pickup_id)->setField('status', $status);
+		if(in_array($status, array(1, 3))){
+			Db::name('pick_up')->where('pickup_id', $pickup_id)->setField('is_open', 0);
+		}
 	}
 }

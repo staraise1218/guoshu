@@ -6,6 +6,7 @@ return	array(
 						//array('name'=>'支付方式','act'=>'index1','op'=>'System'),
 						array('name'=>'配送城市','act'=>'region','op'=>'Tools'),
 						array('name'=>'供应商','act'=>'supplier','op'=>'admin'),
+						array('name'=>'自提点','act'=>'index','op'=>'Pickup'),
 						// array('name'=>'短信模板','act'=>'index','op'=>'SmsTemplate'),
 						// array('name'=>'友情链接','act'=>'linkList','op'=>'Article'),
 						array('name'=>'清除缓存','act'=>'cleanCache','op'=>'System'),

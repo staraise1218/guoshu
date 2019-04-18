@@ -2,17 +2,17 @@
     <table>
         <tbody>
         <volist name="pickupList" id="list">
-            <tr>
-                <td class="sign">
+            <tr pickup_id="{$list.pickup_id}">
+                <!-- <td class="sign">
                     <div style="width: 24px;"><i class="ico-check"></i></div>
-                </td>
+                </td> -->
                 <td align="left" class="">
-                    <div style="text-align: center; width: 50px;">{$list.pickup_id}</div>
+                    <div style="text-align: center; width: 30px;">{$list.pickup_id}</div>
                 </td>
                 <td align="left" class="">
                     <div style="text-align: center; width: 100px;">{$list.pickup_name|getSubstr=0,33}</div>
                 </td>
-                <td align="left" class="">
+                <td align="left" class="" title="{$list.pickup_address}">
                     <div style="text-align: center; width: 100px;">{$list.pickup_address|getSubstr=0,33}</div>
                 </td>
                 <td align="left" class="">
@@ -31,12 +31,27 @@
                     <div style="text-align: center; width: 80px;">{$list.district_name}</div>
                 </td>
                 <td align="left" class="">
-                    <div style="text-align: center; width: 80px;">{$list.suppliers_name|default='无供应商'}</div>
+                    <div style="text-align: center; width: 60px;">
+                        <select name="status" id="status">
+                            <option value="1" <if condition="$list.status eq 1">selected=selected</if>>待审核</option>
+                            <option value="2" <if condition="$list.status eq 2">selected=selected</if>>已通过</option>
+                            <option value="3" <if condition="$list.status eq 3">selected=selected</if>>已拒绝</option>
+                        </select>
+                    </div>
                 </td>
+                <td align="center" axis="col0">
+                  <div style="text-align: center; width: 60px;">
+                    <if condition='$list[is_open] eq 1'>
+                      <span class="yes" onClick="changeTableVal('pick_up','pickup_id','{$list.pickup_id}','is_open',this)" ><i class="fa fa-check-circle"></i>是</span>
+                      <else />
+                      <span class="no" onClick="changeTableVal('pick_up','pickup_id','{$list.pickup_id}','is_open',this)" ><i class="fa fa-ban"></i>否</span>
+                    </if>
+                  </div>
+                </td>                
                 <td align="center" class="handle">
-                    <div style="text-align: center; width: 170px; max-width:170px;">
-                        <a class="btn blue" href="{:U('Admin/Pickup/edit_address',array('pickup_id'=>$list['pickup_id']))}"><i class="fa fa-pencil-square-o"></i>查看编辑</a>
-                        <a class="btn red"  href="javascript:void(0)" onclick="del('{$list[pickup_id]}')" ><i class="fa fa-trash-o"></i>删除</a>
+                    <div style="text-align: center; width: 100px; max-width:170px;">
+                        <a class="btn blue" href="{:U('Admin/Pickup/edit_address',array('pickup_id'=>$list['pickup_id']))}"><i class="fa fa-pencil-square-o"></i>编辑</a>
+                        <!-- <a class="btn red"  href="javascript:void(0)" onclick="del('{$list[pickup_id]}')" ><i class="fa fa-trash-o"></i>删除</a> -->
                     </div>
                 </td>
                 <td align="" class="" style="width: 100%;">
@@ -51,10 +66,21 @@
 {$page}
 <script>
     $(document).ready(function(){
-        // 表格行点击选中切换
-        $('#flexigrid >table>tbody>tr').click(function(){
-            $(this).toggleClass('trSelected');
-        });
+       
+
+         // 修改状态
+        $('select[name=status]').change(function(){
+            var pickup_id = $(this).parents('tr').attr('pickup_id');
+            var status = $(this).val();
+
+            $.ajax({
+                url: "index.php/admin/pickup/ajaxChangeStatus/pickup_id/"+pickup_id+"/status/"+status,
+                type: 'get',
+                success:function(data){
+                    layer.msg('操作成功');
+                }
+            })
+        })
         $('#count').empty().html("{$pager->totalRows}");
     });
     // 点击分页触发的事件
