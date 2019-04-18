@@ -701,6 +701,8 @@ class Cart extends Base {
             ->where('status', 2)
             ->where('is_open', 1)
             ->order('pickup_id desc')
+            ->field('pickup_name, pickup_id
+                ')
             ->select();
 
         $region2 = Db::name('region2')->cache(0)->field('name, code')->select();

@@ -250,6 +250,7 @@ class User extends Base {
         $province__code = I('province__code');
         $city_code = I('city_code');
         $district_code = I('district_code');
+        $pickup_address = I('pickup_address');
 
         if(check_mobile($pickup_phone) == false){
             response_error('', '手机号格式错误');
