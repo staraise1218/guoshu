@@ -692,4 +692,30 @@ class Cart extends Base {
         $return = $couponLogic->exchangeCoupon($this->user_id, $coupon_code);
         $this->ajaxReturn($return);
     }
+
+    public function getPickupList(){
+        $user_id = I('user_id');
+        $page = I('page/d');
+
+        $list = Db::name('pick_up')
+            ->where('status', 2)
+            ->where('is_open', 1)
+            ->order('pickup_id desc')
+            ->select();
+
+        $region2 = Db::name('region2')->cache(0)->field('name, code')->select();
+        $regionlist = array();
+        // 循环地址处理数组
+        foreach ($region2 as $item) {
+            $regionList[$item['code']] = array('name'=>$item['name']);
+        }
+        if($list){
+            
+            foreach ($list as &$item) {
+                $item['fulladdress'] = $regionList[$item['province_code']]['name'].$regionList[$item['city_code']]['name'].$regionList[$item['district_code']]['name'].$item['pickup_address'];
+            }
+        }
+
+        response_success($list);
+    }
 }

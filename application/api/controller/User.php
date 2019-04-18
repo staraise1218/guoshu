@@ -241,4 +241,34 @@ class User extends Base {
         response_success(array('status'=>0));
     }
 
+    // 申请自提点
+    public function applyPickup(){
+        $user_id = I('user_id/d');
+        $mobile_code = I('mobile_code');
+        $pickup_phone = I('pickup_phone');
+        $pickup_contact = I('pickup_contact');
+        $province__code = I('province__code');
+        $city_code = I('city_code');
+        $district_code = I('district_code');
+
+        if(check_mobile($pickup_phone) == false){
+            response_error('', '手机号格式错误');
+        }
+
+        // 验证码检测
+        $SmsLogic = new SmsLogic();
+        if($SmsLogic->checkCode($pickup_phone, $mobile_code, '4', $error) == false) response_error('', $error);
+
+        // 检测是否已申请
+        $pickup = Db::name('pick_up')->where('user_id', $user_id)->find();
+        if($pickup) response_error('', '您已申请，不可重复申请');
+
+        $data['apply_time'] = time();
+        $result = Db::name('pick_up')->insert($data);
+        if($result){
+            response_success('', '申请成功');
+        } else {
+            response_error('', '申请失败');
+        }
+    }
 }
