@@ -704,11 +704,17 @@ class Cart extends Base {
 
     public function getPickupList(){
         $user_id = I('user_id');
+        $city_code = I('city_code');
         $page = I('page/d');
 
+        $where = array(
+            'status' => 2,
+            'is_open'=> 1,
+        );
+        $city_code && $where['city_code'] = $city_code;
+
         $list = Db::name('pick_up')
-            ->where('status', 2)
-            ->where('is_open', 1)
+            ->where($where)
             ->order('pickup_id desc')
             ->field('pickup_id, pickup_name, province_code, city_code, district_code, pickup_address')
             ->page($page)
