@@ -325,6 +325,9 @@ class Cart extends Base {
         $item_id            = I("item_id/d"); // 商品规格id
         $action             = I("action"); // 立即购买
         $dosubmit           = I('dosubmit', 0);
+        $send_method        = I('send_method');
+        $pickup_id        = I('pickup_id');
+
 
         mb_strlen($user_note) > 60 && response_error('', '备注超出限制可输入字符长度！');
         if(!$address_id && $dosubmit == 1) response_error('', '请填写收货地址'); 
@@ -359,6 +362,12 @@ class Cart extends Base {
                 $placeOrder->setUserNote($user_note);
                 $placeOrder->setTaxpayer($taxpayer);
                 $placeOrder->setPayPsw($payPwd);
+                // 额外参数
+                $extraParams = array(
+                    'send_method' => $send_method,
+                    'pickup_id' => $pickup_id,
+                );
+                $placeOrder->setExtraParams($extraParams);
                 $placeOrder->addNormalOrder();
                 $cartLogic->clear();
                 $order = $placeOrder->getOrder();
@@ -701,8 +710,9 @@ class Cart extends Base {
             ->where('status', 2)
             ->where('is_open', 1)
             ->order('pickup_id desc')
-            ->field('pickup_name, pickup_id
-                ')
+            ->field('pickup_id, pickup_name, province_code, city_code, district_code, pickup_address')
+            ->page($page)
+            ->limit(20)
             ->select();
 
         $region2 = Db::name('region2')->cache(0)->field('name, code')->select();
@@ -715,6 +725,7 @@ class Cart extends Base {
             
             foreach ($list as &$item) {
                 $item['fulladdress'] = $regionList[$item['province_code']]['name'].$regionList[$item['city_code']]['name'].$regionList[$item['district_code']]['name'].$item['pickup_address'];
+                unset($item['pickup_address']);
             }
         }
 

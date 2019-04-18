@@ -31,6 +31,7 @@ class PlaceOrder
     private $payPsw;
     private $promType;
     private $promId;
+    private $extraParams;
 
     private $extraParams;
 
@@ -51,6 +52,10 @@ class PlaceOrder
     public function setPayPsw($payPsw)
     {
         $this->payPsw = $payPsw;
+    }
+
+    public function setExtraParams($extraParams){
+        $this->extraParams = $extraParams;
     }
     
     public function setInvoiceTitle($invoiceTitle)
@@ -232,6 +237,10 @@ class PlaceOrder
         }
         if($orderData['integral'] > 0 || $orderData['user_money'] > 0){
             $orderData['pay_name'] = $orderData['user_money'] ? '余额支付' : '积分兑换';//支付方式，可能是余额支付或积分兑换，后面其他支付方式会替换
+        }
+
+        if($this->extraParams){
+            $orderData = array_merge($orderData, $this->extraParams);
         }
 
         $this->order->data($orderData, true);
