@@ -256,9 +256,9 @@ class User extends Base {
             response_error('', '手机号格式错误');
         }
 
-        // // 验证码检测
-        // $SmsLogic = new SmsLogic();
-        // if($SmsLogic->checkCode($pickup_phone, $mobile_code, '4', $error) == false) response_error('', $error);
+        // 验证码检测
+        $SmsLogic = new SmsLogic();
+        if($SmsLogic->checkCode($pickup_phone, $mobile_code, '4', $error) == false) response_error('', $error);
 
         // 检测是否已申请
         $pickup = Db::name('pick_up')->where('user_id', $user_id)->find();
