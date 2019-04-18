@@ -247,7 +247,7 @@ class User extends Base {
         $mobile_code = I('mobile_code');
         $pickup_phone = I('pickup_phone');
         $pickup_contact = I('pickup_contact');
-        $province__code = I('province__code');
+        $province_code = I('province_code');
         $city_code = I('city_code');
         $district_code = I('district_code');
         $pickup_address = I('pickup_address');
@@ -269,7 +269,7 @@ class User extends Base {
             'mobile_code' => $mobile_code,
             'pickup_phone' => $pickup_phone,
             'pickup_contact' => $pickup_contact,
-            'province__code' => $province__code,
+            'province_code' => $province_code,
             'city_code' => $city_code,
             'district_code' => $district_code,
             'pickup_address' => $pickup_address,
