@@ -264,7 +264,17 @@ class User extends Base {
         $pickup = Db::name('pick_up')->where('user_id', $user_id)->find();
         if($pickup) response_error('', '您已申请，不可重复申请');
 
-        $data['apply_time'] = time();
+        $data = array(
+            'user_id' => $user_id,
+            'mobile_code' => $mobile_code,
+            'pickup_phone' => $pickup_phone,
+            'pickup_contact' => $pickup_contact,
+            'province__code' => $province__code,
+            'city_code' => $city_code,
+            'district_code' => $district_code,
+            'pickup_address' => $pickup_address,
+            'apply_time' => time(),
+        );
         $result = Db::name('pick_up')->insert($data);
         if($result){
             response_success('', '申请成功');
