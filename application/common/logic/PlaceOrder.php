@@ -33,7 +33,6 @@ class PlaceOrder
     private $promId;
     private $extraParams;
 
-    private $extraParams;
 
     /**
      * PlaceOrder constructor.
