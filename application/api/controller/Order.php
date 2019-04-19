@@ -42,7 +42,7 @@ class Order extends Base
             ->order($order_str)
             ->where($where)
             ->page($page)
-            ->limit(10)
+            ->limit(20)
             ->select();
 
         //获取订单商品
@@ -91,13 +91,67 @@ class Order extends Base
             ->order($order_str)
             ->where($where)
             ->page($page)
-            ->limit(10)
+            ->limit(20)
             ->select();
 
         //获取订单商品
         $model = new UsersLogic();
         foreach ($order_list as $k => $v) {
             $order_list[$k] = set_btn_order_status_for_pickup($v);  // 添加属性  包括按钮显示属性 和 订单状态显示属性
+            //$order_list[$k]['total_fee'] = $v['goods_amount'] + $v['shipping_fee'] - $v['integral_money'] -$v['bonus'] - $v['discount']; //订单总额
+            $data = $model->get_order_goods($v['order_id']);
+            $order_list[$k]['goods_list'] = $data['result'];
+        }
+
+        //统计订单商品数量
+        foreach ($order_list as $key => $value) {
+            $count_goods_num = 0;
+            foreach ($value['goods_list'] as $kk => $vv) {
+                $count_goods_num += $vv['goods_num'];
+            }
+            $order_list[$key]['count_goods_num'] = $count_goods_num;
+        }
+        
+        // 查询总收益
+        $user_money = Db::name('account_log')
+            ->where('user_id', $user_id)
+            ->where('type', 2)
+            ->sum('user_money');
+            
+        $result['user_money'] = $user_money;
+        $result['order_list'] = $order_list;
+
+        response_success($result);
+    }
+
+    /**
+     * 配送员看到的订单列表
+     * @return mixed
+     * @param  $[type] [< <待发货：WAITSEND; 待送达：WAITARRIVE>]]
+     */
+    public function expressman_order_list()
+    {
+        $user_id = input('user_id/d'); // 自提点用户的id
+        $type = input('type');
+        $page = input('page/d', 1);
+
+        $where = ' express_user_id = '.$user_id.' and deleted = 0 and order_status=1 ';
+        //条件搜索
+        if($type) $where .= C(strtoupper(I('get.type')));
+        $where.=' and prom_type < 5 ';//虚拟订单和拼团订单不列出来
+
+        $order_str = "order_id DESC";
+        $order_list = M('order')
+            ->order($order_str)
+            ->where($where)
+            ->page($page)
+            ->limit(20)
+            ->select();
+
+        //获取订单商品
+        $model = new UsersLogic();
+        foreach ($order_list as $k => $v) {
+            $order_list[$k] = set_btn_order_status_for_express($v);  // 添加属性  包括按钮显示属性 和 订单状态显示属性
             //$order_list[$k]['total_fee'] = $v['goods_amount'] + $v['shipping_fee'] - $v['integral_money'] -$v['bonus'] - $v['discount']; //订单总额
             $data = $model->get_order_goods($v['order_id']);
             $order_list[$k]['goods_list'] = $data['result'];
@@ -719,5 +773,28 @@ class Order extends Base
             $result = ['status' => 1, 'msg' => '点赞成功~', 'result' => ''];
         }
         exit(json_encode($result));
+    }
+
+    // 配送员操作：送达
+    public function arrive(){
+        $user_id = I('user_id');
+        $order_id = I('order_id');
+
+        $order = Db::name('order')->where('order_id', $order_id)->find();
+
+        if(empty($order) || $order['order_status'] != 1
+            || $order['pay_status'] != 1
+            || $order['shipping_status'] != 1
+        ) response_error('', '订单状态不允许');
+        if($order['express_user_id'] != $user_id) response_error('非法操作');
+
+        $updatedata = array(
+            'is_arrive'=>1
+        );
+        if(false !== Db::name('order')->where('order_id', $order_id)->update($updatedata)){
+            response_success('', '操作成功');
+        } else {
+            response_error('', '操作失败');
+        }
     }
 }

@@ -698,6 +698,26 @@ function orderStatusDesc_for_pickup($order_id = 0, $order = array())
 
     return 'OTHER';
 }
+/**
+ * 获取订单状态的 中文描述名称 用于自提点
+ * @param type $order_id  订单id
+ * @param type $order     订单数组
+ * @return string
+ */
+function orderStatusDesc_for_express($order_id = 0, $order = array())
+{
+    if(empty($order))
+        $order = M('Order')->where("order_id", $order_id)->find();
+  
+    if($order['pay_status'] == 1 &&  in_array($order['order_status'], array(0,1)) && $order['shipping_status'] == 0)
+        return 'WAITSEND'; //'待发货',
+    if($order['shipping_status'] == 1 && $order['is_arrive'] == 0)
+        return 'NO_ARRIVE'; //'未送达',
+    if($order['shipping_status'] == 1 && $order['is_arrive'] == 1)
+        return 'ARRIVED'; //'未提货',
+
+    return 'OTHER';
+}
 
 /**
  * 获取订单状态的 显示按钮
@@ -815,6 +835,21 @@ function set_btn_order_status_for_pickup($order)
     $order['order_status_code'] = $order_status_code = orderStatusDesc_for_pickup(0, $order, 'pickup'); // 订单状态显示给用户看的
     $order['order_status_desc'] = $order_status_arr[$order_status_code];
     $orderBtnArr = orderBtn(0, $order);
+    return array_merge($order,$orderBtnArr); // 订单该显示的按钮
+}
+
+/**
+ * 给订单数组添加属性  包括按钮显示属性 和 订单状态显示属性
+ * 配送员看到的
+ * @param type $order
+ */
+function set_btn_order_status_for_express($order)
+{
+    $order_status_arr = C('ORDER_STATUS_DESC');
+    $order['order_status_code'] = $order_status_code = orderStatusDesc_for_express(0, $order, 'pickup'); // 订单状态显示给用户看的
+    $order['order_status_desc'] = $order_status_arr[$order_status_code];
+    $orderBtnArr = orderBtn(0, $order);
+
     return array_merge($order,$orderBtnArr); // 订单该显示的按钮
 }
 

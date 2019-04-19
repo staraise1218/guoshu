@@ -321,6 +321,7 @@ return [
         'NO_ARRIVE' => '未送达',
         'NO_RECEIVE' => '未提货',
         'RECEIVED' => '已提货',
+        'ARRIVED' => '已送达',
     ],
 
     'REFUND_STATUS'=>array(
