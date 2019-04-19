@@ -76,9 +76,16 @@
         <div class="tDiv">
             <div class="tDiv2">
                 <div class="fbutton">
-                    <a href="{:U('User/add_user')}">
+                    <a href="{:U('User/add_user', array('role'=>1))}">
                         <div class="add" title="添加会员">
                             <span><i class="fa fa-plus"></i>添加会员</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="fbutton">
+                    <a href="{:U('User/add_user', array('role'=>2))}">
+                        <div class="add" title="添加配送员">
+                            <span><i class="fa fa-plus"></i>添加配送员</span>
                         </div>
                     </a>
                 </div>

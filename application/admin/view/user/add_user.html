@@ -36,17 +36,6 @@
             </dl>
             <dl class="row">
                 <dt class="tit">
-                    <label>会员类型</label>
-                </dt>
-                <dd class="opt">
-                    <select id="level" name="level">
-                        <option value="0" <if condition="$user.group eq 0">selected</if>>普通会员</option>
-                        <option value="1" <if condition="$user.group eq 1">selected</if>>专家</option>
-                    </select>
-                </dd>
-            </dl>
-            <dl class="row">
-                <dt class="tit">
                     <label for="password"><em>*</em>登录密码</label>
                 </dt>
                 <dd class="opt">
@@ -77,6 +66,7 @@
             </dl>
             <div class="bot"><a href="JavaScript:void(0);" onclick="checkUserUpdate();" class="ncap-btn-big ncap-btn-green" id="submitBtn">确认提交</a></div>
         </div>
+        <input type="hidden" name="role" value="{$role}">
     </form>
 </div>
 <script type="text/javascript">

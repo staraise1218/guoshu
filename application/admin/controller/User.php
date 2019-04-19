@@ -93,6 +93,7 @@ class User extends Base {
     public function add_user(){
     	if(IS_POST){
     		$data = I('post.');
+
 			$user_obj = new UsersLogic();
 			$res = $user_obj->addUser($data);
 			if($res['status'] == 1){
@@ -101,6 +102,9 @@ class User extends Base {
 				$this->error('添加失败,'.$res['msg'],U('User/index'));
 			}
     	}
+
+        $role = I('role');
+        $this->assign('role', $role);
     	return $this->fetch();
     }
     

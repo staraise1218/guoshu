@@ -122,13 +122,29 @@ class Pickup extends Base {
 		$this->ajaxReturn($return_arr);
 	}
 
+	// 审核自提点
 	public function ajaxChangeStatus(){
 		$status = I('status');
 		$pickup_id = I('pickup_id');
 
-		Db::name('pick_up')->where('pickup_id', $pickup_id)->setField('status', $status);
-		if(in_array($status, array(1, 3))){
-			Db::name('pick_up')->where('pickup_id', $pickup_id)->setField('is_open', 0);
+		$pick_update_data = array(
+			'status' => $status,
+		);
+		// 设为待审核或者已拒绝时，将开启状态关闭
+		if($status == 2){
+			$pick_update_data['is_open'] = 1;
+
+			$user_update_data['role'] = 3; // 设为自提点角色
+		} else {
+			$pick_update_data['is_open'] = 0;
+
+			$user_update_data['role'] = 1; // 取消自提点角色
 		}
+
+		Db::name('pick_up')->where('pickup_id', $pickup_id)->update($pick_update_data);
+
+		// 更新用户角色
+		$pickup = Db::name('pick_up')->where('pickup_id', $pickup_id)->find();
+		Db::name('users')->where('user_id', $pickup['user_id'])->update($user_update_data);
 	}
 }

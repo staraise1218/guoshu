@@ -65,6 +65,55 @@ class Order extends Base
         
         response_success($order_list);
     }
+
+    /**
+     * 自提点看到的订单列表
+     * @return mixed
+     * @param  $[type] [< 待收货（未提货）：WAITRECEIVE，已提货（已收货/待评价）：WAITCCOMMENT >]
+     */
+    public function pickup_order_list()
+    {
+        $user_id = input('user_id/d'); // 自提点用户的id
+        $type = input('type');
+        $page = input('page/d', 1);
+
+        // 通过user_id查找该用户的自提点id
+        $pickup = Db::name('pick_up')->where('user_id', $user_id)->find();
+        if(empty($pickup) || $pickup['status'] != 2 || $pickup['is_open'] != 1) response_error('', '你无权查看');
+
+        $where = ' pickup_id=' . $pickup['pickup_id'] . ' and deleted = 0 and shipping_status =1 ';
+        //条件搜索
+        if($type) $where .= C(strtoupper(I('get.type')));
+        $where.=' and prom_type < 5 ';//虚拟订单和拼团订单不列出来
+
+        $order_str = "order_id DESC";
+        $order_list = M('order')
+            ->order($order_str)
+            ->where($where)
+            ->page($page)
+            ->limit(10)
+            ->select();
+
+        //获取订单商品
+        $model = new UsersLogic();
+        foreach ($order_list as $k => $v) {
+            $order_list[$k] = set_btn_order_status($v);  // 添加属性  包括按钮显示属性 和 订单状态显示属性
+            //$order_list[$k]['total_fee'] = $v['goods_amount'] + $v['shipping_fee'] - $v['integral_money'] -$v['bonus'] - $v['discount']; //订单总额
+            $data = $model->get_order_goods($v['order_id']);
+            $order_list[$k]['goods_list'] = $data['result'];
+        }
+
+        //统计订单商品数量
+        foreach ($order_list as $key => $value) {
+            $count_goods_num = 0;
+            foreach ($value['goods_list'] as $kk => $vv) {
+                $count_goods_num += $vv['goods_num'];
+            }
+            $order_list[$key]['count_goods_num'] = $count_goods_num;
+        }
+        
+        response_success($order_list);
+    }
     //拼团订单列表
     public function team_list(){
         $type = input('type');
