@@ -319,6 +319,50 @@ class Order extends Base
             response_success('', '操作成功');
         }
     }
+
+    // 自提点确认提货
+    public function confirm_tihuo(){
+        $user_id = I('user_id');  // 自提点用户id
+        $order_id = I('order_id'); 
+
+        // 判断订单状态
+        $order = Db::name('order')->where('order_id', $order_id)->find();
+        if(empty($order)) response_error('', '订单不存在');
+        if($order['order_status'] == 2) response_error('', '已提货');
+
+        if($order['order_status'] != 1 || $order['pay_status'] != 1 || $order['shipping_status'] != 1) response_error('', '订单异常');
+        if($order['is_arrive'] != 1) response_error('', '该订单未送达');
+
+        // 查找改自提点用户的自提点id
+        $pickup = Db::name('pick_up')->where('user_id', $user_id)->find();
+        if(empty($pickup)) response_error('', '您尚未申请自提点');
+        if($pickup['status'] != 2) response_error('', '自提点未审核通过');
+        if($pickup['is_open'] == 0) response_error('', '自提点已关闭');
+        if($pickup['pickup_id'] != $order['pickup_id']) response_error('', '该订单不属于该自提点');
+
+        // 修改业务数据
+        // 启动事务
+        Db::startTrans();
+        try{
+            // 更改订单状态
+            M('order')->where('order_id', $order_id)->update(array('order_status'=>2, 'confirm_time'=>time()));
+            // 记录金额变动
+            $basicinfo = tpCache('basic');
+            $pickup_money = $basicinfo['pickup_money'];
+            accountLog($user_id, $pickup_money, 0, '自提点订单分佣', 0, $order_id, $order['order_sn'], 2);
+
+            // 提交事务
+            Db::commit();
+
+            response_success('', '操作成功');
+        } catch (\Exception $e) {
+            // 回滚事务
+            Db::rollback();
+
+            response_error('', '操作失败');
+        }
+
+    }
     //订单支付后取消订单
     public function refund_order()
     {

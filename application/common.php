@@ -537,9 +537,10 @@ function tpCache($config_key,$data = array()){
  * @param   float   distribut_money 分佣金额
  * @param int $order_id 订单id
  * @param string $order_sn 订单sn
+ * @param type 变更类型：0 无 1 订单退差价 2 自提点收益 3 商品消费
  * @return  bool
  */
-function accountLog($user_id, $user_money = 0,$pay_points = 0, $desc = '',$distribut_money = 0,$order_id = 0 ,$order_sn = ''){
+function accountLog($user_id, $user_money=0, $pay_points=0, $desc='', $distribut_money=0, $order_id=0, $order_sn='', $type=0){
     /* 插入帐户变动记录 */
     $account_log = array(
         'user_id'       => $user_id,
@@ -548,11 +549,11 @@ function accountLog($user_id, $user_money = 0,$pay_points = 0, $desc = '',$distr
         'change_time'   => time(),
         'desc'   => $desc,
         'order_id' => $order_id,
-        'order_sn' => $order_sn
+        'order_sn' => $order_sn,
+        'type'     => $type,
     );
+
     /* 更新用户信息 */
-//    $sql = "UPDATE __PREFIX__users SET user_money = user_money + $user_money," .
-//        " pay_points = pay_points + $pay_points, distribut_money = distribut_money + $distribut_money WHERE user_id = $user_id";
     $update_data = array(
         'user_money'        => ['exp','user_money+'.$user_money],
         'pay_points'        => ['exp','pay_points+'.$pay_points],
@@ -975,6 +976,7 @@ function confirm_order($id,$user_id = 0){
     if(empty($order['pay_time']) || $order['pay_status'] != 1){
         return array('status'=>-1,'msg'=>'商家未确定付款，该订单暂不能确定收货');
     }
+
     $data['order_status'] = 2; // 已收货
     $data['pay_status'] = 1; // 已付款
     $data['confirm_time'] = time(); // 收货确认时间

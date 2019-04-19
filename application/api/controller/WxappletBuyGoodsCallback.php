@@ -116,7 +116,6 @@ class WxappletBuyGoodsCallback extends \WxPayNotify
 		return true;*/
 	}
 
-
 	public function testpay(){
 		$order_sn = I('order_sn');
 		$this->operation($order_sn);
@@ -128,7 +127,6 @@ class WxappletBuyGoodsCallback extends \WxPayNotify
 		// 启动事务
 		Db::startTrans();
 		try{
-			
 			// 更改订单状态
 			M('order')->where('order_sn', $order_sn)->update(array('pay_status'=>1, 'pay_time'=>time()));
 		   

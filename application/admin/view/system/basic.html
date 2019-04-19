@@ -26,7 +26,7 @@
         <input type="hidden" name="inc_type" value="{$inc_type}">
         <div class="ncap-form-default">
 
-            <dl class="row">
+            <!-- <dl class="row">
                 <dt class="tit">
                     <label for="file_size">附件上传大小</label>
                 </dt>
@@ -44,9 +44,20 @@
 
                     <p class="notic">附件上传大小限制</p>
                 </dd>
-            </dl>
+            </dl> -->
 
             <dl class="row">
+                <dt class="tit">
+                    <label for="pickup_money">自提点分佣金额</label>
+                </dt>
+                <dd class="opt">
+                    <input id="pickup_money" name="pickup_money" value="{$config.pickup_money}" class="input-txt" type="text">
+                    <span class="err"></span>
+                    <p class="notic"></p>
+                </dd>
+            </dl>
+
+            <!-- <dl class="row">
                 <dt class="tit">
                     <label for="hot_keywords">首页热门搜索词</label>
                 </dt>
@@ -55,7 +66,7 @@
                     <span class="err">例如:衣|手机|内衣</span>
                     <p class="notic"></p>
                 </dd>
-            </dl>
+            </dl> -->
 
             <div class="bot"><a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" onclick="fromsubmit();">确认提交</a></div>
         </div>
