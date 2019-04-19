@@ -662,6 +662,39 @@ function orderStatusDesc($order_id = 0, $order = array())
         return 'FINISH'; //'已完成',
     if($order['order_status'] == 5)
         return 'CANCELLED'; //'已作废',
+    if($order['order_status'] == 5)
+        return 'CANCELLED'; //'已作废',
+    // 用于自提点看到的订单
+    if($type == 'pickup'){
+        if($order['is_arrive'] == 0)
+            return 'NO_ARRIVE'; //'未送达',
+        if($order['order_status'] == 1)
+            return 'NO_RECEIVE'; //'未提货',
+        if($order['order_status'] == 2)
+            return 'RECEIVED'; //'已提货',
+
+    }
+    return 'OTHER';
+}
+/**
+ * 获取订单状态的 中文描述名称 用于自提点
+ * @param type $order_id  订单id
+ * @param type $order     订单数组
+ * @return string
+ */
+function orderStatusDesc_for_pickup($order_id = 0, $order = array())
+{
+    if(empty($order))
+        $order = M('Order')->where("order_id", $order_id)->find();
+
+  
+    if($order['is_arrive'] == 0)
+        return 'NO_ARRIVE'; //'未送达',
+    if($order['order_status'] == 1)
+        return 'NO_RECEIVE'; //'未提货',
+    if($order['order_status'] == 2)
+        return 'RECEIVED'; //'已提货',
+
     return 'OTHER';
 }
 
@@ -691,6 +724,7 @@ function orderBtn($order_id = 0, $order = array())
         'shipping_btn' => 0, // 查看物流
         'return_btn' => 0, // 退货按钮 (联系客服)
         'del_btn' => 0, // 删除订单，取消后的订单可删除
+        'arrive_btn' => 0, // 送达按钮（新增，用于配送员）
     );
 
 
@@ -733,7 +767,7 @@ function orderBtn($order_id = 0, $order = array())
     }
     if($order['shipping_status'] == 2  && $order['order_status'] == 1) // 部分发货
     {
-//$btn_arr['return_btn'] = 1; // 退货按钮 (联系客服)
+        //$btn_arr['return_btn'] = 1; // 退货按钮 (联系客服)
     }
     
     if($order['pay_status'] == 1  && shipping_status && $order['order_status'] == 4) // 已完成(已支付, 已发货 , 已完成)
@@ -745,8 +779,12 @@ function orderBtn($order_id = 0, $order = array())
     	$btn_arr['cancel_info'] = 1; // 取消订单详情
     }
 
-    if($order['order_status'] == 3 || $order_status == 5){
+    if($order['order_status'] == 3 || $order['order_status'] == 5){
         $btn_arr['del_btn'] = 1; // 可删除订单
+    }
+
+    if($order['order_status'] == 1 || $order['shipping_status'] == 1){
+        $btn_arr['arrive_btn'] = 1; // 可点击送达
     }
 
     return $btn_arr;
@@ -760,6 +798,20 @@ function set_btn_order_status($order)
 {
     $order_status_arr = C('ORDER_STATUS_DESC');
     $order['order_status_code'] = $order_status_code = orderStatusDesc(0, $order); // 订单状态显示给用户看的
+    $order['order_status_desc'] = $order_status_arr[$order_status_code];
+    $orderBtnArr = orderBtn(0, $order);
+    return array_merge($order,$orderBtnArr); // 订单该显示的按钮
+}
+
+/**
+ * 给订单数组添加属性  包括按钮显示属性 和 订单状态显示属性
+ * 用户自提点看到的
+ * @param type $order
+ */
+function set_btn_order_status_for_pickup($order)
+{
+    $order_status_arr = C('ORDER_STATUS_DESC');
+    $order['order_status_code'] = $order_status_code = orderStatusDesc_for_pickup(0, $order, 'pickup'); // 订单状态显示给用户看的
     $order['order_status_desc'] = $order_status_arr[$order_status_code];
     $orderBtnArr = orderBtn(0, $order);
     return array_merge($order,$orderBtnArr); // 订单该显示的按钮

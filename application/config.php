@@ -329,7 +329,10 @@ return [
         'WAITCCOMMENT'=> '待评价',
         'CANCEL'=> '已取消',
         'FINISH'=> '已完成', //
-        'CANCELLED'=> '已作废'
+        'CANCELLED'=> '已作废',
+        'NO_ARRIVE' => '未送达',
+        'NO_RECEIVE' => '未提货',
+        'RECEIVED' => '已提货',
     ],
 
     'REFUND_STATUS'=>array(

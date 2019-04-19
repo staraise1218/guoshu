@@ -8,7 +8,7 @@ use app\common\logic\OrderLogic;
 use app\common\logic\CommentLogic;
 use think\Page;
 use think\Request;
-use think\db;
+use think\Db;
 
 class Order extends Base
 {
@@ -97,7 +97,7 @@ class Order extends Base
         //获取订单商品
         $model = new UsersLogic();
         foreach ($order_list as $k => $v) {
-            $order_list[$k] = set_btn_order_status($v);  // 添加属性  包括按钮显示属性 和 订单状态显示属性
+            $order_list[$k] = set_btn_order_status_for_pickup($v);  // 添加属性  包括按钮显示属性 和 订单状态显示属性
             //$order_list[$k]['total_fee'] = $v['goods_amount'] + $v['shipping_fee'] - $v['integral_money'] -$v['bonus'] - $v['discount']; //订单总额
             $data = $model->get_order_goods($v['order_id']);
             $order_list[$k]['goods_list'] = $data['result'];
