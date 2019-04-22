@@ -804,7 +804,7 @@ function orderBtn($order_id = 0, $order = array())
         $btn_arr['del_btn'] = 1; // 可删除订单
     }
 
-    if($order['order_status'] == 1 || $order['shipping_status'] == 1){
+    if($order['order_status'] == 1 || $order['shipping_status'] == 1 | $order['is_arrive'] =0){
         $btn_arr['arrive_btn'] = 1; // 可点击送达
     }
 
