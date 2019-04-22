@@ -687,22 +687,6 @@ exit("请联系TPshop官网客服购买高级版支持此功能");
         return $this->fetch();
     }
 
-    /*
-    *批量发货
-    */
-    public function delivery_batch(){
-		header("Content-type: text/html; charset=utf-8");
-exit("请联系TPshop官网客服购买高级版支持此功能");
-    }
-
-    /*
-    *批量发货处理 
-    */
-    public function delivery_batch_handle(){
-		header("Content-type: text/html; charset=utf-8");
-exit("请联系TPshop官网客服购买高级版支持此功能");
-    }
-
     /**
      * 删除某个退换货申请
      */
@@ -1293,4 +1277,50 @@ exit("请联系TPshop官网客服购买高级版支持此功能");
             $this->ajaxReturn(['status' => -1,'msg' =>"删除失败",'url'  =>'']);
         }
     }
+
+    /**
+     *
+     * @time 2016/08/31
+     * @author dyr
+     * 分配派送员
+     */
+    public function dispatchOrder()
+    {
+        $order_id_array = trim(I('get.order_id_array'), ',');
+        $orders = array();
+        if (!empty($order_id_array)) {
+            $orders = M('order')->field('order_id, order_sn')->where(array('order_id' => array('IN', $order_id_array)))->select();
+        }
+        // 获取派送员
+        $expresslist = Db::name('users')
+            ->where('role', 3)
+            ->where('is_lock', 0)
+            ->field('user_id, nickname, fullname')
+            ->select();
+ 
+        $this->assign('orders',$orders);
+        $this->assign('expresslist',$expresslist);
+        return $this->fetch();
+    }
+
+    /**
+     * 发送系统消息
+     * @author dyr
+     * @time  2016/09/01
+     */
+    public function doDispatchOrder()
+    {
+        $call_back = I('call_back');//回调方法
+        $order_ids = I('post.order_ids/a');//个体id
+        $express_user_id = I('express_user_id');
+
+        if(!empty($order_ids) && $express_user_id != ''){
+            Db::name('order')->where('order_id', ['in', $order_ids])->setField('express_user_id', $express_user_id);
+        }
+
+        
+        echo "<script>parent.{$call_back}(1);</script>";
+        exit();
+    }
+
 }

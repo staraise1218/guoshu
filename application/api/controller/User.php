@@ -285,4 +285,27 @@ class User extends Base {
             response_error('', '申请失败');
         }
     }
+
+    // 余额记录
+    // 变更类型：0 无 1 订单退差价 2 自提点订单收益 3 商品消费
+    public function account_list(){
+        $user_id = I('user_id');
+        $type = I('type', 0);
+        $page = I('page', 1);
+
+        $where = array(
+            'user_id'=> $user_id,
+            'user_money'=> array('neq', 0),
+        );
+        $type && $where['type'] = $type;
+        
+        $list = Db::name('account_log')
+            ->where($where)
+            ->field('log_id, user_money, change_time, desc, order_sn, order_id')
+            ->page($page)
+            ->limit(20)
+            ->select();
+
+        response_success($list);
+    }
 }
