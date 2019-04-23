@@ -62,7 +62,7 @@ class Index extends Base {
             ->where($group_by_where)
             ->limit(12)
             ->order('id desc')
-            ->field('gb.goods_id, gb.price, gb.goods_price, g.goods_name, g.subtitle, g.original_img, g.store_count')
+            ->field('gb.goods_id, gb.price, gb.goods_price, g.goods_name, g.subtitle, g.tag, g.original_img, g.store_count')
             ->select();
 
         // 首页下方分类商品
@@ -79,7 +79,7 @@ class Index extends Base {
 			$goodslist = Db::name('goods')
 				->where($where)
 				->order('sort asc, goods_id desc')
-				->field('goods_id, goods_name, subtitle, store_count, original_img, shop_price')
+				->field('goods_id, goods_name, subtitle, tag, store_count, original_img, shop_price')
 				->limit(6)
 				->select();
 			$topCateGoods[] = array(
@@ -127,7 +127,7 @@ class Index extends Base {
 					->where('is_on_sale', 1) 
 					->where('prom_type', 0)  // 普通商品
 					->order('sort asc, goods_id desc')
-					->field('goods_id, goods_name, subtitle, store_count, original_img, shop_price')
+					->field('goods_id, goods_name, subtitle, tag, store_count, original_img, shop_price')
 					->select();
 				if($goodslist) {
 					$item['goodslist'] = $goodslist;
