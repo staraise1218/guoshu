@@ -575,7 +575,7 @@ class CartLogic extends Model
         if($selected != 0){
             $cartWhere['selected'] = 1;
         }
-        $cartList = $cart->field('id, goods_num, goods_name, tag, goods_sn,sku, goods_price, member_goods_price, selected,prom_type, goods_id')
+        $cartList = $cart->field('id, goods_num, goods_name, goods_sn,sku, goods_price, member_goods_price, selected,prom_type, goods_id')
                         ->with(['promGoods', 'goods'=>function($query){
                             $query->field('goods_id, goods_name, subtitle, tag, shop_price, original_img, is_on_sale, cat_id, city_code');
                         }])
