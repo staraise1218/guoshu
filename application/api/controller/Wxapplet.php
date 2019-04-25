@@ -37,7 +37,7 @@ class Wxapplet {
         $input->SetSignType('MD5');
         $config = new \WxPayConfig();
         $order = \WxPayApi::unifiedOrder($config, $input);
-
+p($order);
         $JsApiPay = new \JsApiPay();
         $jsApiParameters = $JsApiPay->GetJsApiParameters($order);
         response_success(json_decode($jsApiParameters, true));
