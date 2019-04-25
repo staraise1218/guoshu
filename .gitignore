@@ -4,3 +4,4 @@ application/database.php
 application/api/logic/SmsLogic.php
 application/api/logic/AlipayLogic.php
 application/api/logic/WxpayLogic.php
+plugins/payment/wxapplet/WxPay.Config.php
