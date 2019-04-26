@@ -129,6 +129,8 @@ class WxappletBuyGoodsCallback extends \WxPayNotify
 		try{
 			// 更改订单状态
 			M('order')->where('order_sn', $order_sn)->update(array('pay_status'=>1, 'pay_time'=>time()));
+
+			
 		   
 		    // 提交事务
 		    Db::commit();

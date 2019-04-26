@@ -8,7 +8,7 @@ require_once "./plugins/payment/wxapplet/lib/WxPay.Api.php";
 require_once "./plugins/payment/wxapplet/WxPay.JsApiPay.php";
 require_once "./plugins/payment/wxapplet/WxPay.Config.php";
 
-class Wxapplet {
+class Wxapplet  extends Base {
 
     // 微信jsapi 支付
 	// 统一下单 unifiedOrder

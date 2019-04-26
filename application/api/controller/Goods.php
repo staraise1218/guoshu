@@ -147,6 +147,22 @@ class Goods extends Base {
 		$goods_id = I('goods_id');
 		$share_userCode = I('share_userCode');
 
+		// 获取分享者用户信息
+		$shareUserInfo = Db::name('users')->where('userCode', $share_userCode)->find();
+		if(empty($shareUserInfo) || $shareUserInfo['is_lock'] == 1) response_error('', '分享者不存在');
+
+		$data = array(
+			'user_id' => $user_id,
+			'goods_id' => $goods_id,
+			'share_userCode' => $share_userCode,
+			'share_user_id' => $shareUserInfo['user_id'],
+		);
+
+		// 判断重复记录
+		if(Db::name('goods_share')->where($data)->count() > 0) response_success('', '操作成功');
+
+		Db::name('goods_share')->insert($data);
+
 		response_success('', '操作成功');
 	}
 
