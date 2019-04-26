@@ -10,6 +10,14 @@ require_once "./plugins/payment/wxapplet/WxPay.Config.php";
 
 class Wxapplet  extends Base {
 
+    public function __construct(){
+        // 设置所有方法的默认请求方式
+        $this->method = 'post';
+
+        parent::__construct();
+    }
+
+
     // 微信jsapi 支付
 	// 统一下单 unifiedOrder
     public function unifiedOrder(){
