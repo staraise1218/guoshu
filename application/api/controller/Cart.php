@@ -10,6 +10,7 @@ use app\common\logic\PlaceOrder;
 use app\common\logic\UserAddressLogic;
 use app\common\logic\GoodsActivityLogic;
 use app\common\logic\CouponLogic;
+use app\common\logic\RedpackLogic;
 use app\common\logic\OrderLogic;
 // use app\common\logic\PickupLogic;
 use app\common\model\SpecGoodsPrice;
@@ -173,7 +174,6 @@ class Cart extends Base {
         $address = $this->getAddress($user_id);
 
         $cartLogic = new CartLogic();
-        $couponLogic = new CouponLogic();
         $cartLogic->setUserId($user_id);
         //立即购买
         if($action == 'buy_now'){
@@ -190,7 +190,7 @@ class Cart extends Base {
             $cartList['cartList'][0] = $buyGoods;
             $cartGoodsTotalNum = $goods_num;
         }else{
-            if ($cartLogic->getUserCartOrderCount() == 0) response_error('', '你的购物车没有选中商品');
+            if ($cartLogic->getUserCartOrderCount() == 0) response_error('', '您的购物车没有选中的商品');
             $cartList['cartList'] = $cartLogic->getCartList(1); // 获取用户选中的购物车商品
             $cartGoodsTotalNum = count($cartList['cartList']);
         }
@@ -200,6 +200,7 @@ class Cart extends Base {
         $cartPriceInfo = $cartLogic->getCartPriceInfo($cartList['cartList']);  //初始化数据。商品总额/节约金额/商品总共数量
         $cartList = array_merge($cartList,$cartPriceInfo);
         //用户可用的优惠券列表
+        $couponLogic = new CouponLogic();
         $userCouponList = $couponLogic->getUserAbleCouponList($user_id, $cartGoodsId, $cartGoodsCatId);
         $userCartCouponList = $cartLogic->getCouponCartList($cartList, $userCouponList);
 

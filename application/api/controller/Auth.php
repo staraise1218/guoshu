@@ -94,6 +94,7 @@ class Auth extends Base {
 
     	if(empty($password)) response_error('', '密码不能为空');
 
+        $userCode = generateUserCode();
     	$map = array(
     		'mobile' => $mobile,
     		'nickname' => $nickname,
@@ -101,6 +102,7 @@ class Auth extends Base {
     		'reg_time' => time(),
     		'last_login' => time(),
     		'token' => md5(time().mt_rand(1,999999999)),
+            'userCode' => $userCode,
     	);
 
     	$user_id = M('users')->insertGetId($map);
@@ -161,12 +163,14 @@ class Auth extends Base {
             $id = Db::name('user_third')->insertGetId($third_data);
 
             // 将信息写入用户表
+            $userCode = generateUserCode();
             $userData = array(
                 'nickname' => $nickname,
                 'reg_time' => time(),
                 'last_login' => time(),
                 'token' => md5(time().mt_rand(1,999999999)),
                 'head_pic' => $head_pic,
+                'userCode' => $userCode,
             );
 
             $user_id = Db::name('users')->insertGetId($userData);

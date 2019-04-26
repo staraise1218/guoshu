@@ -141,4 +141,13 @@ class Goods extends Base {
 		response_success($goodslist);
 	}
 
+	// 分享的商品和用户绑定关系
+	public function bindShareGoods(){
+		$user_id = I('user_id');
+		$goods_id = I('goods_id');
+		$share_userCode = I('share_userCode');
+
+		response_success('', '操作成功');
+	}
+
 }

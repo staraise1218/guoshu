@@ -1246,3 +1246,14 @@ function getPayBody($order_id){
     $payBody = getSubstr($gns, 0, 18);
     return $payBody;
 }
+
+
+// 创建uuid
+function generateUserCode(){
+    $userCode = mt_rand(10000000, 99999999);
+
+    if(M('users')->where('userCode', $userCode)->count()){
+        generateUuid();
+    }
+    return $userCode;
+}

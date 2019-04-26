@@ -77,8 +77,9 @@ return	array(
 			array('name' => '促销','child' => array(
 					array('name' => '秒杀管理', 'act'=>'flash_sale', 'op'=>'Promotion'),
 					array('name' => '团购管理', 'act'=>'group_buy_list', 'op'=>'Promotion'),
-					array('name' => '优惠券','act'=>'index', 'op'=>'Coupon'),
-					array('name' => '红包','act'=>'index', 'op'=>'Redpack'),
+					array('name' => '红包','act'=>'index', 'op'=>'Coupon'), // 实际上是优惠券，改了名字
+					// array('name' => '优惠券','act'=>'index', 'op'=>'Coupon'),
+					// array('name' => '红包','act'=>'index', 'op'=>'Redpack'),
 					// array('name' => '优惠促销', 'act'=>'prom_goods_list', 'op'=>'Promotion'),
 					// array('name' => '订单促销', 'act'=>'prom_order_list', 'op'=>'Promotion'),
 					// array('name' => '预售管理','act'=>'pre_sell_list', 'op'=>'Promotion'),

@@ -144,11 +144,21 @@
             </dl> 
             <dl class="row">
                 <dt class="tit">
+                    <label for="record_no">分享佣金比率</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" value="{$goodsInfo.share_ratio}" name="share_ratio" class="input-txt"/>
+                    <span class="err" id="err_share_ratio" style="color:#F00; display:none;"></span>
+                </dd>
+            </dl> 
+            <dl class="row">
+                <dt class="tit">
                     <label for="record_no">送达标签</label>
                 </dt>
                 <dd class="opt">
                     <input type="text" value="{$goodsInfo.tag}" name="tag" class="input-txt"/>
                     <span class="err" id="err_tag" style="color:#F00; display:none;"></span>
+                    <p class="notic">输入0-1之间的浮点数字，填0代表无分享佣金</p>
                 </dd>
             </dl> 
             <dl class="row">
