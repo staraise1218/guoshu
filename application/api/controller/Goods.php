@@ -33,7 +33,7 @@ class Goods extends Base {
 			'prom_type' => 0, // 普通商品
 		);
 		$cat_id && $where['cat_id'] = $cat_id;
-		$goods_name && $where['goods_name'] = ['like', $keyword];
+		$goods_name && $where['goods_name'] = ['like', "%$keyword%"];
 
 		$goodslist = Db::name('goods')
 			->where($where)
