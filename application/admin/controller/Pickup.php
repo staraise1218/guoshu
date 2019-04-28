@@ -7,6 +7,7 @@
 
 namespace app\admin\controller;
 
+use app\common\logic\MessageLogic;
 use think\Page;
 use think\AjaxPage;
 use think\Db;
@@ -146,5 +147,10 @@ class Pickup extends Base {
 		// 更新用户角色
 		$pickup = Db::name('pick_up')->where('pickup_id', $pickup_id)->find();
 		Db::name('users')->where('user_id', $pickup['user_id'])->update($user_update_data);
+
+		// 发送站内信
+		$MessageLogic = new MessageLogic();
+		$message = '您申请的自提点已审核通过';
+		$MessageLogic->add($pickup['user_id'], $message);
 	}
 }

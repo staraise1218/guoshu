@@ -1,6 +1,8 @@
 <?php
 
 namespace app\api\controller;
+
+use app\common\logic\ShareGoodsLogic;
 use think\Db;
 /**
 *
@@ -130,7 +132,9 @@ class WxappletBuyGoodsCallback extends \WxPayNotify
 			// 更改订单状态
 			M('order')->where('order_sn', $order_sn)->update(array('pay_status'=>1, 'pay_time'=>time()));
 
-			
+			// 分享商品得佣金
+			$ShareGoodsLogic = new ShareGoodsLogic();
+			$ShareGoodsLogic->shareMoney($order_sn);
 		   
 		    // 提交事务
 		    Db::commit();

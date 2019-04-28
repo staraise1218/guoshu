@@ -10,6 +10,7 @@ namespace app\admin\logic;
 
 use think\Db;
 use app\common\logic\WechatLogic;
+use app\common\logic\MessageLogic;
 
 class OrderLogic
 {
@@ -299,18 +300,25 @@ class OrderLogic
 		$res = checkEnableSendSms("5");
 		if ($res && $res['status'] ==1) {
 		    $user_id = $data['user_id'];
-		    $users = M('users')->where('user_id', $user_id)->getField('user_id , nickname , mobile' , true);
+		    /*$users = M('users')->where('user_id', $user_id)->getField('user_id , nickname , mobile' , true);
 		    if($users){
 		        $nickname = $users[$user_id]['nickname'];
 		        $sender = $users[$user_id]['mobile'];
 		        $params = array('user_name'=>$nickname , 'consignee'=>$data['consignee']);
 		        $resp = sendSms("5", $sender, $params,'');
-		    }
+		    }*/
+
+
 		}
 
+        // 发送站内消息
+        $MessageLogic = new MessageLogic();
+        $message = '您的订单'.$data['order_sn'].'已发货';
+        $MessageLogic->add($data['user_id'], $message);
+
         // 发送微信模板消息通知
-        $wechat = new WechatLogic;
-        $wechat->sendTemplateMsgOnDeliver($data);
+        /*$wechat = new WechatLogic;
+        $wechat->sendTemplateMsgOnDeliver($data);*/
         
 		if($s && $r){
 			return array('status'=>1,'printhtml'=>isset($result['printhtml']) ? $result['printhtml'] : '');

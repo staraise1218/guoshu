@@ -4,6 +4,8 @@
  * Date: 2015-12-11
  */
 namespace app\admin\controller;
+
+use app\common\logic\MessageLogic;
 use think\AjaxPage;
 use think\Page;
 use think\Db;
@@ -209,6 +211,7 @@ class Coupon extends Base {
     				}
     			}
     		}else{
+
     			$able = count($user_id);//本次发送量
     			if($coupon['createnum']>0 && $remain<$able){
     				$this->error($coupon['name'].'派发量只剩'.$remain.'张');
@@ -221,6 +224,12 @@ class Coupon extends Base {
 			DB::name('coupon_list')->insertAll($insert);
 			M('coupon')->where("id",$cid)->setInc('send_num',$able);
 			adminLog("发放".$able.'张'.$coupon['name']);
+
+            // 站内消息通知
+            $MessageLogic = new MessageLogic();
+            $message = '系统给您发放了优惠券，请立即使用。';
+            $MessageLogic->add($user_id, $message);
+
 			$this->success("发放成功");
 			exit;
     	}

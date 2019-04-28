@@ -537,7 +537,7 @@ function tpCache($config_key,$data = array()){
  * @param   float   distribut_money 分佣金额
  * @param int $order_id 订单id
  * @param string $order_sn 订单sn
- * @param type 变更类型：0 无 1 订单退差价 2 自提点收益 3 商品消费
+ * @param type 变更类型：0 无 1 订单退差价 2 自提点收益 3 商品消费 4 分享商品得佣金
  * @return  bool
  */
 function accountLog($user_id, $user_money=0, $pay_points=0, $desc='', $distribut_money=0, $order_id=0, $order_sn='', $type=0){

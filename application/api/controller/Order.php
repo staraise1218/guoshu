@@ -6,6 +6,7 @@ use app\common\model\TeamFound;
 use app\common\logic\UsersLogic;
 use app\common\logic\OrderLogic;
 use app\common\logic\CommentLogic;
+use app\common\logic\MessageLogic;
 use think\Page;
 use think\Request;
 use think\Db;
@@ -792,6 +793,11 @@ class Order extends Base
             'is_arrive'=>1
         );
         if(false !== Db::name('order')->where('order_id', $order_id)->update($updatedata)){
+            // 站内消息
+            $MessageLogic = new MessageLogic();
+            $message = '您的订单'.$order['order_sn'].'已送达';
+            $MessageLogic->add($user_id, $message);
+
             response_success('', '操作成功');
         } else {
             response_error('', '操作失败');

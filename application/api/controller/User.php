@@ -340,4 +340,24 @@ class User extends Base {
 
         response_success($message);
     }
+
+        // 标记读消息
+    public function readMessage(){
+        $user_id = I('user_id');
+        $message_id = I('message_id');
+
+        $count = M('user_message')->where(array('user_id'=>$user_id, 'message_id'=>$message_id))->count();
+        if($count){
+            M('user_message')->where(array('user_id'=>$user_id, 'message_id'=>$message_id))->setField('status', 1);
+        } else {
+            $data = array(
+                'user_id' => $user_id,
+                'message_id' => $message_id,
+                'status' => '1',
+            );
+            M('user_message')->insert($data);
+        }
+
+        response_success();
+    }
 }
