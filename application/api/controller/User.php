@@ -308,4 +308,36 @@ class User extends Base {
 
         response_success($list);
     }
+
+    // 消息列表
+    public function message(){
+        $user_id = I('user_id/d');
+        $page = I('page/d', 1);
+
+        $limit_start = ($page-1)*20;
+
+        $message = Db::name('message')->alias('m')
+            ->join('user_message um', 'um.message_id=m.message_id', 'left')
+            ->where('user_id', $user_id)
+            ->whereOr('m.type', 1)
+            ->field('m.message_id, message, m.category, data, send_time, status')
+            ->order('message_id desc')
+            ->limit($limit_start, 20)
+            ->select();
+
+        if(!empty($message)){
+            // $now_date = strtotime(date('Y-m-d')); // 今日凌晨
+            // $mid_date = strtotime(date('Y-m-d 12:00:00')) ;// 今日中午
+
+            foreach ($message as &$item) {
+                // if($item['send_time'] < $now_date) $item['send_time'] = date('Y-m-d', $item['send_time']);
+                // if($item['send_time'] > $now_date && $item['send_time'] < $mid_date) $item['send_time'] = '上午'.date('H:i', $item['send_time']);
+                // if($item['send_time'] > $mid_date) $item['send_time'] = '下午'.date('H:i', $item['send_time']);
+
+                if($item['data']) $item['data'] = unserialize($item['data']);
+            }
+        }
+
+        response_success($message);
+    }
 }
