@@ -42,7 +42,7 @@ class Goods extends Base {
 			->page($page)
 			->limit(15)
 			->select();
-p($where, $goodslist);
+
 		response_success($goodslist);
 	}
 
