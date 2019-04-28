@@ -79,6 +79,7 @@ class Goods extends Base {
 
         // 购物车商品数量
         $cartLogic = new CartLogic();
+        $cartLogic->setUserId($user_id);
  		$goods['cart_num'] = $cartLogic->getUserCartGoodsTypeNum();//获取用户购物车商品总数
         response_success($goods);
 	}
