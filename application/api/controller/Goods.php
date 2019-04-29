@@ -84,6 +84,45 @@ class Goods extends Base {
         response_success($goods);
 	}
 
+	// 获取商品的活动价格等信息
+    public function activity(){
+        $goods_id = input('goods_id/d');//商品id
+        $item_id = input('item_id/d');//规格id
+        $goods_num = input('goods_num/d');//欲购买的商品数量
+
+        $Goods = new \app\common\model\Goods();
+        $goods = $Goods::get($goods_id);
+        $goodsPromFactory = new GoodsPromFactory();
+        if ($goodsPromFactory->checkPromType($goods['prom_type'])) {
+            //这里会自动更新商品活动状态，所以商品需要重新查询
+            if($item_id){
+                $specGoodsPrice = SpecGoodsPrice::get($item_id);
+                $goodsPromLogic = $goodsPromFactory->makeModule($goods,$specGoodsPrice);
+            }else{
+                $goodsPromLogic = $goodsPromFactory->makeModule($goods,null);
+            }
+            if($goodsPromLogic->checkActivityIsAble()){
+                $goods = $goodsPromLogic->getActivityGoodsInfo();
+                $goods['activity_is_on'] = 1;
+                response_success(array('activityInfo'=>$goods), '该商品参与活动');
+            }else{
+                if(!empty($goods['price_ladder'])){
+                    $goodsLogic = new GoodsLogic();
+                    $price_ladder = unserialize($goods['price_ladder']);
+                    $goods->shop_price = $goodsLogic->getGoodsPriceByLadder($goods_num, $goods['shop_price'], $price_ladder);
+                }
+                $goods['activity_is_on'] = 0;
+                response_success(array('activityInfo'=>$goods), '该商品未参与活动');
+            }
+        }
+        if(!empty($goods['price_ladder'])){
+            $goodsLogic = new GoodsLogic();
+            $price_ladder = unserialize($goods['price_ladder']);
+            $goods->shop_price = $goodsLogic->getGoodsPriceByLadder($goods_num, $goods['shop_price'], $price_ladder);
+        }
+        response_success(array('activityInfo'=>$goods), '该商品未参与活动');
+    }
+
 
     /**
      * 商品评论ajax分页
