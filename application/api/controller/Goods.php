@@ -87,8 +87,8 @@ class Goods extends Base {
 	// 获取商品的活动价格等信息
     public function activity(){
         $goods_id = input('goods_id/d');//商品id
-        $item_id = input('item_id/d');//规格id
-        $goods_num = input('goods_num/d');//欲购买的商品数量
+        $item_id = input('item_id/d', 0);//规格id
+        $goods_num = input('goods_num/d', 1);//欲购买的商品数量
 
         $Goods = new \app\common\model\Goods();
         $goods = $Goods::get($goods_id);

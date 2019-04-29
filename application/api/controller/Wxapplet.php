@@ -39,7 +39,7 @@ class Wxapplet  extends Base {
         $input->SetTime_start(date("YmdHis"));
         $input->SetTime_expire(date("YmdHis", time() + 600));
         $input->SetGoods_tag("购买商品");
-        $input->SetNotify_url("http://guoshu.staraise.com.cn/api/WxappletBuyGoodsCallback/exec");
+        $input->SetNotify_url("https://app.zhuoyumall.com:444/api/WxappletBuyGoodsCallback/exec");
         $input->SetTrade_type("JSAPI");
         $input->SetOpenid($openId);
         $input->SetSignType('MD5');

@@ -29,7 +29,7 @@ class Pay extends Base {
 
 		/************** 获取订单签名字符串 **************/
 		if($paymentMethod == 'alipay'){
-			$notify_url = 'http://guoshu.staraise.com.cn/index.php/api/pay/alipayCallback';
+			$notify_url = 'https://app.zhuoyumall.com:444/index.php/api/pay/alipayCallback';
 			$AlipayLogic = new AlipayLogic($notify_url);
 			$orderStr = $AlipayLogic->generateOrderStr($order_sn, $total_amount, '购买商品', '购买商品');
 			return $orderStr;
@@ -37,7 +37,7 @@ class Pay extends Base {
 
 		if($paymentMethod == 'wxpay'){
 			$WxpayLogic = new WxpayLogic();
-			$WxpayLogic->notify_url = 'http://guoshu.staraise.com.cn/index.php/api/pay/wxpayCallback';
+			$WxpayLogic->notify_url = 'https://app.zhuoyumall.com:444/index.php/api/pay/wxpayCallback';
 			$param = $WxpayLogic->getPrepayId($order_sn, $total_amount, '购买商品');
 			response_success($param);
 		}
