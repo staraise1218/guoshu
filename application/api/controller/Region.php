@@ -15,7 +15,7 @@ class Region extends Base {
 
 
     public function getJson(){
-    	$regions = M('region2')->field('name, code, parentCode')->select();
+    	$regions = M('region2')->field('name, code, parentCode')->cache(true)->select();
 
     	$data = array();
   		foreach ($regions as $region) {
