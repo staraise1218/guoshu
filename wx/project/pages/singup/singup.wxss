@@ -1,0 +1,13 @@
+.singup {
+    width: 90%;
+    background: linear-gradient(#f56645, #f7471e);
+    margin-top: 90rpx;
+    color: #fff;
+}
+.code {
+    border: 1rpx solid rgba(0,0,0,0.5);
+    color: rgba(0,0,0,0.5);
+    padding: 4rpx 10rpx;
+    border-radius: 8rpx;
+    font-size: 22rpx;
+}

@@ -1,0 +1,71 @@
+<view class="title-2 border-bottom padding-20 left-center">
+        <image bindtap="chooseAll" wx:if="{{chooseAllShow}}"  class="icon-2" src="https://hbimg.huabanimg.com/af0f6c8f8b4ba1608f1985fd5c491db279dd940c6cf-efCOPl_fw658" />
+        <image bindtap="chooseAll" wx:else class="icon-2" src="https://hbimg.huabanimg.com/af41d36cf3423f49b5180fab5f14f2b3db82652a67e-dDcFEg_fw658" />
+    <view class="margin-left-20 left-center" bindtap="chooseAll">全选</view>
+</view>
+
+
+<block wx:for="{{orderList}}" wx:key>
+    <view class="shop-cart-item title-2 border-bottom padding-20 left-center" data-id="{{item.goods_id}}" data-cat-id="{{item.cat_id}}">
+        <view catchtap="choose" data-index="{{index}}" >
+            <image wx:if="{{item.selected == 1}}" class="icon-2" src="https://hbimg.huabanimg.com/af0f6c8f8b4ba1608f1985fd5c491db279dd940c6cf-efCOPl_fw658" />
+            <image wx:else class="icon-2" src="https://hbimg.huabanimg.com/af41d36cf3423f49b5180fab5f14f2b3db82652a67e-dDcFEg_fw658" />
+        </view>
+        <view class="right">
+            <image class="icon-best" src="{{item.goods.original_img}}" mode="widthFix" />
+            <view class="info">
+                <view class="title-2">{{item.goods_name}}</view>
+                <view class="info-bottom">
+                    <view class="price">￥{{item.goods_price}}
+                        <view class="tag font-size-18 margin-left-10">次日送达</view>
+                    </view>
+                    <view class="num-box" bindtap="ctrl">
+                        <view class="reduce" data-msg="reduce" data-goodsid="{{item.goods_id}}" data-cat-id="{{item.cat_id}}">-</view>
+                        <view class="num">{{item.goods_num}}</view>
+                        <view class="add" data-msg="add" data-goodsid="{{item.goods_id}}" data-cat-id="{{item.cat_id}}">+</view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</block>
+
+
+
+
+<!-- 推荐商品 -->
+<view class="tuijian-bg">
+    <view class="title margin-left-30 margin-bottom-30">推荐商品</view>
+    <scroll-view scroll-x class="commodisyScro">
+        <block wx:for="{{tuijian}}" wx:key>
+            <view class="src-item" data-goodsid="{{item.goods_id}}">
+                <view catchtap="go" data-id="{{item.goods_id}}">
+                    <image class="poster" src="{{item.original_img}}" />
+                </view>
+                <view class="title-2">{{item.goods_name}}</view>
+                <view class="title-2_f">{{item.subtitle}}</view>
+                <view class="bottom">
+                    <view class="price">￥{{item.shop_price}}</view>
+                    <view data-goodsid="{{item.goods_id}}" bindtap="addShopCart">
+                        <image src="https://hbimg.huabanimg.com/ff8af7f0827e85d34cc15b364ff139c61e6fe5bc5b3-0QRyv2_fw658" class="icon-2 shopCartIcon" />
+                    </view>
+                </view>
+            </view>
+        </block>
+    </scroll-view>
+</view>
+
+
+
+<view class="toPay">
+    <view class="left left-center">
+        <!-- <image wx:if="{{true}}" class="icon-2 margin-right-20" src="/src/img/椭圆1拷贝8@2x.png" />
+        <image wx:else class="icon-2 margin-right-20" src="/src/img/组161@2x.png" />
+        全选 -->
+        <view class="heji margin-left-20">
+            <view class="heji-title">合计: <view class="price" >￥{{total_fee}}</view></view>
+            <view class="title-2_f margin-top-10">配送费￥0</view>
+        </view>
+    </view>
+    <view class="right" bindtap="toPay">去结算({{cartList.length}})</view>
+</view>

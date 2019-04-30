@@ -1,0 +1,13 @@
+<block wx:for="{{card}}" wx:key>
+    <view class="quan-item active radius-30">
+        <view class="tag" data-id="{{item.id}}" bindtap="lingqu">立即领取</view>
+        <view class="price-left">
+            <view class="price">￥<view class="price-big">{{item.money}}</view></view>
+            <view class="right">
+                <view class="title price">优惠券</view>
+                <view class="price-none title-3">满{{item.condition}}元可用</view>
+            </view>
+        </view>
+        <view class="title-2_f margin-top-20">有效期: {{item.use_start_time}} 至 {{item.use_end_time}} </view>
+    </view>
+</block>

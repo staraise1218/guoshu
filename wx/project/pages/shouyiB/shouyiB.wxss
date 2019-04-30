@@ -1,0 +1,13 @@
+.top {
+    position: relative;
+    width: 100%;
+    background-image: url('https://hbimg.huabanimg.com/571f10ffb6d3d0376008e447afdd487a4f80929443f45-1SuaBz_fw658');
+    background-size: cover;
+    height: 350rpx;
+}
+.RMB {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}

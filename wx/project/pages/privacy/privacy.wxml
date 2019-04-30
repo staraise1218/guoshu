@@ -1,0 +1,8 @@
+<view class="title text-center">隐私策略</view>
+
+
+<view class="padding-30 title-2">
+    <rich-text nodes="{{html}}" bindtap="tap"></rich-text>
+</view>
+
+

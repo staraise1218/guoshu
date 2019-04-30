@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "gf-rec":"/components/recommend/rec",
+    "gf-precart":"/components/preshopcart/precart"
+  },
+  "navigationBarTitleText": "商品详情"
+}

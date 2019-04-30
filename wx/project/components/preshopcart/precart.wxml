@@ -1,0 +1,8 @@
+<!-- 购物车 -->
+<view class="shopCart-wrap">
+    <view class="schopCart">
+        <image class="icon-1 schop-icon" src="/src/img/gouwuche(2)@2x.png" />
+        <view class="num">4</view>
+    </view>
+    <view class="toPay">即将开售</view>
+</view>

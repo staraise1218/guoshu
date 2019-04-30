@@ -1,0 +1,42 @@
+.commodisyScro {
+    /* margin: 20rpx; */
+    white-space: nowrap;
+}
+.src-item {
+    display: inline-block;
+    padding: 20rpx;
+    border: 1rpx solid rgba(0,0,0,0.1);
+    border-radius: 30rpx;
+    margin-right: 20rpx;
+    background: #fff;
+}
+.src-item:first-child {
+    margin-left: 30rpx;
+}
+.src-item .title-2,
+.src-item .title-2_f {
+    width: 280rpx;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.src-item .poster {
+    width: 280rpx;
+    height: 280rpx;
+}
+.src-item .bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 20rpx;
+    margin-bottom: 5rpx;
+}
+.price {
+    font-weight: 600;
+    color: #F7471C;
+    font-size: 32rpx;
+}
+.icon-1 {
+    width: 60rpx;
+    height: 60rpx;
+}

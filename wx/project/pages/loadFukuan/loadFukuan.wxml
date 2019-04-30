@@ -1,0 +1,149 @@
+<view class="gray">
+    <image class="icon-best" src="/src/img/组1671@2x.png" />
+    <view class="text-center title-2">等待买家付款</view>
+</view>
+
+
+<view class="padding-30">
+
+
+    <view class="left-center">
+        <image  class="icon-3" src="/src/img/dingwei@2x.png" mode="widthFix" />
+        <view class="title-2 margin-left-20">收货人： 郭大白</view>
+        <view class="end title-2_f">18040217006</view>
+    </view>
+    <view class="title-2_f margin-left-50 margin-top-20">
+        收货地址：123456789
+    </view>
+</view>
+
+<view class="line"></view>
+
+<view class="list-item margin-lr-30 padding-30 between-center border-bottom">
+    <view class="left">
+        <image mode="widthFix" class="item-poster" src="/src/img/500770198@2x.png" />
+    </view>
+    <view class="right">
+        <view class="left-center item-con">
+            <view class="title-2">[预售]特仑苏</view>
+            <view class="title-2_f">123456789</view>
+            <view class="bottom">
+                <view class="price-color">￥65.9</view>
+                <view class="title-2_f">x1</view>
+            </view>
+        </view>
+    </view>
+</view>
+
+
+
+<view class="list-item margin-lr-30 padding-30 between-center">
+    <view class="left">
+        <image mode="widthFix" class="item-poster" src="/src/img/500770198@2x.png" />
+    </view>
+    <view class="right">
+        <view class="left-center item-con">
+            <view class="title-2">[预售]特仑苏</view>
+            <view class="title-2_f">123456789</view>
+            <view class="bottom">
+                <view class="price-color">￥65.9</view>
+                <view class="title-2_f">x1</view>
+            </view>
+        </view>
+    </view>
+</view>
+
+
+<view class="line"></view>
+
+
+
+
+
+
+
+<view class="between-center padding-tb-30 border-bottom margin-lr-30">
+    <view class="title-2">商品总价</view>
+    <view class="title-3">￥131.8</view>
+</view>
+
+
+
+<view class="padding-lr-30 padding-tb-30 between-center more-0">
+    <view class="left-center">
+        <image class="icon-3 margin-right-20" src="/src/img/wodehongbao@2x.png" />
+        <view class="title-2">红包</view>
+    </view>
+    <view class="">
+        <view class="title-2_f margin-right-30">无红包可用</view>
+    </view>
+</view>
+
+
+<view class="padding-30 border-bottom  between-center more-0">
+    <view class="left-center">
+        <image class="icon-3 margin-right-20" src="/src/img/wodehongbao@2x.png" />
+        <view class="title-2">优惠券</view>
+    </view>
+    <view class="">
+        <view class="title-2_f margin-right-30">无红包可用</view>
+    </view>
+</view>
+
+
+<view class="padding-lr-30 padding-tb-20  between-center">
+    <view class="left-center">
+        <view class="title-3">商品实付</view>
+    </view>
+    <view class="">
+        <view class="title-3 margin-right-30">无红包可用</view>
+    </view>
+</view>
+
+
+
+
+<view class="padding-lr-30 padding-tb-20 between-center">
+    <view class="left-center">
+        <view class="title-3">配送费</view>
+    </view>
+    <view class="">
+        <view class="title-3 margin-right-30">无红包可用</view>
+    </view>
+</view>
+
+
+<view class="padding-lr-30 padding-tb-20 between-center">
+    <view class="left-center">
+        <view class="title-3"></view>
+    </view>
+    <view class="">
+        <view class="margin-right-30 price">￥136.8</view>
+    </view>
+</view>
+
+
+<view class="line"></view>
+
+<view class="left-center padding-30 margin-left-20">
+    <image src="/src/img/组166@2x.png" class="icon-1" />
+    <view class="column-center margin-left-20">
+        <view class="title-3">微信支付</view>
+        <view class="title-2_f">123456</view>
+    </view>
+</view>
+
+<view class="line"></view>
+
+
+
+
+<view class="border-bottom margin-lr-30 padding-tb-30 title-2">订单信息</view>
+<view class="border-bottom margin-lr-30 padding-tb-20 title-2_f">订单编号：123456</view>
+<view class="border-bottom margin-lr-30 padding-tb-20 title-2_f">创建时间：1234564789</view>
+
+
+<view  class="right-center">
+    <view class="cancel" bindtap="toCancel">取消订单</view>
+    <view class="pay" bindtap="toPay">付款</view>
+</view>

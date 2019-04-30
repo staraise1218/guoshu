@@ -1,0 +1,11 @@
+<!-- 商品列表 -->
+<block wx:for="{{comList}}" wx:key>
+    <gf-com
+        comList="{{item}}"
+    ></gf-com>
+</block>
+<!-- 列表 END -->
+
+<!-- 推荐商品 -->
+<view class="title mar-l mar-t">推荐商品</view>
+<gf-rec></gf-rec>

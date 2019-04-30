@@ -1,0 +1,93 @@
+<view class="container" style="z-index: -1">
+    <view class="top-tips color-f padding-30">
+        <view class="title">申请自提点加盟</view>
+        <view class="title-2 padding-tb-10">需要您填写个人基本资料</view>
+    </view>
+
+
+
+
+
+
+    <view class="box-con title-2 shadow1">
+
+        <view class="inp-item border padding-tb-10 padding-lr-20 radius-15 between-center">
+            <view class="left-center left-box">姓名</view>
+            <view class="right-center right-box border-left">
+                <input bindinput="changUserName" placeholder="请输入姓名" />
+            </view>
+        </view>
+
+
+        <view class="inp-item border padding-tb-10 padding-lr-20 radius-15 between-center">
+            <view class="left-center left-box">手机号</view>
+            <view class="right-center right-box border-left">
+                <input bindinput="changPhone" placeholder="请输入手机号" />
+            </view>
+        </view>
+
+
+        <view class="inp-item border padding-tb-20 padding-lr-20 radius-15 between-center">
+            <view class="left-center left-box">验证码</view>
+            <view class="right-center right-box border-left">
+                <input bindinput="changCode" class="codeInp" placeholder="请输入验证码" />
+                <view catchtap="sondCode" class="before price">获取验证码</view>
+            </view>
+        </view>
+
+        <view class="inp-item border padding-tb-5 padding-l-20 radius-15 between-center">
+            <view class="left-center left-box">地址</view>
+            <view class="right-center right-box border-left">
+                <view class="inp color-6 between-center">
+                    <view bindtap="cityshow" class="left-center padding-tb-10">
+                        <image class="icon-4" mode="widthFix" src="https://hbimg.huabanimg.com/c49cf39cdcf3190d4ec2cb94e70ee269546408d282c-LeO6F6_fw658" />
+                        <view class="margin-left-20">{{address}}</view>
+                    </view>
+                    <view class="right-center">
+                        <image class="icon-1" src="https://hbimg.huabanimg.com/3bc04df372e9e3f66421a5573743687437b517954fb-sgjpU5_fw658" />
+                    </view>
+                </view>
+            </view>
+        </view>
+
+        <view class="inp-item border padding-tb-10 padding-lr-20 radius-15 between-center">
+            <view class="left-center left-box">详细地址</view>
+            <view class="right-center right-box border-left">
+                <input bindinput="changAddress" placeholder="请输入详细地址" />
+            </view>
+        </view>
+        <view bindtap="join" class="okBtn">立即加盟</view>
+    </view>
+
+
+
+</view>
+
+
+
+
+
+
+
+
+
+
+
+
+<view class="box" wx:if="{{cityShow}}">
+  <view class="city-box">
+    <view class="city-btn">
+      <view class="cancel-btn" bindtap="cityCancel">取消</view>
+      <view class="ok-btn" bindtap="cityOk">确定</view>
+    </view>
+    <picker-view indicator-style="height: 50px;" style="width: 100%; height: 300px;" value="{{value}}"
+      bindchange="changeCity">
+      <picker-view-column>
+        <view wx:for="{{multiArray}}" style="line-height: 50px" wx:key>{{item.name}}</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:for="{{multiArray[index0].sub}}" style="line-height: 50px" wx:key>{{item.name}}</view>
+      </picker-view-column>
+    </picker-view>
+  </view>
+</view>

@@ -1,0 +1,14 @@
+<!-- 推荐商品 -->
+<scroll-view scroll-x class="commodisyScro">
+    <block wx:for="{{rec}}" wx:key>
+        <view class="src-item">
+            <image class="poster" src="{{item.url}}" />
+            <view class="title-2">{{item.title}}</view>
+            <view class="title-2_f">{{item.title_f}}</view>
+            <view class="bottom">
+                <view class="price">￥{{item.price}}</view>
+                <image src="/src/img/组1@2x.png" class="icon-1 shopCartIcon" />
+            </view>
+        </view>
+    </block>
+</scroll-view>

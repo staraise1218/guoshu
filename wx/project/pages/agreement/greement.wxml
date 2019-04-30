@@ -1,0 +1,11 @@
+<view class="padding-30">
+    <view class="title text-center margin-tb-20">关于果蔬直销</view>
+    <view class="title-2">欢迎使用</view>
+    <!-- <view class="title-2_f margin-top-20">
+        文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本
+    </view> -->
+</view>
+
+<view class="padding-30 title-2">
+    <rich-text nodes="{{html}}" bindtap="tap"></rich-text>
+</view>

@@ -1,0 +1,49 @@
+.commodityItem {
+    display: flex;
+    justify-content: space-between;
+    padding: 20rpx;
+}
+.commodityItem .poster {
+    width: 250rpx;
+    height: 150rpx;
+}
+.commodityItem .right {
+    margin-left: 20rpx;
+    flex: 1;
+}
+.commodityItem .right .top {
+    font-size: 26rpx;
+}
+.commodityItem .right .top .title {
+    font-weight: 600;
+}
+.commodityItem .right .top .title-f {
+    color: rgba(0,0,0,0.5);
+    margin-top: 10rpx;
+}
+.commodityItem .right .bottom {
+    display: flex;
+    justify-content: space-between;
+    font-size: 26rpx;
+    margin-top: 40rpx;
+    align-items: flex-end;
+}
+.commodityItem .right .bottom .price {
+    display: flex;
+    font-weight: 600;
+    color: #F85832;
+}
+.commodityItem .right .bottom .price .tag {
+    border: 1rpx solid #F85832;
+    border-radius: 5rpx;
+    padding: 5rpx 8rpx;
+    font-size: 16rpx;
+    margin-left: 10rpx;
+}
+.commodityItem .right .bottom .price view {
+    display: inline-block;
+}
+.commodityItem .right .shopCartIcon {
+    width: 60rpx;
+    height: 60rpx;
+}

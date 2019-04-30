@@ -1,0 +1,102 @@
+page {
+    padding-bottom: 120rpx;
+}
+.order-top {
+    position: relative;
+    padding-right: 120rpx;
+}
+.order-top::before {
+    content: "";
+    display: block;
+    width: 70rpx;
+    height: 70rpx;
+    position: absolute;
+    right: 30rpx;
+    top: 50%;
+    transform: translateY(-50%);
+    background-image: url('http://img.hb.aicdn.com/3bc04df372e9e3f66421a5573743687437b517954fb-sgjpU5_fw658');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.list .right {
+    align-self: flex-start;
+}
+
+
+
+
+
+
+
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    border-top: 1rpx solid rgba(0,0,0,0.05);
+    background: #fff;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.footer .sub {
+    background: #F8471E;
+    color: #fff;
+    width: 200rpx;
+    text-align: center;
+    padding: 30rpx;
+}
+
+
+
+.picker-item {
+    width: 80%;
+    height: 50rpx;
+    border: 1rpx solid red;
+    margin: 0 auto;
+}
+
+
+
+
+.address-wrapper {
+    padding: 30rpx;
+    font-size: 28rpx;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.address-wrapper .left {
+    /* padding-top: 8rpx; */
+    padding-right: 10rpx;
+}
+.address-wrapper .right {
+    margin-left: 10rpx;
+    align-self: flex-start
+}
+.address-wrapper .user-info {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.address-wrapper .user-info image {
+    vertical-align: middle;
+    align-self: center
+}
+.address-wrapper .user-info .phone {
+    margin-left: 10rpx;
+}
+.address-wrapper .address-info .address-name {
+    margin-top: 8rpx;
+    width: 100%;
+}
+.address-wrapper .address-info .address-connent {
+    color: #9D9D9D;
+    font-size: 22rpx;
+    margin-top: 6rpx;
+}
+.tips {
+    font-size: 20rpx;
+}
+

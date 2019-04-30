@@ -1,0 +1,5 @@
+<image style="width:100%" mode="widthFix" src="http://img.hb.aicdn.com/d79242b7d01b6d5c0d263dbb8e9eca829ae43dc613568-1dbgxK_fw658" />
+
+<button bindtap="callNumber">联系客服</button>
+
+<view>*温馨提示:客服工作实即9:00-23:00</view>

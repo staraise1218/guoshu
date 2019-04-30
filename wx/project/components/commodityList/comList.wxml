@@ -1,0 +1,16 @@
+<!-- 商品列表 -->
+<view class="commodityItem">
+    <image class="poster" src="{{comList.url}}" />
+    <view class="right">
+        <view class="top">
+            <view class="title">{{comList.title}}</view>
+            <view class="title-f">{{comList.title_f}}</view>
+        </view>
+        <view class="bottom">
+            <view class="price">
+                ￥{{comList.price}} <view class="tag" wx:if="{{comList.ciri}}">次日达</view>
+            </view>
+            <image class="shopCartIcon" src="/src/img/组1@2x.png" />
+        </view>
+    </view>
+</view>

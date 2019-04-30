@@ -1,0 +1,45 @@
+<view class="edit-item border-bottom-03 padding-20 left-center title-2 color-8">
+    <view class="left">联系人</view>
+    <input  class="username right" bindinput="userName" value="{{addressList.consignee}}" placeholder="请输入收货人姓名" />
+</view>
+<view class="edit-item border-bottom-03 padding-20 left-center title-2 color-8">
+    <view class="left">联系方式</view>
+    <input  class="username right" bindinput="phoneNumber" value="{{addressList.mobile}}" placeholder="18240217006" />
+</view>
+<view class="edit-item location-wrap border-bottom-03 padding-20 left-center title-2 color-8">
+    <view class="left">收获地址</view>
+    <view class="location right">
+        <image mode="widthFix" class="icon-loaction" src="/src/img/dingwei@2x.png" />
+        <view class="location-info">
+            <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}">
+                {{region[0]}} {{region[1]}} {{region[2]}}
+            </picker>
+        </view>
+    </view>
+</view>
+<view class="edit-item border-bottom-03 padding-20 left-center title-2 color-8">
+    <view class="left">详细地址</view>
+    <textarea class="location right" bindinput="address" bindblur="bindTextAreaBlur" value="{{addressList.address}}" auto-height placeholder="如辽宁省沈阳市铁西区云峰北街" />
+</view>
+
+<view class="edit-item border-bottom-03 padding-20 left-center title-2 color-8">
+    <view class="left">设为默认地址</view>
+    <view class="right-center" style="width:100%">
+        <van-switch 
+            checked="{{ checked }}" 
+            active-color="#1EC01D"
+            size="36rpx"
+            bind:change="onChange" />
+    </view>
+</view>
+
+
+<view class="line"></view>
+<view class="edit-item border-bottom-03 padding-20 left-center title-2 color-8">
+    <view class="price-color" bindtap="delete">删除收货地址</view>
+</view>
+
+
+
+<!-- <button class="delete">删除</button> -->
+<button class="save" bindtap="saveAddress">保存收货地址</button>

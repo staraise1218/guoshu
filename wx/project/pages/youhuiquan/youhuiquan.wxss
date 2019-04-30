@@ -1,0 +1,76 @@
+page {
+    background: rgba(0,0,0,0.05);
+}
+.tag {
+    border: none;
+    font-size: 24rpx;
+    padding: 5rpx 12rpx;
+    height: auto;
+    display: inline-block;
+    align-self: flex-end;
+}
+
+
+
+.quan-item {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    margin: 30rpx;
+    padding: 30rpx;
+}
+
+
+
+.quan-item.active .tag {
+    color: #F72F03;
+    background: #F5B0A0;
+}
+.quan-item.over .tag {
+    color: #ACACAC;
+    background: #EBEBEB;
+}
+.quan-item.over .title-2_f {
+    color: #222;
+}
+.quan-item.over .price {
+    color: #CACACA;
+}
+.quan-item.over .price-none {
+    color: #CACACA;
+}
+.quan-item.over .title-2_f {
+    color: #CACACA;
+}
+
+.price-left {
+    display: flex;
+    justify-content: left;
+    align-items: flex-start;
+    border-bottom: 1rpx solid rgba(0,0,0,0.05);
+    padding-bottom: 30rpx;
+}
+.price-left .price {
+    display: flex;
+    align-items: flex-end;
+    font-size: 48rpx;
+}
+.price-left .price-big {
+    font-size: 88rpx;
+}
+.price-left .right {
+    margin-left: 20rpx;
+    align-self: center;
+}
+.price-left .price {
+    font-size: 36rpx;
+}
+
+
+
+
+.hongbaoCtr {
+    position:fixed;
+    right:-12rpx;
+    top:9rpx;
+}

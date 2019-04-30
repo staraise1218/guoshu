@@ -1,0 +1,62 @@
+page {
+    background: #F3F3F3;
+}
+.edit-item {
+    position: relative;
+    font-size: 26rpx;
+    background: #fff;
+}
+.left {
+    width: 200rpx;
+}
+.right {
+    font-size: 26rpx;
+}
+
+.icon-loaction {
+    position: absolute;
+    width: 25rpx !important;
+    align-self: center;
+}
+.location {
+    display: flex;
+    width: 450rpx;
+}
+.location-info {
+    margin-left: 50rpx;
+}
+.location-wrap {
+    position: relative;
+}
+.location-wrap::after {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    content: "";
+    display: block;
+    background-image: url('http://img.hb.aicdn.com/3bc04df372e9e3f66421a5573743687437b517954fb-sgjpU5_fw658');
+    background-size: cover;
+    width: 50rpx;
+    height: 50rpx;
+}
+
+
+.delete {
+    position: absolute;
+    left: 2.5%;
+    font-size: 32rpx;
+    background: #F5603F;
+    color: #fff;
+    width: 95%;
+    bottom: 110rpx;
+}
+.save {
+    background: #24C005;
+    color: #fff;
+    width: 95%;
+    bottom: 20rpx;
+    position: absolute;
+    left: 2.5%;
+    font-size: 32rpx;
+}

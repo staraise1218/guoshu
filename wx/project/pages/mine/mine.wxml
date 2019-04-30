@@ -1,0 +1,79 @@
+<view class="header">
+    <view class="news-icon">
+        <button class="news_btn" bindtap="toNews" plain><image class="icon-2" src="https://hbimg.huabanimg.com/b1a5e9c3979d5df57a6224d2ceb75c582870bcc161b-sx87no_fw658" /></button>
+    </view>
+    <view class="user-info">
+        <view class="icon-header">
+            <image class="user-img" style="width: 100%" mode="widthFix" src="{{head_pic}}" bindtap="toUserinfo" />
+        </view>
+        <view class="user-name">{{nickname}}</view>
+    </view>
+    <view class="header-info">
+        <block wx:for="{{infoMsg}}" wx:key="item">
+            <view class="info-item" bindtap="{{item.func}}">
+                <view class="title" style="font-weight: 400">{{item.num}}</view>
+                <view class="_title">{{item.title}}</view>
+            </view>
+        </block>
+    </view>
+</view>
+
+<!-- 我的订单 -->
+<view class="order radius-30 margin-30">
+    <view class="order-title title-3 font-weight-6 margin-30 padding-tb-20">我的订单</view>
+    <view class="order-list">
+        <block wx:for="{{orderMsg}}" wx:key="item">
+            <view class="order-list-item" bindtap='{{item.func}}'>
+                <image class="order-icon icon-1-big" mode="widthFix" src="{{item.url}}" />
+                <view class="order-list-title">{{item.title}}</view>
+            </view>
+        </block>
+    </view>
+</view>
+<!-- 我的订单 END -->
+
+
+<!-- 自提点 -->
+<view wx:if="{{role == 3}}" class="order radius-30 margin-30">
+    <view class="order-title title-3 font-weight-6 margin-30 padding-tb-20">站点订单</view>
+    <view class="order-list">
+        <block wx:for="{{zhandian}}" wx:key="item">
+            <view class="order-list-item" bindtap='{{item.func}}'>
+                <image class="order-icon icon-1-big" mode="widthFix" src="{{item.url}}" />
+                <view class="order-list-title">{{item.title}}</view>
+            </view>
+        </block>
+    </view>
+</view>
+<!-- 自提点 END -->
+
+<!-- 配送员 -->
+<view wx:if="{{role == 2}}" class="order radius-30 margin-30">
+    <view class="order-title title-3 font-weight-6 margin-30 padding-tb-20">配送订单</view>
+    <view class="order-list">
+        <block wx:for="{{peisong}}" wx:key="item">
+            <view class="order-list-item" bindtap='{{item.func}}'>
+                <image class="order-icon icon-1-big" mode="widthFix" src="{{item.url}}" />
+                <view class="order-list-title">{{item.title}}</view>
+            </view>
+        </block>
+    </view>
+</view>
+<!-- 自提点 END -->
+
+
+
+<!-- 我的服务 -->
+<view class="order radius-30 margin-30">
+    <view class="order-title title-3 font-weight-6 margin-30 padding-tb-20">我的服务</view>
+    <view class="order-list">
+        <block wx:for="{{serviceMsg}}" wx:key="item">
+            <view class="order-list-item" bindtap="{{item.func}}">
+                <image class="order-icon icon-1-big" mode="widthFix" src="{{item.url}}" />
+                <view class="{{item.style}} order-list-title">{{item.title}}</view>
+            </view>
+        </block>
+    </view>
+</view>
+<!-- 我的服务 END -->
+

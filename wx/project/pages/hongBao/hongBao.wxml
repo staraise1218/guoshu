@@ -1,0 +1,39 @@
+<view class="list-item active">
+    <view class="top">
+        <view class="left">
+            <view class="price">
+                <view class="fuhao">￥</view>
+                <view class="price-big">10</view>
+            </view>
+            <view class="middle">
+                <view class="title-3">拼团红包</view>
+                <view class="title-3_f">满46元可用</view>
+                <view class="title-3_f">满46元可用</view>
+                <view class="title-3_f">满46元可用</view>
+                <view class="title-3_f">满46元可用</view>
+            </view>
+        </view>
+        <view class="tag">即将过期</view>
+    </view>
+    <view class="title-3 margin-top-20">有效期:2019-20-16值2019-03-16</view>
+</view>
+
+<view class="list-item over">
+    <view class="top">
+        <view class="left">
+            <view class="price">
+                <view class="fuhao">￥</view>
+                <view class="price-big">10</view>
+            </view>
+            <view class="middle">
+                <view class="title-3">拼团红包</view>
+                <view class="title-3_f">满46元可用</view>
+                <view class="title-3_f">满46元可用</view>
+                <view class="title-3_f">满46元可用</view>
+                <view class="title-3_f">满46元可用</view>
+            </view>
+        </view>
+        <view class="tag">即将过期</view>
+    </view>
+    <view class="title-3 margin-top-20">有效期:2019-20-16值2019-03-16</view>
+</view>

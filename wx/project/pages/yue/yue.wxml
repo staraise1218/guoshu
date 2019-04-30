@@ -1,0 +1,9 @@
+<image class="yue-icon icon-best center block" src="/src/img/组169@2x.png" />
+
+
+<view class="text-center title-2 margin-top-50">现金总额(元)</view>
+<view class="text-center price-big font-weight-6 margin-top-10">￥{{user_money}}</view>
+
+<view class="text-center margin-top-20">
+    <view class="center mingxi" bindtap="toMingxi">查看明细</view>
+</view>

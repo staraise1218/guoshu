@@ -1,0 +1,26 @@
+<view class="top">
+    <div class="left-center color-f title-3 padding-20">收益总额（元）：</div>
+    <view class="RMB left-center color-f">
+        <view class="title-1 margin-top-20">￥</view>
+        <view class="title-best font-weight-6">{{user_money}}</view>
+    </view>
+</view>
+
+<view class="line"></view>
+
+<block wx:for="{{shouyiList}}" wx:key>
+    <view class="padding-20 border-bottom between-center">
+        <!-- <view class="left-center">
+            <image class="icon-sm" src="https://hbimg.huabanimg.com/e5b2e8a1f30c9fc3ba4460d50c36cc244838ade31070-Xe3xpS_fw658" />
+        </view> -->
+        <view class="between-center margin-left-20" style="width: 100%">
+            <view class="left">
+                <view class="title-2 margin-bottom-20">{{item.desc}}</view>
+                <view class="title-3_f">{{item.change_time}}</view>
+            </view>
+            <view wx:if="{{item.user_money >= 0}}" class="right-center title-2">+ {{item.user_money}}</view>
+            <view wx:else class="right-center title-2">- {{item.user_money}}</view>
+        </view>
+    </view>
+</block>
+

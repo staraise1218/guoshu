@@ -1,0 +1,52 @@
+page {
+    padding-bottom: 200rpx;
+  }
+  .slider-box {
+    height: 400rpx;
+  }
+  .slide-image {
+    width: 750rpx;
+  }
+  
+  .sare {
+      background: radial-gradient(#F4B796, #F7B593);
+      padding: 20rpx;
+      border-radius: 15rpx;
+      margin-top: 20rpx;
+  }
+  .user-head {
+    margin-top: 20rpx;
+    display: flex;
+    align-items: center;
+  }
+  .user-name {
+    margin-right: 250rpx;
+  }
+  .pingjia-con image {
+    margin-left: 8rpx;
+  }
+  .ping-text {
+    font-size: 26rpx;
+    margin-top: 20rpx;
+  }
+  
+  
+  
+  .tuijian-bg {
+    background: #eee;
+    padding: 30rpx 0;
+  }
+  
+  .shangpinxiangqing {
+    padding: 30rpx 20rpx;
+  }
+  .shangpin-poster {
+    width: 100%;
+    margin: 30rpx 0;
+  }
+  
+  .shopCart {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }

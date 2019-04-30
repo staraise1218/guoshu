@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "gf-rec":"/components/recommend/rec",
+    "gf-cart":"/components/shopchart/cart"
+  }
+}

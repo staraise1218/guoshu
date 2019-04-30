@@ -1,0 +1,38 @@
+<view class="text-center margin-top-50">
+    <image  class="center icon-poster" src="http://img.hb.aicdn.com/4ec94a7282b29432ba23bd4f5631a40a55ab2a912d71-1ShwcV_fw658" />
+</view>
+
+
+
+<view class="center" style="width:80%" style="margin: 100rpx 30rpx 0 30rpx;">
+    <view class="left-center border-bottom title-2_f padding-20">
+        <image class="icon-2" src="http://img.hb.aicdn.com/22c66b002770362a59210b7ee1de4529a94468854c6-xBwpWc_fw658" />
+        <input class="title-2_f margin-left-20" value="{{loginPhone}}" bindinput="getPhone" placeholder="请输入您的手机号" />
+    </view>
+    <view class="between-center padding-20 border-bottom">
+        <view class="left-center">
+            <image class="icon-2" src="http://img.hb.aicdn.com/0064b14b5ea61f118d911a06efc793b7127d783f5ca-vWYk5b_fw658" />
+            <input class="title-2_f margin-left-20 " password bindinput="getPassword" value="{{loginPhonePassword}}" placeholder="请输入密码" />
+        </view>
+        <image class="icon-2" src="http://img.hb.aicdn.com/3c508717012eb6c45c4a3f46e9a69d655f62dad67a2-BLdtzn_fw658" />
+    </view>
+    <view class="title-2_f between-center right-center padding-tb-20" bindtap="toRetrieve">
+        忘记密码？
+    </view>
+</view>
+
+
+<button class="login" bindtap="toLogin">登录</button>
+<button class="singup" bindtap="toSingup">注册</button>
+
+
+
+
+<view class="line-footer" style="margin-top: 100rpx;"> 第三方账号登录</view>
+
+<view class="text-center">
+    <button type="primary" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo" class="clearbtn">
+    <!-- <button type="primary" open-type="getUserInfo" bindtap="test" class="clearbtn"> -->
+        <image class="icon-big" src="http://img.hb.aicdn.com/7f540ddb8fe6502e00d9a2c3b1e3c537c0129a63ddb-PAfkEC_fw658" />
+   </button>
+</view>

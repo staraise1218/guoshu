@@ -1,0 +1,77 @@
+<swiper
+    class="slider-box"
+    autoplay="true"
+    indicator-dots="true"
+    circular="true"
+>
+  <block wx:for="{{imgUrls}}">
+    <swiper-item>
+      <image src="{{item}}" class="slide-image" width="355" height="150" />
+    </swiper-item>
+  </block>
+</swiper>
+
+<view class="title-2 margin-left-30 margin-top-30">[预售]伊利</view>
+<view class="title-2_f margin-left-30 margin-top-10">100%源自伊利甄选牧场</view>
+<view class="flex-space_between margin-top-30 padding-lr-30">
+    <view class="price">￥55.9 <view class="tag font-size-18 margin-left-10">当天送达</view></view>
+    <view class="title-3_f">已售1241份</view>
+</view>
+
+<view class="sare flex-space_between flex-align-item margin-lr-30">
+    <view class="left font-size-26 flex-align-item">
+        <image class="icon_2" src="/src/img/labe_fanxian@2x.png" />
+        分享该商品可领现金红包
+    </view>
+    <view class="right font-size-26 color_red">去开通 ></view>
+</view>
+
+<view class="line margin-top-30"></view>
+
+<!-- 精选评价 -->
+<view class="pingjia padding-20">
+    <view class="title-2">精选评价</view>
+    <view class="flex-space_between user-head">
+        <image class="icon-big" src="/src/img/banner.jpg" />
+        <view class="user-name">米粒</view>
+        <view class="pingjia-con">
+            <image class="icon-3" src="/src/img/xingxing(4)@2x.png" />
+            <image class="icon-3" src="/src/img/xingxing(4)@2x.png" />
+            <image class="icon-3" src="/src/img/xingxing(4)@2x.png" />
+            <image class="icon-3" src="/src/img/xingxing(4)@2x.png" />
+            <image class="icon-3" src="/src/img/xingxing(4)@2x.png" />
+        </view>
+    </view>
+    <view class="ping-text">
+        文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字
+    </view>
+</view>
+<!-- 精选评价 END -->
+<!-- 推荐商品 -->
+<view class="tuijian-bg">
+    <view class="title margin-left-30 margin-bottom-30">推荐商品</view>
+    <gf-rec></gf-rec>
+</view>
+<!-- 推荐商品 END-->
+
+<!-- 商品详情 -->
+<view class="shangpinxiangqing">
+    <view class="title">商品详情</view>
+    <view class="title-2_f margin-top-20">规格：1箱</view>
+    <view class="title-2_f margin-top-20"> 重量：250ml*12 </view>
+    <view class="title-2_f margin-top-20"> 包装：盒装 </view>
+    <view class="title-2_f margin-top-20"> 保质期：180天 </view>
+    <view class="title-2_f margin-top-20"> 储存方式：常温保存 </view>
+    <image class="shangpin-poster" mode="widthFix" src="/src/img/500770198@2x.png" />
+
+    <view class="title-2 font-weight-6">比普通酸奶多35%蛋白质</view>
+    <view class="title-2_f margin-top-20">文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字</view>
+    <image class="shangpin-poster" mode="widthFix" src="/src/img/500770198@2x.png" />
+
+
+    <view class="title-2 font-weight-6">价格详情</view>
+    <view class="title-2_f margin-top-20">文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字</view>
+
+</view>
+<!-- 商品详情 END -->
+<gf-precart class="shopCart"></gf-precart>

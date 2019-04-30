@@ -1,0 +1,9 @@
+<!-- <image class="icon-code" src="/src/img/图层3@2x.png" mode="widthFix" /> -->
+
+<image class="icon-code" src="{{imgUrl}}" data-src='{{imgUrl}}' bindtap='previewImage' ></image>
+<view class="margin-30 text-center font-size-26 color-5" style="padding: 0 120rpx">
+    将上面二维码分享给好友，下载APP，马上得现金红包
+</view>
+
+<button class="share-btn" open-type="share">立即分享</button>
+<button class="save">保存图片</button>

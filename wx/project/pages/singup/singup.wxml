@@ -1,0 +1,36 @@
+<view class="text-center margin-top-50">
+    <image class="center icon-poster" src="/src/img/组204@2x.png" />
+</view>
+
+
+
+<view class="center" style="width:80%" style="margin: 100rpx 30rpx 0 30rpx;">
+    <view class="left-center border-bottom title-2_f padding-20">
+        <image class="icon-2" src="/src/img/shouji(2)@2x.png" />
+        <input class="title-2_f margin-left-20 " placeholder="请输入您的手机号"  bindinput="getPhone"/>
+    </view>
+    <view class="between-center border-bottom title-2_f padding-20">
+        <view class="left-center">
+            <image class="icon-2" src="/src/img/yanzhengma@2x.png" />
+            <input class="title-2_f margin-left-20 " value="{{code}}" placeholder="请输入验证码" bindinput="getCode"/>
+        </view>
+        <view class="right-center code" bindtap="sendCode">获验证码</view>
+    </view>
+    <view class="between-center padding-20 border-bottom">
+        <view class="left-center">
+            <image class="icon-2" src="/src/img/mima@2x.png" />
+            <input class="title-2_f margin-left-20" password placeholder="请输入密码" bindinput="getOassword1"/>
+        </view>
+        <image class="icon-2" src="/src/img/eye拷贝@2x.png" />
+    </view>
+    <view class="between-center padding-20 border-bottom">
+        <view class="left-center">
+            <image class="icon-2" src="/src/img/yuechi@2x.png" />
+            <input class="title-2_f margin-left-20" password placeholder="请确认密码" bindinput="getOassword2"/>
+        </view>
+        <image class="icon-2" src="/src/img/eye拷贝@2x.png" />
+    </view>
+</view>
+
+
+<button class="singup" bindtap="toSingUp">注册</button>
