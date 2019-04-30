@@ -204,6 +204,9 @@ class Cart extends Base {
         $userCouponList = $couponLogic->getUserAbleCouponList($user_id, $cartGoodsId, $cartGoodsCatId);
         $userCartCouponList = $cartLogic->getCouponCartList($cartList, $userCouponList);
 
+        // 获取用户余额
+        $user = Db::name('users')->where('user_id', $user_id)->field('user_money')->find();
+        $result['user_money'] = $user['user_money'];
         $result['address'] = $address; // 地址
         $result['couponList'] = $userCartCouponList; //优惠券，用able判断是否可用
         $result['cartList'] = $cartList; // 购物车的商品
