@@ -25,25 +25,43 @@ class Pay extends Base {
 		if(empty($order)) response_error('', '该订单不存在');
 		if($order['paystatus'] == 1) response_error('', '该订单已支付');
 
-		$total_amount = $order['price'];
+		$order_amount = $order['order_amount'];
 
 		/************** 获取订单签名字符串 **************/
 		if($paymentMethod == 'alipay'){
 			$notify_url = 'https://app.zhuoyumall.com:444/index.php/api/pay/alipayCallback';
 			$AlipayLogic = new AlipayLogic($notify_url);
-			$orderStr = $AlipayLogic->generateOrderStr($order_sn, $total_amount, '购买商品', '购买商品');
+			$orderStr = $AlipayLogic->generateOrderStr($order_sn, $order_amount, '购买商品', '购买商品');
 			return $orderStr;
 		}
 
 		if($paymentMethod == 'wxpay'){
 			$WxpayLogic = new WxpayLogic();
 			$WxpayLogic->notify_url = 'https://app.zhuoyumall.com:444/index.php/api/pay/wxpayCallback';
-			$param = $WxpayLogic->getPrepayId($order_sn, $total_amount, '购买商品');
+			$param = $WxpayLogic->getPrepayId($order_sn, $order_amount, '购买商品');
 			response_success($param);
 		}
 		// 余额支付
 		if($paymentMethod == 'money'){
-			
+			$user = Db::name('users')->where('user_id', $order['user_id'])->find();
+			if(empty($user) || $user['user_money'] < $order['order_amount']) response_error('', '余额不足');
+			// 启动事务
+			Db::startTrans();
+			try{
+				
+				// 更改订单状态
+				M('order')->where('order_sn', $order_sn)->update(array('pay_status'=>1, 'pay_time'=>time()));
+			   // 扣除余额，并记录日志
+				accountLog($order['user_id'], -$order['order_amount'], 0, '订单支付', 0, $order['order_id'], $order['order_sn'], 3);
+
+			    // 提交事务
+			    Db::commit();
+
+			} catch (\Exception $e) {
+			    // 回滚事务
+			    Db::rollback();
+			}
+
 		}
 	}
 
@@ -94,7 +112,7 @@ class Pay extends Base {
 		try{
 			
 			// 更改订单状态
-			M('order')->where('order_sn', $order_sn)->update(array('paystatus'=>1, 'paytime'=>time()));
+			M('order')->where('order_sn', $order_sn)->update(array('pay_status'=>1, 'pay_time'=>time()));
 		   
 
 		    // 提交事务
