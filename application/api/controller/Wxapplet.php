@@ -45,7 +45,7 @@ class Wxapplet  extends Base {
         $input->SetSignType('MD5');
         $config = new \WxPayConfig();
         $order = \WxPayApi::unifiedOrder($config, $input);
-
+p($order);
         // 如果有错
         if($order['return_code'] == 'FAIL'){
             response_error('', $order['return_msg']);

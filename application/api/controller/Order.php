@@ -646,7 +646,6 @@ class Order extends Base
         } else {
             response_error('', $row['msg']);
         }
-       
     }
 
     /**
