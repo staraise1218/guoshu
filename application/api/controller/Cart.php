@@ -372,7 +372,7 @@ class Cart extends Base {
                 $placeOrder->addNormalOrder();
                 $cartLogic->clear();
                 $order = $placeOrder->getOrder();
-                response_success(array('order_sn'=>$order['order_sn']), '提交订单成功');
+                response_success(array('order_sn'=>$order['order_sn'], 'order_id'=>$order['order_id']), '提交订单成功');
             }
             response_success($pay->toArray(), '计算成功');
         } catch (TpshopException $t) {

@@ -608,26 +608,6 @@ class Order extends Base
     }
 
     /**
-     *  评论晒单
-     * @return mixed
-     */
-    public function comment()
-    {
-        $user_id = $this->user_id;
-        $status = I('get.status');
-        $logic = new CommentLogic;
-        $data = $logic->getComment($user_id, $status); //获取评论列表
-        $this->assign('page', $data['page']);// 赋值分页输出
-        $this->assign('comment_page', $data['page']);
-        $this->assign('comment_list', $data['result']);
-        $this->assign('active', 'comment');
-        if(I('is_ajax')){
-            return $this->fetch('ajax_comment_list');
-        }
-        return $this->fetch();
-    }
-
-    /**
      *添加评论
      */
     public function add_comment()
