@@ -1,0 +1,18 @@
+.yue-icon {
+    margin-top: 50rpx;
+}
+
+.mingxi {
+    display: inline-block;
+    border: 1rpx solid #F55F3E;
+    padding: 10rpx 20rpx;
+    font-size: 24rpx;
+    color: #F55F3E;
+}
+
+
+
+
+
+
+

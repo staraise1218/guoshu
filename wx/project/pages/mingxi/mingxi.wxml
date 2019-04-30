@@ -1,0 +1,9 @@
+<block wx:for="{{orderList}}" wx:key>
+    <view class="list-item padding-30">
+        <view class="left">
+            <view class="title-2 margin-bottom-20">{{item.desc}}</view>
+            <view class="title-2_f">{{item.change_time}}</view>
+        </view>
+        <view class="right">{{item.user_money}}</view>
+    </view>
+</block>

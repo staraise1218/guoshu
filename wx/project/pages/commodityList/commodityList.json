@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "van-card": "/src/dist/card/index",
+    "gf-com":"/components/commodityList/comList",
+    "gf-rec":"/components/recommend/rec"
+  }
+}

@@ -1,0 +1,18 @@
+page {
+    padding-bottom: 120rpx;
+}
+
+.okBtn {
+    width: 95%;
+    padding: 20rpx;
+    border-radius: 15rpx;
+    background: linear-gradient(#F56646, #F7471E);
+    box-sizing: border-box;
+    text-align: center;
+    color: #fff;
+    margin: 0 auto;
+    font-size: 28rpx;
+    position: fixed;
+    bottom: 20rpx;
+    left: 2.5%;
+}

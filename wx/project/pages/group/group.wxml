@@ -1,0 +1,86 @@
+<image class="poster" src="{{bannerList}}" mode="widthFix" />
+
+<!-- 秒杀 -->
+<view class="group-title margin-20">限时秒杀</view>
+<view class="item-box-1">
+    <view class="qianggou-slider">
+        <view class="qianggou-nav">
+            <!-- <block wx:for="{{time_space}}" wx:key>
+                        </block> -->
+            <view class="qianggou-item {{currentTab2 == 0 ?'active':''}}" data-current="{{0}}" bindtap="clickTap2">
+                <view class="titme">{{item.font}}</view>
+                <view class="tips">
+                    <view> 正在抢购 </view>
+                    <view class="title-3_f">每天准时更新</view>
+                </view>
+            </view>
+            <view class="qianggou-item {{currentTab2 == 1 ?'active':''}}" data-current="{{1}}" bindtap="clickTap2">
+                <view class="titme">{{item.font}}</view>
+                <view class="tips">下期预告</view>
+            </view>
+        </view>
+
+        <swiper class="" current="{{currentTab2}}" duration="300" bindchange="swiperTab2">
+            <!-- 1 -->
+            <swiper-item>
+                <view class="item-box-1">
+                    <scroll-view class="scroll-wrapper" scroll-x>
+                        <block wx:for="{{qianggou}}" wx:key>
+                            <view class="scr-item" data-id="{{item.goods_id}}" bindtap="toCon">
+                                <image class="scr-pic" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+                                <view class="title">{{item.goods_name}}</view>
+                                <view class="price">￥{{item.price}}</view>
+                                <view class="qiang_btn">马上抢</view>
+                            </view>
+                        </block>
+                    </scroll-view>
+                </view>
+            </swiper-item>
+            <!-- 2 -->
+            <swiper-item>
+                <view class="item-box-1">
+                    <scroll-view class="scroll-wrapper" scroll-x>
+                        <block wx:for="{{nextList}}" wx:key>
+                            <view class="scr-item"  data-id="{{item.goods_id}}" bindtap="toCon">
+                                <image class="scr-pic" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+                                <view class="title">{{item.goods_name}}</view>
+                                <view class="price">￥{{item.price}}</view>
+                                <view class="qiang_btn title-3">即将开售</view>
+                            </view>
+                        </block>
+                    </scroll-view>
+                </view>
+            </swiper-item>
+        </swiper>
+    </view>
+    <view class="group-title">今日推荐</view>
+    <block wx:for="{{toDayTuijian}}" wx:key>
+        <view class="tuijian-item">
+            <view class="poster-wrap">
+                <image class="tuijian-poster" mode="widthFix"
+                    src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+            </view>
+            <view class="right">
+                <view class="top">
+                    <view class="tuijian-title">{{item.goods_name}}</view>
+                    <view class="tuijian-title-f">{{item.subtitle}}</view>
+                </view>
+                <view class="bottom">
+                    <view class="bottom-price">
+                        <view class="tag">{{title.tag}}</view>
+                        <view class="price-wrap">
+                            <view class=" title-sm">团购价</view>
+                            <view class="price">￥{{item.shop_price}}</view>
+                            
+                            <!-- <view class="del">￥{{item}}</view> -->
+                        </view>
+                    </view>
+                    <view class="toPay" data-id="{{item.goods_id}}" bindtap="toCon">去抢购</view>
+                </view>
+            </view>
+        </view>
+    </block>
+
+
+</view>
+<!-- 秒杀 END -->

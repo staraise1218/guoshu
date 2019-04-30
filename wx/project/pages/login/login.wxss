@@ -1,0 +1,23 @@
+.login {
+    width: 90%;
+    background: linear-gradient(#f56645, #f7471e);
+    margin-top: 50rpx;
+    color: #fff;
+}
+.singup {
+    background: #fff;
+    width: 90%;
+    margin-top: 30rpx;
+    border: 1rpx solid rgba(0,0,0,0.5);
+}
+.clearbtn {
+    background: #fff !important;
+    border: none !important;
+    width: auto !important;
+    height: 100rpx !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: inline-block;
+    border-radius: 50%;
+    margin-top: 50rpx !important;
+}

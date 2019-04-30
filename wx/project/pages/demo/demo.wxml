@@ -1,0 +1,168 @@
+<view wx:if="{{Page != 'storeList'}}" class="order-top padding-30" catchtap="toAddress">
+    <view class="top left-center ">
+        <image class="icon-3" mode="widthFix" src="http://img.hb.aicdn.com/c49cf39cdcf3190d4ec2cb94e70ee269546408d282c-LeO6F6_fw658" />
+        <view class="user margin-left-20 font-size-32">收货人: {{Address.consignee}}</view>
+        <view class="margin-left-20 font-size-32 end ">{{Address.mobile}}</view>
+    </view>
+    <view class="margin-left-50 margin-top-20 title-2_f">收货地址：{{Address.fulladdress}}</view>
+</view>
+
+<!-- <block wx:for="{{List}}" wx:key>
+    <view wx:if="{{item.pickup_id == pickup_id}}" class="border-top order-top padding-30 " catchtap="toziqu">
+        <view class="top left-center ">
+            <image class="icon-2" mode="widthFix" src="https://hbimg.huabanimg.com/94fede0dd495760802a3c29889a95c227cde1bbfa19-cizqzZ_fw658" />
+            <view class="user margin-left-20 font-size-32">{{item.pickup_name}}</view>
+        </view>
+        <view class="margin-left-50 margin-top-20 title-2_f">{{item.fulladdress}}</view>
+    </view>
+</block> -->
+
+
+<block wx:for="{{StoreList}}" wx:key>
+    <view wx:if="{{item.pickup_id == Store_id}}" class="address-wrapper">
+        <view class="left">
+            <image class="icon-2" mode="widthFix" src="https://hbimg.huabanimg.com/94fede0dd495760802a3c29889a95c227cde1bbfa19-cizqzZ_fw658" />
+        </view>
+        <view class="right">
+            <view class="user-info" catchtap="toAddress">
+                <view class="user-name">{{Address.consignee}}</view>
+                <view class="phone">{{Address.mobile}}</view>
+                <image class="icon-2" mode="widthFix" src="https://hbimg.huabanimg.com/b7711e380d1d459868803349d7f076524caac10f48c-D3dPLy_fw658" />
+            </view>
+            <view class="address-info" catchtap="toStoreList">
+                <view class="address-name">{{item.pickup_name}}</view>
+                <view class="address-connent">{{item.fulladdress}}</view>
+            </view>
+        </view>
+    </view>
+</block>
+
+
+
+
+<image src="http://img.hb.aicdn.com/a083c47c0805180859b96da24a7a2b8d65dc7d501cd3-HARWF2_fw658" style="width:100%" mode="widthFix" />
+
+
+<block wx:for="{{GoodList}}" wx:key>
+    <view class="list left-center border-bottom padding-30" bindtap="consoleData">
+        <view class="poster">
+            <image src="https://app.zhuoyumall.com:444{{item.goods.original_img}}" style="width:250rpx" mode="widthFix" />
+        </view>
+        <view class="right margin-left-20 wrap">
+            <view class="title-3">{{item.goods.goods_name}}</view>
+            <view class="title-2_f">{{item.goods.subtitle}}</view>
+            <view class="bottom between-center margin-top-30">
+                <view class="price">￥{{item.goods.shop_price}}</view>
+                <view class="num font-size-28">X{{item.goods_num}}</view>
+            </view>
+        </view>
+    </view>
+</block>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<view class="line"></view>
+
+<!-- 商品总价 -->
+<view class="border-bottom padding-tb-30 margin-lr-30 between-center">
+    <view class="title-3">商品总价</view>
+    <view class="title-3">￥{{CommodityMsg.total_fee}}</view>
+</view>
+
+<view class="border-bottom padding-tb-30 margin-lr-30 padding-right-50 between-center more-0">
+    <view class="title-3 left-center">
+        <image class="icon-3 margin-right-20" mode="widthFix" src="http://img.hb.aicdn.com/b7a8f0cd63dda76a08423835a1a1898cef6228f85c6-huGl9M_fw658" />
+        红包
+    </view>
+    <view class="title-3_f">0</view>
+</view>
+
+
+<view class="border-bottom padding-tb-30 margin-lr-30 padding-right-50 between-center more-0" catchtap="toYouHui">
+    <view class="title-3 left-center">
+        <image class="icon-3 margin-right-20" mode="widthFix" src="http://img.hb.aicdn.com/81716659127cb51c349ebe3d734efe5bf57335164f7-m4GiTZ_fw658" />
+        优惠券
+    </view>
+    <view class="price-color" style="font-size:26rpx;">{{RedEnvelopes[0].coupon.money}} </view>
+</view>
+
+<view class="padding-30">
+    <view class="row">
+        <view class="flex-space_between">
+            <view class="title-3">商品实付</view>
+            <view class="title-3">￥{{CommodityMsg.total_fee}}</view>
+        </view>
+    </view>
+    <view class="row margin-top-10">
+        <view class="flex-space_between">
+            <view class="title-3">配送费</view>
+            <view class="title-3">￥ 0</view>
+        </view>
+    </view>
+    <view class="row margin-top-10">
+        <view class="end price">￥{{CommodityMsg.total_fee}}</view>
+    </view>
+</view>
+
+
+<view class="line"></view>
+
+<!-- 微信支付 -->
+<view class="flex-space_between padding-lr-30 padding-tb-20" data-payStatus="wx" bindtap="choosePayBtn">
+    <view class="left left-center">
+        <image class="icon-1" src="http://img.hb.aicdn.com/3c5fb96130ae9442803c441e4443343d61cf0b18974-mmwmGH_fw658" />
+        <view class="margin-left-20">
+            <view class="title-3">微信支付</view>
+            <view class="title-3_f">亿万用户的选择，更快更安全</view>
+        </view>
+    </view>
+    <view class="right center-center">
+        <image class="icon-3" src="http://img.hb.aicdn.com/af0f6c8f8b4ba1608f1985fd5c491db279dd940c6cf-efCOPl_fw658" wx:if="{{paystatus=='wx'}}" />
+        <image class="icon-3" src="http://img.hb.aicdn.com/af41d36cf3423f49b5180fab5f14f2b3db82652a67e-dDcFEg_fw658" wx:else />
+    </view>
+</view>
+<!-- 余额 -->
+<view class="flex-space_between padding-lr-30 padding-tb-20" data-payStatus="yue" bindtap="choosePayBtn">
+    <view class="left left-center">
+        <image class="icon-1" src="http://img.hb.aicdn.com/22892d9b853ccfba5e952bb14cc624cffc91820f827-zsLpG2_fw658" />
+        <view class="margin-left-20">
+            <view class="title-3">余额支付</view>
+            <view class="title-3_f">亿万用户的选择，更快更安全</view>
+        </view>
+    </view>
+    <view class="right center-center">
+        <image class="icon-3" src="http://img.hb.aicdn.com/af0f6c8f8b4ba1608f1985fd5c491db279dd940c6cf-efCOPl_fw658" wx:if="{{paystatus=='yue'}}" />
+        <image class="icon-3" src="http://img.hb.aicdn.com/af41d36cf3423f49b5180fab5f14f2b3db82652a67e-dDcFEg_fw658" wx:else />
+    </view>
+</view>
+
+
+
+
+
+
+
+<view class="footer title-2">
+    <view class="left-center margin-left-30">
+        合计: 
+        <view class="price"> ￥{{CommodityMsg.total_fee}}</view>
+    </view>
+    <view class="sub" 
+        catchtap="toPay" >提交订单</view>
+</view>

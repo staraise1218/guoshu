@@ -1,0 +1,20 @@
+<block wx:for="{{addressList}}" wx:key>
+    <view class="list-item border-bottom" data-id="{{item.address_id}}" bindtap="changeAddress">
+        <view class="left">
+            <view class="address-icon">{{item.consignee[0]}} <image class="icon-title" src="https://hbimg.huabanimg.com/3b6db59cb0a0f820f0f86398507b7bce94c18e7c82e-RFzgnC_fw658" /> </view>
+            <view class="address-con">
+                <view class="user-name title-2">
+                    {{item.consignee}}
+                    <view class="title-2_f">{{item.mobile}}</view>
+                </view>
+                <view class="address-info margin-top-10">{{item.fulladdress}}</view>
+            </view>
+        </view>
+        <view class="right" catchtap="toEdit" data-id="{{item.address_id}}">编辑</view>
+    </view>
+</block>
+
+
+
+
+<button class="add" bindtap="toAddAddress">添加收货地址</button>

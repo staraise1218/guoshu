@@ -1,0 +1,39 @@
+.shopCart-wrap {
+    border-top: 1rpx solid rgba(0,0,0,0.05);
+    display: flex;
+    background: #fff;
+}
+.shopCart-wrap view {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 120rpx;
+}
+.schopCart {
+    position: relative;
+    flex: 1;
+}
+.schopCart .num {
+    background: #F74B23;
+    position: absolute;
+    right: 22rpx;
+    top: 11rpx;
+    width: 50rpx;
+    height: 50rpx;
+    color: #fff;
+    border-radius: 50%;    
+}
+.addCart {
+    flex: 1.6;
+    background: #41403E;
+    color: #fff;
+}
+.toPay {
+    flex: 1.6;
+    background: #F74B23;
+    color: #fff;
+}
+.icon-1 {
+    width: 60rpx;
+    height: 60rpx;
+}

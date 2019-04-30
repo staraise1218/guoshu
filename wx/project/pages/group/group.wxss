@@ -1,0 +1,285 @@
+.group-title {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.8);
+    position: relative;
+    margin-left: 40rpx;
+    letter-spacing: 2rpx;
+}
+
+.group-title::before {
+    content: "";
+    display: block;
+    width: 160rpx;
+    height: 20rpx;
+    background: #F9D1C7;
+    border-radius: 15rpx;
+    position: absolute;
+    left: 0;
+    bottom: -6rpx;
+    z-index: -1;
+}
+
+
+
+
+
+.poster {
+    width: 100%;
+}
+
+
+
+.xianshimiaosha {
+    height: 1200rpx;
+}
+.miaosha {
+    display: flex;
+    justify-content: space-between;
+    padding: 0rpx 40rpx;
+    margin-top: 20rpx;
+}
+
+.miaosha .title .title-l {
+    display: flex;
+    font-weight: 900;
+    color: #333;
+}
+
+.miaosha .title .title-l .ac {
+    color: #F3844D;
+}
+
+.miaosha .more {
+    vertical-align: middle;
+}
+
+.miaosha .arrow {
+    vertical-align: middle;
+}
+
+.qiangou-wrap {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 4rpx solid #F7552F;
+    margin: 10rpx 40rpx;
+    flex-wrap: nowrap;
+}
+
+.qiangou-wrap .left {
+    display: flex;
+}
+
+.qiangou-wrap .left .tab-item {
+    background: #E3E3E3;
+    padding: 10rpx 20rpx;
+    font-size: 32rpx;
+    border-top-left-radius: 10rpx;
+    border-top-right-radius: 10rpx;
+}
+
+.qiangou-wrap .left .tab-active {
+    background: #F7552F;
+}
+
+.qiangou-wrap .left .tab-item:last-child {
+    margin-left: 5rpx;
+}
+.qiangou-wrap .left .big {
+    font-size: 34rpx;
+    line-height: 50rpx;
+    text-align: center;
+}
+
+.qiangou-wrap .left .time {
+    font-size: 24rpx;
+    text-align: center;
+}
+
+.qiangou-wrap .right {
+    display: flex;
+    font-size: 34rpx;
+    margin-top: 25rpx;
+}
+
+.qiangou-wrap .right .time-bg {
+    background: #222;
+    color: #fff;
+    width: 50rpx;
+    height: 50rpx;
+    text-align: center;
+    border-radius: 15rpx;
+    margin: 0 5rpx;
+}
+
+
+.qianggou-slider {
+    background-image: url('https://hbimg.huabanimg.com/ecd0c908ab0aa6fb690177c1e7bce3858d8855eff088-hI7xeM_fw658');
+    border-radius: 10rpx;
+    margin: 30rpx;
+    padding-bottom: 2rpx;
+}
+.qianggou-slider swiper-item{
+    background:#fff;
+border:10rpx solid #F65533;
+box-sizing:border-box;
+border-top:0;
+
+}
+
+.qianggou-slider .qianggou-nav {
+    display: flex;
+}
+
+.qianggou-slider .qianggou-item {
+    width: 140rpx; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 26rpx;
+    padding: 10rpx 30rpx;
+    margin: 10rpx 10rpx 0 10rpx;
+    border-top-left-radius: 10rpx;
+    border-top-right-radius: 10rpx;
+    text-align: center;
+}
+
+.qianggou-slider .qianggou-item.active {
+    background: #fff;
+}
+
+.scroll-wrapper {
+    background: #fff;
+    margin: 10rpx;
+    width: 650rpx;
+    margin-bottom: 20rpx;
+    padding: 20rpx;
+    box-sizing: border-box;
+    white-space: nowrap;
+}
+
+.scr-pic {
+    width: 100rpx;
+    height: 100rpx;
+}
+
+.scr-item {
+    text-align: center;
+    /* border: 1px solid red; */
+    display: inline-block;
+}
+
+.scr-item .title {
+    width: 150rpx;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 28rpx;
+}
+
+.scr-item .price {
+    color: #FE4648;
+    font-size: 28rpx;
+}
+
+.scr-item .qiang_btn {
+    font-size: 22rpx;
+    color: #fff;
+    background: #FAD62A;
+    width: 70%;
+    border-radius: 30rpx;
+    margin: 0 auto;
+}
+
+
+
+
+
+
+
+.tuijian-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 40rpx;
+    border-bottom: 1rpx solid rgba(0, 0, 0, 0.1);
+}
+.tuijian-item .poster-wrap {
+    position: relative;
+    flex-basis: 260rpx;
+}
+.tuijian-item .tuijian-poster {
+    /* position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%; */
+    width: 100%;
+}
+.tuijian-item .right {
+    display: flex;
+    flex-direction: column;
+    width: 380rpx;
+    margin-left: 30rpx;
+}
+.tuijian-item .right .tuijian-title {
+    font-size: 32rpx;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.tuijian-item .right .tuijian-title-f {
+    font-size: 28rpx;
+    color: rgba(0, 0, 0, 0.8);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.tuijian-item .right .bottom {
+    width: 100%;
+    align-self: flex-end;
+    display: flex;
+    justify-content: space-between;
+}
+.tuijian-item .right .bottom .tag {
+    font-size: 26rpx;
+    color: #F5522E;
+    border: none;
+}
+.tuijian-item .right .bottom .toPay {
+    align-self: flex-end;
+    font-size: 26rpx;
+    color: #fff;
+    background: #F5522E;
+    padding: 10rpx 20rpx;
+    border-radius: 30rpx;
+}
+.del {
+    font-size: 26rpx;
+    color: rgba(0, 0, 0, 0.8);
+    font-weight: 400;
+}
+
+
+
+
+.price-wrap {
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

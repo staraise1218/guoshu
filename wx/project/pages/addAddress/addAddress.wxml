@@ -1,0 +1,54 @@
+<view class="edit-item border-bottom-03 padding-20 left-center title-2 color-8">
+    <view class="left">联系人</view>
+    <input class="username right" bindinput="userName" placeholder="收货人姓名" />
+</view>
+<view class="edit-item border-bottom-03 padding-20 left-center title-2 color-8">
+    <view class="left">联系方式</view>
+    <input class="username right" bindinput="phoneNumber" placeholder="收货人手机号" />
+</view>
+
+
+
+
+
+
+
+<view class="section">
+    <view class=" section__title edit-item location-wrap border-bottom-03 padding-20 left-center title-2 color-8">
+        <view class="left">收获地址</view>
+        <view class="location right">
+            <image mode="widthFix" class="icon-loaction" src="/src/img/dingwei@2x.png" />
+            <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}">
+            <view class="location-info picker">
+               <!-- 选择省/市/区/街道 -->  {{region[0]}} {{region[1]}} {{region[2]}}
+            </view>
+            </picker>
+        </view>
+    </view>
+</view>
+
+
+
+
+
+
+<view class="edit-item border-bottom-03 padding-20 left-center title-2 color-8">
+    <view class="left">详细地址</view>
+    <textarea class="location right" bindinput="address" bindblur="bindTextAreaBlur" auto-height placeholder="街道门派、楼层房间等信息" />
+</view>
+
+
+
+<view class="edit-item border-bottom-03 padding-20 left-center title-2 color-8">
+    <view class="left">设为默认地址</view>
+    <view class="right-center" style="width:100%">
+        <van-switch 
+            checked="{{ checked }}" 
+            active-color="#1EC01D"
+            size="36rpx"
+            bind:change="onChange" />
+    </view>
+</view>
+
+
+<button class="save" bindtap="toSave">保存收货地址</button>

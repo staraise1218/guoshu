@@ -1,0 +1,20 @@
+<block wx:for="{{newsList}}" wx:key>
+    <view class="time-wrap">
+        <view class="time">{{item.send_time}}</view>
+    </view>
+    <view class="news-wrap">
+        <view class="news-title">
+            <view class="left">
+                <image class="icon-2" src="https://hbimg.huabanimg.com/873d7fafb815fbeeac7b5179cfeebdd6db0cc0c48c6-xZkG18_fw658" />
+                <view class="margin-left-20">系统公告</view>
+            </view>
+            <view class="right">
+                <view class="" data-id="{{item.message_id}}">查看详情</view>
+                <image class="icon-2" src="https://hbimg.huabanimg.com/3bc04df372e9e3f66421a5573743687437b517954fb-sgjpU5_fw658" />
+            </view>
+        </view>
+        <view class="conent">
+            {{item.message}}
+        </view>
+    </view>
+</block>

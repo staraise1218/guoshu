@@ -1,0 +1,8 @@
+button {
+    width: 95%;
+    position: absolute;
+    bottom: 20rpx;
+    left: 2.5%;
+    color: #fff;
+    background: linear-gradient(#f46644, #f64116);
+}

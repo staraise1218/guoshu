@@ -1,0 +1,57 @@
+.list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20rpx 30rpx;
+}
+.list-item .left {
+    display: flex;
+    justify-content: left;
+    flex-shrink: 1;
+}
+.list-item .address-icon {
+    position: relative;
+    width: 75rpx;
+    margin-right: 20rpx;
+    text-align: center;
+    line-height: 75rpx;
+    color: rgba(255,255,255,0.8);
+    font-size: 28rpx;
+}
+.list-item .address-icon .icon-title {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    width: 75rpx;
+    height: 75rpx;
+}
+.list-item .left .address-con {
+    flex-shrink: 1;
+}
+.list-item .left .title-2_f{
+    display: inline-block    
+}
+.list-item .left .address-info {
+    flex-wrap: wrap;
+    font-size: 26rpx;
+    padding-right: 10rpx;
+}
+.list-item .right {
+    white-space: nowrap;
+    font-size: 28rpx;
+    color: rgba(0,0,0,0.5);
+    padding-left: 20rpx;
+    border-left: 3rpx solid rgba(0,0,0,0.2);
+    flex-shrink: 1;
+}
+
+.add {
+    background: #F65C3A;
+    color: #fff;
+    width: 95%;
+    bottom: 20rpx;
+    position: absolute;
+    left: 2.5%;
+    font-size: 32rpx;
+}

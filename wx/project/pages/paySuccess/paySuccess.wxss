@@ -1,0 +1,16 @@
+.toIndex {
+    width: 95%;
+    font-size: 32rpx;
+    color: #fff;
+    background: linear-gradient(#F67457, #F8481F);
+    border: none;
+    margin-top: 50rpx;
+}
+.toOrder {
+    width: 95%;
+    font-size: 32rpx;
+    color: #222;
+    background: #fff;
+    margin-top: 30rpx;
+    border: 1rpx solid #999;
+}

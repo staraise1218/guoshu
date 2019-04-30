@@ -1,0 +1,12 @@
+.code {
+    border: 1rpx solid rgba(0,0,0,0.3);
+    border-radius: 5rpx;
+    padding: 4rpx 10rpx;
+}
+
+button {
+    width: 90%;
+    color: #fff;
+    background: linear-gradient(#f67355, #f8481f);
+    margin-top: 150rpx;
+}

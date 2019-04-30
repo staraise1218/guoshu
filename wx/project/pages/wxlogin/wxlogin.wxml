@@ -1,0 +1,2 @@
+<image class="login-img" mode="widthFix" src="http://img.hb.aicdn.com/4a7da949626c92f6de79258e24369284735ecac912802-T8zsdJ_fw658" />
+<button type="primary" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">微信用户一键登录</button>
