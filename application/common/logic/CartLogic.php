@@ -580,7 +580,7 @@ class CartLogic extends Model
                             $query->field('goods_id, goods_name, subtitle, tag, shop_price, original_img, is_on_sale, cat_id, city_code');
                         }])
                         ->where($cartWhere)->select();  // 获取购物车商品
-        p($selected);
+        p($cartList);
                         
         $cartCheckAfterList = $this->checkCartList($cartList);
 //        $cartCheckAfterList = $cartList;
