@@ -89,4 +89,14 @@ class Region extends Base {
         $res = array('status' => 1, 'msg' => '获取成功', 'result' => $province);
         exit(json_encode($res));
     }
+
+    // 获取配送城市
+    public function getDeliveryCity(){
+        $list = Db::name('region')
+          ->where('level', 2)
+          ->field('id, name, code')
+          ->select();
+
+        response_success($list);
+    }
 }
