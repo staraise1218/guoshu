@@ -36,6 +36,7 @@ class Cart extends Base {
         $cartLogic->setCityCode($city_code);
 
         $cartList = $cartLogic->getCartList();//用户购物车
+        p($cartList);
         $userCartGoodsTypeNum = $cartLogic->getUserCartGoodsNum();//获取用户购物车商品总数
 
         response_success($cartList);
