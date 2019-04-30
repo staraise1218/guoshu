@@ -330,7 +330,8 @@ class Cart extends Base {
         $action             = I("action"); // 立即购买
         $dosubmit           = I('dosubmit', 0);
         $send_method        = I('send_method');
-        $pickup_id        = I('pickup_id');
+        $pickup_id          = I('pickup_id');
+        $payMethod          = I('payMethod');
 
 
         mb_strlen($user_note) > 60 && response_error('', '备注超出限制可输入字符长度！');
@@ -371,6 +372,7 @@ class Cart extends Base {
                     'send_method' => $send_method,
                     'pickup_id' => $pickup_id,
                 );
+                $placeOrder->setPayMethod($payMethod);
                 $placeOrder->setExtraParams($extraParams);
                 $placeOrder->addNormalOrder();
                 $cartLogic->clear();
