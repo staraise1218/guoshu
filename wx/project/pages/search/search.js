@@ -169,27 +169,33 @@ Page({
   },
   toSearch: function (e) {
     let that = this;
-    wx.request({
-      url: Globalhost + 'Api/goods/goodslist',
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      data: {
-        city_code: 110100,
-        keyword: e.detail.value,
-        page: 1
-      },
-      success: function (res) {
-        console.log(res)
-        that.setData({
-          searchList: res.data.data,
-          historyShow: false
-        })
-        that.searchList(that, that.data.searchText);
-      }
-    })
-
+    if (that.data.searchText == '') {
+      wx.showToast({
+        title: '请输入你要搜索的商品',
+        icon: 'none'
+      })
+    } else {
+      wx.request({
+        url: Globalhost + 'Api/goods/goodslist',
+        method: 'POST',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        data: {
+          city_code: 110100,
+          keyword: e.detail.value,
+          page: 1
+        },
+        success: function (res) {
+          console.log(res)
+          that.setData({
+            searchList: res.data.data,
+            historyShow: false
+          })
+          that.searchList(that, that.data.searchText);
+        }
+      })
+    }
   },
   searchList: function (that, keyword) {
     if (that.data.searchText == '') {

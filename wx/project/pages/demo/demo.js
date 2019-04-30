@@ -18,6 +18,7 @@ Page({
     Store_id: '',           // 门店id
     StoreList: [],          // 门店列表
     Status: '',             // buy_now cart
+    payMethods: 'wx',   // 【默认微信支付】、余额支付 yue
   },
   onLoad: function (options) {
     let that = this;
@@ -211,77 +212,75 @@ Page({
 
   toPay: function () {
     let that = this;
-    if(wx.getStorageSync('openid')) {
+    if(that.data.payMethods == 'wx') {  // 微信支付
+      if(wx.getStorageSync('openid')) {
+        wx.request({
+          url: Globalhost + 'Api/cart/cart3',
+          method: 'POST',
+          header: {
+            'content-type': 'application/x-www-form-urlencoded'
+          },
+          data: {
+            user_id: wx.getStorageSync('user_id'),
+            address_id: that.data.Address_id,
+            coupon_id: that.data.Coupon_id,
+            user_money: 0,
+            action: that.data.Action,
+            goods_id: that.data.Goods_id,
+            goods_num: 1,
+            dosubmit: 1,
+            send_method: 1
+          },
+          success: function(res) {
+            console.log(res)
+            let ordermsg = res.data.data;
+            that.setData({
+              Order_sn: res.data.data.order_sn
+            })
+            wx.request({
+              url: Globalhost + 'Api/Wxapplet/unifiedOrder',
+              method: 'POST',
+              header: {
+                'content-type': 'application/x-www-form-urlencoded'
+              },
+              data: {
+                order_sn: res.data.data.order_sn,
+                openid: wx.getStorageSync('openid')
+              },
+              success: function(res) {
+                wx.requestPayment({
+                  'timeStamp': res.data.data.timeStamp, // 时间
+                  'nonceStr': res.data.data.nonceStr, // 随机字符串
+                  'package': res.data.data.package, // prepayId
+                  'signType': res.data.data.signType, // 签名算法
+                  'paySign': res.data.data.paySign, // 签名
+                  'success': function (res) {
+                    console.log(res)
+                    wx.navigateTo({
+                      url: '/pages/paySuccess/paySuccess?order_amount=' + ordermsg.order_amount + '&order_id=' + ordermsg.order_id + '&order_sn=' + ordermsg.order_sn
+                    })
+                  }
+                })
+              }
+            })
+          }
+        })
+      } else {
+        wx.navigateTo({
+          url: '/pages/wxlogin/wxlogin'
+        })
+      }
+    } else { // 余额支付
       wx.request({
+        url: '',
         url: Globalhost + 'Api/cart/cart3',
         method: 'POST',
         header: {
           'content-type': 'application/x-www-form-urlencoded'
         },
-        data: {
-          user_id: wx.getStorageSync('user_id'),
-          address_id: that.data.Address_id,
-          coupon_id: that.data.Coupon_id,
-          user_money: 0,
-          action: that.data.Action,
-          goods_id: that.data.Goods_id,
-          goods_num: 1,
-          dosubmit: 1,
-          send_method: 1
-        },
         success: function(res) {
-          console.log(res)
-          that.setData({
-            Order_sn: res.data.data.order_sn
-          })
-          wx.request({
-            url: Globalhost + 'Api/Wxapplet/unifiedOrder',
-            method: 'POST',
-            header: {
-              'content-type': 'application/x-www-form-urlencoded'
-            },
-            data: {
-              order_sn: res.data.data.order_sn,
-              openid: wx.getStorageSync('openid')
-            },
-            success: function(res) {
-              console.log(res)
-              console.log(res.data.data.timeStamp,)
-              // wx.requestPayment({
-              //   timeStamp: res.data.data.timeStamp,
-              //   nonceStr: res.data.data.timeStamp.nonceStr,
-              //   package: res.data.data.timeStamp.package,
-              //   signType: res.data.data.timeStamp.signType,
-              //   paySign: res.data.data.timeStamp.paySign,
-              //   success: function(res){
-              //     console.log(res)
-              //   },
-              //   fail: function(res){
-              //     console.log(res)
-              //   }
-              // })
-              
-              wx.requestPayment({
-                'timeStamp': res.data.data.timeStamp, // 时间
-                'nonceStr': res.data.data.nonceStr, // 随机字符串
-                'package': res.data.data.package, // prepayId
-                'signType': res.data.data.signType, // 签名算法
-                'paySign': res.data.data.paySign, // 签名
-
-                'success': function (res) {
-                  console.log(res)
-                  wx.navigateTo({
-                    url: '/pages/'
-                  })
-                }
-              })
-            }
-          })
+          
         }
-      })
-    } else {
-      wx.navigateTo({
-        url: '/pages/wxlogin/wxlogin'
       })
     }
   },
@@ -351,5 +350,19 @@ Page({
       }
     })
   },
+  /**
+   * 选择支付方式
+   */
+  choosePayBtn: function (e) {
+    if(e.currentTarget.dataset.paystatus == "yue") {
+      this.setData({
+        payMethods: 'yue'
+      })
+    } else if (e.currentTarget.dataset.paystatus == 'wx') {
+      this.setData({
+        payMethods: 'wx'
+      })
+    }
+  }
 
 })

@@ -85,6 +85,7 @@ Page({
 
   },
   onLoad: function () {
+    // wx.hideTabBar()
     let that = this;
   },
   onShow: function () {
@@ -122,11 +123,12 @@ Page({
     if(wx.getStorageSync('address') == '位置') {
       that.getUserLocation(); // 获取定位
     }
-    if(wx.getStorageSync('address')) {
-      that.setData({
-        address: wx.getStorageSync('address')
-      })
+    if(!wx.getStorageSync('address')) {
+      that.getUserLocation(); // 获取定位
     }
+    that.setData({
+      address: wx.getStorageSync('address')
+    })
   },
   /**
    * 设置轮播图高度

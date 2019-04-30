@@ -195,7 +195,6 @@ Page({
    * 待评价
    */
   loadPintlun: function (that) {
-    
     wx.request({
       url: Globalhost + 'Api/order/order_list',
       method: 'POST',
@@ -316,34 +315,90 @@ Page({
       },
       data: {
         order_sn: e.currentTarget.dataset.orderSn,
-        openid: 'omnTc4kbM0dc4Cj3Q6V32EF8jXaQ'
+        openid: wx.getStorageSync('openid')
       },
       success: function(res) {
         console.log(res)
-        let data = res.data.data;
-        wx.request({
-          url: Globalhost + 'api/WxappletBuyGoodsCallback/testpay',
-          method: 'POST',
-          data: {
-            order_sn: e.currentTarget.dataset.orderSn
-          },
-          header: {
-            'content-type': 'application/x-www-form-urlencoded'
-          },
-          success: function (res) {
+        wx.showToast({
+          title: res.data.msg,
+          icon: 'none'
+        })
+        wx.requestPayment({
+          'timeStamp': res.data.data.timeStamp, // 时间
+          'nonceStr': res.data.data.nonceStr, // 随机字符串
+          'package': res.data.data.package, // prepayId
+          'signType': res.data.data.signType, // 签名算法
+          'paySign': res.data.data.paySign, // 签名
+          'success': function (res) {
             console.log(res)
-            that.listLoad(that);
-            that.loadPintlun(that);
-            if(res.data.code == 200) {
-              wx.showToast({
-                title: res.data.msg,
-                icon: 'success'
-              })
-            }
+            wx.navigateTo({
+              url: '/pages/paySuccess/paySuccess'
+            })
           }
         })
       }
     })
   },
+  // toPay: function (e) {
+  //   console.log(e.currentTarget.dataset)
+  //   let that = this;
+  //   if(wx.getStorageSync('openid')) {
+  //     wx.request({
+  //       url: Globalhost + 'Api/cart/cart3',
+  //       method: 'POST',
+  //       header: {
+  //         'content-type': 'application/x-www-form-urlencoded'
+  //       },
+  //       data: {
+  //         user_id: wx.getStorageSync('user_id'),
+  //         address_id: that.data.Address_id,
+  //         coupon_id: that.data.Coupon_id,
+  //         user_money: 0,
+  //         action: that.data.Action,
+  //         goods_id: that.data.Goods_id,
+  //         goods_num: 1,
+  //         dosubmit: 1,
+  //         send_method: 1
+  //       },
+  //       success: function(res) {
+  //         console.log(res)
+  //         that.setData({
+  //           Order_sn: res.data.data.order_sn
+  //         })
+  //         wx.request({
+  //           url: Globalhost + 'Api/Wxapplet/unifiedOrder',
+  //           method: 'POST',
+  //           header: {
+  //             'content-type': 'application/x-www-form-urlencoded'
+  //           },
+  //           data: {
+  //             order_sn: res.data.data.order_sn,
+  //             openid: wx.getStorageSync('openid')
+  //           },
+  //           success: function(res) {
+  //             wx.requestPayment({
+  //               'timeStamp': res.data.data.timeStamp, // 时间
+  //               'nonceStr': res.data.data.nonceStr, // 随机字符串
+  //               'package': res.data.data.package, // prepayId
+  //               'signType': res.data.data.signType, // 签名算法
+  //               'paySign': res.data.data.paySign, // 签名
+
+  //               'success': function (res) {
+  //                 console.log(res)
+  //                 wx.navigateTo({
+  //                   url: '/pages/paySuccess/paySuccess'
+  //                 })
+  //               }
+  //             })
+  //           }
+  //         })
+  //       }
+  //     })
+  //   } else {
+  //     wx.navigateTo({
+  //       url: '/pages/wxlogin/wxlogin'
+  //     })
+  //   }
+  // },
 
 })

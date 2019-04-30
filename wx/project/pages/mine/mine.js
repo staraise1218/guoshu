@@ -13,10 +13,6 @@ Page({
       },{
         num: 0,
         title: '红包',
-        func: 'toHongbao'
-      },{
-        num: 0,
-        title: '优惠券',
         func: 'toYouhui'
       },{
         num: 0,

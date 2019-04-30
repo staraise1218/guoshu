@@ -138,9 +138,9 @@ Page({
             }
           })
         }
-
       }
     }
+    that.calculation(that); // 更新购物并计算结果
   },
   /**
    * 渲染列表
@@ -185,7 +185,7 @@ Page({
           })
         }
         console.log(that.data.orderList)
-        that.calculation(that);
+        that.calculation(that); // 更新购物并计算结果
       }
     })
   },
@@ -193,33 +193,49 @@ Page({
    * 更新购物并计算结果
    */
   calculation: function (that) {
-    var posdata = []
-    for (var i = 0; i < that.data.orderList.length; i++) {
-      posdata[i] = {};
-      posdata[i].id = that.data.orderList[i].cat_id;
-      posdata[i].goods_num = that.data.orderList[i].goods_num;
-      posdata[i].selected = that.data.orderList[i].selected;
-    }
-    posdata = JSON.stringify(posdata)
-    wx.request({
-      url: Globalhost + 'Api/cart/AsyncUpdateCart',
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      data: {
-        user_id: wx.getStorageSync('user_id'),
-        cart: posdata
-      },
-      success: function (res) {
-        let data = res.data.data;
-        console.log(data)
-        that.setData({
-          total_fee: data.result.total_fee,
-          cartList: data.result.cartList
-        })
+    var flag = true;
+    if(flag) {
+      flag = false;
+      var posdata = []
+      for (var i = 0; i < that.data.orderList.length; i++) {
+        posdata[i] = {};
+        posdata[i].id = that.data.orderList[i].cat_id;
+        posdata[i].goods_num = that.data.orderList[i].goods_num;
+        posdata[i].selected = that.data.orderList[i].selected;
       }
-    })
+      posdata = JSON.stringify(posdata)
+      wx.request({
+        url: Globalhost + 'Api/cart/AsyncUpdateCart',
+        method: 'POST',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        data: {
+          user_id: wx.getStorageSync('user_id'),
+          cart: posdata
+        },
+        success: function (res) {
+          let data = res.data.data;
+          console.log(data)
+          if(data.result.cartList.length == that.data.orderList.length) {
+            that.setData({
+              chooseAllShow: true
+            })
+          } else {
+            that.setData({
+              chooseAllShow: false
+            })
+          }
+          that.setData({
+            total_fee: data.result.total_fee,
+            cartList: data.result.cartList
+          })
+        }
+      })
+      setTimeout(function () {
+        flag = true;
+      }, 500)
+    }
   },
   /***
    * 选中状态
@@ -247,7 +263,7 @@ Page({
    */
   chooseAll: function () {
     let that = this;
-    console.log(that.data.orderList)
+    // console.log(that.data.orderList)
     var orderList = [];
     if (!that.data.chooseAllShow) {
       for (var i = 0; i < that.data.orderList.length; i++) {

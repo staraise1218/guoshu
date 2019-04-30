@@ -47,7 +47,8 @@ Page({
                   'addressList.mobile': data[i].mobile,
                   'addressList.country': data[i].country,
                   'addressList.fulladdress': data[i].fulladdress,
-                  'addressList.address_id': data[i].address_id
+                  'addressList.address_id': data[i].address_id,
+                  'addressList.is_default': data[i].is_default,
               })
               console.log(that.data.addressList)
             }

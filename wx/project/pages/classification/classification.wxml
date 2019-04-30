@@ -68,7 +68,7 @@
                             <view class="title-3_f">{{item.subtitle}}</view>
                             <view class="margin-top-50 between-center">
                                 <view class="price">￥{{item.shop_price}}</view>
-                                <image class="icon-2" bindtap="addShopCart" src="https://hbimg.huabanimg.com/ff8af7f0827e85d34cc15b364ff139c61e6fe5bc5b3-0QRyv2_fw658" />
+                                <image class="icon-2" data-id="{{item.goods_id}}" catchtap="addCart" src="https://hbimg.huabanimg.com/ff8af7f0827e85d34cc15b364ff139c61e6fe5bc5b3-0QRyv2_fw658" />
                             </view>
                         </view>
                     </view>

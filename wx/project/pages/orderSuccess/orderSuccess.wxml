@@ -77,7 +77,7 @@
 </view>
 
 
-<view class="padding-30 border-bottom  between-center more-0">
+<!-- <view class="padding-30 border-bottom  between-center more-0">
     <view class="left-center">
         <image class="icon-3 margin-right-20" src="http://img.hb.aicdn.com/81716659127cb51c349ebe3d734efe5bf57335164f7-m4GiTZ_fw658" />
         <view class="title-2">优惠券</view>
@@ -85,7 +85,7 @@
     <view class="">
         <view class="title-2_f margin-right-30">{{msg.coupon_price}}</view>
     </view>
-</view>
+</view> -->
 
 
 <view class="padding-lr-30 padding-tb-20  between-center">

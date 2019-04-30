@@ -20,7 +20,7 @@
             </view>
         </view>
 
-        <swiper class="" current="{{currentTab2}}" duration="300" bindchange="swiperTab2">
+        <swiper class="swiper" current="{{currentTab2}}" duration="300" bindchange="swiperTab2">
             <!-- 1 -->
             <swiper-item>
                 <view class="item-box-1">
@@ -28,7 +28,8 @@
                         <block wx:for="{{qianggou}}" wx:key>
                             <view class="scr-item" data-id="{{item.goods_id}}" bindtap="toCon">
                                 <image class="scr-pic" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
-                                <view class="title">{{item.goods_name}}</view>
+                                <view class="title">{{item.goods.goods_name}}</view>
+                                <view class="title">{{item.goods.subtitle}}</view>
                                 <view class="price">￥{{item.price}}</view>
                                 <view class="qiang_btn">马上抢</view>
                             </view>
@@ -43,7 +44,8 @@
                         <block wx:for="{{nextList}}" wx:key>
                             <view class="scr-item"  data-id="{{item.goods_id}}" bindtap="toCon">
                                 <image class="scr-pic" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
-                                <view class="title">{{item.goods_name}}</view>
+                                <view class="title">{{item.goods.goods_name}}</view>
+                                <view class="title">{{item.goods.subtitle}}</view>
                                 <view class="price">￥{{item.price}}</view>
                                 <view class="qiang_btn title-3">即将开售</view>
                             </view>

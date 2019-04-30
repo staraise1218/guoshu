@@ -6,53 +6,21 @@ Page({
     orderid: '', // 订单id
   },
   onLoad: function (options) {
-    console.log(options.orderid)
+    console.log(options)
     let that = this;
     that.setData({
-      orderid: options.orderid
-    })
-    that.orderCon(that);
-  },
-
-
-
-
-
-
-
-  orderCon: function (that) {
-    wx.request({
-      url: Globalhost + 'Api/order/order_detail',
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      data: {
-        order_id: that.data.orderid,
-        user_id: wx.getStorageSync('user_id')
-      },
-      success: function(res) {
-        console.log(res)
-        that.setData({
-          msg: res.data.data
-        })
-      }
+      orderid: options.order_id
     })
   },
-
   toHome: function () {
     wx.switchTab({
       url: '/pages/index/index'
     })
   },
-  toOrder: function () {
-    let that = this;
-    wx.showToast({
-      title: '敬请期待',
-      icon: 'none'
+  toOrder: function (e) {
+    console.log(e.currentTarget.dataset.orderId)
+    wx.navigateTo({
+      url: '/pages/orderSuccess/orderSuccess?orderid='+e.currentTarget.dataset.orderId
     })
-    // wx.navigateTo({
-    //   url: '/pages/orderSuccess/orderSuccess?orderid='+that.data.orderid
-    // })
   }
 })

@@ -11,14 +11,14 @@
               <image class="icon-1" src="/src/img/xiangji(1)@2x.png" />
               添加照片
           </view>
-          <block wx:for="{{item.imgArr}}" wx:key>
+          <block wx:for="{{item.images}}" wx:key>
               <image class="ret-img" src="{{item}}" />
           </block>
       </view>
     </view>
     <view data-goodsid="{{item.goods_id}}" catchtap="anonymous" class="choose-bar margin-tb-30 padding-tb-20 padding-lr-30 title-2 between-center">
         匿名
-        <image wx:if="{{item.is_anonymous}}" class="icon_2" src="https://hbimg.huabanimg.com/af0f6c8f8b4ba1608f1985fd5c491db279dd940c6cf-efCOPl_fw658" />
+        <image wx:if="{{item.is_anonymous == 1}}" class="icon_2" src="https://hbimg.huabanimg.com/af0f6c8f8b4ba1608f1985fd5c491db279dd940c6cf-efCOPl_fw658" />
         <image wx:else class="icon_2" src="https://hbimg.huabanimg.com/af41d36cf3423f49b5180fab5f14f2b3db82652a67e-dDcFEg_fw658" />
     </view>
 

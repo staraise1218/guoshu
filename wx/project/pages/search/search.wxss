@@ -105,7 +105,7 @@
 .search-icon {
     position: absolute;
     left: 58rpx;
-    top: 19rpx;
+    top: 15rpx;
     width: 20px;
     height: 20px;
 }
