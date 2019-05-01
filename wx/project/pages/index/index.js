@@ -208,6 +208,7 @@ Page({
 
   //滑动切换 
   swiperTab: function (e) {
+    console.log(e)
     loadingfunc(); // 加载函数
     var that = this;
     that.setData({

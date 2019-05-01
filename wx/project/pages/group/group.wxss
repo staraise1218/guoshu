@@ -119,8 +119,8 @@
     padding-bottom: 2rpx;
 }
 .qianggou-slider swiper-item{
-    background:#fff;
-    border:10rpx solid #F65533;
+    /* background:#fff; */
+    /* border:10rpx solid #F65533; */
     box-sizing:border-box;
     border-top:0;
 }
@@ -148,7 +148,7 @@
 }
 
 .scroll-wrapper {
-    background: #fff;
+    /* background: #fff; */
     margin: 10rpx;
     width: 650rpx;
     margin-bottom: 20rpx;
@@ -278,7 +278,9 @@
 
 
 .swiper {
-    height:310rpx
+    height:310rpx;
+    background:#fff;
+    border:12rpx solid #f65533;
 }
 
 

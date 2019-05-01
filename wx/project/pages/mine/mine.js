@@ -14,10 +14,11 @@ Page({
         num: 0,
         title: '红包',
         func: 'toYouhui'
-      },{
-        num: 0,
-        title: '积分'
-      }
+      },
+      // {
+      //   num: 0,
+      //   title: '积分'
+      // }
     ],
     orderMsg: [
       {
@@ -71,12 +72,12 @@ Page({
       }
     ],
     serviceMsg: [
-      {
-        url: 'https://hbimg.huabanimg.com/fccc80fd56d9c9936b23f1ee5f345a4b531af6491c27-9DaYj9_fw658',
-        title: '邀请得红包',
-        style: 'serviceActive',
-        func: 'toShare'
-      },
+      // {
+      //   url: 'https://hbimg.huabanimg.com/fccc80fd56d9c9936b23f1ee5f345a4b531af6491c27-9DaYj9_fw658',
+      //   title: '邀请得红包',
+      //   style: 'serviceActive',
+      //   func: 'toShare'
+      // },
       {
         url: 'http://img.hb.aicdn.com/a5b64c56d1f785c25286e484d43696409bda8d9b9b9-Cl3bvW_fw658',
         title: '收货地址',

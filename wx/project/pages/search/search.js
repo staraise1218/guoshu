@@ -8,6 +8,7 @@ Page({
     searchText: '', // 搜索文字
     isSearch: false, // 是否搜索了
     historyShow: true, // 历史记录是否加载
+    isSearch: false,  // 是否收索过， 搜索过显示推荐
   },
   onLoad: function (options) {
     let that = this;
@@ -164,7 +165,8 @@ Page({
     let that = this;
     console.log(e.detail.value)
     that.setData({
-      searchText: e.detail.value
+      searchText: e.detail.value,
+      isSearch: true
     })
   },
   toSearch: function (e) {
@@ -198,6 +200,9 @@ Page({
     }
   },
   searchList: function (that, keyword) {
+    that.setData({
+      isSearch: true
+    })
     if (that.data.searchText == '') {
       wx.showToast({
         title: '请输入你要搜索的商品',
@@ -259,7 +264,8 @@ Page({
   tagSearch: function (e) {
     let that = this;
     that.setData({
-      searchText: e.currentTarget.dataset.text
+      searchText: e.currentTarget.dataset.text,
+      isSearch: true
     })
     that.searchList(that, e.currentTarget.dataset.text);
   },
@@ -268,6 +274,9 @@ Page({
    */
   searchBtn: function () {
     let that = this;
+    that.setData({
+      isSearch: true
+    })
     that.searchList(that, that.data.searchText);
     that.setData({
       historyShow: false

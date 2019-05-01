@@ -16,7 +16,11 @@
             </view>
             <view class="qianggou-item {{currentTab2 == 1 ?'active':''}}" data-current="{{1}}" bindtap="clickTap2">
                 <view class="titme">{{item.font}}</view>
-                <view class="tips">下期预告</view>
+                <!-- <view class="tips">下期预告</view> -->
+                <view class="tips">
+                    <view> 下期预告 </view>
+                    <view class="title-3_f">即将开始</view>
+                </view>
             </view>
         </view>
 

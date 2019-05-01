@@ -46,7 +46,7 @@
 
 
 <!-- 推荐商品 -->
-<view class="tuijian-bg" wx:if="{{searchList.length > 0}}">
+<view class="tuijian-bg" wx:if="{{isSearch}}">
     <view class="title margin-left-30 margin-bottom-30">推荐商品</view>
     <scroll-view scroll-x class="commodisyScro">
         <block wx:for="{{tuijian}}" wx:key>

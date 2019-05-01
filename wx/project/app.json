@@ -1,6 +1,9 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/group/group",
+    "pages/getPhone/getPhone",
+    "pages/shoppingCart/shoppingCart",
     "pages/commodityDetails/commodityDetails",
     "pages/preCommodityDetails/preCommodityDetails",
     "pages/news/news",
@@ -10,7 +13,6 @@
     "pages/demo/demo",
     "pages/search/search",
     "pages/pinglun/pinglun",
-    "pages/shoppingCart/shoppingCart",
     "pages/mine/mine",
     "pages/peisongList/peisongList",
     "pages/myOrderB/myOrderB",
@@ -19,7 +21,6 @@
     "pages/stationmaster/stationmaster",
     "pages/storeList/storeList",
     "pages/link/link",
-    "pages/group/group",
     "pages/order/order",
     "pages/orderSuccess/orderSuccess",
     "components/recommend/rec",
