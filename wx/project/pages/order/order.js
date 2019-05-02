@@ -21,6 +21,8 @@ Page({
     byNowGoodId: '', // 立即购买时的 byNowGoodId
 
     status: '',  // 页面状态 【byNow：立即购买】
+
+    payMethods: 'weixin', // 【默认微信支付】、余额支付 yue
   },
   onLoad: function (options) {
     let that = this;

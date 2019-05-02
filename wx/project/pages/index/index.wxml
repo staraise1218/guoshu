@@ -1,11 +1,13 @@
 <!-- 吸附顶部 -->
 <view class="fix-wrap">
   <view class='topbar'>
-    <view class="left-center logo-title title-2 margin-right-20">果蔬</view>
-    <image class="location-icon"
-      src="https://hbimg.huabanimg.com/698f1951de21b12c43072ae841182f165e05e9cd890-xBN8IX_fw658" />
-    <view class="location" selectable="false" space="false" decode="false" bindtap="cityshow">
-      {{address}}
+    <!-- <view class="left-center logo-title title-2 margin-right-20">果蔬</view> -->
+    <view  bindtap="cityshow">
+      <image class="location-icon"
+        src="https://hbimg.huabanimg.com/698f1951de21b12c43072ae841182f165e05e9cd890-xBN8IX_fw658" />
+      <view class="location" selectable="false" space="false" decode="false">
+        {{address}}
+      </view>
     </view>
     <view class="search" hover-class="none" hover-stop-propagation="false">
       <image class="search-icon"
@@ -20,8 +22,8 @@
     </view>
   </view>
   <!-- tab切换 -->
-  <view style="position: relative">
-    <scroll-view class="topScroll left-center" scroll-x>
+  <view style="position: relative;" class="asdf">
+    <scroll-view class="topScroll left-center" style="width: 670rpx;" scroll-x>
       <block wx:for="{{categoryList}}" wx:key>
         <view class="tab-item {{currentTab==index?'tab-active':''}}" data-id="{{item.id}}" data-current="{{index}}"
           bindtap="clickTap">
@@ -324,7 +326,10 @@
 </swiper>
 
 
-
+<!-- alert box -->
+<view class="alert-box" wx:if="{{cityShow}}"></view>
+<!-- alert box -->
+<!-- 选择城市弹窗 -->
 <view class="box" wx:if="{{cityShow}}">
   <view class="city-box">
     <view class="city-btn">
@@ -342,3 +347,18 @@
     </picker-view>
   </view>
 </view>
+<!-- 选择城市弹窗 END-->
+
+<!-- 红包弹窗 -->
+<!-- <view class="redBag-box">
+  <view class="content">
+    <image src="https://app.zhuoyumall.com:444/wx/img/hongbao.png" />
+    <view class="text">
+      <view class="price">10</view>
+    </view>
+  </view>
+</view> -->
+<!-- 红包弹窗 END -->
+
+
+

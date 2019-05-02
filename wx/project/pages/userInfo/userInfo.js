@@ -82,27 +82,35 @@ Page({
     var that = this;
     this.setData({
       nameShow: !this.data.nameShow,
-      nickname: this.data.test
+      // nickname: this.data.test
     })
-    wx.request({
-      url: Globalhost + 'Api/user/changeField',
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      data: {
-        user_id: wx.getStorageSync('user_id'),
-        field: 'nickname',
-        fieldValue: this.data.nickname
-      },
-      success: function(res) {
-        console.log(res)
-        that.setData({
-          nickname: that.data.nickname
-        })
-        wx.setStorageSync('nickname', that.data.nickname)
-      }
-    })
+    if(that.data.nickname == '') {
+      wx.showToast({
+        title: '请输入昵称',
+        icon: 'none',
+        duration: 2000
+      })
+    } else {
+      wx.request({
+        url: Globalhost + 'Api/user/changeField',
+        method: 'POST',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        data: {
+          user_id: wx.getStorageSync('user_id'),
+          field: 'nickname',
+          fieldValue: this.data.nickname
+        },
+        success: function(res) {
+          console.log(res)
+          that.setData({
+            nickname: that.data.nickname
+          })
+          wx.setStorageSync('nickname', that.data.nickname)
+        }
+      })
+    }
   },
   changName: function (e) { // 修改昵称
     console.log(e.detail.value)

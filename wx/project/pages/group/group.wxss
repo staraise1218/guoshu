@@ -119,11 +119,10 @@
     padding-bottom: 2rpx;
 }
 .qianggou-slider swiper-item{
-    background:#fff;
-border:10rpx solid #F65533;
-box-sizing:border-box;
-border-top:0;
-
+    /* background:#fff; */
+    /* border:10rpx solid #F65533; */
+    box-sizing:border-box;
+    border-top:0;
 }
 
 .qianggou-slider .qianggou-nav {
@@ -149,7 +148,7 @@ border-top:0;
 }
 
 .scroll-wrapper {
-    background: #fff;
+    /* background: #fff; */
     margin: 10rpx;
     width: 650rpx;
     margin-bottom: 20rpx;
@@ -165,16 +164,19 @@ border-top:0;
 
 .scr-item {
     text-align: center;
-    /* border: 1px solid red; */
+    border: 1px solid rgba(0, 0, 0, 0.05);
     display: inline-block;
+    margin-right: 15rpx;
+    border-radius: 10rpx;
+    padding: 10rpx;
 }
 
 .scr-item .title {
     width: 150rpx;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 28rpx;
+    /* text-overflow: ellipsis; */
+    font-size: 22rpx;
 }
 
 .scr-item .price {
@@ -275,7 +277,11 @@ border-top:0;
 
 
 
-
+.swiper {
+    height:310rpx;
+    background:#fff;
+    border:12rpx solid #f65533;
+}
 
 
 

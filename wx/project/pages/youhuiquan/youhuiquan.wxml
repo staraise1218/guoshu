@@ -25,7 +25,7 @@
     <view class="title-2_f margin-top-20">有效期:2019-20-16值2019-03-16</view>
 </view> -->
 
-<block wx:for="{{card}}" wx:key>
+<block wx:if="{{card.length > 0}}" wx:for="{{card}}" wx:key>
     <view class="quan-item  {{item.status == 1 ? 'over' : 'active'}} radius-30" 
         bindtap="toOrder" 
         data-couponIndex="{{index}}" 
@@ -37,7 +37,8 @@
         <view class="price-left">
             <view class="price">￥<view class="price-big">{{item.money}}</view></view>
             <view class="right">
-                <view class="title price">优惠券</view>
+                <!-- <view class="title price">优惠券</view> -->
+                <view class="title price"></view>
                 <view class="price-none title-3">{{item.use_scope}}</view>
             </view>
         </view>

@@ -63,6 +63,25 @@ Page({
     that.setData({
       goods_id: options.goods_id
     })
+    that.loading(that);
+    // ,
+    // wx.request({
+    //   url: Globalhost + 'Api/cart/addCart',
+    //   method: 'POST',
+    //   header: {
+    //     'content-type': 'application/x-www-form-urlencoded'
+    //   },
+    //   data: {
+    //     user_id: wx.getStorageSync('user_id'),
+    //     goods_id: that.data.goods_id,
+    //     goods_num: 1
+    //   },
+    //   success: function (res) {
+    //     console.log(res)
+    //   }
+    // })
+  },
+  loading: function (that) {
     wx.request({
       url: Globalhost + 'Api/goods/goodsInfo',
       method: 'POST',
@@ -96,15 +115,9 @@ Page({
             [imgUrls_]: 'https://app.zhuoyumall.com:444' + data.goods_images_list[i].image_url
           })
         }
-        console.log(data.goods_content)
-
         var reg = /src="/m
         reg.test(data.goods_content)
-        console.log(reg.test(data.goods_content))
-        console.log(data.goods_content.replace(reg, 'https://app.zhuoyumall.com:444'))
-
         data.goods_content = data.goods_content.replace(reg, 'style="max-width:100%;height:auto" src="https://app.zhuoyumall.com:444')
-        console.log(data.goods_content)
         // 轮播图 END
         that.setData({
           'MSM.goods_name': data.goods_name,
@@ -123,7 +136,7 @@ Page({
         'content-type': 'application/x-www-form-urlencoded'
       },
       data: {
-        goods_id: options.goods_id,
+        goods_id: that.data.goods_id,
         // goods_num: 1,
         // item_id: 0
       },
@@ -131,27 +144,8 @@ Page({
         console.log(res.data.data.activityInfo.end_time)
         // 倒计时
         that.TimeDown(Number(res.data.data.activityInfo.end_time) * 1000)
-        that.setData({
-
-        })
       }
     })
-    // ,
-    // wx.request({
-    //   url: Globalhost + 'Api/cart/addCart',
-    //   method: 'POST',
-    //   header: {
-    //     'content-type': 'application/x-www-form-urlencoded'
-    //   },
-    //   data: {
-    //     user_id: wx.getStorageSync('user_id'),
-    //     goods_id: that.data.goods_id,
-    //     goods_num: 1
-    //   },
-    //   success: function (res) {
-    //     console.log(res)
-    //   }
-    // })
   },
   /**
    * 加入购物车
@@ -174,8 +168,11 @@ Page({
         if (res.data.code == 200) {
           wx.showToast({
             title: res.data.msg,
-            icon: 'none'
+            icon: 'none',
           })
+          console.log(that.data.num)
+          console.log(res.data.data.total_num)
+          that.loading(that);
         } else {
           wx.showToast({
             title: res.data.msg,
@@ -280,7 +277,7 @@ Page({
    * 跳转详情
    */
   go: function (e) {
-    console.log(e.currentTarget.dataset)
+    // console.log(e.currentTarget.dataset)
     wx.navigateTo({
       url: '/pages/commodityDetails/commodityDetails?goods_id=' + e.currentTarget.dataset.id
     })
@@ -317,17 +314,16 @@ Page({
   
   //图片滑动事件
   change: function (e) {
-    console.log(e.detail);
+    // console.log(e.detail);
     var that=this;
     var index = e.detail.current;
-    console.log(index);
+    // console.log(index);
     var imgUrls = that.data.imgUrls;
 
     // that.imgH(imgUrls[index])
   },
   //获取图片的高度，把它设置成swiper的高度
   imgH: function (img) {
-    console.log(img)
     var that=this
     var winWid = wx.getSystemInfoSync().windowWidth;         //获取当前屏幕的宽度*2
     wx.getImageInfo({//获取图片长宽等信息
@@ -343,7 +339,7 @@ Page({
     })
   },
   onShareAppMessage: function () {
-    console.log(this.data)
+    // console.log(this.data)
     return {
       title: '果蔬直销',
       desc: this.data.MSM.goods_name,

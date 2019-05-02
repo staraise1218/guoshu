@@ -3,7 +3,7 @@ const Globalhost = getApp().globalData.Globalhost;
 Page({
   data: {
     orderid: '',
-    goods_list: [],  // 返回数据
+    goods_list: [], // 返回数据
     test: [],
   },
   onLoad: function (options) {
@@ -20,9 +20,9 @@ Page({
       },
       data: {
         order_id: options.orderid,
-        user_id: wx.getStorageSync('user_id')
+        user_id: wx.getStorageSync('user_id'),
       },
-      success: function(res) {
+      success: function (res) {
         let data = res.data.data
         that.setData({
           goods_list: data.goods_list
@@ -31,10 +31,10 @@ Page({
     })
     setTimeout(function () {
       console.log(that.data.goods_list)
-      for(var i = 0; i < that.data.goods_list.length; i++) {
+      for (var i = 0; i < that.data.goods_list.length; i++) {
         var str = 'goods_list[' + i + '].is_anonymous';
         that.setData({
-          [str]: true
+          [str]: 1
         })
       }
       console.log(that.data.goods_list)
@@ -52,13 +52,13 @@ Page({
         const tempFilePaths = res.tempFilePaths
         console.log(tempFilePaths)
         console.log(res)
-        for(var i = 0; i < that.data.goods_list.length; i++) {
-          if(that.data.goods_list[i].goods_id == e.currentTarget.dataset.goodsid) {
-            var str = 'goods_list[' + i + '].imgArr';
-            var imgArr = that.data.goods_list[i].imgArr || [];
-            imgArr.push(tempFilePaths[0])
+        for (var i = 0; i < that.data.goods_list.length; i++) {
+          if (that.data.goods_list[i].goods_id == e.currentTarget.dataset.goodsid) {
+            var str = 'goods_list[' + i + '].images';
+            var images = that.data.goods_list[i].images || [];
+            images.push(tempFilePaths[0])
             that.setData({
-              [str]: imgArr
+              [str]: images
             })
           }
         }
@@ -67,10 +67,33 @@ Page({
     })
   },
   fabu: function () {
-    wx.showToast({
-      title: '占未开通',
-      icon: 'none'
-    })
+    let that = this;
+    let imgList = [];
+    console.log(that.data.goods_list)
+    for (let i = 0; i < that.data.goods_list.length; i++) {
+      var img = that.data.goods_list[i].images
+      img = JSON.stringify(img)
+      console.log(img)
+      that.data.goods_list[i].images = img;
+      console.log(that.data.goods_list)
+      that.data.goods_list[i].order_id = that.data.orderid;
+      that.data.goods_list[i].user_id = wx.getStorageSync('user_id');
+      wx.request({
+        url: Globalhost + 'Api/order/add_comment',
+        method: 'POST',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        data: that.data.goods_list[i],
+        success: function (res) {
+          console.log(res)
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'none'
+          })
+        }
+      })
+    }
   },
   /**
    * 切换是否匿名
@@ -78,12 +101,18 @@ Page({
   anonymous: function (e) {
     let that = this;
     console.log(e.currentTarget.dataset.goodsid)
-    for(var i = 0; i < that.data.goods_list.length; i++) {
-      if(that.data.goods_list[i].goods_id == e.currentTarget.dataset.goodsid) {
+    for (var i = 0; i < that.data.goods_list.length; i++) {
+      if (that.data.goods_list[i].goods_id == e.currentTarget.dataset.goodsid) {
         var str = 'goods_list[' + i + '].is_anonymous';
-        that.setData({
-          [str]: !that.data.goods_list[i].is_anonymous
-        })
+        if(that.data.goods_list[i].is_anonymous == 0) {
+          that.setData({
+            [str]: 1
+          })
+        } else {
+          that.setData({
+            [str]: 0
+          })
+        }
       }
     }
   },
@@ -91,9 +120,13 @@ Page({
    * 评论文字
    */
   changeinput: function (e) {
+    let that = this;
     console.log(e.detail.value)
-    for(var i = 0; i < that.data.goods_list.length; i++) {
-      if(that.data.goods_list[i].goods_id == e.currentTarget.dataset.goodsid) {
+    for (var i = 0; i < that.data.goods_list.length; i++) {
+      console.log(that.data.goods_list[i].goods_id)
+      console.log(e.currentTarget.dataset.goodsid)
+      if (that.data.goods_list[i].goods_id == e.currentTarget.dataset.goodsid) {
+        console.log(e.detail.value)
         var str = 'goods_list[' + i + '].content';
         that.setData({
           [str]: e.detail.value
@@ -108,15 +141,15 @@ Page({
     let that = this;
     console.log(e.currentTarget.dataset.goodsid)
     console.log(e.target.dataset.id)
-    for(var i = 0; i < this.data.goods_list.length; i++) {
-      if(that.data.goods_list[i].goods_id == e.currentTarget.dataset.goodsid) {
+    for (var i = 0; i < this.data.goods_list.length; i++) {
+      if (that.data.goods_list[i].goods_id == e.currentTarget.dataset.goodsid) {
         var str = 'goods_list[' + i + '].goods_rank';
         that.setData({
           [str]: e.target.dataset.id
         })
       }
     }
-  },  
+  },
   /**
    * 商品评分
    */
@@ -124,15 +157,15 @@ Page({
     let that = this;
     console.log(e.currentTarget.dataset.goodsid)
     console.log(e.target.dataset.id)
-    for(var i = 0; i < this.data.goods_list.length; i++) {
-      if(that.data.goods_list[i].goods_id == e.currentTarget.dataset.goodsid) {
+    for (var i = 0; i < this.data.goods_list.length; i++) {
+      if (that.data.goods_list[i].goods_id == e.currentTarget.dataset.goodsid) {
         var str = 'goods_list[' + i + '].deliver_rank';
         that.setData({
           [str]: e.target.dataset.id
         })
       }
     }
-  },  
+  },
   /**
    * 商品评分
    */
@@ -140,15 +173,15 @@ Page({
     let that = this;
     console.log(e.currentTarget.dataset.goodsid)
     console.log(e.target.dataset.id)
-    for(var i = 0; i < this.data.goods_list.length; i++) {
-      if(that.data.goods_list[i].goods_id == e.currentTarget.dataset.goodsid) {
+    for (var i = 0; i < this.data.goods_list.length; i++) {
+      if (that.data.goods_list[i].goods_id == e.currentTarget.dataset.goodsid) {
         var str = 'goods_list[' + i + '].service_rank';
         that.setData({
           [str]: e.target.dataset.id
         })
       }
     }
-  },  
+  },
 
 
 

@@ -22,7 +22,7 @@
     <textarea class="location right" bindinput="address" bindblur="bindTextAreaBlur" value="{{addressList.address}}" auto-height placeholder="如辽宁省沈阳市铁西区云峰北街" />
 </view>
 
-<view class="edit-item border-bottom-03 padding-20 left-center title-2 color-8">
+<view wx:if="{{addressList.is_default == 0}}" class="edit-item border-bottom-03 padding-20 left-center title-2 color-8">
     <view class="left">设为默认地址</view>
     <view class="right-center" style="width:100%">
         <van-switch 

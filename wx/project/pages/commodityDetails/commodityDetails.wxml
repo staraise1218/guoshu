@@ -31,6 +31,11 @@
             </view>
         </view>
     </view>
+
+    <view class="padding-bottom-20" wx:if="{{goodLists.prom_type == 2}}">
+        <view class="title-2 margin-left-30 margin-top-30">{{goodLists.goods_name}}</view>
+        <view class="title-2_f margin-left-30 margin-top-10">{{goodLists.subtitle}}</view>
+    </view>
 <!-- 团购价格区域 END -->
 
 

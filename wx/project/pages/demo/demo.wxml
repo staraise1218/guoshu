@@ -85,19 +85,19 @@
     <view class="title-3">￥{{CommodityMsg.total_fee}}</view>
 </view>
 
-<view class="border-bottom padding-tb-30 margin-lr-30 padding-right-50 between-center more-0">
+<!-- <view class="border-bottom padding-tb-30 margin-lr-30 padding-right-50 between-center more-0">
     <view class="title-3 left-center">
         <image class="icon-3 margin-right-20" mode="widthFix" src="http://img.hb.aicdn.com/b7a8f0cd63dda76a08423835a1a1898cef6228f85c6-huGl9M_fw658" />
         红包
     </view>
     <view class="title-3_f">0</view>
-</view>
+</view> -->
 
 
 <view class="border-bottom padding-tb-30 margin-lr-30 padding-right-50 between-center more-0" catchtap="toYouHui">
     <view class="title-3 left-center">
         <image class="icon-3 margin-right-20" mode="widthFix" src="http://img.hb.aicdn.com/81716659127cb51c349ebe3d734efe5bf57335164f7-m4GiTZ_fw658" />
-        优惠券
+        红包
     </view>
     <view class="price-color" style="font-size:26rpx;">{{RedEnvelopes[0].coupon.money}} </view>
 </view>
@@ -133,7 +133,7 @@
         </view>
     </view>
     <view class="right center-center">
-        <image class="icon-3" src="http://img.hb.aicdn.com/af0f6c8f8b4ba1608f1985fd5c491db279dd940c6cf-efCOPl_fw658" wx:if="{{paystatus=='wx'}}" />
+        <image class="icon-3" src="http://img.hb.aicdn.com/af0f6c8f8b4ba1608f1985fd5c491db279dd940c6cf-efCOPl_fw658" wx:if="{{payMethods=='wx'}}" />
         <image class="icon-3" src="http://img.hb.aicdn.com/af41d36cf3423f49b5180fab5f14f2b3db82652a67e-dDcFEg_fw658" wx:else />
     </view>
 </view>
@@ -147,7 +147,7 @@
         </view>
     </view>
     <view class="right center-center">
-        <image class="icon-3" src="http://img.hb.aicdn.com/af0f6c8f8b4ba1608f1985fd5c491db279dd940c6cf-efCOPl_fw658" wx:if="{{paystatus=='yue'}}" />
+        <image class="icon-3" src="http://img.hb.aicdn.com/af0f6c8f8b4ba1608f1985fd5c491db279dd940c6cf-efCOPl_fw658" wx:if="{{payMethods=='yue'}}" />
         <image class="icon-3" src="http://img.hb.aicdn.com/af41d36cf3423f49b5180fab5f14f2b3db82652a67e-dDcFEg_fw658" wx:else />
     </view>
 </view>

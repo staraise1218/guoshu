@@ -8,12 +8,13 @@ page {
   top: 0;
   left: 0;
   background: #fff;
-  z-index: 999;
+  z-index: 99;
   width: 100%;
 }
-
-.topScroll {
+.asdf {
   box-shadow: 0rpx 5rpx 0rpx rgba(0, 0, 0, 0.05);
+}
+.topScroll {
   white-space: nowrap;
 }
 
@@ -27,7 +28,7 @@ page {
 .more-btn {
   position: absolute;
   right: 0rpx;
-  bottom: 0rpx;
+  bottom: 5rpx;
   background: #fff;
   width: 100rpx;
   height: 57rpx;
@@ -41,7 +42,8 @@ page {
 }
 
 .scro-wrap {
-  width: 3000rpx;
+  /* width: 3000rpx; */
+  width: 100%;
 }
 
 .shopListWrap {
@@ -666,6 +668,7 @@ page {
   bottom: 0;
   left: 0;
   text-align: center;
+  z-index: 999;
 }
 
 
@@ -702,7 +705,8 @@ page {
   margin-top: 50rpx;
   justify-content: space-between;
   background-image: url('https://hbimg.huabanimg.com/c971889a40ddb9bbeed28d4f67ced67243ce1c65a19-8IpkXZ_fw658');
-  background-size: cover;
+  /* background-size: cover; */
+  background-size: 100% 100%;
 }
 .share-con .left {
   padding: 20rpx;
@@ -822,4 +826,41 @@ page {
 .icon-2 {
   /* border: 1px solid red; */
   padding: 10rpx;
+}
+
+/* alert */
+.alert-box {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+}
+
+
+/* 红包弹窗 */
+.redBag-box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0,0,0,.5);
+  background-image: url('https://app.zhuoyumall.com:444/wx/img/hongbao-background.png');
+  background-size: cover;
+}
+.redBag-box .content {
+  width: 550rpx;
+  height: 750rpx;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.redBag-box .content image {
+  width: 100%;
+  height: 100%;
 }

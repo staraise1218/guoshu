@@ -153,6 +153,7 @@ Page({
                       wx.setStorageSync('token', data.token);
                       wx.setStorageSync('user_id', data.user_id);
                       wx.setStorageSync('user_money', data.user_money);
+                      
                     }
                   })
                 },
