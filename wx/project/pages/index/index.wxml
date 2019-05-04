@@ -2,13 +2,13 @@
 <view class="fix-wrap">
   <view class='topbar'>
     <!-- <view class="left-center logo-title title-2 margin-right-20">果蔬</view> -->
-    <view  bindtap="cityshow">
-      <image class="location-icon"
+    <!-- <view  bindtap="cityshow"> -->
+      <image bindtap="cityshow" class="location-icon"
         src="https://hbimg.huabanimg.com/698f1951de21b12c43072ae841182f165e05e9cd890-xBN8IX_fw658" />
-      <view class="location" selectable="false" space="false" decode="false">
+      <view bindtap="cityshow" class="location" selectable="false" space="false" decode="false">
         {{address}}
       </view>
-    </view>
+    <!-- </view> -->
     <view class="search" hover-class="none" hover-stop-propagation="false">
       <image class="search-icon"
         src="http://img.hb.aicdn.com/2428f6e809e53942c9be02543a31d0c59b3f7a286b0-2jNZQl_fw658" />

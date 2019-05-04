@@ -134,13 +134,17 @@ page {
   border-bottom: 5rpx solid #E3360C;
 }
 
-
+.item-box-1 {
+  position: relative;
+}
 .slider-wrap {
   position: relative;
   margin: 20rpx;
   border-radius: 15rpx;
+  -webkit-border-radius: 15rpx; /* Safari 和 Chrome */
   overflow: hidden;
   margin-top: 40rpx;
+  border: 1px solid red;
 }
 
 .dots {
@@ -156,8 +160,17 @@ page {
 
 
 
-
-
+swiper {
+  position: relative;
+  border-radius: 15rpx;
+  -webkit-border-radius: 15rpx; /* Safari 和 Chrome */
+  overflow: hidden;
+}
+swiper-item {
+  border-radius: 15rpx;
+  -webkit-border-radius: 15rpx; /* Safari 和 Chrome */
+  overflow: hidden;
+}
 
 
 
