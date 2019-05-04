@@ -103,7 +103,7 @@ class User extends Base {
         $password_confirm = I('password_confirm');
 
         if($password_confirm != $password) response_error('', '两次密码不一致');
-        Db::name('users')->where('user_id', $user_id)->setField('pay_password', encrypt($password));
+        Db::name('users')->where('user_id', $user_id)->setField('paypwd', encrypt($password));
 
         response_success('', '设置成功');
     }

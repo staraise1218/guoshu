@@ -32,6 +32,7 @@ class PlaceOrder
     private $promType;
     private $promId;
     private $extraParams;
+    private $payMethod;
 
 
     /**
@@ -83,9 +84,14 @@ class PlaceOrder
     {
         $this->promId = $prom_id;
     }
-    private function extraParams($params)
+    // 自己加的
+    public function extraParams($params)
     {
         $this->extraParams = $params;
+    }
+    public function setPayMethod($payMethod)
+    {
+        $this->payMethod = $payMethod;
     }
 
     public function addNormalOrder()
@@ -148,7 +154,9 @@ class PlaceOrder
     {
         $pay_points = $this->pay->getPayPoints();
         $user_money = $this->pay->getUserMoney();
-        if ($pay_points || $user_money) {
+        $payMethod = $this->payMethod;
+
+        if ($pay_points || $user_money || $payMethod == 'money') {
             $user = $this->pay->getUser();
             if ($user['is_lock'] == 1) {
                 throw new TpshopException('提交订单', 0, ['status'=>-5,'msg'=>"账号异常已被锁定，不能使用余额支付！",'result'=>'']);
@@ -161,6 +169,15 @@ class PlaceOrder
             }
              if ($this->payPsw !== $user['paypwd'] && encrypt($this->payPsw) !== $user['paypwd']) {
                 throw new TpshopException('提交订单', 0, ['status'=>-8,'msg'=>'支付密码错误','result'=>'']);
+            }
+        }
+
+        // 当支付方式为余额支付时，检测用户余额是否充足
+        if($payMethod == 'money'){
+            $user = $this->pay->getUser();
+            $orderAmount = $this->pay->getOrderAmount();
+            if($user['user_money'] < $orderAmount){
+                throw new TpshopException('提交订单', 0, ['status'=>-9,'msg'=>"余额不足",'result'=>'']);
             }
         }
 

@@ -23,7 +23,7 @@ class Pay extends Base {
 		/********* 判断订单信息 **************/
 		$order = Db::name('order')->where('order_sn', $order_sn)->find();
 		if(empty($order)) response_error('', '该订单不存在');
-		if($order['paystatus'] == 1) response_error('', '该订单已支付');
+		if($order['pay_status'] == 1) response_error('', '该订单已支付');
 
 		$order_amount = $order['order_amount'];
 
@@ -52,14 +52,16 @@ class Pay extends Base {
 				// 更改订单状态
 				M('order')->where('order_sn', $order_sn)->update(array('pay_status'=>1, 'pay_time'=>time()));
 			   // 扣除余额，并记录日志
-				accountLog($order['user_id'], -$order['order_amount'], 0, '订单支付', 0, $order['order_id'], $order['order_sn'], 3);
+				accountLog($order['user_id'], -$order['order_amount'], 0, '下单消费', 0, $order['order_id'], $order['order_sn'], 3);
 
 			    // 提交事务
 			    Db::commit();
+			    response_success('', '支付成功');
 
 			} catch (\Exception $e) {
 			    // 回滚事务
 			    Db::rollback();
+			    response_error('', '支付失败');
 			}
 
 		}
