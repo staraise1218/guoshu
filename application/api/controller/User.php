@@ -146,6 +146,16 @@ class User extends Base {
             ->limit(20)
             ->select();
 
+        if(!empty($list)){
+            foreach ($list as &$item) {
+                $count =  Db::name('coupon_list')
+                    ->where('cid', $item['id'])
+                    ->where('uid', $user_id)
+                    ->count();
+                $item['is_get'] = $count ? 1 : 0;
+            }
+        }
+
         response_success($list);
     }
     
