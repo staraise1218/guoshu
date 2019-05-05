@@ -83,7 +83,7 @@ class Index extends Base {
 				->limit(6)
 				->select();
 			$topCateGoods[] = array(
-				'cat_id' => $item['id'],
+				'id' => $item['id'],
 				'cat_name' => $item['name'],
 				'index_image' => $item['index_image'],
 				'goodslist' => $goodslist,
