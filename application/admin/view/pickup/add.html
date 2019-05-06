@@ -146,8 +146,8 @@
 <!-- 高德地图 -->
 <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=e4e3ea6a620450b47bd7e2be728d240a"></script>
 <script type="text/javascript">
-	var longitude = {$pickup.longitude},
-		latitude = {$pickup.latitude};
+	var longitude = {$pickup.longitude ? $pickup.longitude : 0},
+		latitude = {$pickup.latitude ? $pickup.latitude : 0};
 	var params = {
             resizeEnable: true,
             zoom: 13,
