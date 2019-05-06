@@ -167,7 +167,7 @@
         var longitude = document.getElementById('longitude');
         var latitude = document.getElementById('latitude');
         var city_code = document.getElementById('city_code');
-        var message = document.getElementById('message');
+        // var message = document.getElementById('message');
         map.on('click',function(e){
           marker.setPosition(e.lnglat);
             geocoder.getAddress(e.lnglat,function(status,result){
@@ -177,9 +177,9 @@
                  longitude.value = e.lnglat.lng; // 设置经度
                  latitude.value = e.lnglat.lat; // 设置纬度
                  city_code.value = result.regeocode.addressComponent.citycode // 设置城市编码
-                 message.innerHTML = ''
+                 // message.innerHTML = ''
               }else{
-                 message.innerHTML = '无法获取地址'
+                 // message.innerHTML = '无法获取地址'
                 longitude.value = ''; // 设置经度
                 latitude.value = ''; // 设置纬度
                 city_code.value = '' // 设置城市编码
