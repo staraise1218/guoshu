@@ -116,7 +116,6 @@ class User extends Base {
         $account_log = M('account_log')
         ->where('user_id', $user_id)
         ->where('user_money', array('neq', 0))
-        ->where('type', 2)
         ->where("user_id=" . $user_id." and user_money!=0 ")
         ->field("user_money, FROM_UNIXTIME(change_time, '%Y-%m-%d %H:%i:%s') change_time, desc, order_sn")
         ->page($page)
