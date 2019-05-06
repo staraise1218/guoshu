@@ -120,15 +120,21 @@ Page({
     var date = new Date();
     var str = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + (date.getDate() + 1)
     that.TimeDown(str)
-    if(wx.getStorageSync('address') == '位置') {
-      that.getUserLocation(); // 获取定位
-    }
-    if(!wx.getStorageSync('address')) {
-      that.getUserLocation(); // 获取定位
-    }
-    that.setData({
-      address: wx.getStorageSync('address')
-    })
+
+    /**
+     * 修改
+     * 每次加载都要获取地理位置
+     */
+    that.getUserLocation(); // 获取定位
+    // if(wx.getStorageSync('address') == '位置') {
+    //   that.getUserLocation(); // 获取定位
+    // }
+    // if(!wx.getStorageSync('address')) {
+    //   that.getUserLocation(); // 获取定位
+    // }
+    // that.setData({
+    //   address: wx.getStorageSync('address')
+    // })
   },
   /**
    * 设置轮播图高度
