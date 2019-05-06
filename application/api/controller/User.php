@@ -17,6 +17,25 @@ class User extends Base {
 		parent::__construct();
 	}
 
+    public function index(){
+        $user_id = I('user_id');
+        $userInfo = M('users')
+            ->where("user_id", $user_id)
+            ->where('is_lock', 0)
+            ->find();
+        $result['userInfo'] = array(
+            'head_pic' => $userInfo['head_pic'],
+            'nickname' => $userInfo['nickname'],
+            'user_money' => $userInfo['user_money'],
+        );
+
+        $result['redpack_num'] = Db::name('coupon_list')
+                                        ->where('uid', $user_id)
+                                        ->where('status', 0)
+                                        ->count();
+        response_success($result);
+    }
+
     public function getUserInfo(){
         $user_id = I('user_id');
         $userInfo = M('users')

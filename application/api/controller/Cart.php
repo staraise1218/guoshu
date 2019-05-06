@@ -16,6 +16,7 @@ use app\common\logic\OrderLogic;
 use app\common\model\SpecGoodsPrice;
 use app\common\model\Goods;
 use app\common\util\TpshopException;
+use app\common\logic\GeographyLogic;
 use think\Db;
 
 class Cart extends Base {
@@ -708,8 +709,12 @@ class Cart extends Base {
         $this->ajaxReturn($return);
     }
 
+    // 自提点列表
     public function getPickupList(){
         $user_id = I('user_id');
+        $isLocalCity = I('isLocalCity');  // 是否本地城市
+        $user_longitude = I('user_longitude'); // 
+        $user_latitude = I('user_latitude');
         $city_code = I('city_code');
         $page = I('page/d');
 
@@ -718,11 +723,25 @@ class Cart extends Base {
             'is_open'=> 1,
         );
         $city_code && $where['city_code'] = $city_code;
+        
+        $field = 'pickup_id, pickup_name, province_code, city_code, district_code, pickup_address';
+        $order = 'pickup_id desc';
 
+        if($user_longitude && $user_longitude && $isLocalCity){
+            $GeographyLogic = new GeographyLogic();
+            // 计算500km 范围内的经纬度
+            $around = $GeographyLogic->getAround($user_longitude, $user_latitude, 5000000);
+            $where['longitude'] = array('BETWEEN', array($around['minLongitude'], $around['maxLongitude']));
+            $where['latitude'] = array('BETWEEN', array($around['minLatitude'], $around['maxLatitude']));
+            // sql 计算距离 并按距离排序
+            $field .= ", ROUND(6378.138*2*ASIN(SQRT(POW(SIN(($user_latitude*PI()/180-latitude*PI()/180)/2),2)+COS($user_latitude*PI()/180)*COS(latitude*PI()/180)*POW(SIN(($user_longitude*PI()/180-longitude*PI()/180)/2),2))), 2) AS distance";
+            $order = 'distance asc';
+        }
+        
         $list = Db::name('pick_up')
             ->where($where)
-            ->order('pickup_id desc')
-            ->field('pickup_id, pickup_name, province_code, city_code, district_code, pickup_address')
+            ->order($order)
+            ->field($field)
             ->page($page)
             ->limit(20)
             ->select();
