@@ -80,7 +80,7 @@ class Index extends Base {
 				->where($where)
 				->order('sort asc, goods_id desc')
 				->field('goods_id, goods_name, subtitle, tag, store_count, original_img, shop_price')
-				->limit(6)
+				->limit(18)
 				->select();
 			$topCateGoods[] = array(
 				'id' => $item['id'],
