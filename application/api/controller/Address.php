@@ -96,7 +96,10 @@ class Address extends Base {
     public function detail(){
         $address_id = I('address_id');
 
-        $info = Db::name('address')->where('address_id', $address_id)->find();
+        $info = Db::name('user_address')
+            ->where('user_id', $user_id)
+            ->where('address_id', $address_id)
+            ->find();
 
         response_success($info);
     }
