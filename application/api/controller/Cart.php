@@ -333,6 +333,8 @@ class Cart extends Base {
         $send_method        = I('send_method');
         $pickup_id          = I('pickup_id');
         $payMethod          = I('payMethod');
+        $longitude          = I('longitude');
+        $latitude          = I('latitude');
 
 
         mb_strlen($user_note) > 60 && response_error('', '备注超出限制可输入字符长度！');
@@ -362,6 +364,8 @@ class Cart extends Base {
             $pay->usePayPoints($pay_points);
             // 提交订单
             if ($dosubmit == 1) {
+                // 检测是否在配送范围
+                
                 $placeOrder = new PlaceOrder($pay);
                 $placeOrder->setUserAddress($address);
                 $placeOrder->setInvoiceTitle($invoice_title);

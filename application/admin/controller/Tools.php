@@ -349,6 +349,13 @@ class Tools extends Base {
 		return $this->fetch();
 	}
 
+	public function region_edit(){
+		$id = I('id');
+
+
+		return $this->fetch();
+	}
+
 	/**
 	 * 寻找Region_id的父级字段, $column可自己指定
 	 * @param $parent_id

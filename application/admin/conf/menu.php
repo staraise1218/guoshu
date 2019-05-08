@@ -104,7 +104,7 @@ return	array(
     	    )),*/
 
 			
-			array('name' => '统计','child' => array(
+			/*array('name' => '统计','child' => array(
 					array('name' => '销售概况', 'act'=>'index', 'op'=>'Report'),
 					array('name' => '销售排行', 'act'=>'saleTop', 'op'=>'Report'),
 					array('name' => '会员排行', 'act'=>'userTop', 'op'=>'Report'),
@@ -112,7 +112,7 @@ return	array(
 					array('name' => '会员统计', 'act'=>'user', 'op'=>'Report'),
 					array('name' => '运营概览', 'act'=>'finance', 'op'=>'Report'),
 					array('name' => '平台支出记录','act'=>'expense_log','op'=>'Report'),
-			)),
+			)),*/
 	)),
 		
 	'mobile'=>array('name'=>'模板','child'=>array(

@@ -92,6 +92,15 @@ class Address extends Base {
         }
     }
 
+    // 获取地址详情
+    public function detail(){
+        $address_id = I('address_id');
+
+        $info = Db::name('address')->where('address_id', $address_id)->find();
+
+        response_success($info);
+    }
+
     /*
      * 设置默认收货地址
      */
