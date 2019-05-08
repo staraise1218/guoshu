@@ -105,8 +105,10 @@ class Address extends Base {
         $area_id[] = $info['city'];
         $area_id[] = $info['district'];
 
+        $area_id = array_filter($area_id);
         $area_id = implode(',', $area_id);
-        $regionList = Db::name('region2')->where("id", "in", $area_id)->getField('id,name');
+
+        $regionList = Db::name('region2')->where("code", "in", $area_id)->getField('code,name');
         $info['province_name'] = $regionList[$info['province']];
         $info['city_name'] = $regionList[$info['city']];
         $info['district_name'] = $regionList[$info['district']];
