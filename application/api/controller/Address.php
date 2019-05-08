@@ -95,6 +95,7 @@ class Address extends Base {
     // 获取地址详情
     public function detail(){
         $address_id = I('address_id');
+        $user_id = I('user_id');
 
         $info = Db::name('user_address')
             ->where('user_id', $user_id)
