@@ -744,7 +744,7 @@ class Cart extends Base {
         );
         $city_code && $where['city_code'] = $city_code;
         
-        $field = 'pickup_id, pickup_name, province_code, city_code, district_code, pickup_address';
+        $field = 'pickup_id, pickup_name, province_code, city_code, district_code, pickup_address, image';
         $order = 'pickup_id desc';
 
         if($user_longitude && $user_longitude && $isLocalCity){
