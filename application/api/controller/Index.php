@@ -29,7 +29,7 @@ class Index extends Base {
         if($adList){
         	foreach ($adList as $k => $item) {
         		// 首页banner
-        		($item['pid'] == 1 ) && $bannerList[] = $item;
+        		($item['pid'] == 1 && $item['city_code'] == $city_code) && $bannerList[] = $item;
         		// 首页广告位图片：团购入口，邀请好友得红包入口
         		($item['pid'] == 2 ) && $adv[] = $item;
         		// 分享商品
