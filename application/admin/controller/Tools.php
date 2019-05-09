@@ -351,8 +351,24 @@ class Tools extends Base {
 
 	public function region_edit(){
 		$id = I('id');
+		$data = I('post.');
+		if(IS_POST){
+			$updatedata = array(
+				'name' => $data['name'],
+				'code' => $data['code'],
+			);
+			if(isset($data['address'])) $updatedata['address'] = $data['address'];
+			if(isset($data['longitude'])) $updatedata['longitude'] = $data['longitude'];
+			if(isset($data['latitude'])) $updatedata['latitude'] = $data['latitude'];
 
+			Db::name('region')->where('id', $id)->update($updatedata);
+			$this->success("操作成功");
+		}
+		$info = Db::name('region')
+			->where('id', $id)
+			->find();
 
+		$this->assign('info', $info);
 		return $this->fetch();
 	}
 

@@ -330,7 +330,7 @@ class Cart extends Base {
         $item_id            = I("item_id/d"); // 商品规格id
         $action             = I("action"); // 立即购买
         $dosubmit           = I('dosubmit', 0);
-        $send_method        = I('send_method');
+        $send_method        = I('send_method'); // 配送方式 1 送货上门 2 门店自取
         $pickup_id          = I('pickup_id');
         $payMethod          = I('payMethod');
         $longitude          = I('longitude');
@@ -365,7 +365,23 @@ class Cart extends Base {
             // 提交订单
             if ($dosubmit == 1) {
                 // 检测是否在配送范围
-                
+                if($send_method == 1){
+                    // 获取配送范围
+                    $basicinfo = tpCache('basic');
+                    $delivery_range = $basicinfo['delivery_range'];
+                    // 获取用户地址经纬度
+                    $user_longitude = $address['longitude'];
+                    $user_latitude = $address['latitude'];
+                    // 配送站点经纬度
+                    $city_code = $address['city'];
+                    $region = Db::name('region')->where('code', $city_code)->find();
+                    if(empty($region)) response_error('', '该城市不支持配送');
+                    $delivery_longitude = $region['longitude'];
+                    $delivery_latitude = $region['latitude'];
+                    $GeographyLogic = new GeographyLogic();
+                    $distance = $GeographyLogic->getDistance($user_longitude, $user_latitude, $delivery_longitude, $delivery_latitude);
+                    if($distance > $delivery_range) response_error('', '该地址超出配送范围');
+                }
                 $placeOrder = new PlaceOrder($pay);
                 $placeOrder->setUserAddress($address);
                 $placeOrder->setInvoiceTitle($invoice_title);
