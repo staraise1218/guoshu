@@ -35,84 +35,84 @@ class Goods extends Base {
      */
     public function addEditCategory(){
         
-            $GoodsLogic = new GoodsLogic();        
-            if(IS_GET)
-            {
-                $goods_category_info = D('GoodsCategory')->where('id='.I('GET.id',0))->find();
-                $this->assign('goods_category_info',$goods_category_info);
+        $GoodsLogic = new GoodsLogic();        
+        if(IS_GET)
+        {
+            $goods_category_info = D('GoodsCategory')->where('id='.I('GET.id',0))->find();
+            $this->assign('goods_category_info',$goods_category_info);
+            
+            $all_type = M('goods_category')->where("level<3")->getField('id,name,parent_id');//上级分类数据集，限制3级分类，那么只拿前两级作为上级选择
+            if(!empty($all_type)){
+            	$parent_id = empty($goods_category_info) ? I('parent_id',0) : $goods_category_info['parent_id'];
+            	$all_type = $GoodsLogic->getCatTree($all_type);
+            	$cat_select = $GoodsLogic->exportTree($all_type,0,$parent_id);
+            	$this->assign('cat_select',$cat_select);
+            }
+            
+            //$cat_list = M('goods_category')->where("parent_id = 0")->select(); 
+            //$this->assign('cat_list',$cat_list);         
+            return $this->fetch('_category');
+            exit;
+        }
+
+        $GoodsCategory = D('GoodsCategory'); //
+
+        $type = I('id') > 0 ? 2 : 1; // 标识自动验证时的 场景 1 表示插入 2 表示更新                        
+        //ajax提交验证
+        if(I('is_ajax') == 1)
+        {
+            // 数据验证            
+            $validate = \think\Loader::validate('GoodsCategory');
+            if(!$validate->batch()->check(input('post.')))
+            {                          
+                $error = $validate->getError();
+                $error_msg = array_values($error);
+                $return_arr = array(
+                    'status' => -1,
+                    'msg' => $error_msg[0],
+                    'data' => $error,
+                );
+                $this->ajaxReturn($return_arr);
+            } else {
+                $GoodsCategory->data(input('post.'),true); // 收集数据
+                $GoodsCategory->parent_id = I('parent_id');
                 
-                $all_type = M('goods_category')->where("level<3")->getField('id,name,parent_id');//上级分类数据集，限制3级分类，那么只拿前两级作为上级选择
-                if(!empty($all_type)){
-                	$parent_id = empty($goods_category_info) ? I('parent_id',0) : $goods_category_info['parent_id'];
-                	$all_type = $GoodsLogic->getCatTree($all_type);
-                	$cat_select = $GoodsLogic->exportTree($all_type,0,$parent_id);
-                	$this->assign('cat_select',$cat_select);
+                //查找同级分类是否有重复分类
+                $par_id = ($GoodsCategory->parent_id > 0) ? $GoodsCategory->parent_id : 0;
+                $sameCateWhere = ['parent_id'=>$par_id , 'name'=>$GoodsCategory['name']];
+                $GoodsCategory->id && $sameCateWhere['id'] = array('<>' , $GoodsCategory->id);
+                $same_cate = M('GoodsCategory')->where($sameCateWhere)->find();
+                if($same_cate){
+                    $return_arr = array('status' => 0,'msg' => '同级已有相同分类存在','data' => '');
+                    $this->ajaxReturn($return_arr);
                 }
                 
-                //$cat_list = M('goods_category')->where("parent_id = 0")->select(); 
-                //$this->assign('cat_list',$cat_list);         
-                return $this->fetch('_category');
-                exit;
-            }
-
-            $GoodsCategory = D('GoodsCategory'); //
-
-            $type = I('id') > 0 ? 2 : 1; // 标识自动验证时的 场景 1 表示插入 2 表示更新                        
-            //ajax提交验证
-            if(I('is_ajax') == 1)
-            {
-                // 数据验证            
-                $validate = \think\Loader::validate('GoodsCategory');
-                if(!$validate->batch()->check(input('post.')))
-                {                          
-                    $error = $validate->getError();
-                    $error_msg = array_values($error);
-                    $return_arr = array(
-                        'status' => -1,
-                        'msg' => $error_msg[0],
-                        'data' => $error,
-                    );
+                if ($GoodsCategory->id > 0 && $GoodsCategory->parent_id == $GoodsCategory->id) {
+                    //  编辑
+                    $return_arr = array('status' => 0,'msg' => '上级分类不能为自己','data' => '',);
                     $this->ajaxReturn($return_arr);
-                } else {
-                    $GoodsCategory->data(input('post.'),true); // 收集数据
-                    $GoodsCategory->parent_id = I('parent_id');
-                    
-                    //查找同级分类是否有重复分类
-                    $par_id = ($GoodsCategory->parent_id > 0) ? $GoodsCategory->parent_id : 0;
-                    $sameCateWhere = ['parent_id'=>$par_id , 'name'=>$GoodsCategory['name']];
-                    $GoodsCategory->id && $sameCateWhere['id'] = array('<>' , $GoodsCategory->id);
-                    $same_cate = M('GoodsCategory')->where($sameCateWhere)->find();
-                    if($same_cate){
-                        $return_arr = array('status' => 0,'msg' => '同级已有相同分类存在','data' => '');
-                        $this->ajaxReturn($return_arr);
-                    }
-                    
-                    if ($GoodsCategory->id > 0 && $GoodsCategory->parent_id == $GoodsCategory->id) {
-                        //  编辑
-                        $return_arr = array('status' => 0,'msg' => '上级分类不能为自己','data' => '',);
-                        $this->ajaxReturn($return_arr);
-                    } 
-                   
-                    if ($type == 2)
-                    {
-                        $GoodsCategory->isUpdate(true)->save(); // 写入数据到数据库
-                        $GoodsLogic->refresh_cat(I('id'));
-                    }
-                    else
-                    {
-                        $GoodsCategory->save(); // 写入数据到数据库
-                        $insert_id = $GoodsCategory->getLastInsID();
-                        $GoodsLogic->refresh_cat($insert_id);
-                    }
-                    $return_arr = array(
-                        'status' => 1,
-                        'msg'   => '操作成功',
-                        'data'  => array('url'=>U('Admin/Goods/categoryList')),
-                    );
-                    $this->ajaxReturn($return_arr);
+                } 
+               
+                if ($type == 2)
+                {
+                    $GoodsCategory->isUpdate(true)->save(); // 写入数据到数据库
+                    $GoodsLogic->refresh_cat(I('id'));
+                }
+                else
+                {
+                    $GoodsCategory->save(); // 写入数据到数据库
+                    $insert_id = $GoodsCategory->getLastInsID();
+                    $GoodsLogic->refresh_cat($insert_id);
+                }
+                $return_arr = array(
+                    'status' => 1,
+                    'msg'   => '操作成功',
+                    'data'  => array('url'=>U('Admin/Goods/categoryList')),
+                );
+                $this->ajaxReturn($return_arr);
 
-                }  
-            }
+            }  
+        }
 
     }
     
@@ -358,6 +358,8 @@ class Goods extends Base {
         // 获取省份
         $provincelist = Db::name('region')->where('level', 1)->select();
         $this->assign('provincelist',$provincelist);
+        $citylist = Db::name('region')->where('parent_id', $goodsInfo['province_id'])->select();
+        $this->assign('citylist', $citylist);      
 
         $this->assign('freight_template',$freight_template);
         $this->assign('suppliersList', $suppliersList);

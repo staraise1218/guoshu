@@ -21,7 +21,9 @@ class Ad extends Base{
         if($ad_id){
             $ad_info = D('ad')->where('ad_id',$ad_id)->find();
             $ad_info['start_time'] = date('Y-m-d',$ad_info['start_time']);
-            $ad_info['end_time'] = date('Y-m-d',$ad_info['end_time']);            
+            $ad_info['end_time'] = date('Y-m-d',$ad_info['end_time']);   
+            $citylist = Db::name('region')->where('parent_id', $ad_info['province_id'])->select();
+            $this->assign('citylist', $citylist);      
         }
         if($act == 'add')          
            $ad_info['pid'] = $this->request->param('pid');
@@ -41,7 +43,10 @@ class Ad extends Base{
                 $ad_info['cat_id3'] = $cat_ids[2];
             }
         }
-        
+        // 获取省份
+        $provincelist = Db::name('region')->where('level', 1)->select();
+
+        $this->assign('provincelist',$provincelist);
         $position = D('ad_position')->select();
         $this->assign('info',$ad_info);
         $this->assign('act',$act);
