@@ -23,7 +23,7 @@ class Index extends Base {
 		$bannerList = $adv = $shareGoods = array();
         $adList = Db::name('ad')
             ->where('enabled', 1)
-            ->field('ad_name, ad_link, ad_code, pid')
+            ->field('ad_name, ad_link, ad_code, pid, city_code')
             ->order('orderby asc, ad_id asc')
             ->select();
         if($adList){
