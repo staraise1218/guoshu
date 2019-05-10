@@ -23,8 +23,8 @@ class WxappletBuyGoodsCallback extends \WxPayNotify
 	// 执行回调
 	public function exec(){
 		$param = $_POST;
-// $data = "\r\n".var_export($param, true);
-// file_put_contents('runtime/log/request.log', $data, FILE_APPEND);
+$data = "\r\n".var_export($param, true);
+file_put_contents('runtime/log/request.log', $data, FILE_APPEND);
 		$config = new \WxPayConfig();
 		// Log::DEBUG("begin notify");
 		$this->Handle($config, false);
