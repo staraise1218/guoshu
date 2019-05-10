@@ -5,6 +5,7 @@ namespace app\api\controller;
 use think\Db;
 use app\api\logic\FileLogic;
 use app\api\logic\GeographyLogic;
+use app\common\logic\ShareGoodsLogic;
 
 class Index extends Base {
 
@@ -165,4 +166,10 @@ class Index extends Base {
 		response_success($goodslist);
 	}
 
+	function test(){
+		$order_sn = '201904302212107029';
+		// 分享商品得佣金
+			$ShareGoodsLogic = new ShareGoodsLogic();
+			$ShareGoodsLogic->shareMoney($order_sn);
+	}
 }

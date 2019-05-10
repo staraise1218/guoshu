@@ -133,7 +133,7 @@ file_put_contents('runtime/log/request.log', '2---'.$order_sn, FILE_APPEND);
 			$updatedata = array(
 				'pay_code' => 'wxpay',
 				'pay_name' => '微信支付',
-				'pay_status'=>1,
+				'pay_status'=>1 ,
 				'pay_time'=>time()
 			);
 			$resut = Db::name('order')->where('order_sn', $order_sn)->update($updatedata);

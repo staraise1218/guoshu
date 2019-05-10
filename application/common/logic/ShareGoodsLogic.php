@@ -22,13 +22,14 @@ class ShareGoodsLogic
 		// 获取订单商品
 		$orderGoods = Db::name('order_goods')->alias('og')
 			->join('goods g', 'og.goods_id=g.goods_id')
+			->where('og.order_id', $order['order_id'])
 			->field('g.goods_id, g.goods_name, g.shop_price, g.share_ratio')
 			->select();
 
 		if(empty($orderGoods)) return false;
 		// 重组数组，方便下面使用
 		$orderGoodsList = array();
-		foreach ($$orderGoods as $goods) {
+		foreach ($orderGoods as $goods) {
 			if($goods['share_ratio'] > 0 && $goods['share_ratio'] < 1)
 				$orderGoodsList[$goods['goods_id']] = $goods;
 		}
