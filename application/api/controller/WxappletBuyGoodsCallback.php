@@ -83,7 +83,7 @@ class WxappletBuyGoodsCallback extends \WxPayNotify
 			$msg = "输入参数不正确";
 			return false;
 		}
-
+file_put_contents('runtime/log/request.log', '1---'.var_export($data, true), FILE_APPEND);
 		//TODO 2、进行签名验证
 		try {
 			$checkResult = $objData->CheckSign($config);
@@ -101,7 +101,7 @@ class WxappletBuyGoodsCallback extends \WxPayNotify
 		// Log::DEBUG("call back:" . json_encode($data));
 		
 		$order_sn  = $data['out_trade_no'];
-
+file_put_contents('runtime/log/request.log', '2---'.$order_sn, FILE_APPEND);
         $order = Db::name('order')->where('order_sn', $order_sn)->find();
 		if(empty($order) || $order['pay_status'] == 1) return true;
 		
