@@ -19,7 +19,6 @@ require_once "./plugins/payment/wxapplet/WxPay.Config.php";
 
 class WxappletBuyGoodsCallback extends \WxPayNotify
 {
-
 	// 执行回调
 	public function exec(){
 		$param = $GLOBALS['HTTP_RAW_POST_DATA']; // file_get_contents('php://input');
