@@ -186,7 +186,7 @@ class Cart extends Base {
                 $buyGoods = $cartLogic->buyNow();
             }catch (TpshopException $t){
                 $error = $t->getErrorArr();
-                $this->error($error['msg']);
+                response_error('', $error['msg']);
             }
             $cartList['cartList'][0] = $buyGoods;
             $cartGoodsTotalNum = $goods_num;
@@ -204,7 +204,12 @@ class Cart extends Base {
         $couponLogic = new CouponLogic();
         $userCouponList = $couponLogic->getUserAbleCouponList($user_id, $cartGoodsId, $cartGoodsCatId);
         $userCartCouponList = $cartLogic->getCouponCartList($cartList, $userCouponList);
-
+        // 过滤掉able=0的优惠券
+        if(!empty($userCartCouponList)){
+            foreach ($userCartCouponList as $k => $item) {
+                if($item['coupon']['able'] == 0) unset($userCartCouponList[$k]);
+            }
+        }
         // 获取用户余额
         $user = Db::name('users')->where('user_id', $user_id)->field('user_money')->find();
         $result['user_money'] = $user['user_money'];
