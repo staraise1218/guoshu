@@ -70,6 +70,7 @@ class WxappletBuyGoodsCallback extends \WxPayNotify
 	public function NotifyProcess($objData, $config, &$msg)
 	{
 		$data = $objData->GetValues();
+
 		//TODO 1、进行参数校验
 		if(!array_key_exists("return_code", $data) 
 			||(array_key_exists("return_code", $data) && $data['return_code'] != "SUCCESS")) {
@@ -99,7 +100,7 @@ class WxappletBuyGoodsCallback extends \WxPayNotify
 		//TODO 3、处理业务逻辑
 		// Log::DEBUG("call back:" . json_encode($data));
 		
-		$order_sn  = $result['out_trade_no'];
+		$order_sn  = $data['out_trade_no'];
 
         $order = Db::name('order')->where('order_sn', $order_sn)->find();
 		if(empty($order) || $order['paystatus'] == 1) return true;
