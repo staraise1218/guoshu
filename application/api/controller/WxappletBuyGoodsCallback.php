@@ -130,8 +130,14 @@ file_put_contents('runtime/log/request.log', '2---'.$order_sn, FILE_APPEND);
 		Db::startTrans();
 		try{
 			// 更改订单状态
-			M('order')->where('order_sn', $order_sn)->update(array('pay_status'=>1, 'pay_time'=>time()));
-
+			$updatedata = array(
+				'pay_code' => 'wxpay',
+				'pay_name' => '微信支付',
+				'pay_status'=>1,
+				'pay_time'=>time()
+			);
+			$resut = Db::name('order')->where('order_sn', $order_sn)->update($updatedata);
+file_put_contents('runtime/log/request.log', '23----'.var_export($resut, true), FILE_APPEND);
 			// 分享商品得佣金
 			$ShareGoodsLogic = new ShareGoodsLogic();
 			$ShareGoodsLogic->shareMoney($order_sn);
