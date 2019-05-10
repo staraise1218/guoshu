@@ -103,7 +103,7 @@ class WxappletBuyGoodsCallback extends \WxPayNotify
 		$order_sn  = $data['out_trade_no'];
 
         $order = Db::name('order')->where('order_sn', $order_sn)->find();
-		if(empty($order) || $order['paystatus'] == 1) return true;
+		if(empty($order) || $order['pay_status'] == 1) return true;
 		
 		// 回调后的业务流程
 		$this->operation($order_sn);
