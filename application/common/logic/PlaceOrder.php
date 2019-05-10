@@ -28,7 +28,7 @@ class PlaceOrder
     private $pay;
     private $order;
     private $userAddress;
-    private $payPsw;
+    private $payPwd;
     private $promType;
     private $promId;
     private $extraParams;
@@ -47,11 +47,11 @@ class PlaceOrder
 
     /**
      * 设置密码后加密
-     * @param $payPsw
+     * @param $payPwd
      */
-    public function setPayPsw($payPsw)
+    public function setPayPwd($payPwd)
     {
-        $this->payPsw = $payPsw;
+        $this->payPwd = $payPwd;
     }
 
     public function setExtraParams($extraParams){
@@ -164,10 +164,10 @@ class PlaceOrder
             if (empty($user['paypwd'])) {
                 throw new TpshopException('提交订单', 0, ['status'=>-6,'msg'=>"请先设置支付密码",'result'=>'']);
             }
-            if (empty($this->payPsw)) {
+            if (empty($this->payPwd)) {
                 throw new TpshopException('提交订单', 0, ['status'=>-7,'msg'=>"请输入支付密码",'result'=>'']);
             }
-             if ($this->payPsw !== $user['paypwd'] && encrypt($this->payPsw) !== $user['paypwd']) {
+             if ($this->payPwd !== $user['paypwd'] && encrypt($this->payPwd) !== $user['paypwd']) {
                 throw new TpshopException('提交订单', 0, ['status'=>-8,'msg'=>'支付密码错误','result'=>'']);
             }
         }

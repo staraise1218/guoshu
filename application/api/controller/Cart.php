@@ -394,7 +394,7 @@ class Cart extends Base {
                 $placeOrder->setInvoiceTitle($invoice_title);
                 $placeOrder->setUserNote($user_note);
                 $placeOrder->setTaxpayer($taxpayer);
-                $placeOrder->setPayPsw($payPwd);
+                $placeOrder->setPayPwd($payPwd);
                 // 额外参数
                 $extraParams = array(
                     'send_method' => $send_method,
