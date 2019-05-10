@@ -251,22 +251,22 @@ class System extends Base
      public function login_task()
      {
          
-        /*** 随机清空购物车的垃圾数据*/                     
+        /*** 随机清空购物车的垃圾数据*/ 
         $time = time() - 3600; // 删除购物车数据  1小时以前的
-        M("Cart")->where("user_id = 0 and  add_time < $time")->delete();            
+        M("Cart")->where("user_id = 0 and  add_time < $time")->delete();
         $today_time = time();
 		
 		// 删除 cart表垃圾数据 删除一个月以前的 
 		$time = time() - 2592000; 
-        M("cart")->where("add_time < $time")->delete();		
+        M("cart")->where("add_time < $time")->delete();
 		// 删除 tp_sms_log表垃圾数据 删除一个月以前的短信
-        M("sms_log")->where("add_time < $time")->delete();				
+        M("sms_log")->where("add_time < $time")->delete();
         
         // 发货后满多少天自动收货确认
         $auto_confirm_date = tpCache('shopping.auto_confirm_date');
         $auto_confirm_date = $auto_confirm_date * (60 * 60 * 24); // 7天的时间戳
 		$time = time() - $auto_confirm_date; // 比如7天以前的可用自动确认收货
-        $order_id_arr = M('order')->where("order_status = 1 and shipping_status = 1 and shipping_time < $time")->getField('order_id',true);       
+        $order_id_arr = M('order')->where("order_status = 1 and shipping_status = 1 and shipping_time < $time")->getField('order_id',true);
         foreach($order_id_arr as $k => $v)
         {
             confirm_order($v);

@@ -209,6 +209,8 @@ class Cart extends Base {
             foreach ($userCartCouponList as $k => $item) {
                 if($item['coupon']['able'] == 0) unset($userCartCouponList[$k]);
             }
+            
+            $userCartCouponList = array_values($userCartCouponList);
         }
         // 获取用户余额
         $user = Db::name('users')->where('user_id', $user_id)->field('user_money')->find();
