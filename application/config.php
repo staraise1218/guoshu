@@ -252,6 +252,7 @@ return [
         3 => '已取消',                
         4 => '已完成',//评价完
         5 => '已作废',
+        6 => '已退货', // 自定义加的
     ],
     'SHIPPING_STATUS' => array(
         0 => '未发货',
@@ -306,7 +307,8 @@ return [
     'WAITCCOMMENT'=> ' AND order_status=2 ', // 待评价 确认收货     //'FINISHED'=>'  AND order_status=1 ', //订单查询状态 已完成 
     'FINISH'=> ' AND order_status = 4 ', // 已完成
     'CANCEL'=> ' AND order_status = 3 ', // 已取消
-    'CANCELLED'=> 'AND order_status = 5 ',//已作废
+    'CANCELLED'=> ' AND order_status = 5 ',//已作废
+    'RETURNBACK'=> ' AND order_status = 6 AND pay_status = 3',//退货
     'PAYED'=>' AND (order_status=2 OR (order_status=1 AND pay_status=1) ) ', //虚拟订单状态:已付款
     
     'ORDER_STATUS_DESC' => [

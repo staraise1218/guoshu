@@ -23,7 +23,7 @@ class Order extends Base
     /**
      * 订单列表
      * @return mixed
-     * @param  $[type] [< 待付款：WAITPAY，待发货：WAITSEND， 待收货：WAITRECEIVE，待评价：WAITCCOMMENT >]
+     * @param  $[type] [< 待付款：WAITPAY，待发货：WAITSEND， 待收货：WAITRECEIVE，待评价：WAITCCOMMENT , 退货退款 RETURNBACK >]
      */
     public function order_list()
     {
@@ -781,5 +781,37 @@ class Order extends Base
         } else {
             response_error('', '操作失败');
         }
+    }
+
+    // 商品退货退款，配送端直接点击退款，就把钱返回给用户
+    public function returnBack(){
+        $user_id = I('user_id');
+        $order_id = I('order_id');
+
+        // 启动事务
+        Db::startTrans();
+        try{
+            $order = Db::name('order')
+                ->where('order_id', $order_id)
+                ->where('user_id', $user_id)
+                ->find();
+            if(empty($order)) response_error('', '订单不存在');
+            if($order['order_status'] == 6 || $order['pay_status'] == 3) response_error('', '该订单已退货/款');
+            if($order['pay_status'] != 1) response_error('', '订单未支付');
+
+            // 更改订单状态
+            M('order')->where('order_id', $order_id)->update(array('order_status'=>6, 'pay_status'=>3));
+            // 退款
+            accountLog($user_id, $order['order_amount'], 0, $desc='订单：'.$order['order_sn'].' 退款', 0, $order_id, $order['order_sn'], 5);
+
+            // 提交事务
+            Db::commit();
+
+            response_success('', '操作成功');
+        } catch (\Exception $e) {
+            // 回滚事务
+            Db::rollback();
+            response_error('', '操作失败');
+        }        
     }
 }
