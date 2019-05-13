@@ -340,8 +340,6 @@ class Cart extends Base {
         $send_method        = I('send_method'); // 配送方式 1 送货上门 2 门店自取
         $pickup_id          = I('pickup_id');
         $payMethod          = I('payMethod');
-        $longitude          = I('longitude');
-        $latitude          = I('latitude');
 
 
         mb_strlen($user_note) > 60 && response_error('', '备注超出限制可输入字符长度！');
@@ -385,6 +383,7 @@ class Cart extends Base {
                     if(empty($region)) response_error('', '该城市不支持配送');
                     $delivery_longitude = $region['longitude'];
                     $delivery_latitude = $region['latitude'];
+                    if($delivery_longitude == '' || $delivery_latitude == '') response_error('', '未设置配送点坐标');
                     $GeographyLogic = new GeographyLogic();
                     $distance = $GeographyLogic->getDistance($user_longitude, $user_latitude, $delivery_longitude, $delivery_latitude);
                     if($distance > $delivery_range) response_error('', '该地址超出配送范围');
