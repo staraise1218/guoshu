@@ -44,6 +44,7 @@ class Activity extends Base {
         $group_by_where = array(
             'gb.start_time'=>array('lt',time()),
             'gb.end_time'=>array('gt',time()),
+            'gb.is_end' => 0,
             'g.is_on_sale'=>1,
             'g.city_code'=>$city_code,
         );
@@ -114,6 +115,7 @@ class Activity extends Base {
         $group_by_where = array(
             'gb.start_time'=>array('lt',time()),
             'gb.end_time'=>array('gt',time()),
+            'gb.is_end' => 0,
             'g.is_on_sale'=>1,
             'g.city_code'=>$city_code,
         );
