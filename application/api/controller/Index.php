@@ -119,6 +119,7 @@ class Index extends Base {
 			->field('id, name, image')
 			->select();
 
+		$list = array();
 		if($subcatelist){
 			$list = array();
 			foreach ($subcatelist as $k => $item) {
