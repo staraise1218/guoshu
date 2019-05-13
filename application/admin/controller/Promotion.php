@@ -427,6 +427,7 @@ class Promotion extends Base
                     $this->ajaxReturn(['status' => 0, 'msg' => '添加抢购活动失败', 'result' => '']);
                 }
             } else {
+                if($data['end_time'] >= time()) $data['is_end'];
                 $r = M('flash_sale')->where("id=" . $data['id'])->save($data);
                 M('goods')->where(['prom_type' => 1, 'prom_id' => $data['id']])->save(array('prom_id' => 0, 'prom_type' => 0));
                 if($data['item_id'] > 0){
