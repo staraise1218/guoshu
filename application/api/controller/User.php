@@ -111,8 +111,8 @@ class User extends Base {
 
         // 检测手机号是否存在
         $user = Db::name('users')->where('user_id', $user_id)->find();
-        if(empty($User)) response_error('', '用户不存在');
-        if($user['mobile'] == '') response_error(array('status' = -1), '未设置手机号');
+        if(empty($user)) response_error('', '用户不存在');
+        if($user['mobile'] == '') response_error(array('status' => -1), '未设置手机号');
         if($user['mobile'] != $mobile) response_error('', '与设置的手机号不相符');
         if(!$count) response_error('', '手机号不存在');
 
