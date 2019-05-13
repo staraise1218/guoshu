@@ -146,6 +146,12 @@ class Index extends Base {
 		$cat_id = I('cat_id');
 		$city_code = I('city_code');
 		$page = I('page', 1);
+
+		$category = Db::name('goods_category')
+			->where('is_show', 1)
+			->where('id', $cat_id)
+			->field('id, name, image')
+			->select();
     	
     	$where = array(
 			'city_code' => $city_code, // 城市
@@ -154,7 +160,7 @@ class Index extends Base {
 		);
 
 		$cat_id_arr = getCatGrandson ($cat_id);
-		// $where['cat_id'] = array('in', $cat_id_arr);
+		$where['cat_id'] = array('in', $cat_id_arr);
 
 		$goodslist = Db::name('goods')
 			->where($where)
@@ -164,7 +170,9 @@ class Index extends Base {
 			->limit(15)
 			->select();
 
-		response_success($goodslist);
+		$result['category'] = $category;
+		$result['goodslist'] = $goodslist;
+		response_success($result);
 	}
 
 	function test(){
