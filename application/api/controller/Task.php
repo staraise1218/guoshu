@@ -33,8 +33,8 @@ class Task extends Base {
             ->where('end_time', ['<=', time()])
             ->field('id, goods_id')
             ->select();
-p(1);
-        if(empty($list)) return false;
+
+        if(empty($list)) return;
         
 p($goods_ids, $goods_ids);
         $group_ids = array_column($list, 'id');
