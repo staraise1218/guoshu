@@ -38,7 +38,7 @@ class Activity extends Base {
             ->select();
 
         // 秒杀时间段
-        $time_space = flash_sale_time_space();
+        // $time_space = flash_sale_time_space();
         
         // 团购列表
         $group_by_where = array(
@@ -60,7 +60,7 @@ class Activity extends Base {
 
        
        $result['bannerList'] = $bannerList;
-       $result['time_space'] = $time_space;
+       // $result['time_space'] = $time_space;
        $result['grouplist'] = $grouplist;
        response_success($result);
     }
@@ -103,6 +103,32 @@ class Activity extends Base {
         
         
         response_success($list);
+    }
+
+    // 获取团购商品列表
+    public function groupList(){
+        $city_code = I('city_code');
+        $page = I('page',1);
+
+         // 团购列表
+        $group_by_where = array(
+            'gb.start_time'=>array('lt',time()),
+            'gb.end_time'=>array('gt',time()),
+            'g.is_on_sale'=>1,
+            'g.city_code'=>$city_code,
+        );
+
+        $GroupBuy = new GroupBuy();
+        $grouplist = $GroupBuy
+            ->alias('gb')
+            ->join('__GOODS__ g', 'gb.goods_id=g.goods_id AND g.prom_type=2')
+            ->where($group_by_where)
+            ->page($page)
+            ->limit(15)
+            ->order('id desc')
+            ->select();
+
+        response_success($grouplist);
     }
 
 }
