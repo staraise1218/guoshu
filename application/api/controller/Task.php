@@ -18,7 +18,7 @@ class Task extends Base {
             ->field('id, goods_id')
             ->select();
 
-        if(empty($list)) return false;
+        if(empty($list)) return;
         
         $group_ids = array_column($list, 'id');
         $goods_ids = array_column($list, 'goods_id');
@@ -35,8 +35,7 @@ class Task extends Base {
             ->select();
 
         if(empty($list)) return;
-        
-p($goods_ids, $goods_ids);
+
         $group_ids = array_column($list, 'id');
         $goods_ids = array_column($list, 'goods_id');
         Db::name('group_buy')->where('id', array('IN', $group_ids))->setField('is_end', 1);
