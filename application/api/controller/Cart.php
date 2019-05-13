@@ -377,6 +377,7 @@ class Cart extends Base {
                     // 获取用户地址经纬度
                     $user_longitude = $address['longitude'];
                     $user_latitude = $address['latitude'];
+                    if($user_longitude == '' || $user_latitude == '') response_error('', '该地址缺少经纬度坐标');
                     // 配送站点经纬度
                     $city_code = $address['city'];
                     $region = Db::name('region')->where('code', $city_code)->find();
