@@ -5,6 +5,7 @@ namespace app\api\controller;
 use think\Db;
 use app\api\logic\FileLogic;
 use app\api\logic\SmsLogic;
+use app\common\logic\CartLogic;
 
 class Common extends Base {
 
@@ -98,6 +99,20 @@ class Common extends Base {
             response_error('', '文件上传失败');
         }
 
+    }
+
+    // 获取购物车商品总数量
+    public function getCartNum(){
+        $user_id = I('user_id');
+        $city_code = I('city_code');
+
+        $cartLogic = new CartLogic();
+        $cartLogic->setUserId($user_id);
+        $cartLogic->setCityCode($city_code);
+        
+        $cartNum = $cartLogic->getUserCartGoodsNum();//获取用户购物车商品总数
+
+        response_success(array('cartNum'=>$cartNum));
     }
 
 }
