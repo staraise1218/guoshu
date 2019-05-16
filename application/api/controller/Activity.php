@@ -80,21 +80,25 @@ class Activity extends Base {
         // $end_time = I('end_time');
         $type = I('type');
 
+
+        $where = array(
+            'fl.is_end' => 0,
+            'g.is_on_sale'=>1
+        );
         // 下期预告
         if($type == 'next'){
             $start_time = strtotime(date('Y-m-d', strtotime('+1 day')));
             $end_time = strtotime(date('Y-m-d', strtotime('+2 day')));
+            $where['fl.start_time'] = array('gt', $start_time);
+            $where['fl.end_time'] = array('elt', $start_time);
         } else {
-            $start_time = time();
+            $start_time = strtotime(date('Y-m-d'));
             $end_time = strtotime(date('Y-m-d', strtotime('+1 day')));
+
+            $where['fl.start_time'] = array(array('gt', $start_time), array('elt', time()));
+            $where['fl.end_time'] = array(array('gt', time()), array('elt', $end_time));
         }
 
-        $where = array(
-            'fl.start_time'=>array('elt',$start_time),
-            'fl.end_time'=>array(array('elt',$end_time), array('gt', time())),
-            'fl.is_end' => 0,
-            'g.is_on_sale'=>1
-        );
         $FlashSale = new FlashSale();
         $list = $FlashSale->alias('fl')
             ->join('__GOODS__ g', 'g.goods_id = fl.goods_id')
