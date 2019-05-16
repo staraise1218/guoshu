@@ -288,11 +288,19 @@ class Order extends Base
         $area_id[] = $order_info['district'];
         $area_id = array_filter($area_id);
         $area_id = implode(',', $area_id);
-        $regionList = Db::name('region2')->where("id", "in", $area_id)->getField('id,name');
+        $regionList = Db::name('region2')->where("code", "in", $area_id)->getField('code,name');
         $order_info['fulladdress'] = $regionList[$order_info['province']].$regionList[$order_info['city']].$regionList[$order_info['district']].$order_info['address'];
 
         //获取订单操作记录
         $order_action = M('order_action')->where(array('order_id' => $id))->select();
+
+        // 获取自提点信息
+        if($order_info['send_method'] == 2){
+            $pickupInfo = Db::name('pick_up')->where('pickup_id', $order_info['pickup_id'])
+                ->field('pickup_id, pickup_name, pickup_phone, pickup_contact, pickup_address')
+                ->find();
+            $order_info['pickupInfo'] = $pickupInfo;
+        }
         
 
         // $this->assign('order_status', C('ORDER_STATUS'));

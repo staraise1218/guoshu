@@ -24,6 +24,24 @@
 					<p class="notic">自提点名称</p>
 				</dd>
 			</dl>
+			<dl class="row">
+				<dt class="tit">
+					<label>自提点联系人</label>
+				</dt>
+				<dd class="opt">
+					<input type="text" name="pickup_contact" placeholder="自提点联系人" value="{$pickup.pickup_contact}" class="input-txt">
+					<p class="notic"></p>
+				</dd>
+			</dl>
+			<dl class="row">
+				<dt class="tit">
+					<label><em>*</em>自提点电话</label>
+				</dt>
+				<dd class="opt">
+					<input type="text" name="pickup_phone" value="{$pickup.pickup_phone}" onpaste="this.value=this.value.replace(/[^\d-]/g,'')" onKeyUp="this.value=this.value.replace(/[^\d-]/g,'')" class="input-txt">
+					<p class="notic"></p>
+				</dd>
+			</dl>
             <dl class="row">
                 <dt class="tit">
                     <label>图片上传</label>
@@ -107,24 +125,6 @@
 					</div>
 					<div id="mapContainer" style="height: 500px;"></div>
 					<p class="notic">详细地址</p>
-				</dd>
-			</dl>
-			<dl class="row">
-				<dt class="tit">
-					<label>自提点联系人</label>
-				</dt>
-				<dd class="opt">
-					<input type="text" name="pickup_contact" placeholder="自提点联系人" value="{$pickup.pickup_contact}" class="input-txt">
-					<p class="notic"></p>
-				</dd>
-			</dl>
-			<dl class="row">
-				<dt class="tit">
-					<label><em>*</em>自提点电话</label>
-				</dt>
-				<dd class="opt">
-					<input type="text" name="pickup_phone" value="{$pickup.pickup_phone}" onpaste="this.value=this.value.replace(/[^\d-]/g,'')" onKeyUp="this.value=this.value.replace(/[^\d-]/g,'')" class="input-txt">
-					<p class="notic"></p>
 				</dd>
 			</dl>
 			<div class="bot"><a onclick="checkForm();" class="ncap-btn-big ncap-btn-green" id="submitBtn">确认提交</a></div>
