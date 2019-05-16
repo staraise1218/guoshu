@@ -252,7 +252,6 @@ class Goods extends Base {
      */
     public function addEditGoods()
     {
-        p($_SESSION, $_COOKIE);
         $GoodsLogic = new GoodsLogic();
         $Goods = new \app\admin\model\Goods();
         $goods_id = I('goods_id');
