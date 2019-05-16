@@ -81,7 +81,7 @@ class Activity extends Base {
         $type = I('type');
 
         // 下期预告
-        if(I('type') == 'next'){
+        if($type == 'next'){
             $start_time = strtotime(date('Y-m-d', strtotime('+1 day')));
             $end_time = strtotime(date('Y-m-d', strtotime('+2 day')));
         } else {
