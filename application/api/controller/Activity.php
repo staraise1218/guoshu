@@ -86,7 +86,7 @@ class Activity extends Base {
             'g.is_on_sale'=>1
         );
         // 下期预告
-        if($type == 'next'){
+       /* if($type == 'next'){
             $start_time = strtotime(date('Y-m-d', strtotime('+1 day')));
             $end_time = strtotime(date('Y-m-d', strtotime('+2 day')));
             $where['fl.start_time'] = array('gt', $start_time);
@@ -97,7 +97,7 @@ class Activity extends Base {
 
             $where['fl.start_time'] = array(array('gt', $start_time), array('elt', time()));
             $where['fl.end_time'] = array(array('gt', time()), array('elt', $end_time));
-        }
+        }*/
 
         $FlashSale = new FlashSale();
         $list = $FlashSale->alias('fl')
