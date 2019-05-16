@@ -85,17 +85,16 @@ class Activity extends Base {
             'fl.is_end' => 0,
             'g.is_on_sale'=>1
         );
-        // 下期预告 ，结束时间大于明天24点，开始时间小于等于明天凌晨
+        // 下期预告 ，明天凌晨0点开始的秒杀商品
         if($type == 'next'){
             $start_time = strtotime(date('Y-m-d', strtotime('+1 day')));
-            $end_time = strtotime(date('Y-m-d', strtotime('+2 day')));
-            $where['fl.start_time'] = array('gt', $start_time);
+            $where['fl.start_time'] = array('eq', $start_time);
         } else {
             // 进行中的， 开始时间小于等于当前时间， 结束时间大于当前时间
             $start_time = strtotime(date('Y-m-d'));
             $end_time = strtotime(date('Y-m-d', strtotime('+1 day')));
 
-            $where['fl.start_time'] = array(array('gt', $start_time), array('elt', time()));
+            $where['fl.start_time'] = array(array('egt', $start_time), array('elt', time()));
             $where['fl.end_time'] = array('gt', time());
         }
 
