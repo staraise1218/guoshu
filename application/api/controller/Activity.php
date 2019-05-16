@@ -54,6 +54,7 @@ class Activity extends Base {
             ->alias('gb')
             ->join('__GOODS__ g', 'gb.goods_id=g.goods_id AND g.prom_type=2')
             ->where($group_by_where)
+            ->field('gb.goods_id, gb.price, gb.goods_price, (gb.virtual_num+gb.buy_num) as virtual_num, g.goods_name, g.subtitle, g.tag, g.original_img, g.store_count')
             ->page($page)
             ->limit(15)
             ->order('id desc')
