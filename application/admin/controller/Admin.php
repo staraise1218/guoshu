@@ -84,6 +84,11 @@ class Admin extends Base {
     	$this->assign('act',$act);
     	$role = D('admin_role')->select();
     	$this->assign('role',$role);
+        // 获取省份
+        $provincelist = Db::name('region')->where('level', 1)->select();
+        $this->assign('provincelist',$provincelist);
+        $citylist = Db::name('region')->where('parent_id', $goodsInfo['province_id'])->select();
+        $this->assign('citylist', $citylist);      
     	return $this->fetch();
     }
     

@@ -36,6 +36,18 @@ return [
     'DATA_BACKUP_COMPRESS' => 0, //数据库备份文件是否启用压缩
     'DATA_BACKUP_COMPRESS_LEVEL' => 9, //数据库备份文件压缩级别
     // URL伪静态后缀
-    'url_html_suffix'        => '',        
+    'url_html_suffix'        => '',      
+    'session'                => [
+        'id'             => '',
+        // SESSION_ID的提交变量,解决flash上传跨域
+        'var_session_id' => '',
+        // SESSION 前缀
+        'prefix'         => 'think',
+        // 驱动方式 支持redis memcache memcached
+        'type'           => '',
+        // 是否自动开启 SESSION
+        'auto_start'     => true,
+        // 'expire'        => 3600,
+    ],  
 ]
 ?>

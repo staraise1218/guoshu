@@ -327,6 +327,7 @@ class Goods extends Base {
                     'member_goods_price' => I('shop_price'), // 会员折扣价
                 ));
             } else {
+                $Goods->admin_id = session('admin_id');
                 $Goods->save(); // 写入数据到数据库
                 $goods_id = $insert_id = $Goods->getLastInsID();
                 if(empty($spec_item)){

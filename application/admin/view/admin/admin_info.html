@@ -49,7 +49,7 @@
                         <label><em>*</em>所属角色</label>
                     </dt>
                     <dd class="opt">
-                        <select name="role_id">
+                        <select name="role_id" id="role_id">
                             <volist name="role" id="item">
                                 <option value="{$item.role_id}" <if condition="$item[role_id] eq $info[role_id]"> selected="selected"</if> >{$item.role_name}</option>
                             </volist>
@@ -58,6 +58,30 @@
                         <p class="notic">所属角色</p>
                     </dd>
                 </dl>
+
+            
+            <dl class="row" id="select_city" style="display: none;">
+                <dt class="tit">
+                    <label for="record_no">所属城市</label>
+                </dt>
+                <dd class="opt">
+                      <select name="province_id" id="province_id"  class="small form-control">
+                          <option value="0">请选择省份</option>   
+                               <foreach name="provincelist" item="item" key="k" >
+                                 <option data-id="{$item['id']}" value="{$item['id']}" <if condition="$item['id'] eq $goodsInfo['province_id']">selected="selected"</if> >
+                                      {$item['name']}
+                                 </option>
+                               </foreach>
+                        </select>
+                        <select name="city_code" id="city_code" class="small form-control">
+                          <option value="0">请选择城市</option>
+                          <foreach name="citylist" item="item" key="k" >
+                          <option value="{$item['code']}" <if condition="$item['code'] eq $goodsInfo['city_code']">selected="selected"</if>>{$item['name']}</option>
+                          </foreach>
+                        </select>                            
+                    <span class="err" id="err_cat_id" style="color:#F00; display:none;"></span>
+                </dd>
+            </dl>
             </if>
             <div class="bot"><a href="JavaScript:void(0);" onclick="adsubmit();" class="ncap-btn-big ncap-btn-green" id="submitBtn">确认提交</a></div>
         </div>
@@ -80,6 +104,34 @@
         }
         $('#adminHandle').submit();
     }
+        //选择城市
+        $(document).on("change",'#province_id',function(){
+           var id = $("#province_id option:selected").attr("data-id");
+            
+            $.ajax({
+                url:"{:U('admin/api/ajaxGetCity')}",
+                type:'post',
+                data: {id:id},
+                dataType:'json',
+                success:function(data){
+                    var html = '<option value="0">请选择</option>';
+                    $.each(data.data, function(){
+                        html += '<option value="'+this.code+'">'+this.name+'</option>';
+                    })
+                    $('#city_code').html(html);
+                }
+            })
+        })
+
+        // 选择角色切换城市是否显示
+        $('#role_id').change(function(){
+            var role_id = $(this).val();
+            if(role_id > 1){
+                $('#select_city').show();
+            } else {
+                $('#select_city').hide();
+            }
+        })
 </script>
 </body>
 </html>
