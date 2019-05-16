@@ -78,7 +78,7 @@ class Activity extends Base {
         $page = I('page', 1);
         // $start_time = I('start_time');
         // $end_time = I('end_time');
-        $type = I('next');
+        $type = I('type');
 
         // 下期预告
         if(I('type') == 'next'){
