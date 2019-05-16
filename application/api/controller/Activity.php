@@ -85,12 +85,12 @@ class Activity extends Base {
             $start_time = strtotime(date('Y-m-d', strtotime('+1 day')));
             $end_time = strtotime(date('Y-m-d', strtotime('+2 day')));
         } else {
-            $start_time = strtotime(date('Y-m-d'));
+            $start_time = time();
             $end_time = strtotime(date('Y-m-d', strtotime('+1 day')));
         }
 
         $where = array(
-            'fl.start_time'=>array('gt',$start_time),
+            'fl.start_time'=>array('elt',$start_time),
             'fl.end_time'=>array('elt',$end_time),
             'fl.is_end' => 0,
             'g.is_on_sale'=>1
