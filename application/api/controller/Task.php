@@ -38,7 +38,7 @@ class Task extends Base {
 
         $group_ids = array_column($list, 'id');
         $goods_ids = array_column($list, 'goods_id');
-        Db::name('group_buy')->where('id', array('IN', $group_ids))->setField('is_end', 1);
+        Db::name('flash_sale')->where('id', array('IN', $group_ids))->setField('is_end', 1);
         Db::name('goods')->where('goods_id', array('IN', $goods_ids))->update(array('prom_type'=>0, 'prom_id'=>0));
     }
 
