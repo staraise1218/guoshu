@@ -91,7 +91,7 @@ class Activity extends Base {
 
         $where = array(
             'fl.start_time'=>array('elt',$start_time),
-            'fl.end_time'=>array('elt',$end_time),
+            'fl.end_time'=>array(array('elt',$end_time), array('gt', time())),
             'fl.is_end' => 0,
             'g.is_on_sale'=>1
         );
