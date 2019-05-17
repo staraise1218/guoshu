@@ -102,9 +102,9 @@ class Pickup extends Base {
 		$id = I('get.pickup_id');
 		$pickup = M('pick_up')->where(array('pickup_id'=>$id))->find();
 		//获取省份
-		$p = M('region2')->where(array('parentCode'=>'000000'))->select();
-		$c = M('region2')->where(array('parentCode'=>$pickup['province_code']))->select();
-		$d = M('region2')->where(array('parentCode'=>$pickup['city_code']))->select();
+		$p = M('region')->where(array('level'=>'1'))->select();
+		$c = M('region')->where(array('level'=>2))->select();
+		// $d = M('region')->where(array('parentCode'=>$pickup['city_code']))->select();
 		$suppliers = M('suppliers')->where(array('is_check'=>1))->select();
 
 		$this->assign('province',$p);

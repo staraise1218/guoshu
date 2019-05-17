@@ -340,6 +340,7 @@ class Cart extends Base {
         $send_method        = I('send_method'); // 配送方式 1 送货上门 2 门店自取
         $pickup_id          = I('pickup_id');
         $payMethod          = I('payMethod');
+        $delivery_code      = I('delivery_code');
 
 
         mb_strlen($user_note) > 60 && response_error('', '备注超出限制可输入字符长度！');
@@ -399,6 +400,7 @@ class Cart extends Base {
                 $extraParams = array(
                     'send_method' => $send_method,
                     'pickup_id' => $pickup_id,
+                    'delivery_code' => $delivery_code,
                 );
                 $placeOrder->setPayMethod($payMethod);
                 $placeOrder->setExtraParams($extraParams);
@@ -773,7 +775,7 @@ class Cart extends Base {
             ->limit(20)
             ->select();
 
-        $region2 = Db::name('region2')->cache(0)->field('name, code')->select();
+        $region2 = Db::name('region')->cache(0)->field('name, code')->select();
         $regionlist = array();
         // 循环地址处理数组
         foreach ($region2 as $item) {
@@ -782,7 +784,7 @@ class Cart extends Base {
         if($list){
             
             foreach ($list as &$item) {
-                $item['fulladdress'] = $regionList[$item['province_code']]['name'].$regionList[$item['city_code']]['name'].$regionList[$item['district_code']]['name'].$item['pickup_address'];
+                $item['fulladdress'] = $regionList[$item['province_code']]['name'].$regionList[$item['city_code']]['name'].$item['pickup_address'];
                 unset($item['pickup_address']);
             }
         }
