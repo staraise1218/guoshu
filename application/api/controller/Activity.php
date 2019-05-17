@@ -92,7 +92,6 @@ class Activity extends Base {
         } else {
             // 进行中的， 开始时间小于等于当前时间， 结束时间大于当前时间
             $start_time = strtotime(date('Y-m-d'));
-            $end_time = strtotime(date('Y-m-d', strtotime('+1 day')));
 
             $where['fl.start_time'] = array(array('egt', $start_time), array('elt', time()));
             $where['fl.end_time'] = array('gt', time());

@@ -176,6 +176,24 @@ class Index extends Base {
 		response_success($result);
 	}
 
+	// 获取最近的城市（配送中心)
+	public function getNearCity(){
+		$user_longitude = input('post.longitude');
+		$user_latitude = input('post.latitude');		
+
+		$field = 'id, name, code';
+		$field .= ", ROUND(6378.138*2*ASIN(SQRT(POW(SIN(($user_latitude*PI()/180-latitude*PI()/180)/2),2)+COS($user_latitude*PI()/180)*COS(latitude*PI()/180)*POW(SIN(($user_longitude*PI()/180-longitude*PI()/180)/2),2))), 2) AS distance";
+		$list = Db::name('region')
+			->where('level', 2)
+			->field($field)
+			->order('distance asc')
+			->select();
+
+		$info = array_shift($list);
+		response_success($info);
+
+	}
+
 	function test(){
 		$order_sn = '201904302212107029';
 		// 分享商品得佣金
