@@ -739,7 +739,7 @@ class Cart extends Base {
     // 自提点列表
     public function getPickupList(){
         $user_id = I('user_id');
-        $isLocalCity = I('isLocalCity');  // 是否本地城市
+        $isLocalCity = I('isLocalCity', 1);  // 是否本地城市(该字段不用了，但不影响逻辑)
         $user_longitude = I('user_longitude'); // 
         $user_latitude = I('user_latitude');
         $city_code = I('city_code');
