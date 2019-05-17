@@ -194,6 +194,16 @@ class Index extends Base {
 
 	}
 
+    // 获取配送城市
+    public function getDeliveryCity(){
+        $list = Db::name('region')
+          ->where('level', 2)
+          ->field('id, name, code')
+          ->select();
+
+        response_success($list);
+    }
+
 	function test(){
 		$order_sn = '201904302212107029';
 		// 分享商品得佣金
