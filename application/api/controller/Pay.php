@@ -114,7 +114,11 @@ class Pay extends Base {
 		try{
 			
 			// 更改订单状态
-			M('order')->where('order_sn', $order_sn)->update(array('pay_status'=>1, 'pay_time'=>time()));
+			$updatedata = array(
+				'pay_status'=>1,
+				'pay_time'=>time()
+			);
+			M('order')->where('order_sn', $order_sn)->update($updatedata);
 		   
 
 		    // 提交事务
