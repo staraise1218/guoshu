@@ -127,7 +127,7 @@ class Order extends Model
             }elseif($order_status == 1 && ($shipping_status == 0 || $shipping_status == 2)){
                 $btn['delivery'] = '去发货';
                 if($prom_type != 6){
-                    $btn['cancel'] = '取消确认';
+                    // $btn['cancel'] = '取消确认';
                 }
             }elseif($shipping_status == 1 && $order_status == 1 && $pay_status == 0){
                 $btn['pay'] = '付款';
@@ -146,7 +146,7 @@ class Order extends Model
                 }
             }elseif($order_status == 1 && $pay_status == 1 && ($shipping_status == 0 || $shipping_status == 2)){
                 if($prom_type != 6){
-                    $btn['cancel'] = '取消确认';
+                    // $btn['cancel'] = '取消确认';
                 }
                 $btn['delivery'] = '去发货';
             }

@@ -311,7 +311,7 @@ exit("请联系TPshop官网客服购买高级版支持此功能");
             $deliverUserInfo = Db::name('users')->where('user_id', $order['express_user_id'])->find();
             $this->assign('deliverUserInfo', $deliverUserInfo);
         }
-        
+
         $this->assign('split',$split);
         $this->assign('express',$express);
         return $this->fetch();
