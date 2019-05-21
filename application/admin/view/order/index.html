@@ -36,7 +36,7 @@
 	  		<input type="hidden" name="order_by" value="order_id">
             <input type="hidden" name="sort" value="desc">
             <input type="hidden" name="user_id" value="{$Request.param.user_id}">
-            <input type="hidden" name="order_ids" value="">
+            <input type="hidden" name="order_ids" value="order_id">
             <!--用于查看结算统计 包含了哪些订单-->
             <input type="hidden" value="{$_GET['order_statis_id']}" name="order_statis_id" />
                                     
@@ -218,9 +218,7 @@
       		});
         // 表格行点击选中切换
         $('#flexigrid').delegate('.sign', 'click', function(){
-          debugger
             var tr = $(this).parent('tr');
-            debugger
             $order_status = tr.attr('data_order_status');
             $express_user_id = tr.attr('data_express_user_id');
             $pay_status = tr.attr('data_pay_status');
@@ -229,7 +227,7 @@
                 layer.msg('该商品状态不可指派');
                 return;
             }
-            $(this).toggleClass('trSelected');
+            tr.toggleClass('trSelected');
         });
     		 
 	   });

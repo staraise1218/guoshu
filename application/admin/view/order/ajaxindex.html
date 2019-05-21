@@ -37,7 +37,7 @@
           <div style="text-align: center; width: 60px;" class="">{$list.pay_name|default='无'}</div>
         </td>
         <td align="center" abbr="article_time" axis="col6" class="">
-          <div style="text-align: center; width: 60px;" class="">{$list.shipping_name}</div>
+          <div style="text-align: center; width: 60px;" class="">{$list.send_method == 1 ? '送货上门' : '门店自取'}</div>
         </td>
         <td align="center" abbr="article_time" axis="col6" class="">
           <div style="text-align: center; width: 120px;" class="">{$list.add_time|date='Y-m-d H:i',###}</div>

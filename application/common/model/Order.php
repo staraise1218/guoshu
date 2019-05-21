@@ -93,9 +93,9 @@ class Order extends Model
      */
     public function getFullAddressAttr($value, $data)
     {
-        $province =  Region::where(['id'=>$data['province']])->value('name');
-        $city = Region::where(['id'=>$data['city']])->value('name');
-        $district =Region::where(['id'=>$data['district']])->value('name');
+        $province =  Region2::where(['code'=>$data['province']])->value('name');
+        $city = Region2::where(['code'=>$data['city']])->value('name');
+        $district =Region2::where(['code'=>$data['district']])->value('name');
         $adderss = $province.'，'.$city.'，'.$district.'，'.$data['address'];
         return $adderss;
     }
@@ -114,54 +114,54 @@ class Order extends Model
          *  操作按钮汇总 ：付款、设为未付款、确认、取消确认、无效、去发货、确认收货、申请退货
          *
          */
-        $os = $data['order_status'];//订单状态
-        $ss = $data['shipping_status'];//发货状态
-        $ps = $data['pay_status'];//支付状态
-        $pt = $data['prom_type'];//订单类型：0默认1抢购2团购3优惠4预售5虚拟6拼团
+        $order_status = $data['order_status'];//订单状态
+        $shipping_status = $data['shipping_status'];//发货状态
+        $pay_status = $data['pay_status'];//支付状态
+        $prom_type = $data['prom_type'];//订单类型：0默认1抢购2团购3优惠4预售5虚拟6拼团
         $btn = array();
         if($data['pay_code'] == 'cod') {
-            if($os == 0 && $ss == 0){
-                if($pt != 6){
+            if($order_status == 0 && $shipping_status == 0){
+                if($prom_type != 6){
                     $btn['confirm'] = '确认';
                 }
-            }elseif($os == 1 && ($ss == 0 || $ss == 2)){
+            }elseif($order_status == 1 && ($shipping_status == 0 || $shipping_status == 2)){
                 $btn['delivery'] = '去发货';
-                if($pt != 6){
+                if($prom_type != 6){
                     $btn['cancel'] = '取消确认';
                 }
-            }elseif($ss == 1 && $os == 1 && $ps == 0){
+            }elseif($shipping_status == 1 && $order_status == 1 && $pay_status == 0){
                 $btn['pay'] = '付款';
-            }elseif($ps == 1 && $ss == 1 && $os == 1){
-                if($pt != 6){
-                    $btn['pay_cancel'] = '设为未付款';
+            }elseif($pay_status == 1 && $shipping_status == 1 && $order_status == 1){
+                if($prom_type != 6){
+                    // $btn['pay_cancel'] = '设为未付款';
                 }
             }
         }else{
-            if($ps == 0 && $os == 0 || $ps == 2){
+            if($pay_status == 0 && $order_status == 0 || $pay_status == 2){
                 $btn['pay'] = '付款';
-            }elseif($os == 0 && $ps == 1){
-                if($pt != 6){
-                    $btn['pay_cancel'] = '设为未付款';
+            }elseif($order_status == 0 && $pay_status == 1){
+                if($prom_type != 6){
+                    // $btn['pay_cancel'] = '设为未付款';
                     $btn['confirm'] = '确认';
                 }
-            }elseif($os == 1 && $ps == 1 && ($ss == 0 || $ss == 2)){
-                if($pt != 6){
+            }elseif($order_status == 1 && $pay_status == 1 && ($shipping_status == 0 || $shipping_status == 2)){
+                if($prom_type != 6){
                     $btn['cancel'] = '取消确认';
                 }
                 $btn['delivery'] = '去发货';
             }
         }
 
-        if($ss == 1 && $os == 1 && $ps == 1){
+        if($shipping_status == 1 && $order_status == 1 && $pay_status == 1){
 //        	$btn['delivery_confirm'] = '确认收货';
             $btn['refund'] = '申请退货';
-        }elseif($os == 2 || $os == 4){
+        }elseif($order_status == 2 || $order_status == 4){
             $btn['refund'] = '申请退货';
-        }elseif($os == 3 || $os == 5){
+        }elseif($order_status == 3 || $order_status == 5){
             $btn['remove'] = '移除';
         }
-        if($os != 5){
-            $btn['invalid'] = '无效';
+        if($order_status != 5){
+            // $btn['invalid'] = '无效';
         }
         return $btn;
     }
