@@ -40,6 +40,11 @@ class Pickup extends Base {
 		if(!empty($key_word)){
 			$pickup_where['p.pickup_name'] = array('like',"%$key_word%");
 		}
+		// 配送点管理员看到自己配送点的商品
+        if($this->role_id == 2){
+            $city_code = $this->adminInfo['city_code'];
+            $pickup_where['p.city_code'] = $city_code;
+        }
 
 		$count = DB::name('pick_up')->alias('p')->where($pickup_where)->count();
 		$Page  = new AjaxPage($count,10);
@@ -48,9 +53,9 @@ class Pickup extends Base {
 		$pickupList = DB::name('pick_up')
 				->alias('p')
 				->field('p.*,r1.name as province_name,r2.name as city_name,r3.name as district_name,s.suppliers_name')
-				->join('__REGION2__ r1','r1.code = p.province_code','LEFT')
-				->join('__REGION2__ r2','r2.code = p.city_code','LEFT')
-				->join('__REGION2__ r3','r3.code = p.district_code','LEFT')
+				->join('__REGION__ r1','r1.code = p.province_code','LEFT')
+				->join('__REGION__ r2','r2.code = p.city_code','LEFT')
+				->join('__REGION__ r3','r3.code = p.district_code','LEFT')
 				->join('__SUPPLIERS__ s','s.suppliers_id = p.suppliersid','LEFT')
 				->where($pickup_where)
 				->order($order_by_field.' '.$order_by_mode)

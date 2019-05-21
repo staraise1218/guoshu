@@ -63,7 +63,12 @@ class Order extends Base {
         $condition['prom_type'] = array('lt',5);
         $order_sn = ($keyType && $keyType == 'order_sn') ? $keywords : I('order_sn') ;
         $order_sn ? $condition['order_sn'] = trim($order_sn) : false;
-        
+        // 配送点管理员看到自己配送点的商品
+        if($this->role_id == 2){
+            $city_code = $this->adminInfo['city_code'];
+            $condition['delivery_code'] = $city_code;
+        }
+
         I('order_status') != '' ? $condition['order_status'] = I('order_status') : false;
         I('pay_status') != '' ? $condition['pay_status'] = I('pay_status') : false;
         I('pay_code') != '' ? $condition['pay_code'] = I('pay_code') : false;

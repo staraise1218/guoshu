@@ -194,6 +194,12 @@ class Goods extends Base {
             $grandson_ids = getCatGrandson($cat_id); 
             $where .= " and cat_id in(".  implode(',', $grandson_ids).") "; // 初始化搜索条件
         }
+
+        // 配送点管理员看到自己配送点的商品
+        if($this->role_id == 2){
+            $city_code = $this->adminInfo['city_code'];
+            $where .= " and city_code = $city_code";
+        }
         
         $count = M('Goods')->where($where)->count();
         $Page  = new AjaxPage($count,20);
@@ -328,6 +334,11 @@ class Goods extends Base {
                 ));
             } else {
                 $Goods->admin_id = session('admin_id');
+                // 如果是配送点管理员，自动将配送点的城市信息写入商品
+               if($this->role_id == 2){
+                    $Goods->province_id = $this->adminInfo['province_id'];
+                    $Goods->city_code = $this->adminInfo['city_code'];
+               }
                 $Goods->save(); // 写入数据到数据库
                 $goods_id = $insert_id = $Goods->getLastInsID();
                 if(empty($spec_item)){

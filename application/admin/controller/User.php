@@ -20,22 +20,29 @@ class User extends Base {
      */
     public function ajaxindex(){
         // 搜索条件
+        $role = I('role');
+        $search_key = I('search_key');
+        $search_name = I('search_name');
+        
         $condition = array();
-        I('mobile') ? $condition['mobile'] = I('mobile') : false;
-        I('email') ? $condition['email'] = I('email') : false;
+        $role ? $condition['role'] = $role : false;
+        if($search_key){
+            if($search_name == 'nickname') $condition['nickname'] = array('like', "%$search_key%");
+            if($search_name == 'mobile') $condition['mobile'] = $search_key;
+        }
 
         $sort_order = I('order_by').' '.I('sort');
-               
+
         $model = M('users');
         $count = $model->where($condition)->count();
         $Page  = new AjaxPage($count,10);
         //  搜索条件下 分页赋值
-        foreach($condition as $key=>$val) {
+        /*foreach($condition as $key=>$val) {
             $Page->parameter[$key]   =   urlencode($val);
-        }
+        }*/
         
         $userList = $model->where($condition)->order($sort_order)->limit($Page->firstRow.','.$Page->listRows)->select();
-   
+
         $user_id_arr = get_arr_column($userList, 'user_id');
                               
         $show = $Page->show();
@@ -71,21 +78,34 @@ class User extends Base {
             {   $email = trim($_POST['email']);
                 $c = M('users')->where("user_id != $uid and email = '$email'")->count();
                 $c && exit($this->error('邮箱不得和已有用户重复'));
-            }            
-            
+            }
+
             if(!empty($_POST['mobile']))
             {   $mobile = trim($_POST['mobile']);
                 $c = M('users')->where("user_id != $uid and mobile = '$mobile'")->count();
                 $c && exit($this->error('手机号不得和已有用户重复'));
-            }            
+            }
+
+            if($_POST['role'] == 2){
+                if(!$_POST['province_id'] || !$_POST['city_code'])
+                    exit($this->error('请选择配送点'));
+            } else {
+                $_POST['province_id'] = '';
+                $_POST['city_code'] = '';
+            }
             
             $row = M('users')->where(array('user_id'=>$uid))->save($_POST);
             if($row)
                 exit($this->success('修改成功'));
             exit($this->error('未作内容修改或修改失败'));
         }
-    
  
+        // 获取省份
+        $provincelist = Db::name('region')->where('level', 1)->select();
+        $this->assign('provincelist',$provincelist);
+        $citylist = Db::name('region')->where('parent_id', $user['province_id'])->select();
+        $this->assign('citylist', $citylist);      
+        
         $this->assign('user',$user);
         return $this->fetch();
     }

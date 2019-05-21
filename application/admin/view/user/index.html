@@ -28,12 +28,22 @@
             <form class="navbar-form form-inline"  id="search-form2" onsubmit="return false">
                 <input type="hidden" name="order_by" value="user_id">
                 <input type="hidden" name="sort" value="desc">
-                <input type="hidden" name="mobile" value="" id="input-mobile" />
-                <input type="hidden" name="email" value="" id="input-email" />
+                <!-- <input type="hidden" name="mobile" value="" id="input-mobile" /> -->
+                <!-- <input type="hidden" name="email" value="" id="input-email" /> -->
 
                 <div class="sDiv">
                     <div class="sDiv2">
-                        <input type="text" id="search_key" size="30" class="qsbox" placeholder="手机号">
+                        <select name="role" class="select">
+                            <option value="0">角色筛选</option>
+                            <option value="1">普通会员</option>
+                            <option value="2">配送员</option>
+                            <option value="3">自提点</option>
+                        </select>     
+                        <select name="search_name" class="select">
+                            <option value="nickname">昵称</option>
+                            <option value="mobile">手机号</option>
+                        </select>     
+                        <input type="text" id="search_key" name="search_key" size="30" class="qsbox" placeholder="搜索关键词">
                         <input type="submit" class="btn" onclick="ajax_get_table('search-form2',1)" value="搜索">
                     </div>
                 </div>
@@ -50,14 +60,17 @@
                         <th align="left" abbr="user_id" axis="col3" class="">
                             <div style="text-align: center; width: 40px;" class="">ID</div>
                         </th>
-                        <th align="left" abbr="fullname" axis="col4" class="">
-                            <div style="text-align: center; width: 150px;" class="">会员姓名</div>
+                        <th align="left" abbr="nickname" axis="col4" class="">
+                            <div style="text-align: center; width: 150px;" class="">昵称</div>
                         </th>
                         <!-- <th align="center" abbr="group_id" axis="col5" class="">
                             <div style="text-align: center; width: 80px;" class="">会员分组</div>
                         </th> -->
                         <th align="center" abbr="mobile" axis="col6" class="">
                             <div style="text-align: center; width: 100px;" class="">手机号码</div>
+                        </th>
+                        <th align="center" abbr="role" axis="col6" class="">
+                            <div style="text-align: center; width: 90px;" class="">角色</div>
                         </th>
                         <th align="center" abbr="reg_time" axis="col6" class="">
                             <div style="text-align: center; width: 120px;" class="">注册日期</div>
@@ -212,7 +225,7 @@
 
     // ajax 抓取页面
     function ajax_get_table(tab,page){
-        var search_key = $.trim($('#search_key').val());
+        /*var search_key = $.trim($('#search_key').val());
         if(search_key.length > 0){
             if(checkEmail(search_key)){
                 $('#input-email').val(search_key);
@@ -221,7 +234,7 @@
             }else{
                 layer.alert('请输入正确的邮箱或者手机号码', {icon: 2});
             }
-        }
+        }*/
         cur_page = page; //当前页面 保存为全局变量
         $.ajax({
             type : "POST",

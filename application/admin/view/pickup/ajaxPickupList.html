@@ -10,10 +10,10 @@
                     <div style="text-align: center; width: 30px;">{$list.pickup_id}</div>
                 </td>
                 <td align="left" class="">
-                    <div style="text-align: center; width: 100px;">{$list.pickup_name|getSubstr=0,33}</div>
+                    <div style="text-align: center; width: 150px;">{$list.pickup_name|getSubstr=0,33}</div>
                 </td>
                 <td align="left" class="" title="{$list.pickup_address}">
-                    <div style="text-align: center; width: 100px;">{$list.pickup_address|getSubstr=0,33}</div>
+                    <div style="text-align: center; width: 180px;">{$list.pickup_address|getSubstr=0,33}</div>
                 </td>
                 <td align="left" class="">
                     <div style="text-align: center; width: 100px;">{$list.pickup_phone}</div>
@@ -39,15 +39,15 @@
                         </select>
                     </div>
                 </td>
-                <td align="center" axis="col0">
-                  <div style="text-align: center; width: 60px;">
-                    <if condition='$list[is_open] eq 1'>
-                      <span class="yes" onClick="changeTableVal('pick_up','pickup_id','{$list.pickup_id}','is_open',this)" ><i class="fa fa-check-circle"></i>是</span>
-                      <else />
-                      <span class="no" onClick="changeTableVal('pick_up','pickup_id','{$list.pickup_id}','is_open',this)" ><i class="fa fa-ban"></i>否</span>
-                    </if>
-                  </div>
-                </td>                
+                <!-- <td align="center" axis="col0">
+                                  <div style="text-align: center; width: 60px;">
+                                    <if condition='$list[is_open] eq 1'>
+                                      <span class="yes" onClick="changeTableVal('pick_up','pickup_id','{$list.pickup_id}','is_open',this)" ><i class="fa fa-check-circle"></i>是</span>
+                                      <else />
+                                      <span class="no" onClick="changeTableVal('pick_up','pickup_id','{$list.pickup_id}','is_open',this)" ><i class="fa fa-ban"></i>否</span>
+                                    </if>
+                                  </div>
+                                </td> -->                
                 <td align="center" class="handle">
                     <div style="text-align: center; width: 100px; max-width:170px;">
                         <a class="btn blue" href="{:U('Admin/Pickup/edit_address',array('pickup_id'=>$list['pickup_id']))}"><i class="fa fa-pencil-square-o"></i>编辑</a>

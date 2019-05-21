@@ -10,7 +10,7 @@
                     <div style="text-align: center; width: 40px;">{$list.user_id}</div>
                 </td>
                 <td align="left" class="">
-                    <div style="text-align: center; width: 150px;">{$list.fullname}</div>
+                    <div style="text-align: center; width: 150px;">{$list.nickname}</div>
                 </td>
                 <!-- <td align="left" class="">
                     <div style="text-align: center; width: 80px;">{$list.group_id == '1' ? '普通用户' : '专家'}</div>
@@ -19,11 +19,18 @@
                     <div style="text-align: center; width: 100px;">{$list.mobile}</div>
                 </td>
                 <td align="left" class="">
+                    <div style="text-align: center; width: 90px;">
+                        <if condition="$list.role eq 1">普通会员</if>
+                        <if condition="$list.role eq 2">配送员</if>
+                        <if condition="$list.role eq 3">自提点</if>
+                    </div>
+                </td>
+                <td align="left" class="">
                     <div style="text-align: center; width: 120px;">{$list.reg_time|date='Y-m-d H:i',###}</div>
                 </td>
                 <td align="center" class="handle">
                     <div style="text-align: center; width: 170px; max-width:250px;">
-                        <a class="btn blue" href="{:U('Admin/user/detail',array('id'=>$list['user_id']))}"><i class="fa fa-pencil-square-o"></i>详情</a>
+                        <a class="btn blue" href="{:U('Admin/user/detail',array('id'=>$list['user_id']))}"><i class="fa fa-pencil-square-o"></i>编辑</a>
                         <!-- <a class="btn blue" href="{:U('Admin/user/account_log',array('id'=>$list['user_id']))}"><i class="fa fa-search"></i>资金</a> -->
                         <!-- <a class="btn blue" href="{:U('Admin/user/address',array('id'=>$list['user_id']))}"><i class="fa fa-steam"></i>收货地址</a> -->
                     </div>

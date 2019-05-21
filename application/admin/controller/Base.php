@@ -18,7 +18,9 @@ class Base extends Controller {
     public $begin;
     public $end;
     public $page_size = 0;
-
+    public $admin_id; // 自定义添加 管理员id
+    public $role_id; // 自定义添加 管理员角色
+    public $adminInfo; // 自定义添加 管理员信息
     /**
      * 析构函数
      */
@@ -73,6 +75,16 @@ class Base extends Controller {
             $begin = date('Y-m-d', strtotime("-3 month"));//30天前
             $end = date('Y-m-d', strtotime('+1 days'));
         }
+
+        // 自定义添加 管理员信息
+        $admin_id = session('admin_id');
+        $this->admin_id = $admin_id;
+        $this->assign('admin_id', $admin_id);
+        $admin = Db::name('admin')->where('admin_id', $admin_id)->find();
+        $this->adminInfo = $admin;
+        $this->role_id = $admin['role_id'];
+        $this->assign('role_id', $admin['role_id']);
+
         $this->assign('start_time',$begin);
         $this->assign('end_time',$end);
         $this->begin = strtotime($begin);

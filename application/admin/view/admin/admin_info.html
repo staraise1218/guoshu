@@ -60,7 +60,9 @@
                 </dl>
 
             
-            <dl class="row" id="select_city" style="display: none;">
+            
+            </if>
+            <dl class="row" id="select_city" <if condition="$act eq 'add' || $info['role_id'] eq 1">style="display: none;"</if>>
                 <dt class="tit">
                     <label for="record_no">所属城市</label>
                 </dt>
@@ -82,7 +84,6 @@
                     <span class="err" id="err_cat_id" style="color:#F00; display:none;"></span>
                 </dd>
             </dl>
-            </if>
             <div class="bot"><a href="JavaScript:void(0);" onclick="adsubmit();" class="ncap-btn-big ncap-btn-green" id="submitBtn">确认提交</a></div>
         </div>
     </form>
