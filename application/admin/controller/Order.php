@@ -1304,9 +1304,13 @@ exit("请联系TPshop官网客服购买高级版支持此功能");
             $orders = M('order')->field('order_id, order_sn')->where(array('order_id' => array('IN', $order_id_array)))->select();
         }
         // 获取派送员
+        $expresswhere = array(
+            'role' => 2,
+            'is_lock' => 0,
+        );
+        if($this->role == 2) $where['city_code'] = $this->adminInfo['city_code'];
         $expresslist = Db::name('users')
-            ->where('role', 3)
-            ->where('is_lock', 0)
+            ->where($expresswhere)
             ->field('user_id, nickname, fullname')
             ->select();
  

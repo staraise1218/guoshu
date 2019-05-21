@@ -223,8 +223,16 @@
             $express_user_id = tr.attr('data_express_user_id');
             $pay_status = tr.attr('data_pay_status');
             
-            if($order_status != 1 || $express_user_id != 0 || $pay_status != 1){
-                layer.msg('该商品状态不可指派');
+            if($pay_status == 0) {
+                layer.msg('该订单未支付');
+                return;
+            }
+            if($order_status != 1) {
+                layer.msg('订单状态不允许');
+                return;
+            }
+            if($express_user_id != 0){
+                layer.msg('订单已分配派送员');
                 return;
             }
             tr.toggleClass('trSelected');
