@@ -100,7 +100,7 @@
           <thead>
 	        	<tr>
 	              <th axis="col0">
-	                <div style="width: 24px;"><i class="ico-check"></i></div>
+	                <div style="width: 24px;"><i class="ico-check selectAll"></i></div>
 	              </th>
 	              <th align="left" abbr="order_sn" axis="col3" class="">
 	                <div style="text-align: left; width: 140px;" class="">订单编号</div>
@@ -132,9 +132,9 @@
 	              <th align="center" abbr="article_time" axis="col6" class="">
 	                <div style="text-align: center; width: 120px;" class="">下单时间</div>
 	              </th>
-	              <th align="left" axis="col1" class="handle">
-	                <div style="text-align: left; width: 150px;">开票</div>
-	              </th>
+	              <!-- <th align="left" axis="col1" class="handle">
+                  <div style="text-align: left; width: 150px;">开票</div>
+                </th> -->
                   <th align="left" axis="col1" class="handle">
                       <div style="text-align: left; width: 150px;">操作</div>
                   </th>
@@ -184,30 +184,41 @@
 	 
     $(document).ready(function(){	
 	   
-     	$('#add_time_begin').layDate(); 
-     	$('#add_time_end').layDate();
+       	$('#add_time_begin').layDate(); 
+       	$('#add_time_end').layDate();
      	
-		// 点击刷新数据
-		$('.fa-refresh').click(function(){
-			location.href = location.href;
-		});
+    		// 点击刷新数据
+    		$('.fa-refresh').click(function(){
+    			location.href = location.href;
+    		});
 		
-		ajax_get_table('search-form2',1);
+		    ajax_get_table('search-form2',1);
 		
-		$('.ico-check ' , '.hDivBox').click(function(){
-			$('tr' ,'.hDivBox').toggleClass('trSelected' , function(index,currentclass){
-	    		var hasClass = $(this).hasClass('trSelected');
-	    		$('tr' , '#flexigrid').each(function(){
-	    			if(hasClass){
-	    				$(this).addClass('trSelected');
-	    			}else{
-	    				$(this).removeClass('trSelected');
-	    			}
-	    		});  
-	    	});
-		});
-		 
-	});
+        // 全选
+    		$( '.selectAll').click(function(){
+      			 $('.selectAll').toggleClass('trSelected' , function(index,currentclass){
+          	    	var hasClass = $(this).hasClass('trSelected');
+          	    	$('tr').each(function(){
+            	    		if(hasClass){
+            	    			$(this).addClass('trSelected');
+            	    		}else{
+            	    			$(this).removeClass('trSelected');
+            	    		}
+          	    	});  
+      	    	});
+      		});
+        // 表格行点击选中切换
+        $('#flexigrid').delegate('tr', 'click', function(){
+            $order_status = $(this).attr('data_order_status');
+            $express_user_id = $(this).attr('data_express_user_id');
+            if($order_status >= 1 || $express_user_id != 0){
+                layer.msg('该商品状态不可指派');
+            }
+            $(this).toggleClass('trSelected');
+        });
+    		 
+	   });
+    
     
     
   	//ajax 抓取页面
@@ -220,16 +231,12 @@
                 success: function(data){
                     $("#flexigrid").html('');
                     $("#flexigrid").append(data);
-                    
-                	// 表格行点击选中切换
-            	    $('#flexigrid > table>tbody >tr').click(function(){
-            		    $(this).toggleClass('trSelected');
-            		});
+                  
                 	 
                 }
             });
     }
-	
+
  // 点击排序
     function sort(field){
         $("input[name='order_by']").val(field);
