@@ -230,6 +230,7 @@ class PlaceOrder
             $orderData['district'] = $this->userAddress['district'];//'县',
             $orderData['twon'] = $this->userAddress['twon'];// '街道',
             $orderData['address'] = $this->userAddress['address'];//'详细地址'
+            $orderData['floor'] = $this->userAddress['floor'];//'门牌号'
             $orderData['mobile'] = $this->userAddress['mobile'];//'手机',
             $orderData['zipcode'] = $this->userAddress['zipcode'];//'邮编',
         }
