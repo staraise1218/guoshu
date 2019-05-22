@@ -115,7 +115,7 @@
         }           
     });
 
-
+    // 检查是否有新未处理的订单，提示音
     function checkNewOrder(){
       var promptVoice = document.getElementById('promptVoice');
         $.ajax({
@@ -124,11 +124,14 @@
             dataType: 'json',
             success: function(data){
                 if(data.new == 1){
-                    $('audio')[0].play();
+                    /*$('audio')[0].play();
+                    setTimeout(function(){
+                      $('audio')[0].play();
+                    }, 2000);*/
                 }
             }
         })
     }
-    setInterval("checkNewOrder()",3000);
+    setInterval("checkNewOrder()",10000);
 </script>
 </html>
