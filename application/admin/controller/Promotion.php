@@ -394,6 +394,8 @@ class Promotion extends Base
         $Page = new Page($count, 10);
         $show = $Page->show();
         $prom_list = $FlashSale->append(['status_desc'])->where($condition)->order("id desc")->limit($Page->firstRow . ',' . $Page->listRows)->select();
+
+    p($prom_list);
         $this->assign('prom_list', $prom_list);
         $this->assign('page', $show);// 赋值分页输出
         $this->assign('pager', $Page);

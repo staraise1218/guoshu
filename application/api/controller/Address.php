@@ -48,7 +48,7 @@ class Address extends Base {
         $user_id = I('user_id/d');
 
         $address_lists = M('user_address')->where("user_id={$user_id} and is_default=1")
-            ->field('address_id, consignee, zipcode, address, city, province, mobile, country, is_default')
+            ->field('address_id, consignee, zipcode, address, floor, city, province, mobile, country, is_default')
             ->find();
 
         response_success($address_lists);
@@ -56,7 +56,7 @@ class Address extends Base {
 
     /*
      * 添加地址
-     * params [user_id, consignee, zipcode, address, city, province, mobile, country, is_default]
+     * params [user_id, consignee, zipcode, address, floor, city, province, mobile, country, is_default]
      */
     public function add_address()
     {
