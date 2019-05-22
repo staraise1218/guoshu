@@ -108,4 +108,10 @@ class Index extends Base {
     public function about(){
     	return $this->fetch();
     }
+
+    // 检查新订单，后台提示
+    public function ajaxCheckNewOrder(){
+
+        die(json_encode(array('new' => 1)));
+    }
 }
