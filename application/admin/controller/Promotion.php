@@ -343,6 +343,11 @@ class Promotion extends Base
         if($keywords){
             $where['goods_name|keywords'] = ['like','%'.$keywords.'%'];
         }
+        // 配送点管理员
+        if($this->role_id == 2){
+            $where['city_code'] = $this->adminInfo['city_code'];
+        }
+        
         $Goods = new Goods();
         $count = $Goods->where($where)->where(function ($query) use ($prom_type, $prom_id) {
             if($prom_type == 3){
@@ -389,13 +394,23 @@ class Promotion extends Base
     public function flash_sale()
     {
         $condition = array();
-        $FlashSale = new FlashSale();
-        $count = $FlashSale->where($condition)->count();
+        // 配送点筛选
+        if($this->role_id == 2){
+            $condition['g.city_code'] = $this->adminInfo['city_code'];
+        }
+
+        $count = Db::name('flash_sale')->alias('fs')
+            ->join('goods g', 'fs.goods_id=g.goods_id')->count();
         $Page = new Page($count, 10);
         $show = $Page->show();
-        $prom_list = $FlashSale->append(['status_desc'])->where($condition)->order("id desc")->limit($Page->firstRow . ',' . $Page->listRows)->select();
 
-    p($prom_list);
+        $prom_list = Db::name('flash_sale')->alias('fs')
+            ->join('goods g', 'fs.goods_id=g.goods_id')
+            ->where($condition)
+            ->order("id desc")
+            ->limit($Page->firstRow . ',' . $Page->listRows)
+            ->select();
+
         $this->assign('prom_list', $prom_list);
         $this->assign('page', $show);// 赋值分页输出
         $this->assign('pager', $Page);
@@ -463,6 +478,7 @@ class Promotion extends Base
             $info['start_time'] = date('Y-m-d H:i', $info['start_time']);
             $info['end_time'] = date('Y-m-d H:i', $info['end_time']);
         }
+
         $this->assign('info', $info);
         $this->assign('min_date', date('Y-m-d'));
         return $this->fetch();
