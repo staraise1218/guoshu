@@ -83,7 +83,8 @@ class Activity extends Base {
 
         $where = array(
             'fl.is_end' => 0,
-            'g.is_on_sale'=>1
+            'g.is_on_sale'=>1,
+            'g.city_code' => $city_code,
         );
         // 下期预告 ，明天凌晨0点开始的秒杀商品
         if($type == 'next'){

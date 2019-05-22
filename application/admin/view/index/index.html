@@ -87,7 +87,7 @@
     <iframe src="" id="workspace" name="workspace" style="overflow: visible;" frameborder="0" width="100%" height="94%" scrolling="yes" onload="window.parent"></iframe>
   </div>
 </div>
-<audio src="/public/static/mp3/promptVoice.mp3"></audio>
+<audio muted  src="/public/static/mp3/promptVoice.mp3"></audio>
 </body>
 <script type="text/javascript"> 
 	// 没有点击收货确定的按钮让他自己收货确定    
@@ -124,14 +124,14 @@
             dataType: 'json',
             success: function(data){
                 if(data.new == 1){
-                    /*$('audio')[0].play();
+                    $('audio')[0].play();
                     setTimeout(function(){
                       $('audio')[0].play();
-                    }, 2000);*/
+                    }, 2000);
                 }
             }
         })
     }
-    setInterval("checkNewOrder()",10000);
+    setInterval("checkNewOrder()",3000);
 </script>
 </html>
