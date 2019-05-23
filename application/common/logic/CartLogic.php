@@ -538,8 +538,11 @@ class CartLogic extends Model
     {
         if ($this->user_id) {
             $where = ['user_id' => $this->user_id];
-            if($this->city_code) $where['city_code'] = $city_code;
-            $goods_num = Db::name('cart')->where($where)->sum('goods_num');
+            if($this->city_code) $where['g.city_code'] = $city_code;
+            $goods_num = Db::name('cart')->alias('c')
+                ->join('goods g', 'c.goods_id=g.goods_id')
+                ->where($where)
+                ->sum('goods_num');
         } else {
             $goods_num = Db::name('cart')->where(['session_id' => $this->session_id])->sum('goods_num');
         }
