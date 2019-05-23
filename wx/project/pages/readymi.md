@@ -90,3 +90,45 @@
 | 隐私策略 | pages/privacy/privacy |
 | 版本检测 | 弹窗 |
 | 清除缓存 | 弹窗 |
+
+
+
+
+
+  "tabBar": {
+    "color": "#a9b7b7",
+    "selectedColor": "#F75433",
+    "borderStyle": "black",
+    "list": [
+      {
+        "selectedIconPath": "src/img/icon/shouye.png",
+        "iconPath": "src/img/icon/shouye-pre.png",
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "selectedIconPath": "src/img/icon/fenlei.png",
+        "iconPath": "src/img/icon/fenlei-pre.png",
+        "pagePath": "pages/classification/classification",
+        "text": "分类"
+      },
+      {
+        "selectedIconPath": "src/img/icon/tuan.png",
+        "iconPath": "src/img/icon/tuan-pre.png",
+        "pagePath": "pages/group/group",
+        "text": "团购"
+      },
+      {
+        "selectedIconPath": "src/img/icon/gouwuche.png",
+        "iconPath": "src/img/icon/gouwuche-pre.png",
+        "pagePath": "pages/shoppingCart/shoppingCart",
+        "text": "购物车"
+      },
+      {
+        "selectedIconPath": "src/img/icon/wode.png",
+        "iconPath": "src/img/icon/wode-pre.png",
+        "pagePath": "pages/mine/mine",
+        "text": "我的"
+      }
+    ]
+  },

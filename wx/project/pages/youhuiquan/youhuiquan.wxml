@@ -50,5 +50,5 @@
 
 
 
-<cover-image class="icon-best hongbaoCtr" bindtap="toCouponlist" mode="widthFixed" src="http://img.hb.aicdn.com/77c76d5f1c7c86b5f8dc4329461851fcbb1f1b8c8c512-8aCY1D_fw658" />
+<!-- <cover-image class="icon-best hongbaoCtr" bindtap="toCouponlist" mode="widthFixed" src="http://img.hb.aicdn.com/77c76d5f1c7c86b5f8dc4329461851fcbb1f1b8c8c512-8aCY1D_fw658" /> -->
 

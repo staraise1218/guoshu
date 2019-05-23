@@ -1,0 +1,13 @@
+<!-- 顶部搜索 -->
+<view class='search-bar'>
+    <image class="search-icon" src="/src/img/search.png" />
+    <input class="serach-input" confirm-type="search" confirm-type="搜索" bindconfirm="searchBtn" placeholder="请输入您的地址" bindinput="searchChange" bindconfirm="toSearch" auto-focus />
+    <view class="search-btn" bindtap="searchBtn">搜索</view>
+</view>
+<!-- 顶部搜索 END -->
+<block wx:for="{{MSG}}" wx:key>
+  <view class="address-item" data-loactioin="{{item.location}}" data-name="{{item.name}}" data-address="{{item.address}}" bindtap="go">
+    <view class="title-2">{{item.name}}</view>
+    <view class="title-2_f">{{item.address}}</view>
+  </view>
+</block>

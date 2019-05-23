@@ -1,130 +1,143 @@
-
 <view class="top-bar between-center padding-lr-30 padding-bottom-20 border-bottom">
-    <view class="left-center">
-        <view class="title-2 price-color">果蔬</view>
-        <image class="icon-2 margin-left-20" mode="widthFix" src="https://hbimg.huabanimg.com/698f1951de21b12c43072ae841182f165e05e9cd890-xBN8IX_fw658" />
-        <view class="title-2_f margin-left-20" bindtap="changCity">{{address}}</view>
-   </view>
-    <view class="right-center">
-        <!-- <input class="search margin-right-20" placeholder="火龙果" confirm-type="search" bindconfirm="searchChange" /> -->
-        <input class="search margin-right-20" placeholder="火龙果" bindtap="toSearch" />
-        <image bindtap="toNews" class="icon-2" src="http://img.hb.aicdn.com/c2d15a72fb9a3341210c1773987bf341d56bd303658-3FUCl7_fw658" />
-    </view>
+  <view class="left-center">
+    <!-- <view class="title-2 price-color" bindtap="toLik">果蔬</view> -->
+    <view class="title-2 price-color" bindtap="toLik"></view>
+    <image class="icon-2 " mode="widthFix" src="https://hbimg.huabanimg.com/698f1951de21b12c43072ae841182f165e05e9cd890-xBN8IX_fw658" />
+    <view class="address title-2_f margin-left-20" bindtap="changCity">{{address}}</view>
+  </view>
+  <view class="right-center">
+    <!-- <input class="search margin-right-20" placeholder="火龙果" confirm-type="search" bindconfirm="searchChange" /> -->
+    <input class="search margin-left-20 margin-right-20" placeholder="火龙果" bindtap="toSearch" />
+    <image bindtap="toNews" class="icon-2 news-icon" src="http://img.hb.aicdn.com/c2d15a72fb9a3341210c1773987bf341d56bd303658-3FUCl7_fw658" />
+  </view>
 </view>
-
-
 <view class="wrap">
-    <view class="left-bar">
+  <scroll-view scroll-y class="left-bar">
+    <block wx:for="{{tabList}}" wx:key>
+      <view class="{{item.id==targetID ?'active' :''}} left-item" bindtap="tabClick" data-id="{{item.id}}">
+        {{item.name}}
+      </view>
+    </block>
+  </scroll-view>
+  <!-- 右侧内容区 -->
+  <scroll-view scroll-y class="con">
+    <!-- 热卖 -->
+    <view class="box-1">
+      <scroll-view class="scro-wrap" scroll-x>
         <block wx:for="{{tabList}}" wx:key>
-            <view class="{{item.id==targetID ?'active' :''}} left-item" bindtap="tabClick" data-id="{{item.id}}">{{item.name}}</view>
+          <!-- 小分类 -->
+          <block wx:for="{{item.sub}}" wx:key>
+            <view wx:if="{{item.parent_id == targetID}}" class="tab-item {{item.id== subID ?'tab-active':''}}" data-parentid="{{item.parent_id}}" bindtap="subClick" data-id="{{item.id}}">
+              {{item.name}}
+            </view>
+          </block>
+          <!-- 小分类 END -->
         </block>
+      </scroll-view>
+      <scroll-view class="scro-con" scroll-y>
+        <!-- 左侧点击后商品展示 -->
+        <block wx:show="{{status == 'left'}}" wx:for="{{sub}}" wx:key>
+          <view>
+            <!-- <view class="title-3_f margin-30">{{item.name}}</view> -->
+            <block wx:for="{{item.goodslist}}" wx:key>
+              <view class="list-item between-center margin-30 padding-tb-30 border-bottom" bindtap="{{item.store_count == 0 ? '' : 'toCon'}}" data-goods-id="{{item.goods_id}}">
+                <image class="icon-poster" src="{{item.original_img}}" mode="" />
+                <view class="right padding-lr-20" style="flex:1">
+                  <view class="title-2">{{item.goods_name}}</view>
+                  <view class="title-3_f">{{item.subtitle}}</view>
+                  <view wx-if="{{item.virtual_num != 0}}" class="title-3_f">已购{{item.virtual_num}} 份</view>
+                  <view class="margin-top-50 between-center">
+                    <view  class="price title">￥{{item.shop_price}}</view>
+                    <image class="icon-2" data-id="{{item.goods_id}}" catchtap="{{item.store_count == 0 ? '' : 'addCart'}}" src="https://hbimg.huabanimg.com/ff8af7f0827e85d34cc15b364ff139c61e6fe5bc5b3-0QRyv2_fw658" />
+                  </view>
+                </view>
+            
+              <view class="shopping-alert" wx:if="{{item.store_count == 0}}">
+                <view class="alert-con">
+                  <view>抢光啦</view>
+                  <view>SOLD OUT</view>
+                </view>
+              </view>
+              </view>
+            </block>
+          </view>
+        </block>
+        <!-- 左侧点击后商品展示 END -->
+        <!-- 小分类商品列表 -->
+        <block wx:show="{{status == 'right'}}" wx:for="{{subRight}}" wx:key>
+          <view  bindtap="{{item.store_count == 0 ? '' : 'toCon'}}" data-goods-id="{{item.goods_id}}"  class="list-item between-center margin-30 padding-tb-30 border-bottom">
+            <image class="icon-poster"  src="https://app.zhuoyumall.com:444{{item.original_img}}" mode="" />
+            <view class="right padding-lr-20" style="flex:1">
+              <view class="title-2">{{item.goods_name}}</view>
+              <view class="title-3_f">{{item.subtitle}}</view>
+              <view wx-if="{{item.virtual_num != 0}}" class="title-3_f">已购 {{item.virtual_num}} 份</view>
+              <view class="margin-top-50 between-center">
+                <view class="price">￥{{item.shop_price}}</view>
+                <image class="icon-2" data-id="{{item.goods_id}}" catchtap="{{item.store_count == 0 ? '' : 'addCart'}}" src="https://hbimg.huabanimg.com/ff8af7f0827e85d34cc15b364ff139c61e6fe5bc5b3-0QRyv2_fw658" />
+              </view>
+            </view>
+            <view class="shopping-alert" wx:if="{{item.store_count == 0}}">
+              <view class="alert-con">
+                <view>抢光啦</view>
+                <view>SOLD OUT</view>
+              </view>
+            </view>
+          </view>
+        </block>
+        <!-- 小分类商品列表 END -->
+      </scroll-view>
     </view>
-    <!-- 右侧内容区 -->
-    <view class="con">
-        <!-- 热卖 -->
-        <view class="box-1">
-            <scroll-view class="scro-wrap" scroll-x>
-                <block wx:for="{{tabList}}" wx:key>
-                    <!-- 小分类 -->
-                    <block wx:for="{{item.sub}}" wx:key>
-                        <view wx:if="{{item.parent_id == targetID}}" 
-                            class="tab-item {{item.id== subID ?'tab-active':''}}" 
-                            data-parentid="{{item.parent_id}}" 
-                            bindtap="subClick"
-                            data-id="{{item.id}}">
-                                {{item.name}}
-                        </view>
-                    </block>
-                    <!-- 小分类 END -->
-                </block>
-            </scroll-view>
-            <scroll-view class="scro-con" scroll-y>
-                <!-- 左侧点击后商品展示 -->
-                <block wx:if="{{status == 'left'}}" wx:for="{{sub}}" wx:key>
-                    <view>
-                        <!-- <view class="title-3_f margin-30">{{item.name}}</view> -->
-                        <block wx:for="{{item.goodslist}}" wx:key>
-                            <view class="list-item between-center margin-30 padding-tb-30 border-bottom" bindtap="toCon" data-goods-id="{{item.goods_id}}">
-                                <image class="icon-poster" src="{{item.original_img}}" mode="widthFix" />
-                                <view class="right padding-lr-20" style="flex:1">
-                                    <view class="title-2">{{item.goods_name}}</view>
-                                    <view class="title-3_f">{{item.subtitle}}</view>
-                                    <view class="margin-top-50 between-center">
-                                        <view class="price title">￥{{item.shop_price}}</view>
-                                        <image class="icon-2" data-id="{{item.goods_id}}" catchtap="addCart" src="https://hbimg.huabanimg.com/ff8af7f0827e85d34cc15b364ff139c61e6fe5bc5b3-0QRyv2_fw658" />
-                                    </view>
-                                </view>
-                            </view>
-                        </block>
-                    </view>
-                </block>
-                <!-- 左侧点击后商品展示 END -->
-                <!-- 小分类商品列表 -->
-                <block wx:if="{{status == 'right'}}" wx:for="{{subRight}}" wx:key>
-                    <view class="list-item between-center margin-30 padding-tb-30 border-bottom">
-                        <image class="icon-poster" bindtap="toCon" data-goods-id="{{item.goods_id}}" src="https://app.zhuoyumall.com:444{{item.original_img}}" mode="widthFix" />
-                        <view class="right padding-lr-20" style="flex:1">
-                            <view class="title-3">{{item.goods_name}}</view>
-                            <view class="title-3_f">{{item.subtitle}}</view>
-                            <view class="margin-top-50 between-center">
-                                <view class="price">￥{{item.shop_price}}</view>
-                                <image class="icon-2" data-id="{{item.goods_id}}" catchtap="addCart" src="https://hbimg.huabanimg.com/ff8af7f0827e85d34cc15b364ff139c61e6fe5bc5b3-0QRyv2_fw658" />
-                            </view>
-                        </view>
-                    </view>
-                </block>
-                <!-- 小分类商品列表 END-->
-            </scroll-view>
-        </view>
-        <!-- 热卖 END -->
-    </view>
+    <!-- 热卖 END -->
+  </scroll-view>
 </view>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!-- 城市弹窗 -->
+<view class="alert-box" wx:if="{{cityShow}}"></view>
 <view class="box" wx:if="{{cityShow}}">
   <view class="city-box">
     <view class="city-btn">
       <view class="cancel-btn" bindtap="cityCancel">取消</view>
       <view class="ok-btn" bindtap="cityOk">确定</view>
     </view>
-    <picker-view indicator-style="height: 50px;" style="width: 100%; height: 300px;" value="{{value}}"
-      bindchange="changeCity">
+    <picker-view indicator-style="height: 50px;" style="width: 100%; height: 300px;" value="{{value}}" bindchange="changeCity">
       <picker-view-column>
         <view wx:for="{{multiArray}}" style="line-height: 50px" wx:key>{{item.name}}</view>
       </picker-view-column>
       <picker-view-column>
-        <view wx:for="{{multiArray[index0].sub}}" style="line-height: 50px" wx:key>{{item.name}}</view>
+        <view wx:for="{{multiArray[index0].sub}}" style="line-height: 50px" wx:key>
+          {{item.name}}
+        </view>
       </picker-view-column>
     </picker-view>
   </view>
 </view>
-
-
-
-
+<!-- 城市弹窗 END -->
+<!-- footer -->
+<view class="footer" wx:if="{{false}}">
+  <view class="item-bar" data-link='index' bindtap="LINK">
+    <image class="bar-icon" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/shouye-pre.png" />
+    <!-- <image class="bar-icon" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/shouye.png" /> -->
+    <view class="title-bar ">首页</view>
+  </view>
+  <view class="item-bar" data-link='classification' bindtap="LINK">
+    <!-- <image class="bar-icon" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/fenlei-pre.png" /> -->
+    <image class="bar-icon" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/fenlei.png" />
+    <view class="title-bar active">分类</view>
+  </view>
+  <view class="item-bar" data-link='group' bindtap="LINK">
+    <!-- <image class="bar-icon" class="group-icon" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/tuangou.png" /> -->
+    <image class="group-icon" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/tuangou.png" />
+    <view class="title-bar shopcart-title">团购</view>
+  </view>
+  <view class="item-bar shopcart-icon" data-link='shoppingCart' bindtap="LINK">
+    <image class="bar-icon" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/gouwuche拷贝3@2x.png" />
+    <!-- <image class="bar-icon" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/gouwuche拷贝3-1@2x.png" /> -->
+    <view class="title-bar ">购物车</view>
+    <i wx:if="{{cart_num > 0}}" class="shopcart-num">{{cart_num}}</i>
+  </view>
+  <view class="item-bar" data-link='mine' bindtap="LINK">
+    <image class="bar-icon" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/wode@2x.png" />
+    <!-- <image class="bar-icon" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/wode.png" /> -->
+    <view class="title-bar">我的</view>
+  </view>
+</view>
+<!-- footer END -->

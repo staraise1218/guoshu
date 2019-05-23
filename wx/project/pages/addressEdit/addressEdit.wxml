@@ -1,27 +1,74 @@
+<view class="container">
+  
 <view class="edit-item border-bottom-03 padding-20 left-center title-2 color-8">
     <view class="left">联系人</view>
-    <input  class="username right" bindinput="userName" value="{{addressList.consignee}}" placeholder="请输入收货人姓名" />
+    <!-- <input  class="username right" bindinput="userName" value="{{addressList.consignee}}" placeholder="请输入收货人姓名" /> -->
+
+                <van-cell-group class="search-border">
+                    <van-field
+                        value="{{ addressList.consignee }}"
+                        placeholder="请输入收货人姓名"
+                        border="{{ false }}"
+                        bind:change="userName"
+                        right-icon="search"
+                    />
+                </van-cell-group>
 </view>
 <view class="edit-item border-bottom-03 padding-20 left-center title-2 color-8">
     <view class="left">联系方式</view>
-    <input  class="username right" bindinput="phoneNumber" value="{{addressList.mobile}}" placeholder="18240217006" />
+    <!-- <input  class="username right" bindinput="phoneNumber" value="{{addressList.mobile}}" placeholder="18240217006" /> -->
+
+                <van-cell-group class="search-border">
+                    <van-field
+                        value="{{ addressList.mobile }}"
+                        placeholder="请输入手机号"
+                        border="{{ false }}"
+                        bind:change="phoneNumber"
+                        right-icon="search"
+                    />
+                </van-cell-group>
 </view>
 <view class="edit-item location-wrap border-bottom-03 padding-20 left-center title-2 color-8">
     <view class="left">收获地址</view>
-    <view class="location right">
-        <image mode="widthFix" class="icon-loaction" src="/src/img/dingwei@2x.png" />
-        <view class="location-info">
-            <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}">
+    <view class="location right"  bindtap="cityshow">
+        <image mode="" class="icon-loaction" src="/src/img/dingwei@2x.png" />
+        <!-- <view class="location-info" bindtap="cityshow">
                 {{region[0]}} {{region[1]}} {{region[2]}}
-            </picker>
+        </view> -->
+        <view class="location-info picker" >
+            {{areaCode[0].name}} {{areaCode[1].name}} {{areaCode[2].name}}
+            <!-- <view class="more"></view>  -->
         </view>
+
+
     </view>
 </view>
 <view class="edit-item border-bottom-03 padding-20 left-center title-2 color-8">
     <view class="left">详细地址</view>
-    <textarea class="location right" bindinput="address" bindblur="bindTextAreaBlur" value="{{addressList.address}}" auto-height placeholder="如辽宁省沈阳市铁西区云峰北街" />
+    <!-- <textarea class="location right" bindtap="tochooseAddress" bindblur="bindTextAreaBlur" value="{{addressList.address}}" auto-height placeholder="如辽宁省沈阳市铁西区云峰北街" /> -->
+    
+                <van-cell-group class="search-border" bindtap="tochooseAddress">
+                    <van-field
+                        value="{{ addressList.address }}"
+                        placeholder="请输入手详细地址"
+                        border="{{ false }}"
+                        right-icon="search"
+                    />
+                </van-cell-group>
 </view>
-
+<view class="edit-item border-bottom-03 padding-20 left-center title-2 color-8">
+  <view class="left">门牌号</view>
+  <!-- <input class="username right" bindinput="chengeMenPaiHao" value="{{addressList.menpaihao}}" placeholder="例: 16号楼5层301室" /> -->
+                <van-cell-group class="search-border">
+                    <van-field
+                        value="{{ addressList.menpaihao }}"
+                        placeholder="例: 16号楼5层301室"
+                        border="{{ false }}"
+                        bind:change="chengeMenPaiHao"
+                        right-icon="search"
+                    />
+                </van-cell-group>
+</view>
 <view wx:if="{{addressList.is_default == 0}}" class="edit-item border-bottom-03 padding-20 left-center title-2 color-8">
     <view class="left">设为默认地址</view>
     <view class="right-center" style="width:100%">
@@ -34,6 +81,7 @@
 </view>
 
 
+
 <view class="line"></view>
 <view class="edit-item border-bottom-03 padding-20 left-center title-2 color-8">
     <view class="price-color" bindtap="delete">删除收货地址</view>
@@ -43,3 +91,113 @@
 
 <!-- <button class="delete">删除</button> -->
 <button class="save" bindtap="saveAddress">保存收货地址</button>
+
+</view>
+
+
+
+<!-- <button  bindtap="cityshow">保存收货地址</button> -->
+
+<!-- alert box -->
+<view class="alert-box" wx:if="{{cityShow}}"></view>
+<!-- alert box -->
+<!-- 选择城市弹窗 -->
+<view class="box" wx:if="{{cityShow}}">
+  <view class="city-box">
+    <view class="city-btn">
+      <view class="cancel-btn" bindtap="cityCancel">取消</view>
+      <view class="ok-btn" bindtap="cityOk">确定</view>
+    </view>
+    <picker-view indicator-style="height: 50px;" style="width: 100%; height: 300px;" value="{{value}}" bindchange="changeCity">
+      <picker-view-column>
+        <view wx:for="{{multiArray}}" style="line-height: 50px" wx:key>{{item.name}}</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:for="{{multiArray[index0].sub}}" style="line-height: 50px" wx:key>{{item.name}}</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:for="{{multiArray[index0].sub[index1].sub}}" style="line-height: 50px" wx:key>{{item.name}}</view>
+      </picker-view-column>
+    </picker-view>
+  </view>
+</view>
+<!-- 选择城市弹窗 END -->
+
+
+
+
+
+
+<!-- <view class="cityshow-alert" wx:if="{{chooseAlerShow}}">
+  <scroll-view scroll-y style="height: 100vh" class="left">
+    <block wx:for="{{multiArray}}" wx:key>
+      <view bindtap="changeProvince" 
+        data-code="{{item.code}}" 
+        data-name="{{item.name}}" 
+        data-parentCode="{{item.parentCode}}" 
+        class="{{item.code == areaCode[0].code ? 'active' : ''}} content">{{item.name}}</view>
+    </block>
+  </scroll-view>
+  <scroll-view scroll-y  style="height: 100vh"  class="center">
+    <block wx:for="{{multiArray}}" wx:key>
+      <block wx:for="{{item.sub}}" wx:key>
+        <view wx:if="{{item.parentCode == areaCode[0].code}}" 
+          data-name="{{item.name}}" 
+          bindtap="changeCity" 
+          data-code="{{item.code}}" 
+          data-parentCode="{{item.parentCode}}" 
+          class="{{item.code == areaCode[1].code ? 'active' : ''}} content">{{item.name}}</view>
+      </block>
+    </block>
+  </scroll-view>
+  <scroll-view scroll-y  style="height: 100vh"  class="right">
+    <block wx:for="{{multiArray}}" wx:key>
+      <block wx:for="{{item.sub}}" wx:key>
+        <block wx:for="{{item.sub}}" wx:key>
+          <view wx:if="{{item.parentCode == areaCode[1].code}}" 
+            data-name="{{item.name}}" 
+            bindtap="changeArea" 
+            data-code="{{item.code}}" 
+            data-parentCode="{{item.parentCode}}" 
+            class="{{item.code == areaCode[2].code ? 'active' : ''}} content">{{item.name}}</view>
+        </block>
+      </block>
+    </block>
+  </scroll-view>
+</view>
+<view wx:if="{{chooseAlerShow}}" class="city-btn_" bindtap="chooseCity">确定</view> -->
+
+<view class="alert-wrapper" catchtap="cancleCity" wx:if="{{chooseAlerShow}}"></view>
+<view class="cityshow-alert" wx:if="{{chooseAlerShow}}">
+  <scroll-view scroll-y class="left">
+    <block wx:for="{{multiArray}}" wx:key>
+      <view bindtap="changeProvince" data-code="{{item.code}}" data-name="{{item.name}}" data-parentCode="{{item.parentCode}}" class="{{item.code == areaCode[0].code ? 'active' : ''}} content">
+        {{item.name}}
+      </view>
+    </block>
+  </scroll-view>
+  <scroll-view scroll-y class="center">
+    <block wx:for="{{multiArray}}" wx:key>
+      <block wx:for="{{item.sub}}" wx:key>
+        <view wx:if="{{item.parentCode == areaCode[0].code}}" data-name="{{item.name}}" bindtap="changeCity" data-code="{{item.code}}" data-parentCode="{{item.parentCode}}" class="{{item.code == areaCode[1].code ? 'active' : ''}} content">
+          {{item.name}}
+        </view>
+      </block>
+    </block>
+  </scroll-view>
+  <scroll-view scroll-y class="right">
+    <block wx:for="{{multiArray}}" wx:key>
+      <block wx:for="{{item.sub}}" wx:key>
+        <block wx:for="{{item.sub}}" wx:key>
+          <view wx:if="{{item.parentCode == areaCode[1].code}}" data-name="{{item.name}}" bindtap="changeArea" data-code="{{item.code}}" data-parentCode="{{item.parentCode}}" class="{{item.code == areaCode[2].code ? 'active' : ''}} content">
+            {{item.name}}
+          </view>
+        </block>
+      </block>
+    </block>
+  </scroll-view>
+  <view class="btn-wrapper">
+    <view class="cancel" bindtap="cancleCity">取消</view>
+    <view class="ok" bindtap="chooseCity">确定</view>
+  </view>
+</view>

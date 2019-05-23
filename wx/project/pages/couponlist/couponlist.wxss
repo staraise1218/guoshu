@@ -10,6 +10,12 @@ page {
     align-self: flex-end;
 }
 
+.tip {
+    display: block;
+    text-align: center;
+    margin-top: 300rpx;
+    font-size: 26rpx;
+}
 
 
 .quan-item {
@@ -22,6 +28,15 @@ page {
 
 
 
+.quan-item.active .price-big {
+    color: #F72F03;
+}
+.quan-item.active .price {
+    color: #F72F03;
+}
+.quan-item.active .price-none {
+    color: #F72F03 !important;
+}
 .quan-item.active .tag {
     color: #F72F03;
     background: #F5B0A0;
@@ -38,11 +53,14 @@ page {
 }
 .quan-item.over .price-none {
     color: #CACACA;
+    color: rgba(0,0,0,.1) !important;
 }
 .quan-item.over .title-2_f {
     color: #CACACA;
 }
-
+.price-none {
+    color: rgba(0,0,0,.1) !important;
+}
 .price-left {
     display: flex;
     justify-content: left;
@@ -54,6 +72,7 @@ page {
     display: flex;
     align-items: flex-end;
     font-size: 48rpx;
+    color: rgba(0,0,0,.1);
 }
 .price-left .price-big {
     font-size: 88rpx;

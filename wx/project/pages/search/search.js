@@ -35,7 +35,7 @@ Page({
         'content-type': 'application/x-www-form-urlencoded'
       },
       data: {
-        city_code: 110100,
+        city_code: wx.getStorageSync('addressCode'),//110100,
         keyword: e.detail.value,
         page: 1
       },
@@ -83,7 +83,7 @@ Page({
       },
       data: {
         user_id: wx.getStorageSync('user_id'),
-        city_code: 110100
+        city_code: wx.getStorageSync('addressCode'),//110100
       },
       success: function (res) {
         let data = res.data.data;
@@ -145,7 +145,8 @@ Page({
         if (res.data.code == 200) {
           wx.showToast({
             title: res.data.msg,
-            icon: 'none'
+            image: '../../src/img/shopcart.png',
+            duration: 2000
           })
         } else {
           wx.showToast({
@@ -163,10 +164,10 @@ Page({
    */
   searchChange: function (e) {
     let that = this;
-    console.log(e.detail.value)
+    console.log(e)
     that.setData({
-      searchText: e.detail.value,
-      isSearch: true
+      searchText: e.detail,
+      // isSearch: true
     })
   },
   toSearch: function (e) {
@@ -184,7 +185,7 @@ Page({
           'content-type': 'application/x-www-form-urlencoded'
         },
         data: {
-          city_code: 110100,
+          city_code: wx.getStorageSync('addressCode'),//110100,
           keyword: e.detail.value,
           page: 1
         },
@@ -218,7 +219,6 @@ Page({
       })
       that.unque(that, that.data.tagList); // 去重
       wx.setStorageSync('tagList', that.data.tagList)
-
       wx.request({
         url: Globalhost + 'Api/goods/goodslist',
         method: 'POST',
@@ -226,14 +226,22 @@ Page({
           'content-type': 'application/x-www-form-urlencoded'
         },
         data: {
-          city_code: 110100,
+          city_code: wx.getStorageSync('addressCode'),//110100,
           keyword: keyword, // that.data.searchText,
           page: 1
         },
         success: function (res) {
           console.log(res)
+          
+          if(res.data.data.length == 0) {
+            wx.showToast({
+              title: '没有相关商品',
+              icon: 'none'
+            })
+          }
           that.setData({
             searchList: res.data.data,
+            historyShow: false
           })
         }
       })
@@ -265,7 +273,8 @@ Page({
     let that = this;
     that.setData({
       searchText: e.currentTarget.dataset.text,
-      isSearch: true
+      isSearch: true,
+      historyShow: false
     })
     that.searchList(that, e.currentTarget.dataset.text);
   },
@@ -278,9 +287,6 @@ Page({
       isSearch: true
     })
     that.searchList(that, that.data.searchText);
-    that.setData({
-      historyShow: false
-    })
   },
   /**
    * 数组去重

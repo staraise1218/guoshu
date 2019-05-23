@@ -27,38 +27,57 @@ Page({
 
   onShow: function (options) {
     var that = this;
-    wx.request({ // 获取分类 -- 左侧
-      url: Globalhost + 'Api/category/getAllCategory',
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      success: function (res) {
-        console.log(res)
-        that.setData({
-          targetID: res.data.data[0].id
-        })
-      }
-    })
+    console.log(options)
+    console.log(that.data.targetID)
     that.all(that);
-    setTimeout(function () {
-        if (wx.getStorageSync('indexCatid')) {
+    that.location(that);
+    that.loadingShopcartNum(that);
+    
+    if(!wx.getStorageSync('user_id')) {
+      wx.navigateTo({
+        url: '/pages/loading/loading'
+      })
+    }
+    if(wx.getStorageSync('targetID')) {
+      that.setData({
+        targetID: wx.getStorageSync('targetID')
+      })
+      that.yiji(that, that.data.targetID) 
+    } else {
+      wx.request({ // 获取分类 -- 左侧
+        url: Globalhost + 'Api/category/getAllCategory',
+        method: 'POST',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        success: function (res) {
+          console.log(res)
           that.setData({
-            targetID: wx.getStorageSync('indexCatid')
+            targetID: res.data.data[0].id
           })
-          that.yiji(that, wx.getStorageSync('indexCatid'));
-        } else {
-          that.yiji(that, that.data.targetID);
         }
-      }, 1000),
+      })
+      setTimeout(function () {
+          if (wx.getStorageSync('indexCatid')) {
+            that.setData({
+              targetID: wx.getStorageSync('indexCatid')
+            })
+            that.yiji(that, wx.getStorageSync('indexCatid'));
+          } else {
+            that.yiji(that, that.data.targetID);
+          }
+        }, 1000)
+    }
       
       that.setData({
         address: wx.getStorageSync('address') || '北京',
       })
   },
+  toLik: function () {
+    console.log(this.data)
+  },
   onLoad: function () {
     let that = this;
-    that.location(that);
   },
 
   /**
@@ -66,14 +85,20 @@ Page({
    */
   tabClick: function (e) {
     let that = this;
+    console.log(that.data)
     console.log('分类id：', e.currentTarget.dataset.id)
-    this.setData({
+    
+    that.setData({
+      sub: [],
       targetID: e.currentTarget.dataset.id,
       subID: '',
       subRight: '',
-      status: 'left'
+      status: 'left',
     })
     that.yiji(that, that.data.targetID)
+    if(that.data.targetID) {
+      wx.setStorageSync('targetID', that.data.targetID)
+    }
   },
   /**
    * 小分类
@@ -82,6 +107,7 @@ Page({
     let that = this;
     console.log('小分类id', e.currentTarget.dataset.id)
     this.setData({
+      sub: [],
       subID: e.currentTarget.dataset.id
     })
     that.erji(that, e.currentTarget.dataset.id)
@@ -169,7 +195,7 @@ Page({
       },
       data: {
         cat_id: id,
-        city_code: 110100
+        city_code: wx.getStorageSync('addressCode') //110100
       },
       success: function (res) {
         console.log(' 获取一级分类下的商品列表')
@@ -200,14 +226,16 @@ Page({
               original_img: '',
               shop_price: '',
               store_count: '',
-              subtitle: ''
+              subtitle: '',
+              virtual_num: 0,
             }
             var goodslistGoods_id = 'sub[' + i + '].goodslist[' + j + '].goods_id',
               goodslistGoods_name = 'sub[' + i + '].goodslist[' + j + '].goods_name',
               goodslistOriginal_img = 'sub[' + i + '].goodslist[' + j + '].original_img',
               goodslistShop_price = 'sub[' + i + '].goodslist[' + j + '].shop_price',
               goodslistStore_count = 'sub[' + i + '].goodslist[' + j + '].store_count',
-              goodslistSubtitle = 'sub[' + i + '].goodslist[' + j + '].subtitle'
+              goodslistSubtitle = 'sub[' + i + '].goodslist[' + j + '].subtitle',
+              goodslistSales_sum = 'sub[' + i + '].goodslist[' + j + '].virtual_num'
 
             that.setData({
               [goodslistGoods_id]: data[i].goodslist[j].goods_id,
@@ -216,6 +244,7 @@ Page({
               [goodslistShop_price]: data[i].goodslist[j].shop_price,
               [goodslistStore_count]: data[i].goodslist[j].store_count,
               [goodslistSubtitle]: data[i].goodslist[j].subtitle,
+              [goodslistSales_sum]: data[i].goodslist[j].virtual_num
             })
           }
         }
@@ -234,7 +263,7 @@ Page({
       },
       data: {
         cat_id: id,
-        city_code: 110100,
+        city_code: wx.getStorageSync('addressCode'),//110100,
         page: 0
       },
       success: function (res) {
@@ -256,6 +285,7 @@ Page({
    * 加入购物车
    */
   addCart: function (e) {
+    let that = this;
     wx.request({
       url: Globalhost + 'Api/cart/addCart',
       method: 'POST',
@@ -272,8 +302,10 @@ Page({
         if (res.data.code == 200) {
           wx.showToast({
             title: res.data.msg,
-            icon: 'none'
+            image: '../../src/img/shopcart.png',
+            duration: 2000
           })
+          that.loadingShopcartNum(that);
         } else {
           wx.showToast({
             title: res.data.msg,
@@ -300,9 +332,11 @@ Page({
   },
   cityOk: function () {
     wx.setStorageSync('address', this.data.cityChange)
+    wx.setStorageSync('addressCode', this.data.codeChange || '110100')
     this.setData({
       cityShow: false,
-      address: this.data.cityChange
+      address: this.data.cityChange,
+      addressCODE: this.data.codeChange
     })
   },
   changeCity: function (e) {
@@ -360,5 +394,80 @@ Page({
    wx.navigateTo({
      url: '/pages/news/news'
    })
- }
+ },
+
+
+
+
+
+
+
+  /**
+   * 加载购物车数量
+   */
+  loadingShopcartNum: function (that) {
+    wx.request({
+      url: Globalhost + 'Api/common/getCartNum',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        city_code: wx.getStorageSync('addressCode'),
+        user_id: wx.getStorageSync('user_id')
+      },
+      success: function(res) {
+        console.log(res)
+        that.setData({
+          cart_num: res.data.data.cartNum
+        })
+        if(res.data.data.cartNum > 0) {
+          wx.setTabBarBadge({
+            index: 3,
+            text: '' + res.data.data.cartNum
+          })
+        } else {
+          wx.hideTabBarRedDot({
+            index: 3
+          })
+        }
+      }
+    })
+  },
+
+
+ 
+
+  /**
+   * footer 跳转
+   */
+  LINK: function (e) {
+    console.log(e.currentTarget.dataset.link) // index classification group shopcart mine
+    switch (e.currentTarget.dataset.link) {
+      case 'index':
+        wx.redirectTo({
+          url: '/pages/index/index'
+        })
+        break;
+      case 'classification':
+        wx.redirectTo({
+          url: '/pages/classification/classification'
+        })
+        break;
+      case 'group':
+        wx.redirectTo({
+          url: '/pages/group/group'
+        })
+        break;
+        case 'shoppingCart':
+          wx.redirectTo({
+            url: '/pages/shoppingCart/shoppingCart'
+          })
+          break;
+      case 'mine':
+        wx.redirectTo({
+          url: '/pages/mine/mine'
+        })
+    }
+  }
 })

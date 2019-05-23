@@ -11,7 +11,11 @@ Page({
     test: ''
   },
   onLoad: function (options) {
-    if(wx.getStorageSync('head_pic')) {
+    if(wx.getStorageSync('login') == '手机号登陆') {
+      this.setData({
+        head_pic: Globalhost + wx.getStorageSync('head_pic')
+      })
+    } else {
       this.setData({
         head_pic: wx.getStorageSync('head_pic')
       })
@@ -56,9 +60,10 @@ Page({
           success(res) {
             console.log(JSON.parse(res.data).data.head_pic)
             that.setData({
-              head_pic: JSON.parse(res.data).data.head_pic
+              head_pic: Globalhost + JSON.parse(res.data).data.head_pic
             })
-            wx.setStorageSync('head_pic',  JSON.parse(res.data).data.head_pic)
+            console.log(JSON.parse(res.data).data.head_pic)
+            wx.setStorageSync('head_pic',  Globalhost + JSON.parse(res.data).data.head_pic)
             // that.setData({
             //   head_pic: Globalhost + JSON.parse(res.data).data.head_pic
             // })

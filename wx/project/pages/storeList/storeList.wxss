@@ -16,3 +16,64 @@ page {
     bottom: 20rpx;
     left: 2.5%;
 }
+
+
+
+
+.list-wrap {
+    padding: 20rpx;
+    display: flex;
+    justify-content: flex-start;
+    border-bottom: 1px solid rgba(0,0,0,.1);
+}
+.list-wrap .left {
+    width: 80rpx;
+    height: 80rpx;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.list-wrap .left image {
+    max-width: 100%;
+    max-height: 100%;
+}
+.list-wrap .right {
+    flex: 1;
+    margin-left: 20rpx;
+    font-size: 20rpx;
+}
+.list-wrap .right .title {
+    font-weight: 400;
+    display: flex;
+    justify-content: space-between;
+}
+.list-wrap .right .name {
+    color: #222;
+    font-size: 28rpx;
+}
+.list-wrap .right .juli {
+    color: #DF5E11;
+    font-size: 24rpx;
+}
+.list-wrap .right .con {
+    font-size: 22rpx;
+    color: rgba(0,0,0,.3);
+    margin-top: 10rpx;
+}
+.active {
+    background: rgba(247, 72, 31, .3)
+}
+
+.empty-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 200rpx;
+    font-size: 26rpx;
+    color: rgba(0,0,0,.5)
+}
+.empty-wrap image {
+    width: 200rpx;
+    height: 160rpx;
+    margin-bottom: 30rpx;
+}

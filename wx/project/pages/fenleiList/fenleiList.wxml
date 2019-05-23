@@ -1,0 +1,34 @@
+<view class="item-box-1">
+    <view class="list-wrapper">
+        <image class="icon-bg" mode="" src="https://app.zhuoyumall.com:444{{msg.image}}" />
+        <!-- <view class="padding-30 padding-top-50 font-weight-6" style="color: #296B8E;font-size: 32rpx;">
+            {{msg.name}} >
+        </view> -->
+        <view class="lists">
+            <!-- {{GOODLIST.name}} -->
+            <block wx:for="{{GOODLIST}}" wx:key>
+                <view class="item-list-box" data-id="{{item.goods_id}}" bindtap="toCon" data-id="{{item.goods_id}}">
+                    <!-- <view class="shopping-alert" wx:if="{{item.store_count == 0}}">
+                        <view class="alert-con">
+                            <view>抢光啦</view>
+                            <view>SOLD OUT</view>
+                        </view>
+                    </view> -->
+                    <view class="poster-wrapper">
+                        <image class="icon-shop" mode="" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+                    </view>
+                    <view class="title-3 shop-title">{{item.goods_name}}</view>
+                    <view class="title-2_f shop-title">{{item.subtitle}}</view>
+                    <view wx-if="{{item.sales_sum != 0}}" class="title-2_f shop-title">已购 {{item.sales_sum}} 份</view>
+                    <view class="tag-new">{{item.tag}}</view>
+                    <view class="bottom">
+                        <view class="left-center">
+                            <view class="price">{{item.shop_price}}</view>
+                        </view>
+                        <image data-id="{{item.goods_id}}" catchtap="addCart" class="icon-2" mode="widthFix" src="https://hbimg.huabanimg.com/ff8af7f0827e85d34cc15b364ff139c61e6fe5bc5b3-0QRyv2_fw658" />
+                    </view>
+                </view>
+            </block>
+        </view>
+    </view>
+</view>

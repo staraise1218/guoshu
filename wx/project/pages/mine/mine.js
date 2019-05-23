@@ -20,20 +20,42 @@ Page({
       //   title: '积分'
       // }
     ],
+    // orderMsg: [
+    //   {
+    //     url: 'http://img.hb.aicdn.com/34e2c06fe2e2bdd28b1687c4f1f2e4d6909a93a965e-lE6fEc_fw658',
+    //     title: '全部订单',
+    //     func: 'toMyOrder'
+    //   },
+    //   {
+    //     url: 'http://img.hb.aicdn.com/ea1e30c09e5d34530d1670e2f95532f8061c6b847ea-wMoJhN_fw658',
+    //     title: '待评价',
+    //     func: 'toLoadPinglun'
+    //   },
+    //   {
+    //     url: 'http://img.hb.aicdn.com/f9cb87fd436c0be2da0917754d92fdbc734d15b68ef-iLZpRU_fw658',
+    //     title: '退款',
+    //     func: 'toTuikuan'
+    //   }
+    // ],
     orderMsg: [
       {
         url: 'http://img.hb.aicdn.com/34e2c06fe2e2bdd28b1687c4f1f2e4d6909a93a965e-lE6fEc_fw658',
-        title: '全部订单',
-        func: 'toMyOrder'
+        title: '未支付',
+        func: 'toWeiZhiFu'
+      },
+      {
+        url: 'http://img.hb.aicdn.com/34e2c06fe2e2bdd28b1687c4f1f2e4d6909a93a965e-lE6fEc_fw658',
+        title: '已支付',
+        func: 'toYiZhiFu'
       },
       {
         url: 'http://img.hb.aicdn.com/ea1e30c09e5d34530d1670e2f95532f8061c6b847ea-wMoJhN_fw658',
         title: '待评价',
-        func: 'toLoadPinglun'
+        func: 'toDaiPingLun'
       },
       {
         url: 'http://img.hb.aicdn.com/f9cb87fd436c0be2da0917754d92fdbc734d15b68ef-iLZpRU_fw658',
-        title: '退款/售后',
+        title: '退款',
         func: 'toTuikuan'
       }
     ],
@@ -98,7 +120,6 @@ Page({
       }
     ],
     role: '未设置', // 用户权限
-    
   },
   onLoad: function (options) {
     var that = this;
@@ -118,14 +139,43 @@ Page({
         success: function(res) {
           console.log(res)
           that.setData({
-            head_pic: Globalhost + res.data.data.head_pic,
             nickname: res.data.data.nickname,
             user_id: res.data.data.user_id,
             'infoMsg[0].num': res.data.data.user_money
           })
+          if(wx.getStorageSync('login') == '手机号登陆') {
+            if(res.data.data.head_pic) {
+              that.setData({
+                head_pic: Globalhost + wx.getStorageSync('head_pic')
+              })
+            } else {
+              that.setData({
+                head_pic: 'http://img.hb.aicdn.com/0d073af2e0eb5b66d800bdc234571d2aeaec4c641700-aZonQZ_fw658'
+              })
+            }
+          } else {
+            if(res.data.data.head_pic) {
+              that.setData({
+                head_pic: wx.getStorageSync('head_pic')
+              })
+            }else {
+              that.setData({
+                head_pic: 'http://img.hb.aicdn.com/0d073af2e0eb5b66d800bdc234571d2aeaec4c641700-aZonQZ_fw658'
+              })
+            }
+          }
+          if(res.data.data.nickname) {
+            that.setData({
+              nickname: res.data.data.nickname,
+            })
+          } else {
+            that.setData({
+              nickname: '请输入用户名'
+            })
+          }
         }
       })
-    } 
+    }
     if(!wx.getStorageSync('login')) {
       wx.showModal({
         title: '未登录',
@@ -134,7 +184,8 @@ Page({
           if (res.confirm) {
             console.log('用户点击确定')
             wx.navigateTo({
-              url: '/pages/login/login'
+              // url: '/pages/login/login'
+              url: '/pages/loading/loading'
             })
           } else if (res.cancel) {
             console.log('用户点击取消')
@@ -145,6 +196,13 @@ Page({
   },
   onShow: function () {
     let that = this;
+    
+    if(!wx.getStorageSync('user_id')) {
+      wx.navigateTo({
+        url: '/pages/loading/loading'
+      })
+    }
+    that.loadingShopcartNum(that);
     if(wx.getStorageSync('nickname')) {
       console.log(123)
       this.setData({
@@ -154,11 +212,38 @@ Page({
     that.setData({
       role: wx.getStorageSync('role')
     })
-    if(wx.getStorageSync('head_pic')) {
+    // if(wx.getStorageSync('login') == '手机号登陆') {
+    //   this.setData({
+    //     head_pic: Globalhost + wx.getStorageSync('head_pic')
+    //   })
+    // } else {
       this.setData({
-        head_pic: Globalhost + wx.getStorageSync('head_pic')
+        head_pic: wx.getStorageSync('head_pic')
       })
-    }
+    // }
+    wx.request({
+      url: Globalhost + 'Api/user/index',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        user_id: wx.getStorageSync('user_id')
+      },
+      success: function(res) {
+        console.log(res)
+        if(res.data.code == 200) {
+          wx.setStorageSync('head_pic', Globalhost + res.data.data.userInfo.head_pic);
+          wx.setStorageSync('nickname', res.data.data.userInfo.nickname);
+          that.setData({
+            head_pic: Globalhost + res.data.data.userInfo.head_pic,
+            nickname: res.data.data.userInfo.nickname,
+            'infoMsg[0].num': res.data.data.userInfo.user_money,
+            'infoMsg[1].num': res.data.data.redpack_num
+          })
+        }
+      }
+    })
   },
   toYue: function () { // 余额
     loadingfunc();
@@ -178,22 +263,28 @@ Page({
       url: '/pages/hongBao/hongBao'
     })
   },
-  toMyOrder: function () { // 全部订单
+  toWeiZhiFu: function () { // 未支付
     loadingfunc();
     wx.navigateTo({
-      url: '/pages/myOrder/myOrder'
+      url: '/pages/myOrder/myOrder?pageStatus=0'
     })
   },
-  toLoadPinglun: function () { // 待评论
+  toYiZhiFu: function () { // 已支付
     loadingfunc();
     wx.navigateTo({
       url: '/pages/myOrder/myOrder?pageStatus=1'
     })
   },
-  toTuikuan: function () { // 退款/售后
+  toDaiPingLun: function () { // 待评价
     loadingfunc();
     wx.navigateTo({
       url: '/pages/myOrder/myOrder?pageStatus=2'
+    })
+  },
+  toTuikuan: function () { // 退款
+    loadingfunc();
+    wx.navigateTo({
+      url: '/pages/myOrder/myOrder?pageStatus=3'
     })
   },
 
@@ -268,6 +359,75 @@ Page({
     wx.navigateTo({
       url: '/pages/news/news'
     })
+  },
+
+
+
+
+
+  /**
+   * 加载购物车数量
+   */
+  loadingShopcartNum: function (that) {
+    wx.request({
+      url: Globalhost + 'Api/common/getCartNum',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        city_code: wx.getStorageSync('addressCode'),
+        user_id: wx.getStorageSync('user_id')
+      },
+      success: function(res) {
+        console.log(res)
+        that.setData({
+          cart_num: res.data.data.cartNum
+        })
+        if(res.data.data.cartNum > 0) {
+          wx.setTabBarBadge({
+            index: 3,
+            text: '' + res.data.data.cartNum
+          })
+        } else {
+          wx.hideTabBarRedDot({
+            index: 3
+          })
+        }
+      }
+    })
+  },
+
+
+
+
+  
+  /**
+   * footer 跳转
+   */
+  LINK: function (e) {
+    console.log(e.currentTarget.dataset.link) // index classification group shopcart mine
+    switch (e.currentTarget.dataset.link) {
+      case 'index':
+        wx.redirectTo({
+          url: '/pages/index/index'
+        })
+        break;
+      case 'classification':
+        wx.redirectTo({
+          url: '/pages/classification/classification'
+        })
+        break;
+      case 'group':
+        wx.redirectTo({
+          url: '/pages/group/group'
+        })
+        break;
+        case 'shoppingCart':
+          wx.redirectTo({
+            url: '/pages/shoppingCart/shoppingCart'
+          })
+    }
   }
 
 })

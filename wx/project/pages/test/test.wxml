@@ -1,0 +1,21 @@
+<view>
+    <view>
+        <view wx:for='{{data}}' class='item' wx:key='item.id'>
+            <image class='image' src='https://hbimg.huabanimg.com/d79242b7d01b6d5c0d263dbb8e9eca829ae43dc613568-1dbgxK_fw658' mode='aspectFit' />
+            <text class='text'>{{item.title}}</text>
+            <view class='bottom_container'>
+                <text class='price'>￥{{item.price}}</text>
+                <image class='add' src='https://hbimg.huabanimg.com/395ddec5f781d44541ddda4c5281687e3f0ed9e39b2-76juRm_fw658' bindtouchstart='goto_shopcart' data-item="{{item}}" />
+            </view>
+        </view>
+    </view>
+    <view class='shopcart'>
+        <image src='https://hbimg.huabanimg.com/d79242b7d01b6d5c0d263dbb8e9eca829ae43dc613568-1dbgxK_fw658' class='shopcart_icon' />
+        <text class='shopcart_num'>{{all_num}}</text>
+    </view>
+
+    <view wx:for='{{ghost_arr}}' wx:key='{{index}}' class='ghost'
+        style='left:{{item.x}}px;top:{{item.y}}px;width:{{item.w}}px;height:{{item.h}}px;'>
+        <image class='ghost_img' src='https://hbimg.huabanimg.com/d79242b7d01b6d5c0d263dbb8e9eca829ae43dc613568-1dbgxK_fw658' mode='aspectFit' />
+    </view>
+</view>

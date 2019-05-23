@@ -1,4 +1,4 @@
-<view class="container">
+<!-- <view class="container">
     <block wx:for="{{List}}" wx:key>
         <view data-id="{{item.pickup_id}}" bindtap="choose" class="between-center padding-lr-20 padding-tb-10 border-bottom">
             <view class="left-center">
@@ -6,7 +6,6 @@
                 <image wx:else class="icon-3" src="https://hbimg.huabanimg.com/af41d36cf3423f49b5180fab5f14f2b3db82652a67e-dDcFEg_fw658" />
             </view>
             <view class="flex-1 margin-left-20 between-center">
-                <!-- <image class="icon-header" src="https://hbimg.huabanimg.com/afb5f1a90a9bad803d8bc76b4602643a873aff78465e-ghun04_fw658" /> -->
                 <view class="flex-1 padding-lr-10">
                     <view class="title-2 margin-bottom-10">{{item.pickup_name}}</view>
                     <view class="title-3_f">{{item.fulladdress}}</view>
@@ -14,6 +13,36 @@
             </view>
         </view>
     </block>
+</view> -->
+
+
+
+
+
+<block wx:for="{{List}}" wx:key>
+    <view data-id="{{item.pickup_id}}" bindtap="chooseActive" class="{{item.pickup_id == currentID ? 'active' : ''}} list-wrap">
+        <view class="left">
+            <image src="https://app.zhuoyumall.com:444{{item.image}}" />
+        </view>
+        <view class="right">
+            <view class="title">
+                <view class="name">{{item.pickup_name}}</view>
+                <view class="juli"><view wx:if="{{item.distance}}"> {{item.distance}}千米 </view></view>
+            </view>
+            <view class="con">{{item.fulladdress}}</view>
+            <view class="con">{{item.pickup_phone}}</view>
+        </view>
+    </view>
+</block>
+
+<view class="empty-wrap" wx:if="{{List.length == 0}}">
+    <image src="https://app.zhuoyumall.com:444/wx/img/empty.png" />
+    <view class="text-center">没有搜索到站点</view>
 </view>
+
+
+
+
+
 
 <view bindtap="toOrder" class="okBtn">确定</view>

@@ -1,4 +1,6 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "van-field": "/src/dist/field/index"
+  },
   "navigationBarTitleText": "自提点加盟"
 }

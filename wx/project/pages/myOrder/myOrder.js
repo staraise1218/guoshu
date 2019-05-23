@@ -5,7 +5,7 @@ Page({
     currentTab: 0,
     reaHeight: 0,
     orderInfo: [],
-    orderMsg: {
+    waitPayMsg: {
       0: {
         add_time: "1552297167",
         count_goods_num: 8,
@@ -28,7 +28,7 @@ Page({
   },
   onLoad: function (options) {
     let that = this;
-    console.log(options.pageStatus == "loadPinglun")
+    console.log(options.pageStatus)
     that.setData({
       currentTab: options.pageStatus
     })
@@ -36,28 +36,29 @@ Page({
     /**
      * 判断高度
      */
-    setTimeout(function () {
-      var query = wx.createSelectorQuery()
-      query.select('.item-box-1').boundingClientRect()
-      query.selectViewport().scrollOffset()
-      query.exec(function (res) {
-        res[0].top // #the-id节点的上边界坐标
-        res[1].scrollTop // 显示区域的竖直滚动位置
-        // console.log('打印demo的元素的信息', res);
-        // console.log('打印高度', res[0].height);
-        that.setData({
-          reaHeight: 'height:' + (res[0].height + 20) + 'px'
-        })
-      })
-    }, 1000)
+    // var dom = '.item-box-' + options.pageStatus
+    // setTimeout(function () {
+    //   var query = wx.createSelectorQuery()
+    //   // query.select('.item-box-1').boundingClientRect()
+    //   query.select(dom).boundingClientRect()
+    //   query.selectViewport().scrollOffset()
+    //   query.exec(function (res) {
+    //     res[0].top // #the-id节点的上边界坐标
+    //     res[1].scrollTop // 显示区域的竖直滚动位置
+    //     // console.log('打印demo的元素的信息', res);
+    //     // console.log('打印高度', res[0].height);
+    //     that.setData({
+    //       reaHeight: 'height:' + (res[0].height + 20) + 'px'
+    //     })
+    //   })
+    // }, 1000)
     // 判断高度 END
-    that.listLoad(that);
-    that.loadPintlun(that);
   },
   onShow: function () {
     let that = this;
-    that.listLoad(that);
-    that.loadPintlun(that);
+    that.loadWaitpay(that);
+    that.loadWaitCcomment(that);
+    that.loadWaitSend(that);
   },
 
   //滑动切换 
@@ -154,6 +155,19 @@ Page({
           reaHeight: 'height:' + (res[0].height + 20) + 'px'
         })
       })
+    } else if (e.currentTarget.dataset.current == 4) {
+      var query = wx.createSelectorQuery()
+      query.select('.item-box-4').boundingClientRect()
+      query.selectViewport().scrollOffset()
+      query.exec(function (res) {
+        res[0].top // #the-id节点的上边界坐标
+        res[1].scrollTop // 显示区域的竖直滚动位置
+        console.log('打印demo的元素的信息', res);
+        console.log('打印高度', res[0].height);
+        that.setData({
+          reaHeight: 'height:' + (res[0].height + 20) + 'px'
+        })
+      })
     }
   },
   /**
@@ -167,10 +181,8 @@ Page({
       url: '/pages/orderSuccess/orderSuccess?state=' + e.currentTarget.dataset.state + '&orderid=' + e.currentTarget.dataset.orderid
     })
   },
-  /**
-   * 列表
-   */
-  listLoad: function (that) {
+  // 未支付
+  loadWaitpay: function (that) {
     wx.request({
       url: Globalhost + 'Api/order/order_list',
       method: 'POST',
@@ -179,22 +191,44 @@ Page({
       },
       data: {
         user_id: wx.getStorageSync('user_id') ,
+        type: 'WAITPAY',
         page: 1
       },
       success: function (res) {
         let data = res.data.data;
         console.log(data)
         that.setData({
-          orderMsg: data
+          waitPayMsg: data
         })
-        console.log(that.data.orderMsg)
+        console.log(that.data.waitPayMsg)
       }
     })
   },
-  /**
-   * 待评价
-   */
-  loadPintlun: function (that) {
+  // 已支付
+  loadWaitSend: function (that) {
+    wx.request({
+      url: Globalhost + 'Api/order/order_list',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        user_id: wx.getStorageSync('user_id') ,
+        type: 'WAITSEND',
+        page: 1
+      },
+      success: function (res) {
+        let data = res.data.data;
+        console.log(data)
+        that.setData({
+          waitSendMsg: data
+        })
+        console.log(that.data.waitSendMsg)
+      }
+    })
+  },
+  // 待评价
+  loadWaitCcomment: function (that) {
     wx.request({
       url: Globalhost + 'Api/order/order_list',
       method: 'POST',
@@ -215,6 +249,29 @@ Page({
       }
     })
   },
+  // 待评价
+  loadTuiKuan: function (that) {
+    wx.request({
+      url: Globalhost + 'Api/order/order_list',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        user_id: wx.getStorageSync('user_id'),
+        type: 'WAITCCOMMENT',
+        page: 1
+      },
+      success: function(res) {
+        let data = res.data.data;
+        console.log(data)
+        that.setData({
+          tuiKuanMsg: data
+        })
+      }
+    })
+  },
+
   /**
    * 取消订单
    */
@@ -237,13 +294,16 @@ Page({
             },
             success: function(res) {
               console.log(res)
-              that.listLoad(that);
+              wx.showToast({
+                title: res.data.msg,
+                icon: 'none',
+                duration: 2000
+              })
+              // that.listLoad(that);
+              that.loadWaitpay(that);
+              that.loadWaitCcomment(that);
+              that.loadWaitSend(that);
             }
-          })
-          wx.showToast({
-            title: '订单已取消',
-            icon: 'success',
-            duration: 2000
           })
         } else if (res.cancel) {
           console.log('用户点击取消')
@@ -290,7 +350,6 @@ Page({
         }
       }
     })
-
   },
   /**
    * 评论
@@ -307,6 +366,8 @@ Page({
    */
   toPay: function (e) {
     console.log(e.currentTarget.dataset)
+    let orderId = e.currentTarget.dataset.orderId
+    console.log(orderId)
     wx.request({
       url: Globalhost + 'Api/Wxapplet/unifiedOrder',
       method: 'POST',
@@ -332,73 +393,11 @@ Page({
           'success': function (res) {
             console.log(res)
             wx.navigateTo({
-              url: '/pages/paySuccess/paySuccess'
+              url: '/pages/paySuccess/paySuccess?order_id=' + orderId
             })
           }
         })
       }
     })
   },
-  // toPay: function (e) {
-  //   console.log(e.currentTarget.dataset)
-  //   let that = this;
-  //   if(wx.getStorageSync('openid')) {
-  //     wx.request({
-  //       url: Globalhost + 'Api/cart/cart3',
-  //       method: 'POST',
-  //       header: {
-  //         'content-type': 'application/x-www-form-urlencoded'
-  //       },
-  //       data: {
-  //         user_id: wx.getStorageSync('user_id'),
-  //         address_id: that.data.Address_id,
-  //         coupon_id: that.data.Coupon_id,
-  //         user_money: 0,
-  //         action: that.data.Action,
-  //         goods_id: that.data.Goods_id,
-  //         goods_num: 1,
-  //         dosubmit: 1,
-  //         send_method: 1
-  //       },
-  //       success: function(res) {
-  //         console.log(res)
-  //         that.setData({
-  //           Order_sn: res.data.data.order_sn
-  //         })
-  //         wx.request({
-  //           url: Globalhost + 'Api/Wxapplet/unifiedOrder',
-  //           method: 'POST',
-  //           header: {
-  //             'content-type': 'application/x-www-form-urlencoded'
-  //           },
-  //           data: {
-  //             order_sn: res.data.data.order_sn,
-  //             openid: wx.getStorageSync('openid')
-  //           },
-  //           success: function(res) {
-  //             wx.requestPayment({
-  //               'timeStamp': res.data.data.timeStamp, // 时间
-  //               'nonceStr': res.data.data.nonceStr, // 随机字符串
-  //               'package': res.data.data.package, // prepayId
-  //               'signType': res.data.data.signType, // 签名算法
-  //               'paySign': res.data.data.paySign, // 签名
-
-  //               'success': function (res) {
-  //                 console.log(res)
-  //                 wx.navigateTo({
-  //                   url: '/pages/paySuccess/paySuccess'
-  //                 })
-  //               }
-  //             })
-  //           }
-  //         })
-  //       }
-  //     })
-  //   } else {
-  //     wx.navigateTo({
-  //       url: '/pages/wxlogin/wxlogin'
-  //     })
-  //   }
-  // },
-
 })

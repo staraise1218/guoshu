@@ -8,6 +8,7 @@
                     <view class="title-2_f">{{item.mobile}}</view>
                 </view>
                 <view class="address-info margin-top-10">{{item.fulladdress}}</view>
+                <view class="address-info margin-top-10">{{item.floor}}</view>
             </view>
         </view>
         <view class="right" catchtap="toEdit" data-id="{{item.address_id}}">编辑</view>

@@ -13,6 +13,15 @@ Page({
     this.setData({
       phoneNumber: e.detail.value
     })
+    if(!(/^1[34578]\d{9}$/.test(e.detail.value))){ 
+        this.setData({
+          codeStatus: 'false'
+        })
+    } else {
+      this.setData({
+        codeStatus: 'true'
+      })
+    }
   },
   getCode: function () {
     let that = this;

@@ -7,5 +7,7 @@
     "van-cell": "/src/dist/cell/index",
     "van-cell-group": "/src/dist/cell-group/index",
     "van-icon": "/src/dist/icon/index"
-  }
+  },
+  "enablePullDownRefresh": true
+  
 }

@@ -36,9 +36,9 @@ Page({
       })
     }, 1000)
     // 判断高度 END
-    that.listLoad(that);  // 全部
-    that.loadTihuo(that); // 已提货
-    that.weiTiHuo(that);  // 未提货
+    // that.listLoad(that);  // 全部
+    // that.loadTihuo(that); // 已提货
+    // that.weiTiHuo(that);  // 未提货
   },
   onShow: function () {
     let that = this;
@@ -179,7 +179,7 @@ Page({
       },
       data: {
         user_id: wx.getStorageSync('user_id'),
-        type: 'WAITRECEIVE',
+        type: 'WAITCCOMMENT',
         page: 1
       },
       success: function (res) {

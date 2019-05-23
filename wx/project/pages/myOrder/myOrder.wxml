@@ -1,9 +1,9 @@
-<view class="around-center padding-30">
-    <view class="tab-item {{currentTab==0?'tab-active':''}}" data-current="0" catchtap="clickTap">全部订单</view>
-    <view class="tab-item {{currentTab==1?'tab-active':''}}" data-current="1" catchtap="clickTap">待评价</view>
-    <view class="tab-item {{currentTab==2?'tab-active':''}}" data-current="2" catchtap="clickTap">退款/售后</view>
+<view class="topbar around-center">
+    <view class="tab-item {{currentTab==0?'tab-active':''}}" data-current="0" catchtap="clickTap">未支付</view>
+    <view class="tab-item {{currentTab==1?'tab-active':''}}" data-current="1" catchtap="clickTap">已支付</view>
+    <view class="tab-item {{currentTab==2?'tab-active':''}}" data-current="2" catchtap="clickTap">待评价</view>
+    <view class="tab-item {{currentTab==3?'tab-active':''}}" data-current="3" catchtap="clickTap">退款</view>
 </view>
-
 
 
 <swiper class="xianshimiaosha" style="{{reaHeight}}" current="{{currentTab}}" duration="300" bindchange="swiperTab">
@@ -11,14 +11,13 @@
 
 
     <!--    =================================================
-            全部订单
+            全部订单 ——》 未支付
     ================================================= -->
     <swiper-item>
-        <view class="item-box-1">
-            <block wx:for="{{orderMsg}}" wx:key>
+        <scroll-view scroll-y class="item-box-1">
+            <block wx:for="{{waitPayMsg}}" wx:key>
                 <view class="order-item" catchtap="go" data-orderid="{{item.order_id}}"
                     data-state="{{item.order_status_code}}">
-                    <view class="line"></view>
                     <view class="padding-30 between-center border-bottom">
                         <view class="title-2_f">{{item.add_time}}</view>
                         <view class="title-2_f">{{item.order_status_desc}}</view>
@@ -59,10 +58,12 @@
                         </view>
                         <!-- 按钮 END -->
                     </view>
+
+                    <view class="line"></view>
                 </view>
             </block>
             <view class="margin-top-30 text-center title-2_f">没有更多了~</view>
-        </view>
+        </scroll-view>
     </swiper-item>
 
 
@@ -71,44 +72,14 @@
 
 
     <!--    =================================================
-            待评价
+            待评价 ——》 已支付
     ================================================= -->
     <swiper-item>
-        <view class="item-box-2">
+        <scroll-view scroll-y class="item-box-2">
             <!-- 待评价 -->
-            <!-- <block wx:for="{{wait}}" wx:key>
-                <view class="order-item" catchtap="go" data-orderid="{{item.order_id}}" data-state="{{item.order_status_code}}">
-                    <view class="line"></view>
-                    <view class="padding-30 between-center border-bottom">
-                        <view class="title-2_f">{{item.add_time}}</view>
-                        <view class="title-2_f">{{item.order_status_desc}}</view>
-                    </view>
-                    <view class="order-poster border-bottom padding-30">
-                        <block wx:for="{{item.goods_list}}" wx:key>
-                            <image class="icon-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}" mode="widthFix" />
-                        </block>
-                    </view>
-                    <view class="btn-wrap padding-lr-30 padding-tb-20">
-                        <view class="end-center ">
-                            <view class="title-3">共{{item.count_goods_num}}件商品</view>
-                            <view class="title-3 margin-left-20 left-center align-middle">
-                                合计:<view class="price-color">￥{{item.order_amount}}</view>
-                            </view>
-                        </view>
-                        <view class="end padding-tb-20">
-                            <view wx:if="{{true}}" class="title-3 margin-right-30 agein" catchtap="cancelOrder">取消订单</view>
-                            <view wx:if="{{item.cancel_btn == 1}}" class="title-3 margin-right-30 agein" catchtap="cancelOrder">取消订单</view>
-                            <view wx:if="{{item.pay_btn == 1}}" class="title-3 pingjia" catchtap="toPay">付款</view>
-                            <view wx:if="{{item.comment_btn == 1}}" class="title-3 pingjia" catchtap="pingjia">评价</view>
-                        </view>
-                    </view>
-                </view>
-            </block> -->
-
-            <block wx:for="{{wait}}" wx:key>
+            <block wx:for="{{waitSendMsg}}" wx:key>
                 <view class="order-item" catchtap="go" data-orderid="{{item.order_id}}"
                     data-state="{{item.order_status_code}}">
-                    <view class="line"></view>
                     <view class="padding-30 between-center border-bottom">
                         <view class="title-2_f">{{item.add_time}}</view>
                         <view class="title-2_f">{{item.order_status_desc}}</view>
@@ -149,34 +120,79 @@
                         </view>
                         <!-- 按钮 END -->
                     </view>
+                    <view class="line"></view>
                 </view>
             </block>
             <view class="margin-top-30 text-center title-2_f">没有更多了~</view>
-        </view>
+        </scroll-view>
     </swiper-item>
 
 
 
 
     <!--    =================================================
-            退款/售后
+            退款/售后 ——》 待评价
     ================================================= -->
     <swiper-item>
-        <view class="item-box-3">
-
-
-
-
-
-
-
-
-
-
-
+        <scroll-view scroll-y class="item-box-3">
             <view class="margin-top-30 text-center title-2_f">没有更多了~</view>
-        </view>
+        </scroll-view>
     </swiper-item>
 
+
+    <!--    =================================================
+            退款
+    ================================================= -->
+    <swiper-item>
+        <scroll-view scroll-y class="item-box-4">
+            <block wx:for="{{tuiKuanMsg}}" wx:key>
+                <view class="order-item" catchtap="go" data-orderid="{{item.order_id}}"
+                    data-state="{{item.order_status_code}}">
+                    <view class="padding-30 between-center border-bottom">
+                        <view class="title-2_f">{{item.add_time}}</view>
+                        <view class="title-2_f">{{item.order_status_desc}}</view>
+                    </view>
+                    <view class="order-poster border-bottom padding-30">
+                        <block wx:for="{{item.goods_list}}" wx:key>
+                            <image class="icon-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}"
+                                mode="widthFix" />
+                        </block>
+                    </view>
+                    <view class="btn-wrap padding-lr-30 padding-tb-20">
+                        <view class="end-center ">
+                            <view class="title-3">共{{item.count_goods_num}}件商品</view>
+                            <view class="title-3 margin-left-20 left-center align-middle">
+                                合计:<view class="price-color">￥{{item.order_amount}}</view>
+                            </view>
+                        </view>
+                        <!-- 按钮 -->
+                        <view class="end padding-tb-20">
+                            <view wx:if="{{item.cancel_btn == 1}}" 
+                                class="title-3 agein margin-left-20"
+                                data-order-sn="{{item.order_sn}}" 
+                                data-order-id="{{item.order_id}}"
+                                catchtap="cancelOrder">取消订单</view>
+
+                            <view wx:if="{{item.pay_btn == 1}}" 
+                                class="title-3 pingjia margin-left-20"
+                                data-order-sn="{{item.order_sn}}" 
+                                data-order-id="{{item.order_id}}" 
+                                catchtap="toPay">付款
+                            </view>
+
+                            <view wx:if="{{item.comment_btn == 1}}" 
+                                class="title-3 pingjia margin-left-20"
+                                data-order-sn="{{item.order_sn}}" 
+                                data-order-id="{{item.order_id}}"
+                                catchtap="toPinglun">评价</view>
+                        </view>
+                        <!-- 按钮 END -->
+                    </view>
+                    <view class="line"></view>
+                </view>
+            </block>
+            <view class="margin-top-30 text-center title-2_f">没有更多了~</view>
+        </scroll-view>
+    </swiper-item>
 
 </swiper>

@@ -12,7 +12,21 @@
     background: #fff;
     padding: 60rpx;
 }
-
+.box-con input {
+    font-size: 20rpx
+}
+.search-border {
+    width: 100% !important
+}
+.van-field__input {
+    width:100% !important;
+    padding-left:20rpx !important;
+    font-size:26rpx !important;
+    height: 30rpx !important    
+}
+.van-cell {
+    padding: 4rpx 10rpx !important;
+}
 .inp-item {
     margin: 20rpx 0;
     position: relative;
@@ -21,7 +35,9 @@
 .left-box {
     width: 200rpx;
 }
-
+._code {
+    z-index: 9
+}
 .before {
     position: absolute;
     font-size: 22rpx;
@@ -32,7 +48,9 @@
 .right-box {
     width: 100%;
 }
-
+.icon-4 {
+    margin-right: 10rpx;
+}
 .right-box input {
     width: 100%;
     padding-left: 20rpx;
