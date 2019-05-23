@@ -15,30 +15,28 @@ use think\Db;
 class Pickup extends Base {
 
     public function index(){
-		$p = M('region2')->where(array('parentCode'=>'000000'))->select();
-		$this->assign('province',$p);
+    	$city = M('region')->where('level', 2)->select();
+		// $p = M('region')->where('level', 1)->select();
+		// $this->assign('province',$p);
+		$this->assign('city',$city);
         return $this->fetch();
     }
 
 	public function ajaxPickupList(){
-		$province_id = I('post.province_id');
-		$city_id = I('post.city_id');
-		$district_id = I('post.district_id');
+		$city_code = I('post.city_code');
+		$status = I('post.status');
+		$search_name = I('post.search_name');
+		$key_word = I('post.key_word');
 		$order_by_field = I('post.order_by_field','pickup_id');
 		$order_by_mode = I('post.order_by_mode','desc');
-		$key_word = I('post.key_word');
+		
 		$pickup_where = array();
-		// if(!empty($province_id)){
-		// 	$pickup_where['p.province_id'] = $province_id;
-		// }
-		// if(!empty($city_id)){
-		// 	$pickup_where['p.city_id'] = $city_id;
-		// }
-		// if(!empty($district_id)){
-		// 	$pickup_where['p.district_id'] = $district_id;
-		// }
-		if(!empty($key_word)){
-			$pickup_where['p.pickup_name'] = array('like',"%$key_word%");
+		$city_code ? $pickup_where['city_code'] = $city_code : false;
+		$status ? $pickup_where['status'] = $status : false;
+
+		if($key_word){
+			if($search_name == 'pickup_name') $pickup_where['p.pickup_name'] = array('like',"%$key_word%");
+			if($search_name == 'pickup_phone') $pickup_where['p.pickup_phone'] = $key_word;
 		}
 		// 配送点管理员看到自己配送点的商品
         if($this->role_id == 2){

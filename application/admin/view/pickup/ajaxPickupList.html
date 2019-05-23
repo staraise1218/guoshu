@@ -10,19 +10,16 @@
                     <div style="text-align: center; width: 30px;">{$list.pickup_id}</div>
                 </td>
                 <td align="left" class="">
-                    <div style="text-align: center; width: 150px;">{$list.pickup_name|getSubstr=0,33}</div>
+                    <div style="width: 150px;">{$list.pickup_name|getSubstr=0,33}</div>
                 </td>
                 <td align="left" class="" title="{$list.pickup_address}">
-                    <div style="text-align: center; width: 180px;">{$list.pickup_address|getSubstr=0,33}</div>
+                    <div style="width: 180px;">{$list.pickup_address|getSubstr=0,33}</div>
                 </td>
                 <td align="left" class="">
                     <div style="text-align: center; width: 100px;">{$list.pickup_phone}</div>
                 </td>
                 <td align="left" class="">
                     <div style="text-align: center; width: 80px;">{$list.pickup_contact}</div>
-                </td>
-                <td align="left" class="">
-                    <div style="text-align: center; width: 80px;">{$list.province_name}</div>
                 </td>
                 <td align="left" class="">
                     <div style="text-align: center; width: 80px;">{$list.city_name}</div>
@@ -32,7 +29,7 @@
                </td> -->
                 <td align="left" class="">
                     <div style="text-align: center; width: 60px;">
-                        <select name="status" id="status">
+                        <select name="status" class="" ="status">
                             <option value="1" <if condition="$list.status eq 1">selected=selected</if>>待审核</option>
                             <option value="2" <if condition="$list.status eq 2">selected=selected</if>>已通过</option>
                             <option value="3" <if condition="$list.status eq 3">selected=selected</if>>已拒绝</option>
@@ -69,7 +66,7 @@
        
 
          // 修改状态
-        $('select[name=status]').change(function(){
+        $('.status').change(function(){
             var pickup_id = $(this).parents('tr').attr('pickup_id');
             var status = $(this).val();
 
