@@ -130,7 +130,7 @@ class Index extends Base {
 					->where('is_on_sale', 1) 
 					->where('prom_type', 0)  // 普通商品
 					->order('sort asc, goods_id desc')
-					->field('goods_id, goods_name, subtitle, tag, store_count, original_img, shop_price, sales_num')
+					->field('goods_id, goods_name, subtitle, tag, store_count, original_img, shop_price, sales_sum')
 					->select();
 				if($goodslist) {
 					$item['goodslist'] = $goodslist;
