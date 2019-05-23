@@ -342,7 +342,17 @@
                     </if>
                     <span class="err" id="err_store_count" style="color:#F00; display:none;"></span>
                 </dd>
-            </dl>       
+            </dl>  
+            <dl class="row">
+                <dt class="tit">
+                    <label>虚拟购买数</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" id="virtual_num" name="virtual_num" value="{$goodsInfo.virtual_num}" onpaste="this.value=this.value.replace(/[^\d.]/g,'')" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')"  class="input-txt">
+                    <span class="err" id="err_virtual_num"></span>
+                    <p class="notic"></p>
+                </dd>
+            </dl>     
             <dl class="row">
                 <dt class="tit">
                     <label for="record_no">商品关键词</label>
