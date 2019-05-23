@@ -81,7 +81,7 @@ class Index extends Base {
 			$goodslist = Db::name('goods')
 				->where($where)
 				->order('sort asc, goods_id desc')
-				->field('goods_id, goods_name, subtitle, tag, store_count, original_img, shop_price')
+				->field('goods_id, goods_name, subtitle, tag, store_count, original_img, shop_price, sales_sum')
 				->limit(18)
 				->select();
 			$topCateGoods[] = array(
