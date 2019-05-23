@@ -537,7 +537,9 @@ class CartLogic extends Model
     public function getUserCartGoodsNum()
     {
         if ($this->user_id) {
-            $goods_num = Db::name('cart')->where(['user_id' => $this->user_id])->sum('goods_num');
+            $where = ['user_id' => $this->user_id];
+            if($this->city_code) $where['city_code'] = $city_code;
+            $goods_num = Db::name('cart')->where($where)->sum('goods_num');
         } else {
             $goods_num = Db::name('cart')->where(['session_id' => $this->session_id])->sum('goods_num');
         }
