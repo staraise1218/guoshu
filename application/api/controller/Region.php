@@ -92,11 +92,30 @@ class Region extends Base {
 
     // 获取配送城市
     public function getDeliveryCity(){
-        $list = Db::name('region')
-          ->where('level', 2)
-          ->field('id, name, code')
-          ->select();
+        $list = M('region')->field('id, name, code, parent_id')->cache(true)->select();
 
-        response_success($list);
+        $data = array();
+        foreach ($list as $region) {
+          $data[$region['id']] = $region;
+        }
+
+        $data = $this->_treeFortDeliveryCity($data);
+        response_success($data);
+    }
+    /**
+     * 生成目录树结构
+     */
+    private function _treeFortDeliveryCity($data){
+
+      $tree = array();
+      foreach ($data as $item) {
+               if(isset($data[$item['parent_id']])){
+                  $data[$item['parent_id']]['sub'][] = &$data[$item['id']];
+               } else {
+                  $tree[] = &$data[$item['id']];
+               }
+      }
+
+      return $tree;
     }
 }
