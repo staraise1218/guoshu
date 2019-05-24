@@ -273,8 +273,8 @@ page .wallets-password {
   overflow: hidden;
 }
 .alert-zitidian .content image {
-  width: 70rpx;
-  height: 70rpx;
+  width: 40rpx;
+  height: 40rpx;
   /* border-radius: 50%; */
 }
 .alert-zitidian .content .right {

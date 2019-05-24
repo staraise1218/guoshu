@@ -185,6 +185,7 @@ page {
     overflow: hidden;
     /* text-overflow: ellipsis; */
     font-size: 22rpx;
+    height: 30rpx;
 }
 
 .scr-item .price {

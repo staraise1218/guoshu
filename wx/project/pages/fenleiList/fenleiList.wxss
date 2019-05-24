@@ -804,6 +804,27 @@ page {
     padding-top: 180rpx;
   }
   
+.self-flex {
+  display: flex;
+  align-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.self-flex view {
+  white-space:nowrap;
+  overflow:hidden;
+  display:inline-block;
+  margin:5rpx 0;
+  font-size:18rpx;
+  color:#666;
+  padding:5rpx 8rpx;
+  margin-top:16rpx;
+  /* margin-right: 50rpx */
+}
+.selt-right {
+  padding-left: 20rpx !important;
+}
   .item-list-box {
     width:338rpx;
     background:#fff;

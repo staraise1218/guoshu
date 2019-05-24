@@ -23,12 +23,23 @@ Page({
     multiArray: [], // 地区json
     index0: 0, // 地区index 0
     cityShow: false,
+
+
+    
+    chooseIndex: [0, 0],
+    multiArray: [], // 地区json
+    index0: 0, // 地区index 0
+
   },
 
   onShow: function (options) {
     var that = this;
     console.log(options)
     console.log(that.data.targetID)
+    
+    that.setData({
+      address: wx.getStorageSync('address')
+    })
     that.all(that);
     that.location(that);
     that.loadingShopcartNum(that);
@@ -68,10 +79,6 @@ Page({
           }
         }, 1000)
     }
-      
-      that.setData({
-        address: wx.getStorageSync('address') || '北京',
-      })
   },
   toLik: function () {
     console.log(this.data)
@@ -373,20 +380,41 @@ Page({
     })
   },
   location: function (that) {
+    // wx.request({
+    //   url: 'https://app.zhuoyumall.com:444/api/region/getJson',
+    //   method: 'POST',
+    //   header: {
+    //     'content-type': 'application/x-www-form-urlencoded'
+    //   },
+    //   success: function(res) {
+    //     // console.log(res.data.data)
+    //     that.setData({
+    //       multiArray: res.data.data
+    //     })
+    //   }
+    // })
+    
     wx.request({
-      url: 'https://app.zhuoyumall.com:444/api/region/getJson',
+      url: Globalhost + 'Api/index/getDeliveryCity',
       method: 'POST',
       header: {
         'content-type': 'application/x-www-form-urlencoded'
       },
-      success: function(res) {
-        // console.log(res.data.data)
+      success: function (res) {
+        console.log(res.data.data)
+        var arr = [];
+        for (var i = 0; i < res.data.data.length; i++) {
+          arr[i] = res.data.data[i].name
+        }
         that.setData({
-          multiArray: res.data.data
+          multiArray: res.data.data,
+          array: arr,
+          chooseAddressCode: res.data.data[0].sub[0].code,
+          chooseAddressName: res.data.data[0].sub[0].name
         })
       }
     })
-  },  
+  },
   /**
   * 跳转消息页面
   */
@@ -469,5 +497,60 @@ Page({
           url: '/pages/mine/mine'
         })
     }
-  }
+  },
+
+
+
+
+
+
+
+  
+// 数据 [code, code, code]
+chooseAddressShow: function () {
+  console.log(111111111111111111111111111)
+  this.setData({
+    chooseAlerShow: true
+  })
+},
+// 选择省
+changeProvince: function (e) {
+  let that = this;
+  console.log(e)
+  that.setData({
+    'chooseIndex[0]': e.currentTarget.dataset.index,
+    'chooseIndex[1]': 0,
+    chooseAddressCode: that.data.multiArray[e.currentTarget.dataset.index].sub[0].code,
+    chooseAddressName:  that.data.multiArray[e.currentTarget.dataset.index].sub[0].name
+  })
+  console.log(that.data)
+},
+// 选择配送点
+changeCity: function (e) {
+  let that = this;
+  console.log(e)
+  that.setData({
+    'chooseIndex[1]': e.currentTarget.dataset.index,
+    chooseAddressCode: e.currentTarget.dataset.code,
+    chooseAddressName: e.currentTarget.dataset.name
+  })
+},
+
+// 确定修改
+chooseCity: function () {
+  let that = this;
+  that.setData({
+    chooseAlerShow: false,
+    address: that.data.chooseAddressName
+  })
+  wx.setStorageSync('address', that.data.chooseAddressName);
+  wx.setStorageSync('addressCode', that.data.chooseAddressCode);
+  that.yiji(that, wx.getStorageSync('targetID')) 
+},
+// 取消修改
+cancleCity: function () {
+  this.setData({
+    chooseAlerShow: false
+  })
+},
 })

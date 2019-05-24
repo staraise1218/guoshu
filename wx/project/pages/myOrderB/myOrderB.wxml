@@ -166,6 +166,6 @@
 
 
 <view bindtap="toYue" class="tipsBox">
-    <view class="title-3 color-6">首页总额：</view>
+    <view class="title-3 color-6">收益总额：</view>
     <view class="title-2 color-f">￥{{user_money}}</view>
 </view>

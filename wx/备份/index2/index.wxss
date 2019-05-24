@@ -1,5 +1,5 @@
 page {
-  padding-top: 80rpx;
+  padding-top: 148rpx;
   height: 100vh;
 }
 
@@ -10,8 +10,6 @@ page {
   background: #fff;
   z-index: 99;
   width: 100%;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  justify-content: space-between;
 }
 .asdf {
   box-shadow: 0rpx 5rpx 0rpx rgba(0, 0, 0, 0.05);
@@ -26,30 +24,7 @@ page {
   display: inline-block;
   font-size: 28rpx;
 }
-.group-icon-poster {
-  border-radius: 10rpx;
-  margin-top: 20rpx;
-}
-.self-flex {
-  display: flex;
-  align-items: center;
-  width: 200rpx;
-  justify-content: space-between;
-}
-.self-flex view {
-  white-space:nowrap;
-  overflow:hidden;
-  display:inline-block;
-  margin:5rpx 0;
-  font-size:18rpx;
-  color:#666;
-  padding:5rpx 8rpx;
-  margin-top:16rpx;
-  /* margin-right: 50rpx */
-}
-.selt-right {
-  padding-left: 20rpx !important;
-}
+
 .more-btn {
   position: absolute;
   right: 0rpx;
@@ -65,46 +40,30 @@ page {
   font-weight: 600;
   font-size: 32rpx;
 }
-.scroll-wrapper_ .title-2_f {
-  overflow: hidden;
-  width: 200rpx;
-  height: 35rpx;
-}
 
 .scro-wrap {
   /* width: 3000rpx; */
-  white-space: nowrap;
   width: 100%;
 }
 
 .shopListWrap {
   box-shadow: 5rpx 5rpx 5rpx rgba(0, 0, 0, 0.05);
-  /* margin: 20rpx; */
-  /* padding: 20rpx 0; */
-  padding: 20rpx 0;
+  margin: 20rpx;
   border-radius: 15rpx;
+  padding: 20rpx 0;
 }
 
-.shopListWrap .scro-item {
+.scro-item {
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 230rpx;
-  /* padding: 10rpx; */
+  width: 250rpx;
+  padding: 20rpx;
   display: inline-block;
   margin: 10rpx 0;
   padding-top: 0;
-  margin-left: 10rpx;
-  /* border: 1px solid red; */
-}
-.shopListWrap .scro-item:first-child {
-  margin-left: 20rpx;
 }
 
-.shopListWrap .title-2 {
-  width: 200rpx;
-  overflow: hidden;
-}
 
 
 .scro-item .title-2 {
@@ -145,8 +104,8 @@ page {
 
 .group-icon {
   position: absolute;
-  left:-12rpx;
-  top:-12rpx;
+  left:10rpx;
+  top:10rpx;
 }
 
 
@@ -203,10 +162,12 @@ page {
 swiper {
   position: relative;
   border-radius: 15rpx;
-  -webkit-border-radius: 15rpx;
+  -webkit-border-radius: 15rpx; /* Safari 和 Chrome */
   overflow: hidden;
 }
 swiper-item {
+  border-radius: 15rpx;
+  -webkit-border-radius: 15rpx; /* Safari 和 Chrome */
   overflow: hidden;
 }
 
@@ -237,53 +198,37 @@ swiper-item {
   width: 100%;
   height: 100%;
   display: block;
-  border-radius: 15rpx;
 }
 
 .topbar {
-  padding: 20rpx;
+  padding: 0 20rpx;
   display: flex;
   align-items: center;
   box-sizing: border-box;
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 
 .location-icon {
   display: inline-block;
-  width:42rpx;
-  height:38rpx;
+  width:34rpx;
+  height:32rpx;
   
 }
-.group-tag {
-  border: 1px solid #F7461D;
-  color: #F7461D;
-  display: inline-block;
-  border-radius: 4rpx;
-  padding: 2rpx 4rpx;
-  font-size: 22rpx;
-}
+
 .location {
   display: inline-block;
   color:rgba(0, 0, 0, 1);
   font-size:26rpx;
   margin-left:8rpx;
   vertical-align:middle;
-  max-width: 260rpx;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
-.search-flex {
-  flex: 1;
-}
+
 .search {
-  /* flex: 1; */
+  flex: 1;
   margin-left: 40rpx;
   position: relative;
-  width: 450rpx;
 }
 
 .serach-input {
@@ -291,7 +236,7 @@ swiper-item {
   border-radius:50rpx;
   box-sizing:border-box;
   font-size:22rpx;
-  width:100%;
+  width:400rpx;
   padding-left:70rpx;
   height:62rpx;
   line-height:62rpx;
@@ -302,7 +247,6 @@ swiper-item {
   padding: 0;
   margin: 0;
   border: 0 !important;
-  display: flex;
 }
 
 .search-icon {
@@ -317,8 +261,7 @@ swiper-item {
 .news {
   display: flex;
   justify-content: flex-end;
-  /* flex: 1; */
-  margin-left: 20rpx;
+  flex: 1;
 }
 
 .news-icon {
@@ -614,7 +557,9 @@ swiper-item {
   width: 100%;
 }
 .shangpin-wrap .scro-item {
-  width: 200rpx;
+  width: 190rpx;
+  /* background: #666; */
+  z-index: 999;
   height: 400rpx;
 }
 
@@ -778,7 +723,7 @@ swiper-item {
 .share-con {
   display: flex;
   width: 100%;
-  /* margin-top: 50rpx; */
+  margin-top: 50rpx;
   justify-content: space-between;
   background-image: url('https://hbimg.huabanimg.com/c971889a40ddb9bbeed28d4f67ced67243ce1c65a19-8IpkXZ_fw658');
   /* background-size: cover; */
@@ -939,269 +884,4 @@ swiper-item {
 .redBag-box .content image {
   width: 100%;
   height: 100%;
-}
-.icon-group {
-  width: 200rpx;
-  max-height: 200rpx;
-}
-
-
-.scroll-wrapper_ {
-  position: relative;
-  white-space: nowrap;
-  margin: 0;
-  padding: 0;
-}
-.scroll-wrapper_ .scro-item {
-  position: relative;
-  height: 350rpx;
-  padding: 10rpx 20rpx;
-  display: inline-block;
-}
-.shopping-alert {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%,-50%);
-  z-index: 9;
-}
-.shopping-alert .alert-con {
-  border-radius: 20rpx;
-  padding: 20rpx 10rpx;
-  background: rgba(0,0,0,.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  flex-direction: column;
-  font-size: 22rpx;
-}
-
-
-
-/* 红包弹窗 */
-.redBag-box {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 999;
-  width: 100%;
-  height: 100vh;
-  background: rgba(0,0,0,.5);
-  background-image: url('https://app.zhuoyumall.com:444/wx/img/hongbao-background.png');
-  background-size: cover;
-}
-.redBag-box .content {
-  width: 550rpx;
-  height: 750rpx;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-.redBag-box .content image {
-  width: 100%;
-  height: 100%;
-}
-.redBag-box .content .close {
-  width: 60rpx;
-  height: 60rpx;
-  position: absolute;
-  right: -5rpx;
-  top: -5rpx;
-}
-.redBag-box .content .price {
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  bottom: 34%;
-  font-size: 70rpx;
-}
-
-/* 购物车动画 */
-.good_box {
-  width: 30rpx;
-  height: 30rpx;
-  position: fixed;
-  border-radius: 50%;
-  overflow: hidden;
-  left: 50%;
-  top: 50%;
-  z-index: 99;
-  background: #b02c41;
-  }
-
-
-  /* 购物车 */
-  .item{
-    width:calc(50% - 15px);
-    float:left;
-    box-sizing: border-box;
-    
-    border:1px solid #ddd;
-  }
-  .item:nth-child(2n){
-    margin:10px 10px 0px 10rpx;
-  }
-  .item:nth-child(2n+1){
-    margin:10px 10rpx 0px 10px;
-  }
-  .image{
-    width:100%;
-    height:50vw;
-  }
-  .text{
-    font-size:13px;
-    line-height:16px;
-   display: -webkit-box;    
-    -webkit-box-orient: vertical;    
-    -webkit-line-clamp: 2;    
-    overflow: hidden;
-    margin:5px;
-  }
-  .bottom_container{
-    display: flex;
-    display: -webkit-flex;
-    align-items: center;
-    justify-content:space-between;
-    -webkit-align-items: center;
-    -webkit-justify-content:space-between;
-    margin:10px 5px;
-  }
-  .price{
-    color:rgb(255, 0, 0);
-  }
-  .add{
-    width:24px;
-    height:24px;
-    margin-right:5px;  
-  }
-  .shopcart{
-    position:fixed;
-    width:40px;
-    height:40px;
-    bottom:100px;
-    right:20px;
-    border-radius: 50%;
-    background:rgba(0,0,0,.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index:5;
-  }
-  .shopcart_icon{
-    width:80%;
-    height:80%;
-  
-  }
-  .ghost{
-    position: fixed;
-    
-    z-index:1;
-    transition:all .04s linear;
-  }
-  .ghost_img{
-    width:100%;
-    height:100%;
-  
-  }
-  .shopcart_num{
-    color:red;
-    font-size:11px;
-    position:absolute;
-    top:-4px;
-    right:-4px;
-    width:16px;
-    height:16px;
-    text-align: center;
-    line-height:18px;
-    border-radius: 50%;
-    background:red;
-    color:#fff;
-  }
-
-
-  /* 选择城市弹窗 */
-.alert-box_ {
-  width: 100%;
-  height: 100vh;
-  position: fixed;
-  left: 0;
-  top: 0;
-  background: rgba(0,0,0,.5);
-  z-index: 998;
-}
-.cityshow-alert {
-  position: fixed;
-  left: 49.5%;
-  top: 50%;
-  transform: translate(-50%,-50%);
-  z-index: 999;
-  background: #fff;
-  display: flex;
-  width: 95%;
-  height: 800rpx;
-  border-radius: 15rpx;
-  overflow: hidden;
-}
-.cityshow-alert .left, 
-.cityshow-alert .center, 
-.cityshow-alert .right {
-  flex: 1;
-  font-weight: 400;
-  font-size: 22rpx;
-  text-align: center;
-  height: 720rpx;
-  padding-bottom: 40rpx;
-}
-.cityshow-alert .content {
-  line-height: 60rpx;
-  border-left: 10rpx solid transparent;
-  box-sizing: border-box;
-  text-align: center;
-}
-.cityshow-alert .active {
-  background: #eee;
-  border-left: 10rpx solid #FC5453
-}
-
-.city-btn_ {
-  position: fixed;
-  bottom: 20rpx;
-  left: 50%;
-  transform: translate(-50%, 0);
-  width: 200rpx;
-  background: rgba(0,200,0,1);
-  z-index: 999;
-  color: #fff;
-  text-align: center;
-  font-size: 26rpx;
-  border-radius: 10rpx;
-  padding: 20rpx;
-  margin: 0;
-}
-.btn-wrapper {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #fff;
-  font-size: 32rpx;
-  border-top: 1rpx solid rgba(0,0,0,.1);
-}
-.btn-wrapper view {
-  text-align: center;
-  flex: 1;
-  height: 80rpx;
-  line-height: 80rpx;
-}
-.btn-wrapper .cancel {
-  background: #eee;
-}
-.btn-wrapper .ok {
-  background: #FF8A00;
-  color: #fff;
 }
