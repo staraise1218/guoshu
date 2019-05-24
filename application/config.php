@@ -252,7 +252,7 @@ return [
         3 => '已取消',                
         4 => '已完成',//评价完
         5 => '已作废',
-        6 => '已退货', // 自定义加的
+        6 => '已退款', // 自定义加的
     ],
     'SHIPPING_STATUS' => array(
         0 => '未发货',
@@ -310,6 +310,8 @@ return [
     'CANCELLED'=> ' AND order_status = 5 ',//已作废
     'RETURNBACK'=> ' AND order_status = 6 AND pay_status = 3',//退货
     'PAYED'=>' AND (order_status=2 OR (order_status=1 AND pay_status=1) ) ', //虚拟订单状态:已付款
+    'PAID'=> ' and pay_status = 1 and order_status IN (0, 1, 2, 4) ',// 已支付 （自定义）
+    'REFUND'=> ' and order_status = 3',// 退款 （自定义）
     
     'ORDER_STATUS_DESC' => [
         'WAITPAY' => '待支付',
@@ -324,6 +326,8 @@ return [
         'NO_RECEIVE' => '未提货',
         'RECEIVED' => '已提货',
         'ARRIVED' => '已送达',
+        'WAITCONFIRM' => '待确认',
+        'WAITREFUND' => '待退款',
     ],
 
     'REFUND_STATUS'=>array(

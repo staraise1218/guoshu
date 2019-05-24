@@ -628,56 +628,6 @@ function get_user_default_address($user_id){
     return $data;
 }
 /**
- * 获取订单状态的 中文描述名称
- * @param type $order_id  订单id
- * @param type $order     订单数组
- * @return string
- */
-function orderStatusDesc($order_id = 0, $order = array())
-{
-    if(empty($order))
-        $order = M('Order')->where("order_id", $order_id)->find();
-
-    // 货到付款
-    if($order['pay_code'] == 'cod')
-    {
-        if(in_array($order['order_status'],array(0,1)) && $order['shipping_status'] == 0)
-            return 'WAITSEND'; //'待发货',
-    }
-    else // 非货到付款
-    {
-        if($order['pay_status'] == 0 && $order['order_status'] == 0)
-            return 'WAITPAY'; //'待支付',
-        if($order['pay_status'] == 1 &&  in_array($order['order_status'],array(0,1)) && $order['shipping_status'] == 0)
-            return 'WAITSEND'; //'待发货',
-        if($order['pay_status'] == 1 &&  $order['shipping_status'] == 2 && $order['order_status'] == 1)
-            return 'PORTIONSEND'; //'部分发货',
-    }
-    if(($order['shipping_status'] == 1) && ($order['order_status'] == 1))
-        return 'WAITRECEIVE'; //'待收货',
-    if($order['order_status'] == 2)
-        return 'WAITCCOMMENT'; //'待评价',
-    if($order['order_status'] == 3)
-        return 'CANCEL'; //'已取消',
-    if($order['order_status'] == 4)
-        return 'FINISH'; //'已完成',
-    if($order['order_status'] == 5)
-        return 'CANCELLED'; //'已作废',
-    if($order['order_status'] == 5)
-        return 'CANCELLED'; //'已作废',
-    // 用于自提点看到的订单
-    if($type == 'pickup'){
-        if($order['is_arrive'] == 0)
-            return 'NO_ARRIVE'; //'未送达',
-        if($order['order_status'] == 1)
-            return 'NO_RECEIVE'; //'未提货',
-        if($order['order_status'] == 2)
-            return 'RECEIVED'; //'已提货',
-
-    }
-    return 'OTHER';
-}
-/**
  * 获取订单状态的 中文描述名称 用于自提点
  * @param type $order_id  订单id
  * @param type $order     订单数组
@@ -822,6 +772,46 @@ function set_btn_order_status($order)
     $order['order_status_desc'] = $order_status_arr[$order_status_code];
     $orderBtnArr = orderBtn(0, $order);
     return array_merge($order,$orderBtnArr); // 订单该显示的按钮
+}
+/**
+ * 获取订单状态的 中文描述名称
+ * @param type $order_id  订单id
+ * @param type $order     订单数组
+ * @return string
+ */
+function orderStatusDesc($order_id = 0, $order = array())
+{
+    if(empty($order))
+        $order = M('Order')->where("order_id", $order_id)->find();
+
+    if($order['pay_status'] == 0)
+        return 'WAITPAY'; //'待支付',
+    if($order['pay_status'] == 1 && $order['order_status'] == 0)
+        return 'WAITCONFIRM'; //'待确认',
+
+    if($order['pay_status'] == 1 &&  in_array($order['order_status'],array(0,1)) && $order['shipping_status'] == 0)
+        return 'WAITSEND'; //'待发货',
+    if(($order['shipping_status'] == 1) && ($order['order_status'] == 1))
+        return 'WAITRECEIVE'; //'待收货',
+    if($order['order_status'] == 2)
+        return 'WAITCCOMMENT'; //'待评价',
+    if($order['order_status'] == 3)
+        return 'CANCEL'; //'已取消',
+    if($order['order_status'] == 4)
+        return 'FINISH'; //'已完成',
+    if($order['order_status'] == 5)
+        return 'CANCELLED'; //'已作废',
+
+    // 用于自提点看到的订单
+    if($type == 'pickup'){
+        if($order['is_arrive'] == 0)
+            return 'NO_ARRIVE'; //'未送达',
+        if($order['order_status'] == 1)
+            return 'NO_RECEIVE'; //'未提货',
+        if($order['order_status'] == 2)
+            return 'RECEIVED'; //'已提货',
+    }
+    return 'OTHER';
 }
 
 /**

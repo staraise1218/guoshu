@@ -62,7 +62,7 @@ class Index extends Base {
         $grouplist = Db::name('group_buy')->alias('gb')
             ->join('goods g', 'gb.goods_id=g.goods_id')
             ->where($group_by_where)
-            ->limit(12)
+            ->limit(24)
             ->order('id desc')
             ->field('gb.goods_id, gb.title, gb.price, gb.goods_price, (gb.virtual_num+gb.buy_num) as virtual_num, g.goods_name, g.subtitle, g.tag, g.original_img, g.store_count')
             ->select();
@@ -82,7 +82,7 @@ class Index extends Base {
 				->where($where)
 				->order('sort asc, goods_id desc')
 				->field('goods_id, goods_name, subtitle, tag, store_count, original_img, shop_price, (sales_sum+virtual_num) as virtual_num')
-				->limit(18)
+				->limit(24)
 				->select();
 			$topCateGoods[] = array(
 				'id' => $item['id'],
