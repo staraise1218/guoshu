@@ -89,33 +89,4 @@ class Region extends Base {
         $res = array('status' => 1, 'msg' => '获取成功', 'result' => $province);
         exit(json_encode($res));
     }
-
-    // 获取配送城市
-    public function getDeliveryCity(){
-        $list = M('region')->field('id, name, code, parent_id')->cache(true)->select();
-
-        $data = array();
-        foreach ($list as $region) {
-          $data[$region['id']] = $region;
-        }
-
-        $data = $this->_treeFortDeliveryCity($data);
-        response_success($data);
-    }
-    /**
-     * 生成目录树结构
-     */
-    private function _treeFortDeliveryCity($data){
-
-      $tree = array();
-      foreach ($data as $item) {
-               if(isset($data[$item['parent_id']])){
-                  $data[$item['parent_id']]['sub'][] = &$data[$item['id']];
-               } else {
-                  $tree[] = &$data[$item['id']];
-               }
-      }
-
-      return $tree;
-    }
 }
