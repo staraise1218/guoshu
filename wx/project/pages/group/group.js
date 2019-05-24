@@ -23,8 +23,16 @@ Page({
     })
   },
   onShow: function () {
-    if(wx.getStorageSync('nextStatus')) {
-      wx.setStorageSync('nextStatus', 'false');
+    if(!wx.getStorageSync('user_id')) {
+      wx.navigateTo({
+        url: '/pages/loading/loading'
+      })
+    }
+    this.setData({
+      currentTab2: 0
+    })
+    if(wx.getStorageSync('nextStatus') == 1) {
+      wx.setStorageSync('nextStatus', 0);
       this.setData({
         currentTab2: 1
       })
@@ -36,14 +44,24 @@ Page({
       })
       wx.setStorageSync('next', false)
     }
+    that.Times()
+    that.group(that);     // 团购首页
+    // that.tuijian(that);   // 推荐商品
+    that.miaosha(that);   // 秒杀
+    that.next(that);      // 下期预告
+    that.loadingShopcartNum(that);
   },
   onLoad: function (options) {
     var that = this;
-    that.Times()
-    that.group(that);     // 团购首页
-    that.tuijian(that);   // 推荐商品
-    that.miaosha(that);   // 秒杀
-    that.next(that);      // 下期预告
+    // that.Times()
+    // that.group(that);     // 团购首页
+    // // that.tuijian(that);   // 推荐商品
+    // that.miaosha(that);   // 秒杀
+    // that.next(that);      // 下期预告
+    // that.loadingShopcartNum(that);
+    // setTimeout(function () {
+    //   console.log(that.data)
+    // }, 1000)
   },
   //滑动切换 
   swiperTab: function (e) {
@@ -142,7 +160,7 @@ Page({
       },
       data: {
         user_id: wx.getStorageSync('user_id'), //   	    用户id
-        city_code: 110100, //    	用户的城市编码
+        city_code: wx.getStorageSync('addressCode'),//110100, //    	用户的城市编码
       },
       success: function (res) {
         let data = res.data.data;
@@ -165,7 +183,7 @@ Page({
       },
       data: {
         user_id: wx.getStorageSync('user_id'), //   	    用户id
-        city_code: 110100, //    	用户的城市编码
+        city_code: wx.getStorageSync('addressCode'),//110100, //    	用户的城市编码
         type: 'next'
       },
       success: function (res) {
@@ -189,7 +207,7 @@ Page({
       },
       data: {
         user_id: wx.getStorageSync('user_id'),
-        city_code: 110100
+        city_code: wx.getStorageSync('addressCode'),//110100
       },
       success: function (res) {
         let data = res.data.data;
@@ -214,7 +232,7 @@ Page({
       },
       data: {
         user_id: wx.getStorageSync('user_id'),
-        city_code: 110100,
+        city_code: wx.getStorageSync('addressCode'),//110100,
         page: 1
       },
       success: function (res) {
@@ -222,7 +240,8 @@ Page({
         // console.log('团购首页')
         // console.log(data)
         that.setData({
-          bannerList: Globalhost + data.bannerList[0].ad_code
+          bannerList: Globalhost + data.bannerList[0].ad_code,
+          toDayTuijian: data.grouplist
         })
       }
     })
@@ -258,6 +277,7 @@ Page({
    * 加入购物车
    */
   addCart: function (e) {
+    let that = this;
     wx.request({
       url: Globalhost + 'Api/cart/addCart',
       method: 'POST',
@@ -276,6 +296,7 @@ Page({
             title: res.data.msg,
             icon: 'none'
           })
+          that.loadingShopcartNum(that);
         } else {
           wx.showToast({
             title: res.data.msg,
@@ -285,4 +306,70 @@ Page({
       }
     })
   },
+
+
+
+
+
+  /**
+   * 加载购物车数量
+   */
+  loadingShopcartNum: function (that) {
+    wx.request({
+      url: Globalhost + 'Api/common/getCartNum',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        city_code: wx.getStorageSync('addressCode'),
+        user_id: wx.getStorageSync('user_id')
+      },
+      success: function(res) {
+        console.log(res)
+        that.setData({
+          cart_num: res.data.data.cartNum
+        })
+        if(res.data.data.cartNum > 0) {
+          wx.setTabBarBadge({
+            index: 3,
+            text: '' + res.data.data.cartNum
+          })
+        } else {
+          wx.hideTabBarRedDot({
+            index: 3
+          })
+        }
+      }
+    })
+  },
+
+  
+  /**
+   * footer 跳转
+   */
+  LINK: function (e) {
+    console.log(e.currentTarget.dataset.link) // index classification group shopcart mine
+    switch (e.currentTarget.dataset.link) {
+      case 'index':
+        wx.redirectTo({
+          url: '/pages/index/index'
+        })
+        break;
+      case 'classification':
+        wx.redirectTo({
+          url: '/pages/classification/classification'
+        })
+        break;
+        case 'shoppingCart':
+          wx.redirectTo({
+            url: '/pages/shoppingCart/shoppingCart'
+          })
+          break;
+      case 'mine':
+        wx.redirectTo({
+          url: '/pages/mine/mine'
+        })
+    }
+  }
 })

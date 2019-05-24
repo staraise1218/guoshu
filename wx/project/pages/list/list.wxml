@@ -1,0 +1,28 @@
+<block wx:for="{{topCateGoods}}" wx:key="item.id">
+    <view class="padding-30">
+        <image style="width: 100%" mode="widthFix" data-catid="{{item.id}}" bindtap="toFenlei" src="https://app.zhuoyumall.com:444{{item.index_image}}" />
+    </view>
+    <view class="shoppint-box">
+        <view class="top-wrap-item" 
+            data-id="{{item.goods_id}}" 
+            bindtap="toCon" 
+            wx:for="{{item.goodslist}}" 
+            wx:key="item.id" 
+            wx:if="{{index < 6}}">
+            <view class="poster-wrap">
+                <image lazy-load="true" class="icon-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+            </view>
+            <view class="title-2">{{item.goods_name}}</view>
+            <view class="tag-new">{{item.tag}}</view>
+            <view class="between-center">
+                <view class="left-center">
+                    <view class="price">￥{{item.shop_price}}</view>
+                </view>
+                <view class="right-center">
+                    <image lazy-load="true" class="icon-2" catchtap="addCart" style="margin: 15rpx 0" src="https://hbimg.huabanimg.com/ff8af7f0827e85d34cc15b364ff139c61e6fe5bc5b3-0QRyv2_fw658" data-id="{{item.goods_id}}" />
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="line"></view>
+</block>

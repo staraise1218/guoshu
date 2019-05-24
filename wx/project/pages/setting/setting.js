@@ -12,15 +12,18 @@ Page({
   },
   toClear: function () {
     wx.showModal({
-      content: '是否清除缓存',
+      content: '是否退出登录',
       success(res) {
         if (res.confirm) {
           console.log('用户点击确定')
           wx.clearStorage()
           wx.showToast({
-            title: '缓存清除成功',
+            title: '已退出',
             icon: 'success',
             duration: 2000
+          })
+          wx.navigateTo({
+            url: '/pages/loading/loading'
           })
         } else if (res.cancel) {
           console.log('用户点击取消')
@@ -63,7 +66,8 @@ Page({
   },
   toPassword: function () {
     wx.navigateTo({
-      url: '/pages/passwordSeeting/passwordSeeting'
+      // url: '/pages/passwordSeeting/passwordSeeting'
+      url: '/pages/password/password'
     })
   }
 })

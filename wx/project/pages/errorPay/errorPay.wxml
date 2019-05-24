@@ -1,0 +1,9 @@
+<view class="content">
+    <view class="top">
+        <image mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/error_pay.png" />
+    </view>
+    <view class="btn-wrap">
+        <view class="btn" bindtap="toOrder">查看订单</view>
+        <view class="btn" bindtap="toHome">返回首页</view>
+    </view>
+</view>

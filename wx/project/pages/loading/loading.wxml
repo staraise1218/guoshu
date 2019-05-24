@@ -1,0 +1,41 @@
+
+
+
+
+<view class="login" wx:if="{{loginShow}}">
+    <view class="logo-wrap">
+        <image class="logo" mode="widthFix" src="https://hbimg.huabanimg.com/fe38573b6786a49ff7b34c14496aac4d604d2d453577-pZD97r_fw658" />
+    </view>
+    <button type="primary" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo" class="clearbtn">登陆小程序</button>
+</view>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

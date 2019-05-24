@@ -1,5 +1,6 @@
 page {
     background: #F6F6F6;
+    padding-bottom: 100rpx;
 }
 .header {
     background-image: url("http://img.hb.aicdn.com/286e7f4fd1a8c2732277d4e60bc8f1613a7851ab1cbfe-BdktWx_fw658");
@@ -86,6 +87,7 @@ page {
     align-items: center;
     font-size: 24rpx;
     padding: 20rpx 0;
+    width: 120rpx;
 }
 .order-list-title {
     line-height: 56rpx;
@@ -101,7 +103,9 @@ page {
 
 
 
-
+.user-img {
+    height: 100%;
+}
 
 
 

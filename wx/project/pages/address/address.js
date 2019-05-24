@@ -51,10 +51,17 @@ Page({
     })
   },
   toAddAddress: function () {
+    var flag = true;
     loadingfunc();
-    wx.navigateTo({
-      url: '/pages/addAddress/addAddress'
-    })
+    if(flag) {
+      flag = false;
+      wx.navigateTo({
+        url: '/pages/addAddress/addAddress'
+      })
+      setTimeout(function () {
+        flag = true;
+      }, 300)
+    }
   },
   /**
    * 选中地址

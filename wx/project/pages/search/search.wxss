@@ -3,6 +3,22 @@
     margin-left: 40rpx;
     position: relative;
 }
+.search-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 26rpx;
+    padding: 0 20px;
+    border-bottom: 1rpx solid rgba(0,0,0,0.1);
+    padding-left: 0;
+}
+.van-field__input {
+    box-sizing: content-box !important;
+    resize:none !important;
+    background:#eee !important;
+    border-radius:50rpx !important;
+    padding:10rpx 20rpx !important;
+}
 .serach-input {
     background: #eee;
     border-radius: 50rpx;
@@ -12,6 +28,10 @@
     padding-left: 60rpx;
     width: 600rpx;
     margin-left: 40rpx;
+}
+.search-border {
+    flex: 1;
+    background: #222 !important
 }
 .search-icon {
     position: absolute;
@@ -29,6 +49,9 @@
 .search-bar {
     border-bottom: 1rpx solid rgba(0,0,0,0.1);
     padding-bottom: 10rpx;
+}
+.search-bar .search-icon {
+    line-height: 80rpx;
 }
 
 
@@ -95,7 +118,7 @@
     border-radius: 50rpx;
     padding: 0 20rpx;
     box-sizing: border-box;
-    font-size: 22rpx;
+    font-size: 20rpx;
     padding-left: 60rpx;
     width: 600rpx;
     margin-left: 40rpx;

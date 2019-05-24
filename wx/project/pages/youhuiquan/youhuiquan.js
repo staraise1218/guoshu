@@ -2,17 +2,23 @@ const app = getApp()
 const Globalhost = getApp().globalData.Globalhost;
 Page({
   data: {
-    card: [{
-      
-    }],
-    msg: ''
+    card: [],
+    msg: '',
+    status: '', // 是否是选择优惠券   订单--》优惠券
   },
   onLoad: function (options) {
     let that = this;
     console.log(options)
-    that.setData({
-      msg: options.msg
-    })
+    if(options.msg) {
+      that.setData({
+        msg: options.msg
+      })
+    }
+    if(options.status == "chooseCoupon") {
+      that.setData({
+        status: 'chooseCoupon'
+      })
+    }
     wx.request({
       url: Globalhost + 'Api/user/coupon',
       method: 'POST',
@@ -67,11 +73,16 @@ Page({
   },
   toOrder: function (e) {
     let that = this;
-    if(that.data.msg == 'order') {
+    if(that.data.status == 'chooseCoupon') {
       console.log(e.currentTarget.dataset)
-      wx.navigateTo({
-        url: '/pages/order/order?coupon_id=' + e.currentTarget.dataset.couponid + '&coupon_index=' + e.currentTarget.dataset.couponindex
-      })
+      // wx.navigateTo({
+      //   url: '/pages/order/order?coupon_id=' + e.currentTarget.dataset.couponid + '&coupon_index=' + e.currentTarget.dataset.couponindex
+      // })
+      wx.setStorageSync('coupon_id', e.currentTarget.dataset.couponid)
+      wx.setStorageSync('chooseStatus', 'coupon')
+      wx.navigateBack({
+        delta: 1
+      });
     }
   },
   formatDate : function (date) {

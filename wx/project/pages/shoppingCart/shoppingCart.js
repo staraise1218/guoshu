@@ -4,16 +4,65 @@ Page({
   data: {
     orderList: [{}], // 购物车列表
     total_fee: '', // 合计
-    chooseAllShow: false, // 全选按钮状态
+    chooseAllShow: '', // 全选按钮状态
     tuijian: [{}], // 推荐商品
     cartList: [], // 选中的商品
+    OldList: [],    // 上传购物车状态
   },
   onShow: function () {
     let that = this;
-    that.createList(that)
-    that.tuijian(that);
-    that.isChooseAll(that);
+    that.createList(that);  // 渲染列表
+    that.tuijian(that);     // 推荐商品
+    // that.isChooseAll(that); // 判断全选按钮状态
+    that.setData({
+      total_fee: 0
+    })
     console.log(that.data.cartList.length)
+    that.setData({
+      chooseAllShow: wx.getStorageSync('chooseAllShow')
+    })
+    
+    if(!wx.getStorageSync('user_id')) {
+      wx.navigateTo({
+        url: '/pages/loading/loading'
+      })
+    }
+    // 加载上次的购物车状态
+    if(wx.getStorageSync('OldListSTATUS') == 'shopcart') {
+        // console.log(wx.getStorageSync('OldList'))
+        console.log(JSON.parse(wx.getStorageSync('OldList')))
+
+
+        
+        // var orderList = that.orderList;
+        // var selected = 'orderList[' + e.currentTarget.dataset.index + '].selected'
+        // if (that.data.orderList[e.currentTarget.dataset.index].selected == 0) {
+        // that.setData({
+        //     [selected]: 1
+        // })
+        // } else {
+        // that.setData({
+        //     [selected]: 0
+        // })
+        // }
+        // console.log(that.data.orderList)
+        // /**
+        //  * 记录购物车状态
+        //  */
+        // let OldList = that.data.orderList;
+        // OldList = JSON.stringify(OldList)
+        // wx.setStorageSync('OldList', OldList);
+        // wx.setStorageSync('OldListSTATUS', 'shopcart');     // 购物车加载判断 如果是 shopcart 就是购物车，其他为跳出购物车页面，不用加载上一次购物车状态
+
+        // setTimeout(function () {
+        //     console.log(wx.getStorageSync('OldList'))
+        // }, 200)
+
+        // console.log(that.data.cartList)
+        // that.calculation(that);
+        // that.isChooseAll(that); // 判断全选按钮状态
+    }
+    that.loadingShopcartNum(that);
   },
   /**
    * 去结算
@@ -30,13 +79,17 @@ Page({
         success(res) {
           if (res.confirm) {
             console.log('送货上门')
+            wx.setStorageSync('action', 'cart');
+            wx.setStorageSync('send_method', 1);
             wx.navigateTo({
-              url: '/pages/demo/demo?page=shoppingCart'
+              url: '/pages/demo/demo?page=shoppingCart&send_method=1&action=cart'
             })
           } else if (res.cancel) {
             console.log('门店自取')
+            wx.setStorageSync('action', 'cart');
+            wx.setStorageSync('send_method', 2);
             wx.navigateTo({
-              url: '/pages/storeList/storeList?page=shoppingCart'
+              url: '/pages/storeList/storeList?page=shoppingCart&send_method=2&action=cart'
             })
           }
         }
@@ -50,9 +103,9 @@ Page({
   },
   ctrl: function (e) {
     let that = this;
-    // console.log(e.target.dataset.msg)
-    // console.log(e.target.dataset)
-    // console.log(that.data.orderList)
+    console.log(e.target.dataset.msg)
+    console.log(e.target.dataset)
+    console.log(that.data.orderList)
     var orderList = [];
     for (var i = 0; i < that.data.orderList.length; i++) {
       if (e.target.dataset.catId == that.data.orderList[i].cat_id) {
@@ -83,9 +136,9 @@ Page({
                     success: function (res) {
                       cart.goods_num--
                       that.setData({
-                        [num]: cart.goods_num--
+                        [num]: cart.goods_num
                       })
-                      that.createList(that);
+                      that.createList(that);  // 渲染列表
                       that.calculation(that);
                       console.log(res)
                     }
@@ -96,9 +149,8 @@ Page({
           } else {
             cart.goods_num--
             that.setData({
-              [num]: cart.goods_num--
+              [num]: cart.goods_num
             })
-            that.calculation(that);
             console.log(cart.goods_num)
             cart = JSON.stringify(cart);
             wx.request({
@@ -113,15 +165,16 @@ Page({
               },
               success: function (res) {
                 console.log(res)
+                that.calculation(that);
+                // that.loadingShopcartNum(that);
               }
             })
           }
         } else if (e.target.dataset.msg == "add") {
           cart.goods_num++
           that.setData({
-            [num]: cart.goods_num++
+            [num]: cart.goods_num
           })
-          that.calculation(that);
           cart = JSON.stringify(cart);
           wx.request({
             url: Globalhost + 'Api/cart/changeNum',
@@ -135,12 +188,13 @@ Page({
             },
             success: function (res) {
               console.log(res)
+              that.calculation(that);
             }
           })
         }
       }
     }
-    that.calculation(that); // 更新购物并计算结果
+    // that.calculation(that); // 更新购物并计算结果
   },
   /**
    * 渲染列表
@@ -154,7 +208,7 @@ Page({
       },
       data: {
         user_id:  wx.getStorageSync('user_id'),
-        city_code: 110100
+        city_code: wx.getStorageSync('addressCode'),// 110100
       },
       success: function (res) {
         that.setData({
@@ -163,6 +217,9 @@ Page({
         let data = res.data.data;
         // console.log(data);
         var orderList = [];
+        that.setData({
+          goodLists: data
+        })
         for (var i = 0; i < data.length; i++) {
           orderList[i] = {};
           orderList[i].goods = {};
@@ -172,17 +229,29 @@ Page({
             ORnum = 'orderList[' + i + '].goods_num',
             ORprice = 'orderList[' + i + '].goods_price',
             ORselect = 'orderList[' + i + '].selected',
-            ORimg = 'orderList[' + i + '].goods.original_img'
+            ORimg = 'orderList[' + i + '].goods.original_img' ,
+            tag = 'orderList[' + i + '].goods.tag',
+            subtitle = 'orderList[' + i + '].subtitle'
 
           that.setData({
             [ORid]: data[i].goods_id,
             [ORcat_id]: data[i].id,
             [Orname]: data[i].goods_name,
             [ORnum]: data[i].goods_num,
-            [ORprice]: data[i].goods_price,
+            [ORprice]: data[i].member_goods_price,
             [ORimg]: 'https://app.zhuoyumall.com:444' + data[i].goods.original_img,
-            [ORselect]: 0
+            [tag]: data[i].goods.tag,
+            [subtitle]: data[i].goods.subtitle
           })
+          if(that.data.chooseAllShow) {
+            that.setData({
+              [ORselect]: 1
+            })
+          } else {
+            that.setData({
+              [ORselect]: 0
+            })
+          }
         }
         console.log(that.data.orderList)
         that.calculation(that); // 更新购物并计算结果
@@ -218,18 +287,27 @@ Page({
           let data = res.data.data;
           console.log(data)
           if(data.result.cartList.length == that.data.orderList.length) {
-            that.setData({
-              chooseAllShow: true
-            })
+            if(that.data.orderList.length != 0) {
+              that.setData({
+                chooseAllShow: true
+              })
+              wx.setStorageSync('chooseAllShow', true)
+            }
           } else {
             that.setData({
               chooseAllShow: false
             })
+            wx.setStorageSync('chooseAllShow', false)
+          }
+          if(data.result) {
+            that.setData({
+              total_fee: data.result.total_fee
+            })
           }
           that.setData({
-            total_fee: data.result.total_fee,
             cartList: data.result.cartList
-          })
+          })                
+          that.loadingShopcartNum(that);
         }
       })
       setTimeout(function () {
@@ -254,9 +332,21 @@ Page({
       })
     }
     console.log(that.data.orderList)
+    /**
+     * 记录购物车状态
+     */
+    let OldList = that.data.orderList;
+    OldList = JSON.stringify(OldList)
+    wx.setStorageSync('OldList', OldList);
+    wx.setStorageSync('OldListSTATUS', 'shopcart');     // 购物车加载判断 如果是 shopcart 就是购物车，其他为跳出购物车页面，不用加载上一次购物车状态
+
+    setTimeout(function () {
+        console.log(wx.getStorageSync('OldList'))
+    }, 200)
+
     console.log(that.data.cartList)
     that.calculation(that);
-    that.isChooseAll(that);
+    that.isChooseAll(that); // 判断全选按钮状态
   },
   /**
    * 选中所有
@@ -285,7 +375,16 @@ Page({
     that.setData({
       chooseAllShow: !that.data.chooseAllShow
     })
+    wx.setStorageSync('chooseAllShow', that.data.chooseAllShow)
     that.calculation(that);
+
+    /**
+     * 记录购物车状态
+     */
+    let OldList = that.data.orderList;
+    OldList = JSON.stringify(OldList)
+    wx.setStorageSync('OldList', OldList);
+    wx.setStorageSync('OldListSTATUS', 'shopcart');     // 购物车加载判断 如果是 shopcart 就是购物车，其他为跳出购物车页面，不用加载上一次购物车状态
   },
   /**
    * 推荐商品列表
@@ -299,29 +398,32 @@ Page({
       },
       data: {
         user_id: wx.getStorageSync('user_id'),
-        city_code: 110100
+        city_code: wx.getStorageSync('addressCode'),//110100
       },
       success: function (res) {
         let data = res.data.data;
         // console.log(data);
         var tuijian = [];
-        for (var i = 0; i < data.length; i++) {
-          tuijian[i] = {};
-          var Tid = 'tuijian[' + i + '].goods_id',
-            Tname = 'tuijian[' + i + '].goods_name',
-            original_img = 'tuijian[' + i + '].original_img',
-            Tprice = 'tuijian[' + i + '].shop_price',
-            Tcount = 'tuijian[' + i + '].store_count',
-            Tsub = 'tuijian[' + i + '].subtitle'
-          that.setData({
-            [Tid]: data[i].goods_id,
-            [Tname]: data[i].goods_name,
-            [original_img]: 'https://app.zhuoyumall.com:444' + data[i].original_img,
-            [Tprice]: data[i].shop_price,
-            [Tcount]: data[i].store_count,
-            [Tsub]: data[i].subtitle
-          })
-        }
+        // for (var i = 0; i < data.length; i++) {
+        //   tuijian[i] = {};
+        //   var Tid = 'tuijian[' + i + '].goods_id',
+        //     Tname = 'tuijian[' + i + '].goods_name',
+        //     original_img = 'tuijian[' + i + '].original_img',
+        //     Tprice = 'tuijian[' + i + '].shop_price',
+        //     Tcount = 'tuijian[' + i + '].store_count',
+        //     Tsub = 'tuijian[' + i + '].subtitle'
+        //   that.setData({
+        //     [Tid]: data[i].goods_id,
+        //     [Tname]: data[i].goods_name,
+        //     [original_img]: 'https://app.zhuoyumall.com:444' + data[i].original_img,
+        //     [Tprice]: data[i].shop_price,
+        //     [Tcount]: data[i].store_count,
+        //     [Tsub]: data[i].subtitle
+        //   })
+        // }
+        that.setData({
+          tuijian: data
+        })
         // console.log(that.data.tuijian)
       }
     })
@@ -343,7 +445,13 @@ Page({
       success: function (res) {
         console.log(res)
         if (res.data.code == 200) {
-          that.createList(that);
+          wx.showToast({
+            title: res.data.msg,
+            image: '../../src/img/shopcart.png',
+            duration: 2000
+          })
+          that.createList(that); // 渲染列表
+          that.loadingShopcartNum(that);
         } else {
           wx.showToast({
             title: res.data.msg,
@@ -368,7 +476,78 @@ Page({
         that.setData({
           chooseAllShow: false
         })
+        wx.setStorageSync('chooseAllShow', false)
       }
+    }
+  },
+
+
+
+
+
+  /**
+   * 加载购物车数量
+   */
+  loadingShopcartNum: function (that) {
+    wx.request({
+      url: Globalhost + 'Api/common/getCartNum',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        city_code: wx.getStorageSync('addressCode'),
+        user_id: wx.getStorageSync('user_id')
+      },
+      success: function(res) {
+        console.log(res)
+        that.setData({
+          cart_num: res.data.data.cartNum
+        })
+        if(res.data.data.cartNum > 0) {
+          wx.setTabBarBadge({
+            index: 3,
+            text: '' + res.data.data.cartNum
+          })
+        } else {
+          wx.hideTabBarRedDot({
+            index: 3
+          })
+        }
+      }
+    })
+  },
+
+  
+
+
+
+  
+  /**
+   * footer 跳转
+   */
+  LINK: function (e) {
+    console.log(e.currentTarget.dataset.link) // index classification group shopcart mine
+    switch (e.currentTarget.dataset.link) {
+      case 'index':
+        wx.redirectTo({
+          url: '/pages/index/index'
+        })
+        break;
+      case 'classification':
+        wx.redirectTo({
+          url: '/pages/classification/classification'
+        })
+        break;
+      case 'group':
+        wx.redirectTo({
+          url: '/pages/group/group'
+        })
+        break;
+      case 'mine':
+        wx.redirectTo({
+          url: '/pages/mine/mine'
+        })
     }
   }
 })

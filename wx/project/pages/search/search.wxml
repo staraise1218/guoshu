@@ -1,9 +1,23 @@
 <!-- 顶部搜索 -->
-<view class='search-bar'>
+    <view class="search-box">
+        <van-cell-group class="search-border">
+            <van-field
+                value="{{ searchText }}"
+                placeholder="请输入关键字"
+                border="{{ false }}"
+                right-icon="search"
+                input-class="search-bg"
+                bind:change="searchChange"
+            />
+        </van-cell-group>
+        <view bindtap="searchBtn">搜索</view>
+    </view>
+<!-- <view class='search-bar'>
     <image class="search-icon" src="/src/img/search.png" />
+
     <input class="serach-input" confirm-type="search" placeholder="请输入关键字" bindinput="searchChange" bindconfirm="toSearch" auto-focus />
     <view class="search-btn" bindtap="searchBtn">搜索</view>
-</view>
+</view> -->
 <!-- 顶部搜索 END -->
 
 <!-- 搜索历史 -->
@@ -27,7 +41,7 @@
 
 <!-- 列表 -->
 <block wx:for="{{searchList}}" wx:key>
-    <view class="list-item between-center margin-30 padding-tb-30 border-bottom">
+    <view wx:if="{{item.store_count !=0}}" class="list-item between-center margin-30 padding-tb-30 border-bottom">
         <image class="icon-poster" bindtap="toCon" data-id="{{item.goods_id}}"
             src="https://app.zhuoyumall.com:444{{item.original_img}}" mode="widthFix" />
         <view class="right padding-lr-20" style="flex:1">
@@ -50,7 +64,7 @@
     <view class="title margin-left-30 margin-bottom-30">推荐商品</view>
     <scroll-view scroll-x class="commodisyScro">
         <block wx:for="{{tuijian}}" wx:key>
-            <view class="src-item" data-goodsid="{{item.goods_id}}">
+            <view  wx:if="{{item.store_count !=0}}" class="src-item" data-goodsid="{{item.goods_id}}">
                 <view catchtap="toCon" data-id="{{item.goods_id}}">
                     <image class="poster" src="{{item.original_img}}" />
                 </view>

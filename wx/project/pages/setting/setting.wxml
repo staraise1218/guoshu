@@ -20,4 +20,5 @@
 
 
 
-<button bindtap="toLogin">退出登录</button>
+<button bindtap="toClear">退出登录</button>
+<!-- <button bindtap="toLogin">退出登录</button> -->

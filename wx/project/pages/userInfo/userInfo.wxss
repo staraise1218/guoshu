@@ -1,3 +1,11 @@
 .nickname {
     text-align: right;
 }
+.icon-1 {
+    width: 75rpx;
+    height: 75rpx;
+    overflow: hidden;
+}
+.icon-1 image {
+    max-width: 100%;
+}

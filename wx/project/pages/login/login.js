@@ -45,6 +45,7 @@ Page({
         console.log(res)
         if (res.data.code == 200) {
           wx.setStorageSync('login', '手机号登陆');
+          wx.setStorageSync('loginStatus', '手机号登陆');
           wx.setStorageSync('mobile', res.data.data.mobile);
           wx.setStorageSync('user_id', res.data.data.user_id);
           wx.setStorageSync('user_money', res.data.data.user_money);
@@ -116,6 +117,11 @@ Page({
               wx.setStorageSync('iv', infoRes.iv)
               wx.setStorageSync('signature', infoRes.signature)
               wx.setStorageSync('userInfo', infoRes.userInfo)
+              if(wx.getSystemInfoSync('login') == '手机号登陆') {
+
+              } else {
+                wx.setStorageSync('head_pic', USERINFO.avatarUrl)
+              }
               // 请求服务端的登录接口
               wx.request({
                 url: Globalhost + 'Api/auth/getOpenid',
@@ -147,13 +153,11 @@ Page({
                     success: function (res) {
                       console.log(res)
                       let data = res.data.data;
-
-                      wx.setStorageSync('head_pic', data.head_pic);
                       wx.setStorageSync('nickname', data.nickname);
                       wx.setStorageSync('token', data.token);
                       wx.setStorageSync('user_id', data.user_id);
                       wx.setStorageSync('user_money', data.user_money);
-                      
+                      wx.setStorageSync('userCode', data.userCode);
                     }
                   })
                 },

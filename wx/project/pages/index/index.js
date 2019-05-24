@@ -1,18 +1,17 @@
 const app = getApp()
 const Globalhost = getApp().globalData.Globalhost;
 const loadingfunc = getApp().globalData.loadingfunc;
+const parabola = require("../../utils/animate.js").parabola;
 Page({
   data: {
     currentTab: 0,
-    index: 0,
     imgUrls: [], // 轮播图
     imgUrlsLen: 0, // 轮播图 length
     dots: 1, // 轮播图 小点初始值
     categoryList: {}, // tab
     // height: 0,  // 轮播图
     time: {}, // 秒杀倒计时
-    navBtn: [
-      {
+    navBtn: [{
       url: 'http://img.hb.aicdn.com/e5b2e8a1f30c9fc3ba4460d50c36cc244838ade31070-Xe3xpS_fw658',
       title: '热卖',
       func: ''
@@ -70,99 +69,155 @@ Page({
     }],
     grouplist: [], // 团购商品
     miaosha: [], // 秒杀商品
-    address: '位置',
+    address: '',
     topCateGoods: [], // 底部商品
     /**
-     * =============
+     * ===============
      *  选择城市相关
      * ===============
      */
     value: [0, 0],
     multiArray: [], // 地区json
     index0: 0, // 地区index 0
-    cityShow: false,
-    cityChange: '北京',
+    // cityShow: false,
+    // cityChange: '北京',
 
+    redBagNum: 0, // 是否显示优惠券弹窗
+    coup: { // 优惠券弹窗
+      money: '',
+      name: '',
+      status: 0
+    },
+    scrollLeft: 0, // 滑动
+    hide_good_box: true,
+
+
+    // 选择城市
+    array: [],
+    index: 0,
+    addressStatus: 0,
+
+    // 购物车动画
+
+    end: { //结束地方的位置，大小
+      x: '',
+      y: '',
+      width: 16,
+      height: 16,
+    },
+    _parabola: '', //抛物线对象
+    ghost_arr: [], //抛物线数组，支持多个抛物线
+    add_num: 0, //增加的数量
+    sub_num: 0, //减少的数量
+    all_num: 0, //所有的数量
   },
-  onLoad: function () {
-    // wx.hideTabBar()
+  onLoad: function (options) {
     let that = this;
-  },
-  onShow: function () {
-    let that = this;
-    if (!wx.getStorageSync('login')) {
-      wx.navigateTo({
-        url: '/pages/login/login'
-      })
-    }
-    that.index(that);   // 首页
-    that.miaosha(that); // 秒杀商品
-    that.location(that); // 地址
-
-    /**
-     * 首页高度加载
-     */
-    setTimeout(function () {
-      const query = wx.createSelectorQuery()
-      query.select('.item-box-1').boundingClientRect()
-      query.selectViewport().scrollOffset()
-      query.exec(function (res) {
-        res[0].top // #the-id节点的上边界坐标
-        res[1].scrollTop // 显示区域的竖直滚动位置
-        // console.log('打印demo的元素的信息', res);
-        // console.log('打印高度', res[0].height);
-        that.setData({
-          reaHeight: 'height:' + (res[0].height + 20) + 'px'
-        })
-      })
-    }, 1000)
-
-    var date = new Date();
-    var str = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + (date.getDate() + 1)
-    that.TimeDown(str)
-
     /**
      * 修改
      * 每次加载都要获取地理位置
      */
+    // if(wx.getStorageSync('LOCATIONSTATUS') == 0) {
+    // }
     that.getUserLocation(); // 获取定位
-    // if(wx.getStorageSync('address') == '位置') {
-    //   that.getUserLocation(); // 获取定位
-    // }
-    // if(!wx.getStorageSync('address')) {
-    //   that.getUserLocation(); // 获取定位
-    // }
-    // that.setData({
-    //   address: wx.getStorageSync('address')
-    // })
+    that.setData({
+      address: wx.getStorageSync('address')
+    })
+    
+    // that.index(that); // 首页
+    // that.miaosha(that); // 秒杀商品
+    /**
+     * 接到分享数据
+     */
+    console.log('*************************************************************')
+    if (options.status == 'share') {
+      console.log(options)
+      wx.navigateTo({
+        url: '/pages/commodityDetails/commodityDetails?goods_id=' + options.goods_id + '&user_id=' + options.user_id + '&share_userCode=' + options.userCode
+      })
+    }
+    if (wx.getStorageSync('readBackAlertStatus') == 0) {
+      that.coupList(that);
+    }
+
+
+    // this.busPos = {};
+    // this.busPos['x'] = app.globalData.ww / 2;
+    // this.busPos['y'] = app.globalData.hh - 10;
+    // console.log('购物车坐标', this.busPos)
+    that.location(that);
+
+    // 购物车动画
+    // wx.getSystemInfo({
+    //   success: function (res) {
+    //     var width = res.windowWidth,
+    //       height = res.windowHeight;
+    //     var _end = that.data.end,
+    //       _start = that.data.start;
+    //     // console.log(width,height,_end);
+    //     //计算出购物车的坐标
+    //     _end.x = width - 132;
+    //     _end.y = height - 46;
+    //     that.setData({
+    //       end: _end
+    //     });
+    //   }
+    // });
   },
+  onShow: function () {
+    let that = this;
+    // if (!wx.getStorageSync('login')) {
+    //   wx.navigateTo({
+    //     url: '/pages/login/login'
+    //   })
+    // }
+    that.index(that); // 首页
+    that.miaosha(that); // 秒杀商品
+    // that.location(that); // 地址
+    // if (wx.getStorageSync('alertStatus') == 1) {
+    //   that.setData({
+    //     redBagNum: 1
+    //   })
+    // } else {
+    //   // that.coupList(that);
+    // }
+    if (!wx.getStorageSync('user_id')) {
+      wx.navigateTo({
+        url: '/pages/loading/loading'
+      })
+    }
+    var date = new Date();
+    var str = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + (date.getDate() + 1)
+    that.TimeDown(str)
+  },
+
   /**
    * 设置轮播图高度
    */
-  // setContainerHeight: function (e) {
-  //   console.log(e)
+  setContainerHeight: function (e) {
+    console.log(e)
 
-  //   // 图片原始宽度
-  //   let imgWidth = e.detail.width; 
+    // 图片原始宽度
+    let imgWidth = e.detail.width;
 
-  //   // 图片原始高度
-  //   let imgHeight = e.detail.height;
+    // 图片原始高度
+    let imgHeight = e.detail.height;
 
-  //   // 同步获取设备宽度
-  //   let sysInfo = wx.getSystemInfoSync();
-  //   console.log('sysInfo:', sysInfo);
+    // 同步获取设备宽度
+    let sysInfo = wx.getSystemInfoSync();
+    console.log('sysInfo:', sysInfo);
 
-  //   // 获取屏幕宽度
-  //   let screenWidth = sysInfo.screenWidth;
+    // 获取屏幕宽度
+    let screenWidth = sysInfo.screenWidth;
 
-  //   // 获取屏幕和原图的比例
-  //   let scale = screenWidth / imgWidth;
+    // 获取屏幕和原图的比例
+    let scale = screenWidth / imgWidth;
 
-  //   // 设置容器的高度
-  //   this.setData({
-  //     height: imgHeight * scale
-  //   })
-  // },
+    // 设置容器的高度
+    this.setData({
+      height: imgHeight * scale
+    })
+  },
 
   /**
    * 首页接口
@@ -177,7 +232,7 @@ Page({
       },
       data: {
         user_id: wx.getStorageSync('user_id'),
-        city_code: 110100
+        city_code: wx.getStorageSync('addressCode')// 110100
       },
       success: function (res) {
         let data = res.data.data
@@ -191,13 +246,24 @@ Page({
         console.log(that.data.imgUrls)
 
         that.setData({
-          imgUrlsLen: data.bannerList.length,  // 轮播图len
-          categoryList: data.categoryList,    // 分类
-          grouplist: data.grouplist,          // 团购商品
+          imgUrlsLen: data.bannerList.length, // 轮播图len
+          categoryList: data.categoryList, // 分类
+          grouplist: data.grouplist, // 团购商品
           // multiArray: region.region.data,     //城市选择json
           topCateGoods: data.topCateGoods
         })
-        console.log(that.data.categoryList)
+        for (var j = 0; j < data.topCateGoods.length; j++) {
+          var current = 'topCateGoods[' + j + '].STATUS';
+          that.setData({
+            [current]: 0
+          })
+        }
+        for (var i = 0; i < that.data.categoryList.length; i++) {
+          var str = 'categoryList[' + i + '].GOODLISTSS';
+          that.setData({
+            [str]: {}
+          })
+        }
         /**
          * Ad
          */
@@ -208,71 +274,19 @@ Page({
           jingcaiAdvr: 'https://app.zhuoyumall.com:444' + data.shareGoods[1].ad_code,
           shareGoods: data.shareGoods
         })
+        that.loadingShopcartNum(that);
       }
     })
   },
 
-  //滑动切换 
-  swiperTab: function (e) {
-    console.log(e)
-    loadingfunc(); // 加载函数
-    var that = this;
-    that.setData({
-      currentTab: e.detail.current
-    });
-    // console.log(e.detail.current)
-    var str = '.item-box-' + (Number(e.detail.current) + 1)
-    var num = (Number(e.detail.current) + 1)
-    that.changeTab(that,num);
-    var query = wx.createSelectorQuery()
-    // query.select('.item-box-1').boundingClientRect()
-    query.select(str).boundingClientRect()
-
-    query.selectViewport().scrollOffset()
-    query.exec(function (res) {
-      res[0].top // #the-id节点的上边界坐标
-      res[1].scrollTop // 显示区域的竖直滚动位置
-      // console.log('打印demo的元素的信息', res);
-      // console.log('打印高度', res[0].height);
-      that.setData({
-        reaHeight: 'height:' + (res[0].height + 20) + 'px'
-      })
-    })
-  },
-
-  //点击切换 
-  clickTap: function (e) {
-    loadingfunc(); // 加载函数
-    var that = this;
-    console.log(e.currentTarget.dataset.id)
-    // console.log(e.currentTarget.dataset.current)
-    that.setData({
-      currentTab: e.currentTarget.dataset.current
-    })
-    that.changeTab(that, e.currentTarget.dataset.id);
-    var query = wx.createSelectorQuery()
-    var str = '.item-box-' + (Number(e.currentTarget.dataset.current) + 1)
-    query.select(str).boundingClientRect()
-    query.selectViewport().scrollOffset()
-    query.exec(function (res) {
-      res[0].top // #the-id节点的上边界坐标
-      res[1].scrollTop // 显示区域的竖直滚动位置
-      // console.log('打印demo的元素的信息', res);
-      // console.log('打印高度', res[0].height);
-      that.setData({
-        reaHeight: 'height:' + (res[0].height + 20) + 'px'
-      })
-    })
-
-  },
 
 
 
 
 
-/**
- * 分类切换
- */
+  /**
+   * 分类切换
+   */
   changeTab: function (that, id) {
     loadingfunc(); // 加载函数
     wx.request({
@@ -283,14 +297,27 @@ Page({
       },
       data: {
         cat_id: id, //e.currentTarget.dataset.id,
-        city_code: 110100
+        city_code: wx.getStorageSync('addressCode')//110100
       },
       success: function (res) {
-        if(res.data.code == 200) {
+        if (res.data.code == 200) {
           console.log(res.data.data);
           that.setData({
             fenleiList: res.data.data
           })
+          console.log(that.data.categoryList)
+          console.log(that.data.categoryList)
+          let len = that.data.categoryList.length;
+          // console.log(len)
+          let categoryList = that.data.categoryList;
+          for (var i = 0; i < len; i++) {
+            if (categoryList[i].id == id) {
+              var str = 'categoryList[' + i + '].GOODLISTSS';
+              that.setData({
+                [str]: res.data.data[0]
+              })
+            }
+          }
         }
       }
     })
@@ -330,9 +357,12 @@ Page({
    * NAV 点击
    */
   tapchange: function (e) {
-    console.log(e.currentTarget.dataset.currenttab)
-    this.setData({
-      currentTab: e.currentTarget.dataset.currenttab
+    console.log(e.currentTarget.dataset.id)
+    // this.setData({
+    //   currentTab: e.currentTarget.dataset.currenttab
+    // })
+    wx.navigateTo({
+      url: '/pages/fenleiList/fenleiList?id=' + e.currentTarget.dataset.id
     })
   },
   toShuiCan: function () { // 水产
@@ -358,7 +388,7 @@ Page({
       },
       data: {
         user_id: wx.getStorageSync('user_if'),
-        city_code: 110100
+        city_code: wx.getStorageSync('addressCode')//110100
       },
       success: function (res) {
         // console.log(res);
@@ -408,7 +438,7 @@ Page({
    */
   toNext: function () { // 下期预告
     loadingfunc(); // 加载函数
-    wx.setStorageSync('nextStatus', true)
+    wx.setStorageSync('nextStatus', 1)
     wx.switchTab({
       url: '/pages/group/group'
     })
@@ -434,55 +464,16 @@ Page({
     })
   },
   /**
-   * 跳转分类
-   */
-  toFenlei: function () {
-    loadingfunc(); // 加载函数
-    wx.switchTab({
-      url: '/pages/classification/classification'
-    })
-  },
-  /**
-   * 加入购物车
-   */
-  addCart: function (e) {
-    loadingfunc(); // 加载函数
-    wx.request({
-      url: Globalhost + 'Api/cart/addCart',
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      data: {
-        user_id: wx.getStorageSync('user_id'),
-        goods_id: e.currentTarget.dataset.id,
-        goods_num: 1
-      },
-      success: function (res) {
-        console.log(res)
-        if(res.data.code == 200) {
-          wx.showToast({
-            title: res.data.msg,
-            icon: 'none'
-          })
-        } else {
-          wx.showToast({
-            title: res.data.msg,
-            icon: 'none'
-          })
-        }
-      }
-    })
-  },
-  /**
    * 倒计时
    */
   TimeDown: function (endDateStr) {
     var that = this;
+    endDateStr = endDateStr.replace(/-/g, '/');
     //结束时间
     var endDate = new Date(endDateStr);
     //当前时间
     var nowDate = new Date();
+
     //相差的总秒数
     var totalSeconds = parseInt((endDate - nowDate) / 1000);
     //天数
@@ -490,55 +481,54 @@ Page({
     //取模（余数）
     var modulo = totalSeconds % (60 * 60 * 24);
     //小时数
-    var hours = Math.floor(modulo / (60 * 60));
+    var hours = Math.floor(modulo / (60 * 60)) + '';
     modulo = modulo % (60 * 60);
     //分钟
-    var minutes = Math.floor(modulo / 60);
+    var minutes = Math.floor(modulo / 60) + '';
     //秒
-    var seconds = modulo % 60;
+    var seconds = modulo % 60 + '';
 
     var obj = {
       hours: hours,
       minutes: minutes,
       seconds: seconds
     }
-    // console.log(obj)
     that.setData({
       time: obj
     })
     setTimeout(function () {
       that.TimeDown(endDateStr);
     }, 1000)
+
+
+
+
+
+
+
+
+
   },
+
+
+
+
+
+
+
+
+
+
+
+
+
   /**
    * 分享
    */
   onShareAppMessage(res) {
-    // wx.getShareInfo({
-    //   shareTicket: res.shareTickets[0],
-    //   success: function (res) {
-    //     console.log(res)
-    //     wx.request({
-    //       url: Globalhost + 'Api/user/shareSystemLog',
-    //       method: 'POST',
-    //       header: {
-    //         'content-type': 'application/x-www-form-urlencoded'
-    //       },
-    //       success: function(res) {
-    //         console.log('分享成功')
-    //         console.log(res)
-    //       }
-    //     })
-    //   },
-    //   fail: function (err) {
-    //     console.log(err)
-    //     console.log('分享失败')
-    //   }
-    // })
-
     wx.showShareMenu({
       withShareTicket: false,
-      success: (result)=>{
+      success: (result) => {
         console.log(result)
         wx.request({
           url: Globalhost + 'Api/user/shareSystemLog',
@@ -549,20 +539,22 @@ Page({
           data: {
             user_id: wx.getStorageSync('user_id')
           },
-          success: function(res) {
+          success: function (res) {
             console.log('分享成功')
             console.log(res)
           }
         })
       },
-      fail: (res)=>{console.log(res)},
-      complete: ()=>{}
+      fail: (res) => {
+        console.log(res)
+      },
+      complete: () => {}
     });
   },
 
   /**
    * =================================
-   *      位置相关
+   *      位置相关   调起定位
    * =================================
    */
   /**
@@ -598,6 +590,7 @@ Page({
                       })
                       //再次授权，调用wx.getLocation的API
                       that.geo();
+                      wx.setStorageSync('LOCATIONSTATUS', 1)
                     } else {
                       wx.showToast({
                         title: '授权失败',
@@ -622,6 +615,7 @@ Page({
     })
 
   },
+
   /**
    * 获取定位城市
    */
@@ -636,28 +630,54 @@ Page({
         let location = latitude + ',' + longitude
         // console.log('当前经纬度：', location)
         wx.setStorageSync('location', location)
-        that.loadCity(latitude, longitude, that)
+        // that.loadCity(latitude, longitude, that)
+        wx.request({
+          url: Globalhost + 'api/index/getNearCity',
+          method: 'POST',
+          header: {
+            'content-type': 'application/x-www-form-urlencoded'
+          },
+          data: {
+            longitude: longitude,
+            latitude: latitude,
+          },
+          success: function (res) {
+            wx.setStorageSync('address', res.data.data.name);
+            wx.setStorageSync('addressCode', res.data.data.code);
+            wx.setStorageSync('addressId', res.data.data.id);
+            that.setData({
+              // 'array[0]': res.data.data.name
+              address: res.data.data.name
+            })
+            
+            that.index(that); // 首页
+            that.miaosha(that); // 秒杀商品
+          }
+        })
       }
     })
   },
   /**
    * 逆地理编码
+   * 弃用
    */
   loadCity: function (latitude, longitude, that) {
     var _self = this;
+    let location = longitude + "," + latitude
     wx.request({
       url: 'https://restapi.amap.com/v3/geocode/regeo',
       data: {
         key: '18964fba3ee3a4e672956a24b0090f75',
-        location: longitude + "," + latitude,
+        location: location,
         extensions: "all",
         s: "rsx",
         sdkversion: "sdkversion",
         logversion: "logversion"
       },
       success: function (res) {
-        // console.log(res)
-        let address = res.data.regeocode.addressComponent.city
+        console.log(res)
+        let address = res.data.regeocode.formatted_address
+        // let address = res.data.regeocode.addressComponent.city
         // console.log('当前城市：', address);
         wx.setStorageSync('address', address)
         that.setData({
@@ -670,15 +690,38 @@ Page({
           },
           success: function (res) {
             let data = res.data.geocodes;
-            // console.log(data)
-            const adcode = data[0].adcode;
+            console.log(res.data.geocodes[0].adcode)
+            // res.data.geocodes[0].adcode
+            // const adcode = res.data[0].adcode;
             // console.log('当前城市码：', adcode);
-            // wx.setStorageSync('adcode', adcode)
+            // wx.setStorageSync('addressCode', adcode)
+            // wx.setStorageSync('addressCode', res.data.pois[0].pcode)
+            var str = res.data.geocodes[0].adcode;
+            str = str.substring(0, str.length - 1)
+            str = str + '0';
+            console.log(str)
+            wx.setStorageSync('addressCode', str)
+            wx.setStorageSync('address', data[0].city)
+            that.setData({
+              // address: data[0].city
+            })
+
           }
         })
       },
       fail: function (res) {
         console.log('获取地理位置失败')
+      }
+    })
+    wx.request({
+      url: 'https://restapi.amap.com/v3/place/around?key=d1155b6ce952cd80d4ab61f16a9dcb41&location=' + location + '&keywords=&types=120302&radius=3000&offset=20&page=1&extensions=all',
+      // url: 'https://restapi.amap.com/v3/geocode/regeo?&location=' + location + '&poitype=商务住宅&key=d1155b6ce952cd80d4ab61f16a9dcb41&radius=10000&extensions=all&roadlevel=1&batch =true',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function (res) {
+        console.log(res)
+        // wx.setStorageSync('addressCode', res.data.pois[0].pcode)
       }
     })
   },
@@ -691,77 +734,99 @@ Page({
    * ================================
    */
   cityshow: function () {
-    this.setData({
-      cityShow: true
-    })
+    // this.setData({
+    //   cityShow: true
+    // })
+    const that = this;
   },
-  cityCancel: function () {
-    this.setData({
-      cityShow: false
-    })
-  },
-  cityOk: function () {
-    wx.setStorageSync('address', this.data.cityChange)
-    this.setData({
-      cityShow: false,
-      address: this.data.cityChange
-    })
-  },
-  changeCity: function (e) {
-    let that = this;
-    var str = 'value[1]';
-    if (that.data.index0 != e.detail.value[0]) {
-      that.setData({
-        index0: e.detail.value[0],
-        'value[0]': e.detail.value[0],
-        'value[1]': 0,
-      })
-    } else {
-      that.setData({
-        index0: e.detail.value[0],
-        'value[0]': e.detail.value[0],
-        'value[1]': e.detail.value[1],
-      })
-    }
-    let index0 = e.detail.value[0]
-    let index1 = e.detail.value[1]
+  // cityCancel: function () {
+  //   this.setData({
+  //     cityShow: false
+  //   })
+  // },
+  // cityOk: function () {
+  //   wx.setStorageSync('address', this.data.cityChange)
+  //   wx.setStorageSync('addressCode', this.data.codeChange || '110100')
+  //   this.setData({
+  //     cityShow: false,
+  //     address: this.data.cityChange,
+  //     addressCODE: this.data.codeChange
+  //   })
+  // },
+  // changeCity: function (e) {
+  //   let that = this;
+  //   var str = 'value[1]';
+  //   if (that.data.index0 != e.detail.value[0]) {
+  //     that.setData({
+  //       index0: e.detail.value[0],
+  //       'value[0]': e.detail.value[0],
+  //       'value[1]': 0,
+  //     })
+  //   } else {
+  //     that.setData({
+  //       index0: e.detail.value[0],
+  //       'value[0]': e.detail.value[0],
+  //       'value[1]': e.detail.value[1],
+  //     })
+  //   }
+  //   let index0 = e.detail.value[0]
+  //   let index1 = e.detail.value[1]
 
 
-    console.log(that.data.multiArray[index0])
-    console.log(that.data.multiArray[index0].sub[index1])
-    that.setData({
-      cityChange: that.data.multiArray[index0].sub[index1].name,
-      codeChange: that.data.multiArray[index0].sub[index1].code
-    })
-  
-  },
-  cityt: function () {
-    this.setData({
-      cityShow: !this.data.cityShow
-    })
-  },
+  //   console.log(that.data.multiArray[index0])
+  //   console.log(that.data.multiArray[index0].sub[index1])
+  //   that.setData({
+  //     cityChange: that.data.multiArray[index0].sub[index1].name,
+  //     codeChange: that.data.multiArray[index0].sub[index1].code
+  //   })
+
+  // },
+  // cityt: function () {
+  //   this.setData({
+  //     cityShow: !this.data.cityShow
+  //   })
+  // },
   location: function (that) {
     wx.request({
-      url: Globalhost + 'api/region/getJson',
+      url: Globalhost + 'Api/index/getDeliveryCity',
       method: 'POST',
       header: {
         'content-type': 'application/x-www-form-urlencoded'
       },
-      success: function(res) {
-        // console.log(res.data.data)
+      success: function (res) {
+        console.log(res.data.data)
+        var arr = [];
+        for (var i = 0; i < res.data.data.length; i++) {
+          arr[i] = res.data.data[i].name
+        }
         that.setData({
-          multiArray: res.data.data
+          multiArray: res.data.data,
+          array: arr
         })
       }
     })
+    // 弃用
+    // wx.request({
+    //   url: Globalhost + 'api/region/getJson',
+    //   method: 'POST',
+    //   header: {
+    //     'content-type': 'application/x-www-form-urlencoded'
+    //   },
+    //   success: function(res) {
+    //     // console.log(res.data.data)
+    //     that.setData({
+    //       multiArray: res.data.data
+    //     })
+    //   }
+    // })
   },
-/**
- * 点击banner跳转
- */
+  /**
+   * 点击banner跳转
+   */
   toLink: function (e) {
     loadingfunc(); // 加载函数
     console.log(e.currentTarget.dataset.link)
-    if(e.currentTarget.dataset.link) {
+    if (e.currentTarget.dataset.link) {
       wx.navigateTo({
         url: e.currentTarget.dataset.link
       })
@@ -771,9 +836,28 @@ Page({
    * 跳转分类
    */
   toFenlei: function (e) {
+    let that = this;
     loadingfunc(); // 加载函数
+    console.log(e)
     console.log(e.currentTarget.dataset.catid)
+    // this.setData({
+    //   currentTab: e.currentTarget.dataset.catid
+    // })
+    wx.setStorageSync('targetID', e.currentTarget.dataset.catid)
     wx.setStorageSync('indexCatid', e.currentTarget.dataset.catid)
+    // wx.switchTab({
+    //   url: '/pages/classification/classification'
+    // })
+    console.log(that.data.topCateGoods)
+    for (var i = 0; i < that.data.topCateGoods.length; i++) {
+      if (that.data.topCateGoods[i].id == e.currentTarget.dataset.catid) {
+        console.log(that.data.topCateGoods[i])
+        that.setData({
+          currentTab: i
+        })
+      }
+    }
+    loadingfunc(); // 加载函数
     wx.switchTab({
       url: '/pages/classification/classification'
     })
@@ -793,5 +877,285 @@ Page({
     wx.navigateTo({
       url: '/pages/news/news'
     })
-  }
+  },
+  /**
+   * 跳转到领取优惠券页面
+   */
+  toCoup: function () {
+    this.setData({
+      'coup.status': 1,
+    })
+    wx.navigateTo({
+      url: '/pages/couponlist/couponlist'
+    })
+  },
+
+  /**
+   * 优惠券数据
+   */
+  coupList: function (that) {
+    wx.setStorageSync('readBackAlertStatus', 1);
+    wx.request({
+      url: Globalhost + 'Api/user/couponlist',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        user_id: wx.getStorageSync('user_id'),
+        page: 1
+      },
+      success: function (res) {
+        let data = res.data.data;
+        console.log(data)
+        var redBagNum = 0;
+        var redBagTitle = '';
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].is_get == 0) {
+            redBagNum++;
+            redBagTitle = data[i].money;
+          }
+        }
+        console.log(wx.getStorageSync('readBackAlertStatus'))
+        that.setData({
+          redBagNum: redBagNum,
+          redBagTitle: redBagTitle
+        })
+        if (data.length > 0) {
+          that.setData({
+            'coup.money': data[0].money,
+            'coup.name': data[0].name,
+            'coup.status': 0
+          })
+        }
+      }
+    })
+  },
+  /**
+   * 关闭弹窗
+   */
+  alertClose: function () {
+    this.setData({
+      redBagNum: 0
+    })
+    wx.setStorageSync('alertStatus', 1)
+    // wx.showTabBar();
+  },
+  /**
+   * 加载购物车数量
+   */
+  loadingShopcartNum: function (that) {
+    wx.request({
+      url: Globalhost + 'Api/common/getCartNum',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        city_code: wx.getStorageSync('addressCode'),
+        user_id: wx.getStorageSync('user_id')
+      },
+      success: function (res) {
+        console.log(res)
+        that.setData({
+          cart_num: res.data.data.cartNum
+        })
+        if (res.data.data.cartNum > 0) {
+          wx.setTabBarBadge({
+            index: 3,
+            text: '' + res.data.data.cartNum
+          })
+        } else {
+          wx.hideTabBarRedDot({
+            index: 3
+          })
+        }
+      }
+    })
+  },
+
+  /**
+   * footer 跳转
+   */
+  LINK: function (e) {
+    console.log(e) // index classification group shopcart mine
+    console.log(this)
+    switch (e.currentTarget.dataset.link) {
+      case 'classification':
+        wx.redirectTo({
+          url: '/pages/classification/classification'
+        })
+        break;
+      case 'group':
+        wx.redirectTo({
+          url: '/pages/group/group'
+        })
+        break;
+      case 'shoppingCart':
+        wx.redirectTo({
+          url: '/pages/shoppingCart/shoppingCart'
+        })
+        break;
+      case 'mine':
+        wx.redirectTo({
+          url: '/pages/mine/mine'
+        })
+    }
+  },
+  // 下拉刷新
+  onPullDownRefresh: function () {
+    var that = this;
+    wx.startPullDownRefresh({
+      success: function () {
+        wx.showNavigationBarLoading();
+        that.index(that); // 首页
+        that.miaosha(that); // 秒杀商品
+      },
+      complete: function () {
+        wx.hideNavigationBarLoading();
+        wx.stopPullDownRefresh();
+      }
+    })
+  },
+  // 购物车动画
+
+  /**
+   * 加入购物车
+   */
+  addCart: function (e) {
+    let that = this;
+    var event = e;
+    console.log(e)
+    // loadingfunc(); // 加载函数
+    wx.request({
+      url: Globalhost + 'Api/cart/addCart',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        user_id: wx.getStorageSync('user_id'),
+        goods_id: e.currentTarget.dataset.id,
+        goods_num: 1
+      },
+      success: function (res) {
+        console.log(res)
+        if (res.data.code == 200) {
+          // wx.showToast({
+          //   title: res.data.msg,
+          //   icon: 'none'
+          // })
+          
+          wx.showToast({
+            title: res.data.msg,
+            image: '../../src/img/shopcart.png',
+            duration: 2000
+          })
+          that.loadingShopcartNum(that)
+    // 动画部分
+    // that.shopcartAnimat(that, event)
+          wx.setTabBarBadge({
+            index: 3,
+            text: '' + res.data.data.total_num
+          })
+          // that.loadingShopcartNum(that);
+        } else {
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'none'
+          })
+        }
+      }
+    })
+  },
+  shopcartAnimat: function (that, e) {
+    // 购物车动画
+    // var that = this,
+    var start = { //找到开始点的位置，大小
+        x: e.touches[0].clientX - 50,
+        y: e.touches[0].clientY - 50,
+        width: 100,
+        height: 100
+      },
+      temp_ghost = {
+        id: that.data.add_num,
+
+      }; //数组的复制
+    var str = 'ghost_arr[' + that.data.add_num + ']';
+    that.data.add_num++;
+    var _p = new parabola({
+      start: start,
+      end: this.data.end,
+      callback: function (x, y, w, h) {
+        temp_ghost.x = x;
+        temp_ghost.y = y;
+        temp_ghost.w = w;
+        temp_ghost.h = h;
+        temp_ghost.img = e.target.dataset.img;
+        that.setData({
+          [str]: temp_ghost
+        });
+      },
+      finish: function () {
+        that.data.sub_num++;
+        if (that.data.add_num == that.data.sub_num) { //全部完成了
+          that.data.sub_num = 0;
+          that.data.add_num = 0;
+          that.setData({ //清空ghost数组
+            ghost_arr: []
+          })
+        }
+        that.setData({
+          all_num: that.data.all_num + 1
+        })
+      }
+    });
+    _p.run();
+  },
+  toReadBag: function () {
+    loadingfunc();
+    wx.navigateTo({
+      url: '/pages/couponlist/couponlist'
+    })
+  },
+  toSearMsg: function () {
+    loadingfunc();
+    wx.navigateTo({
+      url: '/pages/searMsg/searMsg'
+    })
+  },
+  toSiteMsg: function () {
+    loadingfunc();
+    wx.navigateTo({
+      url: '/pages/siteMsg/siteMsg'
+    })
+  },
+
+
+
+
+
+  // 选择城市picker
+  bindPickerChange: function (e) {
+    const that = this;
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      index: e.detail.value
+    })
+    console.log(that.data.multiArray)
+    console.log(that.data.array)
+    wx.setStorageSync('address', that.data.multiArray[e.detail.value].name);
+    wx.setStorageSync('addressCode', that.data.multiArray[e.detail.value].code);
+    wx.setStorageSync('addressId', that.data.multiArray[e.detail.value].id);
+    this.setData({
+      addressStatus: 1
+    })
+    
+    that.index(that); // 首页
+    that.miaosha(that); // 秒杀商品
+  },
+
+
+
+
 })

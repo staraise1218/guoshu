@@ -2,5 +2,7 @@
   "usingComponents": {
     "van-card": "/src/dist/card/index",
     "gf-com":"/components/commodityList/comList",
-    "gf-rec":"/components/recommend/rec"}
+    "gf-rec":"/components/recommend/rec",
+    "van-field": "/src/dist/field/index"
+  }
 }

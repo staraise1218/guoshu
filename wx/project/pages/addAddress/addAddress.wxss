@@ -1,3 +1,9 @@
+.container {
+    z-index: -1;
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+}
 .edit-item {
     position: relative;
     font-size: 26rpx;
@@ -7,16 +13,32 @@
 }
 .right {
     font-size: 26rpx;
+    flex: 1
+}
+.van-field__input {
+    width:100% !important;
+    padding-left:20rpx !important;
+    font-size:26rpx !important;
+    height: 30rpx !important;
+    line-height: 30rpx !important;
+}
+.van-cell {
+    padding: 0rpx 0rpx !important;
+}
+.van-field__input {
+    min-height: 0;
 }
 
 .icon-loaction {
     position: absolute;
     width: 25rpx !important;
     align-self: center;
+    height: 30rpx;
 }
 .location {
     display: flex;
     width: 450rpx;
+    margin-right: 40rpx;
 }
 .location-info {
     margin-left: 50rpx;
@@ -31,12 +53,31 @@
     transform: translateY(-50%);
     content: "";
     display: block;
-    background-image: url('http://img.hb.aicdn.com/3bc04df372e9e3f66421a5573743687437b517954fb-sgjpU5_fw658');
     background-size: cover;
     width: 50rpx;
     height: 50rpx;
 }
-
+.more {
+    position: absolute;
+    right: 10rpx;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 60rpx;
+    height: 80rpx;
+    z-index: 10;
+}
+.more::after {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    content: "";
+    display: block;
+    /* background-image: url('http://img.hb.aicdn.com/3bc04df372e9e3f66421a5573743687437b517954fb-sgjpU5_fw658'); */
+    background-size: cover;
+    width: 50rpx;
+    height: 50rpx;
+}
 
 .save {
     background: #F65C3A;
@@ -46,4 +87,95 @@
     position: absolute;
     left: 2.5%;
     font-size: 32rpx;
+}
+input {
+    width: 100%;
+}
+
+/* ================= 
+ *  选择城市相关
+ * ==================
+ */
+.alert-wrapper {
+    width: 100%;
+    height: 100vh;
+    background: rgba(0,0,0,.5);
+    position: fixed;
+    left: 0;
+    top: 0;
+
+}
+.cityshow-alert {
+    position: fixed;
+    left: 49.5%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 999;
+    background: #fff;
+    display: flex;
+    width: 95%;
+    height: 800rpx;
+    border-radius: 15rpx;
+    overflow: hidden;
+}
+.cityshow-alert .left, 
+.cityshow-alert .center, 
+.cityshow-alert .right {
+    flex: 1;
+    font-weight: 400;
+    font-size: 22rpx;
+    text-align: center;
+    height: 720rpx;
+    padding-bottom: 40rpx;
+}
+.cityshow-alert .content {
+    line-height: 60rpx;
+    border-left: 10rpx solid transparent;
+    box-sizing: border-box;
+    text-align: center;
+}
+.cityshow-alert .active {
+    background: #eee;
+    border-left: 10rpx solid #FC5453
+}
+
+.city-btn_ {
+    position: fixed;
+    bottom: 20rpx;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 200rpx;
+    background: rgba(0,200,0,1);
+    z-index: 999;
+    color: #fff;
+    text-align: center;
+    font-size: 26rpx;
+    border-radius: 10rpx;
+    padding: 20rpx;
+    margin: 0;
+}
+.btn-wrapper {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    font-size: 32rpx;
+    border-top: 1rpx solid rgba(0,0,0,.1);
+}
+.btn-wrapper view {
+    text-align: center;
+    flex: 1;
+    height: 80rpx;
+    line-height: 80rpx;
+}
+.btn-wrapper .cancel {
+    background: #eee;
+}
+.btn-wrapper .ok {
+    background: #FF8A00;
+    color: #fff;
 }

@@ -15,6 +15,7 @@ Page({
     name: '',
     phone: '',
     code: '',
+    index: 0
 
   },
   onLoad: function (options) {
@@ -26,58 +27,67 @@ Page({
    */
   sondCode: function () {
     let that = this;
+    console.log(that.data.phone)
     console.log('发送验证码！')
-    wx.request({
-      url: Globalhost + 'api/auth/sendMobileCode',
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      data: {
-        mobile: that.data.phone,
-        scene: 4
-      },
-      success: function (res) {
-        console.log(res)
-        let code = res.data.data.code
-        wx.showModal({
-          title: '温馨提示',
-          content: '您的验证码为' + code,
-          success(res) {
-            if (res.confirm) {
-              console.log('验证码',code)
-            }
-          }
-        })
-      }
-    })
+    if((/(^1[3|4|5|7|8]\d{9}$)/.test(that.data.phone))) {
+      wx.request({
+        url: Globalhost + 'api/auth/sendMobileCode',
+        method: 'POST',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        data: {
+          mobile: that.data.phone,
+          scene: 4
+        },
+        success: function (res) {
+          console.log(res)
+          // let code = res.data.data.code
+          // wx.showModal({
+          //   title: '温馨提示',
+          //   content: '您的验证码为' + code,
+          //   success(res) {
+          //     if (res.confirm) {
+          //       console.log('验证码',code)
+          //     }
+          //   }
+          // })
+        }
+      })
+    } else {
+      wx.showToast({
+        title: '请输入正确的手机号',
+        icon: 'none'
+      })
+
+    }
   },
   // 姓名
   changUserName: function (e) {
-    console.log(e.detail.value)
+    console.log(e.detail)
     this.setData({
-      name: e.detail.value
+      name: e.detail
     })
   },
   // 手机号
   changPhone: function (e) {
-    console.log(e.detail.value)
+    console.log(e.detail)
     this.setData({
-      phone: e.detail.value
+      phone: e.detail
     })
   },
   // 验证码
   changCode: function (e) {
-    console.log(e.detail.value)
+    console.log(e.detail)
     this.setData({
-      code: e.detail.value
+      code: e.detail
     })
   },
   // 详细地址
   changAddress: function (e) {
-    console.log(e.detail.value)
+    console.log(e.detail)
     this.setData({
-      addressCon: e.detail.value
+      addressCon: e.detail
     })
   },
   /**
@@ -277,18 +287,36 @@ Page({
   },
   location: function (that) {
     wx.request({
-      url: 'https://app.zhuoyumall.com:444/api/region/getJson',
+      url: Globalhost + 'Api/index/getDeliveryCity',
       method: 'POST',
       header: {
         'content-type': 'application/x-www-form-urlencoded'
       },
       success: function (res) {
-        // console.log(res.data.data)
+        console.log(res)
+        var arr = [];
+        for(var i = 0; i < res.data.data.length; i++) {
+          arr[i] = res.data.data[i].name;
+        }
         that.setData({
-          multiArray: res.data.data
+          multiArray: res.data.data,
+          array: arr
         })
       }
     })
+    // wx.request({
+    //   url: 'https://app.zhuoyumall.com:444/api/region/getJson',
+    //   method: 'POST',
+    //   header: {
+    //     'content-type': 'application/x-www-form-urlencoded'
+    //   },
+    //   success: function (res) {
+    //     // console.log(res.data.data)
+    //     that.setData({
+    //       multiArray: res.data.data
+    //     })
+    //   }
+    // })
   },
 
 
@@ -305,6 +333,16 @@ Page({
 
 
 
+
+  // 选择城市picker
+  bindPickerChange: function (e) {
+    const that = this;
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      index: e.detail.value,
+      codeChange: that.data.multiArray[e.detail.value].code 
+    })
+  },
 
 
 

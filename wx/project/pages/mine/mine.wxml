@@ -4,11 +4,11 @@
     </view>
     <view class="user-info">
         <view class="icon-header">
-            <image class="user-img" style="width: 100%" mode="widthFix" src="{{head_pic}}" bindtap="toUserinfo" />
+            <image class="user-img" style="width: 100%"  src="{{head_pic}}"  bindtap="toUserinfo"/>
         </view>
-        <view class="user-name">{{nickname}}</view>
+        <view class="user-name"  bindtap="toUserinfo">{{nickname}}</view>
     </view>
-    <view class="header-info">
+    <view class="header-info"  >
         <block wx:for="{{infoMsg}}" wx:key="item">
             <view class="info-item" bindtap="{{item.func}}">
                 <view class="title" style="font-weight: 400">{{item.num}}</view>
@@ -77,3 +77,36 @@
 </view>
 <!-- 我的服务 END -->
 
+
+
+
+<!-- footer -->
+<view class="footer" wx:if="{{false}}">
+  <view class="item-bar" data-link='index' bindtap="LINK">
+    <image class="bar-icon" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/shouye-pre.png" />
+    <!-- <image class="bar-icon" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/shouye.png" /> -->
+    <view class="title-bar ">首页</view>
+  </view>
+  <view class="item-bar" data-link='classification' bindtap="LINK">
+    <image class="bar-icon" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/fenlei-pre.png" />
+    <!-- <image class="bar-icon" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/fenlei.png" /> -->
+    <view class="title-bar">分类</view>
+  </view>
+  <view class="item-bar" data-link='group' bindtap="LINK">
+    <!-- <image  class="group-icon" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/tuangou.png" /> -->
+    <image class="group-icon" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/tuangou.png" />
+    <view class="title-bar shopcart-title">团购</view>
+  </view>
+  <view class="item-bar shopcart-icon" data-link='shoppingCart' bindtap="LINK">
+    <image class="bar-icon" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/gouwuche拷贝3@2x.png" />
+    <!-- <image class="bar-icon" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/gouwuche拷贝3-1@2x.png" /> -->
+    <view class="title-bar ">购物车</view>
+    <i wx:if="{{cart_num > 0}}" class="shopcart-num">{{cart_num}}</i>
+  </view>
+  <view class="item-bar" data-link='mine' bindtap="LINK">
+    <!-- <image class="bar-icon" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/wode@2x.png" /> -->
+    <image class="bar-icon" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/wode.png" />
+    <view class="title-bar active">我的</view>
+  </view>
+</view>
+<!-- footer END -->

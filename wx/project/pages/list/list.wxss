@@ -1,0 +1,32 @@
+
+
+.top-wrap-item {
+    width: 200rpx;
+    overflow: hidden;
+    padding: 20rpx;
+}
+.top-wrap-item .icon-poster {
+    max-width: 100%;
+}
+
+.poster-wrap {
+    width: 180rpx;
+    margin: 0 auto;
+    text-align: center;
+    
+}
+.shoppint-box {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 10rpx;
+    box-sizing: border-box;
+}
+
+
+
+
+
+
+
+
+

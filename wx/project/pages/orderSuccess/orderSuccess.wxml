@@ -36,7 +36,7 @@
 <block wx:for="{{msg.goods_list}}" wx:key>
     <view class="list-item margin-lr-30 padding-30 between-center border-bottom">
         <view class="left">
-            <image mode="widthFix" class="item-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+            <image mode="" class="item-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
         </view>
         <view class="right">
             <view class="left-center item-con">
@@ -162,14 +162,20 @@
         class="pay" 
         wx:if="{{msg.comment_btn==1}}" 
         data-orderid="{{msg.order_id}}"
+        data-ordersn="{{msg.order_sn}}"
         bindtap="toComment">
         评价
     </view>
-    <view class="cancel margin-right-20" wx:if="{{msg.cancel_btn==1}}" bindtap="toCancel">取消订单</view>
+    <view class="cancel margin-right-20" 
+        wx:if="{{msg.cancel_btn==1}}" 
+        data-orderid="{{msg.order_id}}"
+        data-ordersn="{{msg.order_sn}}"
+        bindtap="toCancel">取消订单</view>
     <view 
         class="pay" 
         wx:if="{{msg.pay_btn==1}}"
         data-orderid="{{msg.order_id}}"
+        data-ordersn="{{msg.order_sn}}"
         bindtap="toPay">
         付款
     </view>
@@ -177,6 +183,7 @@
         class="pay" 
         wx:if="{{msg.del_btn==1}}"
         data-orderid="{{msg.order_id}}"
+        data-ordersn="{{msg.order_sn}}"
         bindtap="toDelete">
         删除订单
     </view>
@@ -184,9 +191,14 @@
         class="pay" 
         wx:if="{{msg.receive_btn==1}}"
         data-orderid="{{msg.order_id}}"
+        data-ordersn="{{msg.order_sn}}"
         bindtap="toReceive">
         确认收货
     </view>
 
     
+</view>
+
+<view class="toHome" bindtap="toHome">
+    <image src="https://app.zhuoyumall.com:444/wx/img/home.png" />
 </view>
