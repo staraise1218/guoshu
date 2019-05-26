@@ -17,7 +17,7 @@
     </view>
 </block> -->
     <block wx:for="{{StoreList}}" wx:key>
-        <view wx:if="{{item.pickup_id == options.Store_id}}" class="address-wrapper">
+        <view wx:if="{{item.pickup_id == pickup_id}}" class="address-wrapper">
             <view class="left">
                 <image class="icon-2" mode="widthFix" src="https://hbimg.huabanimg.com/94fede0dd495760802a3c29889a95c227cde1bbfa19-cizqzZ_fw658" />
             </view>
@@ -64,14 +64,14 @@
     </view>
     <view class="title-3_f">0</view>
 </view> -->
-    <view wx:if="{{CouponList.length != 0}}" class="border-bottom padding-tb-30 margin-lr-30 padding-right-50 between-center more-0" catchtap="toYouHui">
+    <view wx:if="{{couponList != -1}}" class="border-bottom padding-tb-30 margin-lr-30 padding-right-50 between-center more-0" catchtap="toYouHui">
         <view class="title-3 left-center">
             <image class="icon-3 margin-right-20" mode="widthFix" src="http://img.hb.aicdn.com/81716659127cb51c349ebe3d734efe5bf57335164f7-m4GiTZ_fw658" />
             红包
         </view>
         <!-- <view class="price-color" data-id="{{CouponList[0].coupon.id}}" style="font-size:26rpx;">{{CouponList[CouponIndex].coupon.money}} </view> -->
-        <block wx:for="{{CouponList}}" wx:key>
-            <view wx:if="{{item.id == Coupon_id}}" class="price-color" data-id="{{item.id}}" style="font-size:26rpx;">
+        <block wx:for="{{couponList}}" wx:key>
+            <view wx:if="{{item.id == coupon_id}}" class="price-color" data-id="{{item.id}}" style="font-size:26rpx;">
                 {{item.coupon.money}}
             </view>
         </block>

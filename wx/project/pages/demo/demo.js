@@ -79,6 +79,13 @@ Page({
     //   }
     // }
 
+    that.setData({
+      PAYSTATUS: wx.getStorageSync('PAYSTATUS'),
+      send_method: wx.getStorageSync('send_method')
+    })
+    if(wx.getStorageSync('send_method') == 2) {
+      that.loadList(that)
+    }
     var posdata2 = {};
     switch (wx.getStorageSync('PAYSTATUS')) {
       case 0:
@@ -88,6 +95,9 @@ Page({
         }
         break;
       case 1:
+        that.setData({
+          pickup_id: wx.getStorageSync('pickup_id')
+        })
         posdata2 = {
           action: 'cart',
           user_id: wx.getStorageSync('user_id')
@@ -102,6 +112,9 @@ Page({
         }
         break;
       case 3:
+        that.setData({
+          pickup_id: wx.getStorageSync('pickup_id')
+        })
         posdata2 = {
           action: 'buy_now',
           user_id: wx.getStorageSync('user_id'),
@@ -113,7 +126,7 @@ Page({
     that.cart2(that, posdata2);
 
 
-
+    
 
 
 
@@ -135,6 +148,17 @@ Page({
       data: posdata2,
       success: function (res) {
         console.log(res)
+        if(res.data.data.couponList == 0) {
+          that.setData({
+            couponList: -1,
+            coupon_id: -1
+          })
+        } else {
+          that.setData({
+            couponList: res.data.data.couponList,
+            coupon_id: res.data.data.couponList[0].id
+          })
+        }
         if (res.data.data.address.length == 0) {
           wx.showModal({
             title: '未设置地址',
@@ -279,14 +303,16 @@ Page({
   },
 
   // 自提点列表
-  loadList: function (that, posdata) {
+  loadList: function (that) {
+    let getPickupListData = wx.getStorageSync('getPickupListData');
+    getPickupListData = JSON.parse(getPickupListData)
     wx.request({
       url: Globalhost + 'Api/cart/getPickupList',
       method: 'POST',
       header: {
         'content-type': 'application/x-www-form-urlencoded'
       },
-      data: posdata,
+      data: getPickupListData,
       success: function (res) {
         console.log(res)
         if (res.data.code == 200) {
@@ -449,8 +475,9 @@ Page({
     console.log(e.currentTarget.dataset.id)
     this.setData({
       storeListShow: false,
-      'options.Store_id': e.currentTarget.dataset.id
+      'pickup_id': e.currentTarget.dataset.id
     })
+    wx.setStorageSync('pickup_id', e.currentTarget.dataset.id);
   },
   closePickup: function () {
     this.setData({
@@ -518,6 +545,11 @@ Page({
         break;
       case 'yue': // 余额支付
         payData.payMethod = 'money';
+        payData = JSON.stringify(payData);
+        console.log(payData)
+        that.setData({
+          payData: payData
+        })
         that.setData({
           wxShow: true,
           wallets_password: ''
@@ -810,6 +842,7 @@ Page({
       //     delivery_code: wx.getStorageSync('addressCode')
       //   }
       // }
+      console.log(yueData)
       wx.request({
         url: '',
         url: Globalhost + 'Api/cart/cart3',
@@ -821,6 +854,9 @@ Page({
         success: function (res) {
           // let ordermsg = res.data.data;
           console.log(res)
+          wx.setStorageSync('order_amount', res.data.data.order_amount);
+          wx.setStorageSync('order_id', res.data.data.order_id);
+          wx.setStorageSync('order_sn', res.data.data.order_sn);
           if (res.data.code == 400) {
             if (res.data.msg == "余额不足") {
               wx.showToast({
