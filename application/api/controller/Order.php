@@ -334,6 +334,7 @@ class Order extends Base
 
     /**
     * 取消订单
+    * * 取消订单，未支付时取消变为作废订单，已支付时取消，订单变为退款单
     */
     public function cancel_order()
     {
