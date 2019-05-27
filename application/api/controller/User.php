@@ -171,7 +171,7 @@ class User extends Base {
             ->limit(20)
             ->fetchSql()
             ->select();
-
+p($list);
         if(!empty($list)){
             foreach ($list as &$item) {
                 $count =  Db::name('coupon_list')
