@@ -38,9 +38,9 @@ class OrderLogic
 		}
 		// 根据订单支付状态判断，是变更为取消还是作废
 		if($order['pay_status'] == 0){
-			$changeOrderStatusTo = 3;
-		} else if($order['pay_status'] == 1 && $order['shipping_status'] == 0) {
 			$changeOrderStatusTo = 5;
+		} else if($order['pay_status'] == 1 && $order['shipping_status'] == 0) {
+			$changeOrderStatusTo = 3;
 		} else {
 			return array('status'=>-1,'msg'=>'订单状态不允许','result'=>'');
 		}
