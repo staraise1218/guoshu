@@ -24,7 +24,7 @@ class Order extends Base
      * 订单列表
      * @return mixed
      * @param  $[type] [< 待付款：WAITPAY，待发货：WAITSEND， 待收货：WAITRECEIVE，待评价：WAITCCOMMENT , 退货退款 RETURNBACK >]
-     * @param [type] $[name] [客户自定义：未支付：WAITPAY， 已支付：PAIED， 待评价：WAITCCOMMENT， 退款：REFUND]
+     * @param [type] $[name] [客户自定义：未支付： WAITPAY  已支付： PAIED ， 待评价： WAITCCOMMENT， 退款： REFUND]
      */
     public function order_list()
     {
@@ -36,15 +36,14 @@ class Order extends Base
         //条件搜索
         if($type) $where .= C(strtoupper(I('get.type')));
         $where.=' and prom_type < 5 ';//虚拟订单和拼团订单不列出来
-        // $count = M('order')->where($where)->count();
-        // $Page = new Page($count, 10);
-        // $show = $Page->show();
+        
         $order_str = "order_id DESC";
         $order_list = M('order')
             ->order($order_str)
             ->where($where)
             ->page($page)
             ->limit(20)
+            // ->fetchSql(true)
             ->select();
 
         //获取订单商品

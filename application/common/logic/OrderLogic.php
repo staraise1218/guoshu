@@ -36,39 +36,43 @@ class OrderLogic
 		if($order['order_status'] == 3){
 			return array('status'=>-1,'msg'=>'该订单已取消','result'=>'');
 		}
-		//检查是否未支付的订单
-		if($order['pay_status'] > 0 || $order['order_status'] > 0)
-			return array('status'=>-1,'msg'=>'支付状态或订单状态不允许','result'=>'');
-		//获取记录表信息
-		//$log = M('account_log')->where(array('order_id'=>$order_id))->find();
-		//有余额支付的情况
-		// if($order['user_money'] > 0 || $order['integral'] > 0){
-		// 	accountLog($user_id,$order['user_money'],$order['integral'],"订单取消，退回{$order['user_money']}元",0,$order['order_id'],$order['order_sn']);
-		// }
 
-		// 退回优惠券
-		// if($order['coupon_price'] >0){
-		// 	$res = array('use_time'=>0,'status'=>0,'order_id'=>0);
-		// 	M('coupon_list')->where(array('order_id'=>$order_id,'uid'=>$user_id))->save($res);
-		// }
-
-		$row = M('order')->where(array('order_id'=>$order_id,'user_id'=>$user_id))->save(array('order_status'=>3));
-		$reduce = tpCache('shopping.reduce');
-		if($reduce == 1 || empty($reduce)){
-			$this->alterReturnGoodsInventory($order);
+		if($order['order_status'] > 0) return array('status'=>-1,'msg'=>'订单状态不允许','result'=>'');
+		
+		// 根据订单支付状态判断，是变更为取消还是作废
+		if($order['pay_status'] == 0){
+			$changeOrderStatusTo = 5;
+		} else if($order['pay_status'] == 1 && $order['shipping_status'] == 0) {
+			$changeOrderStatusTo = 3;
 		}
-		$data['order_id'] = $order_id;
-		$data['action_user'] = 0;
-		$data['action_note'] = $action_note;
-		$data['order_status'] = 3;
-		$data['pay_status'] = $order['pay_status'];
-		$data['shipping_status'] = $order['shipping_status'];
-		$data['log_time'] = time();
-		$data['status_desc'] = '用户取消订单';
-		M('order_action')->add($data);//订单操作记录
-		if(!$row)
-			return array('status'=>-1,'msg'=>'操作失败','result'=>'');
-		return array('status'=>1,'msg'=>'操作成功','result'=>'');
+
+
+
+		if($order['order_status'] == $changeOrderStatusTo) return array('status'=>-1, 'msg'=>'订单状态已变更', 'result' => '');
+
+		$row = M('order')->where(array('order_id'=>$order_id,'user_id'=>$user_id))->save(array('order_status'=>$changeOrderStatusTo));
+
+		
+		
+		if(false !== $row){
+			$reduce = tpCache('shopping.reduce');
+			if(($reduce == 1 || empty($reduce)) && $changeOrderStatusTo == 5){
+				$this->alterReturnGoodsInventory($order);
+			}
+
+			$data['order_id'] = $order_id;
+			$data['action_user'] = 0;
+			$data['action_note'] = $action_note;
+			$data['order_status'] = $changeOrderStatusTo;
+			$data['pay_status'] = $order['pay_status'];
+			$data['shipping_status'] = $order['shipping_status'];
+			$data['log_time'] = time();
+			$data['status_desc'] = '用户取消订单';
+			M('order_action')->add($data);//订单操作记录
+
+			return array('status'=>-1,'msg'=>'操作成功','result'=>'');
+		}
+		return array('status'=>1,'msg'=>'操作失败','result'=>'');
 
 	}
 

@@ -204,10 +204,22 @@ class Promotion extends Base
 
     public function group_buy_list()
     {
-        $GroupBuy = new GroupBuy();
-        $count = $GroupBuy->where('')->count();
+        // 配送点筛选
+        if($this->role_id == 2){
+            $condition['g.city_code'] = $this->adminInfo['city_code'];
+        }
+
+        $count = Db::name('group_buy')->alias('gb')
+            ->join('goods g', 'gb.goods_id=g.goods_id')->count();
         $Page = new Page($count, 10);
-        $list = $GroupBuy->where('')->order('id desc')->limit($Page->firstRow . ',' . $Page->listRows)->select();
+        $show = $Page->show();
+
+        $list = Db::name('group_buy')->alias('gb')
+            ->join('goods g', 'gb.goods_id=g.goods_id')
+            ->where($condition)
+            ->order("id desc")
+            ->limit($Page->firstRow . ',' . $Page->listRows)
+            ->select();
         $this->assign('list', $list);
         $this->assign('page', $Page);
         return $this->fetch();
