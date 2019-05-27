@@ -348,7 +348,6 @@ class Cart extends Base {
         $address = Db::name('UserAddress')->where("address_id", $address_id)->find();
         $cartLogic = new CartLogic();
         $pay = new Pay();
-        response_error('', $address_id);
         try {
             $cartLogic->setUserId($user_id);
             $pay->setUserId($user_id);
