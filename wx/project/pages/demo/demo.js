@@ -26,7 +26,8 @@ Page({
     actual_fee: 20, //待支付
     wallets_password_flag: false, //密码输入遮罩
     storeListShow: false,
-    addressListShow: false
+    addressListShow: false,
+    hongbaoShow: false
   },
   onLoad: function (options) {
     let that = this;
@@ -176,57 +177,8 @@ Page({
               }
             }
           })
-
         }
-        // let options = that.data.options;
-        // if (options.options) {
-        //   options.options = JSON.parse(options.options)
-        // }
         if (res.data.code == 200) {
-
-          // if (that.data.options.Store_id) { // 自提点id
-          // if (options.page == "commodityDeatils") { // 立即购买
-          //     posdata3 = {
-          //       user_id: wx.getStorageSync('user_id'), // 用户id
-          //       address_id: res.data.data.address.address_id || 0, // 地址id
-          //       user_money: 0, // 使用的余额数
-          //       action: 'buy_now', // 动作：立即购买：buy_now 购物车结算：cart
-          //       send_method: 2, // 提交订单参数，配送方式 1 送货上门 2 门店自取
-          //       pickup_id: that.data.options.Store_id,
-          //       goods_num: 1,
-          //       goods_id: options.options.goodId,
-          //     }
-          //   } else { // 购物车
-          //     posdata3 = {
-          //       user_id: wx.getStorageSync('user_id'), // 用户id
-          //       address_id: res.data.data.address.address_id || 0, // 地址id
-          //       user_money: 0, // 使用的余额数
-          //       action: 'cart', // 动作：立即购买：buy_now 购物车结算：cart
-          //       send_method: 2, // 提交订单参数，配送方式 1 送货上门 2 门店自取
-          //       pickup_id: that.data.options.Store_id,
-          //     }
-          //   }
-          //   // that.loadList(that);
-          // } else { // 配送
-          //   console.log(res)
-          //   posdata3 = {
-          //     user_id: wx.getStorageSync('user_id'), // 用户id
-          //     address_id: res.data.data.address.address_id || 0, // 地址id
-          //     user_money: 0, // 使用的余额数
-          //     action: options.action, // 动作：立即购买：buy_now 购物车结算：cart
-          //     send_method: options.send_method, // 提交订单参数，配送方式 1 送货上门 2 门店自取
-          //     goods_id: options.goodId,
-          //     goods_num: 1,
-          //   }
-          // }
-          // if (res.data.data.couponList.length > 0) {
-          //   posdata3.coupon_id = res.data.data.couponList[0].id // 优惠券id
-          //   that.setData({
-          //     CouponList: res.data.data.couponList || [], // 优惠券列表
-          //     Coupon_id: res.data.data.couponList[0].id || '', // 选中优惠券id【默认第一个】
-          //   })
-          // }
-          // }
           let posdata3 = {}
           that.setData({
             Address: res.data.data.address, // 地址
@@ -273,11 +225,13 @@ Page({
               break;
           }
           try {
-            posdata3.coupon_id = res.data.data.couponList[0].id
+            posdata3.coupon_id = that.data.coupon_id||res.data.data.couponList[0].id
           } catch (error) {
             console.log(error)
           }
-
+          that.setData({
+            posdata3: posdata3
+          })
           that.cart3(that, posdata3)
 
         }
@@ -348,34 +302,58 @@ Page({
   toYouHui: function (e) {
     let that = this;
     console.log(that.data.CouponList)
-    var arr = [];
-    for (var i = 0; i < that.data.CouponList.length; i++) {
-      arr[i] = that.data.CouponList[i].coupon.money
-    }
-    wx.showActionSheet({
-      itemList: arr,
-      success(res) {
-        console.log(that.data.CouponList)
-        console.log(res.tapIndex)
-        for (var j = 0; j < that.data.CouponList.length; j++) {
-          that.setData({
-            Coupon_id: that.data.CouponList[res.tapIndex].id
-          })
-        }
-        that.setData({
-          'posdata3.coupon_id': that.data.CouponList[res.tapIndex].id,
-        })
-        setTimeout(() => {
-          that.cart3(that, that.data.posdata3);
-        }, 200);
-      },
-      fail(res) {
-        console.log(res.errMsg)
-        wx.showToast({
-          title: '没有其他可用红包',
-          icon: 'none'
-        })
-      }
+    that.setData({
+      hongbaoShow: true
+    })
+    // var arr = [];
+    // for (var i = 0; i < that.data.CouponList.length; i++) {
+    //   arr[i] = that.data.CouponList[i].coupon.money
+    // }
+    // wx.showActionSheet({
+    //   itemList: arr,
+    //   success(res) {
+    //     console.log(that.data.CouponList)
+    //     console.log(res.tapIndex)
+    //     for (var j = 0; j < that.data.CouponList.length; j++) {
+    //       that.setData({
+    //         Coupon_id: that.data.CouponList[res.tapIndex].id
+    //       })
+    //     }
+    //     that.setData({
+    //       'posdata3.coupon_id': that.data.CouponList[res.tapIndex].id,
+    //     })
+    //     setTimeout(() => {
+    //       that.cart3(that, that.data.posdata3);
+    //     }, 200);
+    //   },
+    //   fail(res) {
+    //     console.log(res.errMsg)
+    //     wx.showToast({
+    //       title: '没有其他可用红包',
+    //       icon: 'none'
+    //     })
+    //   }
+    // })
+  },
+  alertHongBao: function () {
+    this.setData({
+      hongbaoShow: true
+    })
+  },
+  chooseHongBao(e) {
+    let that = this;
+    console.log(e.currentTarget.dataset.id)
+    this.setData({
+      coupon_id: e.currentTarget.dataset.id,
+      hongbaoShow: false
+    })
+    let posdata3 = that.data.posdata3;
+    posdata3.coupon_id = e.currentTarget.dataset.id;
+    that.cart3(that, posdata3)
+  },
+  closeHongBao: function (e) {
+    this.setData({
+      hongbaoShow: false
     })
   },
   /**
@@ -495,6 +473,7 @@ Page({
             address_id: that.data.Address_id,
             action: 'cart',
             dosubmit: 1,
+            coupon_id: that.data.coupon_id,
             send_method: 1,
             delivery_code: wx.getStorageSync('addressCode')
           }
@@ -505,6 +484,7 @@ Page({
             address_id: that.data.Address_id,
             action: 'cart',
             dosubmit: 1,
+            coupon_id: that.data.coupon_id,
             send_method: 2,
             pickup_id: wx.getStorageSync('pickup_id'),
             delivery_code: wx.getStorageSync('addressCode')
@@ -518,6 +498,7 @@ Page({
             goods_id: wx.getStorageSync('goods_id'),
             goods_num: wx.getStorageSync('goods_num'),
             dosubmit: 1,
+            coupon_id: that.data.coupon_id,
             send_method: 1,
             pickup_id: wx.getStorageSync('pickup_id'),
             delivery_code: wx.getStorageSync('addressCode')
@@ -530,6 +511,7 @@ Page({
             action: 'buy_now',
             goods_id: wx.getStorageSync('goods_id'),
             goods_num: wx.getStorageSync('goods_num'),
+            coupon_id: that.data.coupon_id,
             dosubmit: 1,
             send_method: 2,
             pickup_id: wx.getStorageSync('pickup_id'),
@@ -681,6 +663,11 @@ Page({
           wx.setStorageSync('order_id', res.data.data.order_id);
           wx.setStorageSync('order_sn', res.data.data.order_sn);
           that.wxPay(that);
+        } else {
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'none'
+          })
         }
       }
     })
@@ -737,8 +724,6 @@ Page({
   yuePay: function (that, payData) {
 
   },
-
-
   set_wallets_password(e) { //获取钱包密码
     let that = this;
     this.setData({
@@ -760,6 +745,7 @@ Page({
               dosubmit: 1,
               send_method: 1,
               payMethod: 'money',
+              coupon_id: that.data.coupon_id,
               payPwd: this.data.wallets_password,
               delivery_code: wx.getStorageSync('addressCode')
             }
@@ -772,6 +758,7 @@ Page({
               dosubmit: 1,
               send_method: 2,
               payMethod: 'money',
+              coupon_id: that.data.coupon_id,
               pickup_id: wx.getStorageSync('pickup_id'),
               payPwd: this.data.wallets_password,
               delivery_code: wx.getStorageSync('addressCode')
@@ -785,6 +772,7 @@ Page({
               goods_id: wx.getStorageSync('goods_id'),
               goods_num: wx.getStorageSync('goods_num'),
               dosubmit: 1,
+              coupon_id: that.data.coupon_id,
               send_method: 1,
               payMethod: 'money',
               pickup_id: wx.getStorageSync('pickup_id'),
@@ -800,6 +788,7 @@ Page({
               goods_id: wx.getStorageSync('goods_id'),
               goods_num: wx.getStorageSync('goods_num'),
               dosubmit: 1,
+              coupon_id: that.data.coupon_id,
               send_method: 2,
               payMethod: 'money',
               pickup_id: wx.getStorageSync('pickup_id'),
@@ -808,40 +797,6 @@ Page({
             }
             break;
       }
-
-
-
-
-      // if (that.data.options.page == "commodityDeatils") {
-      //   posdata = {
-      //     user_id: wx.getStorageSync('user_id'),
-      //     address_id: that.data.Address_id,
-      //     coupon_id: that.data.Coupon_id,
-      //     user_money: 0,
-      //     action: 'buy_now',
-      //     goods_id: that.data.options.goodId,
-      //     goods_num: 1,
-      //     dosubmit: 1,
-      //     send_method: that.data.options.send_method,
-      //     payMethod: 'money',
-      //     payPwd: this.data.wallets_password,
-      //     delivery_code: wx.getStorageSync('addressCode')
-      //   }
-      // } else if (that.data.options.page == "shoppingCart") {
-      //   posdata = {
-      //     user_id: wx.getStorageSync('user_id'),
-      //     address_id: that.data.Address_id,
-      //     coupon_id: that.data.Coupon_id,
-      //     user_money: 0,
-      //     action: 'cart',
-      //     goods_num: 1,
-      //     dosubmit: 1,
-      //     send_method: that.data.options.send_method,
-      //     payMethod: 'money',
-      //     payPwd: this.data.wallets_password,
-      //     delivery_code: wx.getStorageSync('addressCode')
-      //   }
-      // }
       console.log(yueData)
       wx.request({
         url: '',
@@ -857,35 +812,6 @@ Page({
           wx.setStorageSync('order_amount', res.data.data.order_amount);
           wx.setStorageSync('order_id', res.data.data.order_id);
           wx.setStorageSync('order_sn', res.data.data.order_sn);
-          if (res.data.code == 400) {
-            if (res.data.msg == "余额不足") {
-              wx.showToast({
-                title: '余额不足',
-                icon: 'none'
-              })
-            } else if (res.data.msg == '请先设置支付密码') {
-              wx.showModal({
-                title: '请先设置支付密码',
-                confirmText: '去设置',
-                cancelText: '取消',
-                success(res) {
-                  if (res.confirm) {
-                    console.log('用户点击确定')
-                    wx.navigateTo({
-                      url: '/pages/password/password'
-                    })
-                  } else if (res.cancel) {
-                    console.log('用户点击取消')
-                  }
-                }
-              })
-            } else {
-              wx.showToast({
-                title: res.data.msg,
-                icon: 'none'
-              })
-            }
-          }
           if (res.data.code == 200) {
             wx.request({
               url: Globalhost + 'api/pay/topay',
@@ -903,7 +829,11 @@ Page({
                 })
               }
             })
-
+          } else {
+            wx.showToast({
+              title: res.data.msg,
+              icon: 'none'
+            })
           }
         }
       })

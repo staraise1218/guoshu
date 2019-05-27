@@ -64,7 +64,17 @@
     </view>
     <view class="title-3_f">0</view>
 </view> -->
-    <view wx:if="{{couponList != -1}}" class="border-bottom padding-tb-30 margin-lr-30 padding-right-50 between-center more-0" catchtap="toYouHui">
+    <view wx:if="{{couponList == -1}}" class="border-bottom padding-tb-30 margin-lr-30 padding-right-50 between-center more-0" catchtap="">
+        <view class="title-3 left-center">
+            <image class="icon-3 margin-right-20" mode="widthFix" src="http://img.hb.aicdn.com/81716659127cb51c349ebe3d734efe5bf57335164f7-m4GiTZ_fw658" />
+            红包
+        </view>
+        <!-- <view class="price-color" data-id="{{CouponList[0].coupon.id}}" style="font-size:26rpx;">{{CouponList[CouponIndex].coupon.money}} </view> -->
+            <view  class="price-color" data-id="{{item.id}}" style="font-size:26rpx;">
+                暂无红包
+            </view>
+    </view>
+    <view wx:else class="border-bottom padding-tb-30 margin-lr-30 padding-right-50 between-center more-0" catchtap="alertHongBao">
         <view class="title-3 left-center">
             <image class="icon-3 margin-right-20" mode="widthFix" src="http://img.hb.aicdn.com/81716659127cb51c349ebe3d734efe5bf57335164f7-m4GiTZ_fw658" />
             红包
@@ -75,16 +85,6 @@
                 {{item.coupon.money}}
             </view>
         </block>
-    </view>
-    <view wx:else class="border-bottom padding-tb-30 margin-lr-30 padding-right-50 between-center more-0" catchtap="">
-        <view class="title-3 left-center">
-            <image class="icon-3 margin-right-20" mode="widthFix" src="http://img.hb.aicdn.com/81716659127cb51c349ebe3d734efe5bf57335164f7-m4GiTZ_fw658" />
-            红包
-        </view>
-        <!-- <view class="price-color" data-id="{{CouponList[0].coupon.id}}" style="font-size:26rpx;">{{CouponList[CouponIndex].coupon.money}} </view> -->
-            <view  class="price-color" data-id="{{item.id}}" style="font-size:26rpx;">
-                暂无红包
-            </view>
     </view>
     <view class="padding-30">
         <view class="row">
@@ -202,6 +202,19 @@
     </scroll-view>
 </view>
 
+<!-- 红包选中 -->
+<view class="alert-zitidian" wx:if="{{hongbaoShow}}" catchtap="closeHongBao">
+    <scroll-view  scroll-y class="content">
+        <block wx:for="{{couponList}}" wx:key>
+            <view class="list-item {{item.id == coupon_id ? 'active' : ''}}" data-id="{{item.id}}" catchtap="chooseHongBao">
+                <view class="center">
+                    <view class="name">{{item.coupon.money}}</view>
+                    <view class="con">{{item.coupon.name}}</view>
+                </view>
+            </view>
+        </block>
+    </scroll-view>
+</view>
 
 
 <!-- 地址点选中 -->
@@ -213,6 +226,7 @@
                     <view class="name">{{item.consignee}}</view>
                     <view class="name">{{item.mobile}}</view>
                     <view class="con">{{item.fulladdress}}</view>
+                    <view class="con">{{item.floor}}</view>
                 </view>
                 <view class="right" data-id="{{item.address_id}}" catchtap="toEditAddress">
                     <image src="https://app.zhuoyumall.com:444/wx/img/xiugai.png" />

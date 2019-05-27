@@ -64,6 +64,8 @@ Page({
                   'areaCode[1].code': data.city,
                   'areaCode[2].name': data.district_name,
                   'areaCode[2].code': data.district,
+                  'addressList.latitude': data.latitude,
+                  'addressList.longitude': data.longitude,
                   baseMsg: data
                 })
                 console.log(that.data.addressList)

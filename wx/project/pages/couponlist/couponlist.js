@@ -14,7 +14,7 @@ Page({
   },
   onLoad: function (options) {
     let that = this;
-    that.list(that);
+    // that.list(that);
   },
   onShow: function () {
     let that = this;
