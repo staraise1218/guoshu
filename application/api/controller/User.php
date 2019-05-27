@@ -163,14 +163,16 @@ class User extends Base {
             'status'    => 1,
             'createnum' => ['exp', ' > `send_num`'],
         );
-        $list = Db::name('coupon')
+        $list = Db::name('coupon')->alias('c')
             ->where($where)
+            ->where(function($query) use ($user_id){
+                $query->table('tp_coupon_list')->where('uid', $user_id)->where('cid', 'exp', '=`c`.`id`');
+            }, 'not exists')
             ->field('id, name, money, condition, use_start_time, use_end_time')
             ->order('id desc')
             ->page($page)
             ->limit(20)
             ->select();
-
         if(!empty($list)){
             foreach ($list as &$item) {
                 $count =  Db::name('coupon_list')
