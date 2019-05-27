@@ -43,7 +43,7 @@ class Order extends Base
             ->where($where)
             ->page($page)
             ->limit(20)
-            ->fetchSql(true)
+            // ->fetchSql(true)
             ->select();
 
         //获取订单商品
