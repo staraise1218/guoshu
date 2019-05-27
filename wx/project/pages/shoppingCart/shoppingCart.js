@@ -69,6 +69,8 @@ Page({
    */
   toPay: function () {
     let that = this;
+    // wx.setStorageSync(key, data);
+      
     // console.log(that.data.orderList)
     if (that.data.cartList.length > 0) {
       wx.showModal({
@@ -79,6 +81,7 @@ Page({
         success(res) {
           if (res.confirm) {
             console.log('送货上门')
+            wx.setStorageSync('PAYSTATUS', 0);
             wx.setStorageSync('action', 'cart');
             wx.setStorageSync('send_method', 1);
             wx.navigateTo({
@@ -86,6 +89,7 @@ Page({
             })
           } else if (res.cancel) {
             console.log('门店自取')
+            wx.setStorageSync('PAYSTATUS', 1);
             wx.setStorageSync('action', 'cart');
             wx.setStorageSync('send_method', 2);
             wx.navigateTo({

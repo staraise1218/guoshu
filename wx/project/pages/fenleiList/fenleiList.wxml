@@ -19,8 +19,9 @@
                     </view>
                     <view class="title-3 shop-title">{{item.goods_name}}</view>
                     <view class="title-2_f shop-title">{{item.subtitle}}</view>
-                    <view wx-if="{{item.sales_sum != 0}}" class="title-2_f shop-title">已购 {{item.sales_sum}} 份</view>
-                    <view class="tag-new">{{item.tag}}</view>
+                    <!-- <view wx-if="{{item.virtual_num != 0}}" class="title-2_f shop-title">已购 {{item.virtual_num}} 份</view> -->
+                    <view class="self-flex title-3 margin-bottom-20 "><view class="tag-new">{{item.tag}}</view> <view wx-if="{{item.virtual_num != 0}}" class="selt-right">已购{{item.virtual_num}} 份</view> </view>
+                    <!-- <view class="tag-new">{{item.tag}}</view> -->
                     <view class="bottom">
                         <view class="left-center">
                             <view class="price">{{item.shop_price}}</view>

@@ -24,8 +24,41 @@
             </view>
         </view>
 
-        <swiper class="swiper" current="{{currentTab2}}" duration="300" bindchange="swiperTab2">
-            <!-- 1 -->
+        <view class="swiper">
+                <view class="item-box-1" wx-if="{{currentTab2 == 0}}">
+                    <scroll-view class="scroll-wrapper" scroll-x>
+                        <block wx:for="{{qianggou}}" wx:key>
+                            <view class="scr-item" data-id="{{item.goods_id}}" bindtap="toCon">
+                                <image class="scr-pic" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+                                <view class="title">{{item.goods_name}}</view>
+                                <view class="title">{{item.subtitle}}</view>
+                                <view class="price">￥{{item.price}}</view>
+                                <view class="qiang_btn">马上抢</view>
+                            </view>
+                        </block>
+                    </scroll-view>
+                </view>
+                <view class="item-box-1" wx-if="{{currentTab2 == 1}}">
+                    <scroll-view class="scroll-wrapper" scroll-x>
+                        <block wx:for="{{nextList}}" wx:key>
+                            <view class="scr-item"  data-id="{{item.goods_id}}" bindtap="toCon2">
+                                <image class="scr-pic" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+                                <view class="title">{{item.goods_name}}</view>
+                                <view class="title">{{item.subtitle}}</view>
+                                <view class="price">￥{{item.price}}</view>
+                                <view class="qiang_btn title-3">即将开售</view>
+                            </view>
+                        </block>
+                    </scroll-view>
+                </view>
+        </view>
+
+
+
+
+
+
+        <!-- <swiper class="swiper" current="{{currentTab2}}" duration="300" bindchange="swiperTab2">
             <swiper-item>
                 <view class="item-box-1">
                     <scroll-view class="scroll-wrapper" scroll-x>
@@ -41,7 +74,8 @@
                     </scroll-view>
                 </view>
             </swiper-item>
-            <!-- 2 -->
+
+
             <swiper-item>
                 <view class="item-box-1">
                     <scroll-view class="scroll-wrapper" scroll-x>
@@ -57,7 +91,28 @@
                     </scroll-view>
                 </view>
             </swiper-item>
-        </swiper>
+        </swiper> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </view>
     <view class="group-title">超值团购</view>
     <block wx:for="{{toDayTuijian}}" wx:key>

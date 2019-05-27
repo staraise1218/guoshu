@@ -2,6 +2,7 @@ const app = getApp()
 const Globalhost = getApp().globalData.Globalhost;
 Page({
   onLoad: function (options) {
+    let that = this;
     wx.showLoading({
       title: '加载中',
     })
@@ -33,8 +34,7 @@ Page({
 
 
 
-
-
+    // that.bindGetUserInfo()
 
   },
 
@@ -93,6 +93,7 @@ Page({
                       wx.setStorageSync('user_id', data.user_id);
                       wx.setStorageSync('user_money', data.user_money);
                       wx.setStorageSync('userCode', data.userCode);
+                      wx.setStorageSync('role',data.role);
                     }
                   })
                 },

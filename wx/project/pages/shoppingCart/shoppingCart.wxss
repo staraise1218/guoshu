@@ -145,6 +145,7 @@ page {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    height: 42rpx;
 }
 .src-item .poster {
     width: 280rpx;
@@ -154,7 +155,7 @@ page {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 38rpx;
+    margin-top: 10rpx;
     margin-bottom: 5rpx;
 }
 .price {

@@ -80,6 +80,8 @@ Page({
       success: function(res) {
         console.log(res)
         if(res.data.code == 200) {
+          posdata = JSON.stringify(posdata);
+          wx.setStorageSync('getPickupListData', posdata);
           that.setData({
             List: res.data.data
           })

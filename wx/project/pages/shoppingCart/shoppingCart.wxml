@@ -51,7 +51,9 @@
                 </view>
                 <view class="title-2">{{item.goods_name}}</view>
                 <view class="title-2_f">{{item.subtitle}}</view>
-                <view wx-if="{{item.virtual_num != 0}}" class="title-2_f">已购 {{item.virtual_num}} 份</view>
+                <view class="title-2_f">
+                    <view wx-if="{{item.virtual_num != 0}}">已购 {{item.virtual_num}} 份</view>
+                </view>
                 <view class="bottom">
                     <view class="price">￥{{item.shop_price}}</view>
                     <view data-goodsid="{{item.goods_id}}" bindtap="{{item.store_count == 0 ? '' : 'addShopCart'}}">

@@ -79,6 +79,13 @@ Page({
     //   }
     // }
 
+    that.setData({
+      PAYSTATUS: wx.getStorageSync('PAYSTATUS'),
+      send_method: wx.getStorageSync('send_method')
+    })
+    if(wx.getStorageSync('send_method') == 2) {
+      that.loadList(that)
+    }
     var posdata2 = {};
     switch (wx.getStorageSync('PAYSTATUS')) {
       case 0:
@@ -88,6 +95,9 @@ Page({
         }
         break;
       case 1:
+        that.setData({
+          pickup_id: wx.getStorageSync('pickup_id')
+        })
         posdata2 = {
           action: 'cart',
           user_id: wx.getStorageSync('user_id')
@@ -102,6 +112,9 @@ Page({
         }
         break;
       case 3:
+        that.setData({
+          pickup_id: wx.getStorageSync('pickup_id')
+        })
         posdata2 = {
           action: 'buy_now',
           user_id: wx.getStorageSync('user_id'),
@@ -113,7 +126,7 @@ Page({
     that.cart2(that, posdata2);
 
 
-
+    
 
 
 
@@ -125,7 +138,7 @@ Page({
     let that = this;
     that.loadAddress(that)
   },
-  cart2: function (that, posdata2, callback) {
+  cart2: function (that, posdata2) {
     wx.request({
       url: Globalhost + 'Api/cart/cart2',
       method: 'POST',
@@ -135,6 +148,17 @@ Page({
       data: posdata2,
       success: function (res) {
         console.log(res)
+        if(res.data.data.couponList == 0) {
+          that.setData({
+            couponList: -1,
+            coupon_id: -1
+          })
+        } else {
+          that.setData({
+            couponList: res.data.data.couponList,
+            coupon_id: res.data.data.couponList[0].id
+          })
+        }
         if (res.data.data.address.length == 0) {
           wx.showModal({
             title: '未设置地址',
@@ -279,14 +303,16 @@ Page({
   },
 
   // 自提点列表
-  loadList: function (that, posdata) {
+  loadList: function (that) {
+    let getPickupListData = wx.getStorageSync('getPickupListData');
+    getPickupListData = JSON.parse(getPickupListData)
     wx.request({
       url: Globalhost + 'Api/cart/getPickupList',
       method: 'POST',
       header: {
         'content-type': 'application/x-www-form-urlencoded'
       },
-      data: posdata,
+      data: getPickupListData,
       success: function (res) {
         console.log(res)
         if (res.data.code == 200) {
@@ -449,8 +475,9 @@ Page({
     console.log(e.currentTarget.dataset.id)
     this.setData({
       storeListShow: false,
-      'options.Store_id': e.currentTarget.dataset.id
+      'pickup_id': e.currentTarget.dataset.id
     })
+    wx.setStorageSync('pickup_id', e.currentTarget.dataset.id);
   },
   closePickup: function () {
     this.setData({
@@ -518,6 +545,15 @@ Page({
         break;
       case 'yue': // 余额支付
         payData.payMethod = 'money';
+        payData = JSON.stringify(payData);
+        console.log(payData)
+        that.setData({
+          payData: payData
+        })
+        that.setData({
+          wxShow: true,
+          wallets_password: ''
+        })
         break;
     }
 
@@ -627,10 +663,6 @@ Page({
       // })
       // var query = wx.createSelectorQuery();
       //选择id
-      // that.setData({
-      //   wxShow: true,
-      //   wallets_password: ''
-      // })
     // }
   },
 
@@ -685,14 +717,14 @@ Page({
               console.log(res)
               wx.setStorageSync('chooseStatus', 'END') // 清空优惠券状态
               wx.navigateTo({
-                url: '/pages/paySuccess/paySuccess?order_amount=' + ordermsg.order_amount + '&order_id=' + ordermsg.order_id + '&order_sn=' + ordermsg.order_sn
+                url: '/pages/paySuccess/paySuccess?order_amount=' + wx.getStorageSync('order_amount') + '&order_id=' + wx.getStorageSync('order_id') + '&order_sn=' + wx.getStorageSync('order_sn')
               })
             },
             fail(res) {
               console.log(res)
               console.log('ERROR***********************************************************')
               wx.redirectTo({
-                url: '/pages/errorPay/errorPay?status=errorPay&order_id=' + ordermsg.order_id + '&order_sn=' + ordermsg.order_sn
+                url: '/pages/errorPay/errorPay?status=errorPay&order_id=' + wx.getStorageSync('order_id') + '&order_sn=' + wx.getStorageSync('order_sn')
               })
             }
           })
@@ -701,6 +733,9 @@ Page({
         
       }
     })
+  },
+  yuePay: function (that, payData) {
+
   },
 
 
@@ -715,36 +750,99 @@ Page({
         wxShow: false
       })
       var posdata = {};
-      if (that.data.options.page == "commodityDeatils") {
-        posdata = {
-          user_id: wx.getStorageSync('user_id'),
-          address_id: that.data.Address_id,
-          coupon_id: that.data.Coupon_id,
-          user_money: 0,
-          action: 'buy_now',
-          goods_id: that.data.options.goodId,
-          goods_num: 1,
-          dosubmit: 1,
-          send_method: that.data.options.send_method,
-          payMethod: 'money',
-          payPwd: this.data.wallets_password,
-          delivery_code: wx.getStorageSync('addressCode')
-        }
-      } else if (that.data.options.page == "shoppingCart") {
-        posdata = {
-          user_id: wx.getStorageSync('user_id'),
-          address_id: that.data.Address_id,
-          coupon_id: that.data.Coupon_id,
-          user_money: 0,
-          action: 'cart',
-          goods_num: 1,
-          dosubmit: 1,
-          send_method: that.data.options.send_method,
-          payMethod: 'money',
-          payPwd: this.data.wallets_password,
-          delivery_code: wx.getStorageSync('addressCode')
-        }
+      let yueData = {};
+      switch(wx.getStorageSync('PAYSTATUS')) {
+        case 0:
+            yueData = {
+              user_id: wx.getStorageSync('user_id'),
+              address_id: that.data.Address_id,
+              action: 'cart',
+              dosubmit: 1,
+              send_method: 1,
+              payMethod: 'money',
+              payPwd: this.data.wallets_password,
+              delivery_code: wx.getStorageSync('addressCode')
+            }
+            break;
+        case 1:
+            yueData = {
+              user_id: wx.getStorageSync('user_id'),
+              address_id: that.data.Address_id,
+              action: 'cart',
+              dosubmit: 1,
+              send_method: 2,
+              payMethod: 'money',
+              pickup_id: wx.getStorageSync('pickup_id'),
+              payPwd: this.data.wallets_password,
+              delivery_code: wx.getStorageSync('addressCode')
+            }
+            break;
+        case 2:
+            yueData = {
+              user_id: wx.getStorageSync('user_id'),
+              address_id: that.data.Address_id,
+              action: 'buy_now',
+              goods_id: wx.getStorageSync('goods_id'),
+              goods_num: wx.getStorageSync('goods_num'),
+              dosubmit: 1,
+              send_method: 1,
+              payMethod: 'money',
+              pickup_id: wx.getStorageSync('pickup_id'),
+              payPwd: this.data.wallets_password,
+              delivery_code: wx.getStorageSync('addressCode')
+            }
+            break;
+        case 3:
+            yueData = {
+              user_id: wx.getStorageSync('user_id'),
+              address_id: that.data.Address_id,
+              action: 'buy_now',
+              goods_id: wx.getStorageSync('goods_id'),
+              goods_num: wx.getStorageSync('goods_num'),
+              dosubmit: 1,
+              send_method: 2,
+              payMethod: 'money',
+              pickup_id: wx.getStorageSync('pickup_id'),
+              payPwd: this.data.wallets_password,
+              delivery_code: wx.getStorageSync('addressCode')
+            }
+            break;
       }
+
+
+
+
+      // if (that.data.options.page == "commodityDeatils") {
+      //   posdata = {
+      //     user_id: wx.getStorageSync('user_id'),
+      //     address_id: that.data.Address_id,
+      //     coupon_id: that.data.Coupon_id,
+      //     user_money: 0,
+      //     action: 'buy_now',
+      //     goods_id: that.data.options.goodId,
+      //     goods_num: 1,
+      //     dosubmit: 1,
+      //     send_method: that.data.options.send_method,
+      //     payMethod: 'money',
+      //     payPwd: this.data.wallets_password,
+      //     delivery_code: wx.getStorageSync('addressCode')
+      //   }
+      // } else if (that.data.options.page == "shoppingCart") {
+      //   posdata = {
+      //     user_id: wx.getStorageSync('user_id'),
+      //     address_id: that.data.Address_id,
+      //     coupon_id: that.data.Coupon_id,
+      //     user_money: 0,
+      //     action: 'cart',
+      //     goods_num: 1,
+      //     dosubmit: 1,
+      //     send_method: that.data.options.send_method,
+      //     payMethod: 'money',
+      //     payPwd: this.data.wallets_password,
+      //     delivery_code: wx.getStorageSync('addressCode')
+      //   }
+      // }
+      console.log(yueData)
       wx.request({
         url: '',
         url: Globalhost + 'Api/cart/cart3',
@@ -752,10 +850,13 @@ Page({
         header: {
           'content-type': 'application/x-www-form-urlencoded'
         },
-        data: posdata,
+        data: yueData,
         success: function (res) {
-          let ordermsg = res.data.data;
+          // let ordermsg = res.data.data;
           console.log(res)
+          wx.setStorageSync('order_amount', res.data.data.order_amount);
+          wx.setStorageSync('order_id', res.data.data.order_id);
+          wx.setStorageSync('order_sn', res.data.data.order_sn);
           if (res.data.code == 400) {
             if (res.data.msg == "余额不足") {
               wx.showToast({
@@ -798,7 +899,7 @@ Page({
               },
               success: function (res) {
                 wx.navigateTo({
-                  url: '/pages/paySuccess/paySuccess?order_amount=' + ordermsg.order_amount + '&order_id=' + ordermsg.order_id + '&order_sn=' + ordermsg.order_sn
+                  url: '/pages/paySuccess/paySuccess?order_amount=' + wx.getStorageSync('order_amount') + '&order_id=' + wx.getStorageSync('order_id') + '&order_sn=' + wx.getStorageSync('order_sn')
                 })
               }
             })

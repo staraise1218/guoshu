@@ -2,15 +2,18 @@
   <view class="left-center">
     <!-- <view class="title-2 price-color" bindtap="toLik">果蔬</view> -->
     <view class="title-2 price-color" bindtap="toLik"></view>
-    <image class="icon-2 " mode="widthFix" src="https://hbimg.huabanimg.com/698f1951de21b12c43072ae841182f165e05e9cd890-xBN8IX_fw658" />
-    <view class="address title-2_f margin-left-20" bindtap="changCity">{{address}}</view>
+    <image class="location-icon " mode="" src="https://hbimg.huabanimg.com/698f1951de21b12c43072ae841182f165e05e9cd890-xBN8IX_fw658" />
+    <view class="address" bindtap="chooseAddressShow">{{address}}</view>
   </view>
   <view class="right-center">
     <!-- <input class="search margin-right-20" placeholder="火龙果" confirm-type="search" bindconfirm="searchChange" /> -->
     <input class="search margin-left-20 margin-right-20" placeholder="火龙果" bindtap="toSearch" />
-    <image bindtap="toNews" class="icon-2 news-icon" src="http://img.hb.aicdn.com/c2d15a72fb9a3341210c1773987bf341d56bd303658-3FUCl7_fw658" />
+    <!-- <image bindtap="toNews" class="icon-2 news-icon" src="http://img.hb.aicdn.com/c2d15a72fb9a3341210c1773987bf341d56bd303658-3FUCl7_fw658" /> -->
+    <image bindtap="toNews" class="icon-2 news-icon" src="https://hbimg.huabanimg.com/deb427e3df46fa36177cf43e28494ada7db19f72668-iwUuto_fw658" />
   </view>
 </view>
+
+
 <view class="wrap">
   <scroll-view scroll-y class="left-bar">
     <block wx:for="{{tabList}}" wx:key>
@@ -91,7 +94,7 @@
   </scroll-view>
 </view>
 <!-- 城市弹窗 -->
-<view class="alert-box" wx:if="{{cityShow}}"></view>
+<!-- <view class="alert-box" wx:if="{{cityShow}}"></view>
 <view class="box" wx:if="{{cityShow}}">
   <view class="city-box">
     <view class="city-btn">
@@ -109,7 +112,7 @@
       </picker-view-column>
     </picker-view>
   </view>
-</view>
+</view> -->
 <!-- 城市弹窗 END -->
 <!-- footer -->
 <view class="footer" wx:if="{{false}}">
@@ -141,3 +144,31 @@
   </view>
 </view>
 <!-- footer END -->
+
+
+
+
+
+<view class="alert-box_"  wx:if="{{chooseAlerShow}}"></view>
+<view class="cityshow-alert" wx:if="{{chooseAlerShow}}">
+  <scroll-view scroll-y class="left">
+    <block wx:for="{{multiArray}}" wx:key>
+      <view bindtap="changeProvince" data-index="{{index}}" data-code="{{item.code}}" data-name="{{item.name}}" data-parentCode="{{item.parentCode}}" class="{{index ==  chooseIndex[0]? 'active' : ''}} content">
+        {{item.name}}
+      </view>
+    </block>
+  </scroll-view>
+  <scroll-view scroll-y class="center">
+    <block wx:for="{{multiArray[chooseIndex[0]].sub}}" wx:key>
+      <!-- <block wx:for="{{item.}}" wx:key> -->
+        <view  data-name="{{item.name}}" data-index="{{index}}" bindtap="changeCity" data-code="{{item.code}}" data-parentCode="{{item.parentCode}}" class="{{index == chooseIndex[1] ? 'active' : ''}} content">
+          {{item.name}}
+        </view>
+      <!-- </block> -->
+    </block>
+  </scroll-view>
+  <view class="btn-wrapper">
+    <view class="cancel" bindtap="cancleCity">取消</view>
+    <view class="ok" bindtap="chooseCity">确定</view>
+  </view>
+</view>

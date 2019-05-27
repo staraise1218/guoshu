@@ -1,0 +1,478 @@
+<!-- 吸附顶部 -->
+<view class="fix-wrap">
+  <view class='topbar'>
+    <!-- <view class="left-center logo-title title-2 margin-right-20">果蔬</view> -->
+    <!-- <view  bindtap="cityshow"> -->
+      <image bindtap="cityshow" class="location-icon"
+        src="https://hbimg.huabanimg.com/698f1951de21b12c43072ae841182f165e05e9cd890-xBN8IX_fw658" />
+      <view bindtap="cityshow" class="location" selectable="false" space="false" decode="false">
+        {{address}}
+      </view>
+    <!-- </view> -->
+    <view class="search" hover-class="none" hover-stop-propagation="false">
+      <image class="search-icon"
+        src="http://img.hb.aicdn.com/2428f6e809e53942c9be02543a31d0c59b3f7a286b0-2jNZQl_fw658" />
+      <input class="serach-input" disabled='true' placeholder="火龙果" auto-focus bindtap="toSearch" />
+    </view>
+    <view bindtap="toNews" class="news" hover-class="none" hover-stop-propagation="false">
+      <button class="news_btn" send-message-title="分享标题" send-message-img="分享的单个图片链接" show-message-card="true"
+        send-message-path="../index/index?id={{id}}" plain>
+        <image class="news-icon"
+          src="https://hbimg.huabanimg.com/deb427e3df46fa36177cf43e28494ada7db19f72668-iwUuto_fw658" /></button>
+    </view>
+  </view>
+  <!-- tab切换 -->
+  <view style="position: relative;" class="asdf">
+    <scroll-view class="topScroll left-center" style="width: 670rpx;" scroll-x>
+      <block wx:for="{{categoryList}}" wx:key>
+        <view class="tab-item {{currentTab==index?'tab-active':''}}" data-id="{{item.id}}" data-current="{{index}}"
+          bindtap="clickTap">
+          {{item.name}}
+        </view>
+      </block>
+    </scroll-view>
+    <view class="more-btn" bindtap="toFenlei">
+      <image class="icon-2"
+        src="https://hbimg.huabanimg.com/bf2585481aaa378b23ad49295af47d9bb76ff0ec850-7OmMFu_fw658" />
+    </view>
+  </view>
+  <!-- tab切换 END-->
+</view>
+<!-- 吸附顶部 END -->
+<swiper class="xianshimiaosha" style="{{reaHeight}}" current="{{currentTab}}" duration="300" bindchange="swiperTab">
+  <swiper-item>
+    <view class="item-box-1">
+      <!-- 热卖 -->
+      <!-- 论播 -->
+      <view class='slider-wrap'>
+        <swiper class="slider-box" bindchange="swChange" current autoplay="true" circular="true" interval="5000"
+          duration="500">
+          <block wx:for="{{imgUrls}}" wx:key>
+            <swiper-item data-current="{{index}}">
+              <image src="https://app.zhuoyumall.com:444{{item.ad_code}}" bindtap='toLink' bindload='setContainerHeight'
+                data-link="{{item.ad_link}}" class="slide-image" />
+            </swiper-item>
+          </block>
+        </swiper>
+        <view class="dots">{{dots}}/{{imgUrlsLen}}</view>
+      </view>
+      <!-- 论播 END -->
+
+      <!-- nav -->
+      <view class="nav-btn">
+        <block wx:for="{{categoryList}}" wx:key>
+          <view class="nav-item" data-currentTab="{{index}}" data-id="{{item.id}}"
+            bindtap="{{item.func == 'more' ? 'more' : 'tapchange'}}">
+            <image class="nav-icon" src="https://app.zhuoyumall.com:444{{item.icon}}" />
+            <view class="nav-text">
+              {{item.name}}
+            </view>
+          </view>
+        </block>
+        <!-- <block wx:for="{{navBtn}}" wx:key>
+          <view class="nav-item" data-currentTab="{{index}}" bindtap="{{item.func == 'more' ? 'more' : 'tapchange'}}">
+            <image class="nav-icon" src="{{item.url}}" />
+            <view class="nav-text">
+              {{item.title}}
+            </view>
+          </view>
+        </block> -->
+        <!-- <view class="qwe" wx:if="{{showMore}}">
+          <view class="nav-item" bindtap="toRouDan">
+            <image class="nav-icon"
+              src="http://img.hb.aicdn.com/9033bedea7e6c2ffb826458129c8fa60b676f56b283e-jmuflU_fw658" />
+            <view class="nav-text">
+              肉蛋
+            </view>
+          </view>
+          <view class="nav-item" bindtap="more">
+            <image class="nav-icon"
+              src="http://img.hb.aicdn.com/6fa8d18ec18d9eea5231622d1a7808dbb085c1b5c72-CsPSeI_fw658" />
+            <view class="nav-text">
+              更多
+            </view>
+          </view>
+        </view> -->
+      </view>
+      <!-- nav END -->
+
+      <!-- AD -->
+      <view class="poster">
+        <image class="poster-pic" bindtap='toGroup' src="{{adImg}}" mode="widthFix" />
+      </view>
+      <!-- AD END -->
+      <!-- shop -->
+      <view class="shopListWrap">
+        <scroll-view class="" scroll-x>
+          <view class="scro-wrap">
+            <block wx:for="{{grouplist}}" wx:key>
+
+              <view class="scro-item" data-goodsid="{{item.goods_id}}" data-id="{{item.goods_id}}" bindtap="toCon">
+                <view class="poster-wrap">
+                  <image class="icon-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+                </view>
+                <view class="title-2">{{item.goods_name}}</view>
+                <view class="title-3 margin-bottom-20">{{item.subtitle}}</view>
+                <view class="between-center">
+                  <view class="left-center">
+                    <view class="price">
+                      <view style="font-size: 22rpx">￥</view> {{item.price}}
+                    </view>
+                    <view class="del margin-left-10">{{item.goods_price}}</view>
+                  </view>
+                  <view class="right-center">
+                    <image class="icon-2"
+                      src="https://hbimg.huabanimg.com/ff8af7f0827e85d34cc15b364ff139c61e6fe5bc5b3-0QRyv2_fw658"
+                      data-id="{{item.goods_id}}" catchtap="addCart" />
+                  </view>
+                </view>
+                <image class="icon-1 group-icon"
+                  src="https://hbimg.huabanimg.com/88e471bad788381b12b71ca3cc1d101f74d17b97e2b-7mkX4y_fw658" />
+              </view>
+            </block>
+          </view>
+        </scroll-view>
+      </view>
+      <!-- shop-END -->
+
+      <view class="line"></view>
+      <!-- AD 2 -->
+      <view class="padding-tb-30 jingcaidali-wrap">
+        <image bindtap="toLink" mode="widthFix" data-link="{{shareGoods[0].ad_link}}" class="jingcaidali_2"
+          src="https://app.zhuoyumall.com:444{{shareGoods[0].ad_code}}" />
+        <image bindtap="toLink" mode="widthFix" data-link="{{shareGoods[1].ad_link}}" class="jingcaidali_2"
+          src="https://app.zhuoyumall.com:444{{shareGoods[1].ad_code}}" />
+      </view>
+      <!-- AD 2  END -->
+      <view class="line"></view>
+
+      <!-- 限时秒杀 -->
+      <view wxLif="{{miaosha}}">
+        <view class="padding-30 between-center">
+          <view class=" left-center">
+            <view class="miaosha-title">限时秒杀</view>
+            <view class="miaosha-time left-center">
+              <view class="time-item">{{time.hours}}</view> :
+              <view class="time-item">{{time.minutes}}</view> :
+              <view class="time-item">{{time.seconds}}</view>
+            </view>
+          </view>
+          <view class="next-btn" bindtap="toNext">下期预告</view>
+        </view>
+        <scroll-view class="miaosha-scrol" scroll-x>
+          <block wx:for="{{miaosha}}" wx:key>
+            <view class="scro-shop-wrap" data-id="{{item.goods_id}}" bindtap="toCon">
+              <view class="miaosha-shop-item">
+                <view class="miaosha-poster-wrap">
+                  <image class="icon-poster" mode="widthFix" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+                </view>
+                <view class="title-2 center">{{item.goods_name}}</view>
+                <view class="price center">￥{{item.shop_price}}</view>
+              </view>
+            </view>
+          </block>
+        </scroll-view>
+      </view>
+      <!-- 限时秒杀 END -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <!-- <block wx:for="{{topCateGoods}}" wx:key="{{item.id}}">
+        <view class="padding-30">
+          <image style="width: 100%" mode="widthFix" data-catid="{{item.cat_id}}" bindtap="toFenlei"
+            src="https://app.zhuoyumall.com:444{{item.index_image}}" />
+        </view>
+        <scroll-view scroll-x class="shangpin-wrap padding-lr-30 padding-bottom-20">
+          <block wx:for="{{item.goodslist}}" wx:key>
+            <view class="scro-item " data-id="{{item.goods_id}}" bindtap="toCon">
+              <view class="poster-wrap">
+                <image class="icon-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+              </view>
+              <view class="title-2">{{item.goods_name}}</view>
+              <view class="tag-new"> {{item.tag}}
+              </view>
+              <view class="between-center">
+                <view class="left-center">
+                  <view class="price">￥{{item.shop_price}}</view>
+                </view>
+                <view class="right-center">
+                  <image class="icon-2" catchtap="addCart" style="margin: 15rpx 0"
+                    src="https://hbimg.huabanimg.com/ff8af7f0827e85d34cc15b364ff139c61e6fe5bc5b3-0QRyv2_fw658"
+                    data-id="{{item.goods_id}}" />
+                </view>
+              </view>
+            </view>
+          </block>
+        </scroll-view>
+      </block> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <view class="line"></view>
+
+      <!-- share -->
+      <view class="share-wrap">
+        <view class="share-title">
+          <view class="color">精彩活动</view>
+          <view class="right margin-left-20">拉好友 优惠享不停</view>
+        </view>
+        <view class="share-con">
+          <view class="left">
+            <view class="title">分享小程序</view>
+            <view class="title-2_f">分享小程序 立即得现金红包</view>
+            <view class="ctr">
+              <button  open-type='share'>立即邀请>></button>
+              <image class="icon-big"
+                src="https://hbimg.huabanimg.com/9a19c9c46f078145e598f0674cdb689784233e4f5719-5nmaHz_fw658" />
+            </view>
+          </view>
+          <view class="right">
+            <view class="title">申请站长</view>
+            <view class="title-2_f">加入我们 下一个站长就是你</view>
+            <view class="ctr">
+              <button bindtap="toMaster">立即加入>></button>
+              <image class="icon-big"
+                src="https://hbimg.huabanimg.com/ba5f7e420c613c848254e359edda5c12157f59d320f7-ApvZU4_fw658" />
+            </view>
+          </view>
+        </view>
+      </view>
+      <!-- share END -->
+
+
+
+
+
+      <view class="line"></view>
+      <block wx:for="{{topCateGoods}}" wx:key="{{item.id}}">
+        <view class="padding-30">
+          <image style="width: 100%" mode="widthFix" data-catid="{{item.cat_id}}" bindtap="toFenlei"
+            src="https://app.zhuoyumall.com:444{{item.index_image}}" />
+        </view>
+        <swiper>
+          <swiper-item class="" item-id="">
+            <view scroll-x class="shangpin-wrap padding-lr-30 padding-bottom-20">
+              <block wx:for="{{item.goodslist}}" wx:key>
+                <view class="scro-item " data-id="{{item.goods_id}}" bindtap="toCon">
+                  <view class="poster-wrap">
+                    <image class="icon-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+                  </view>
+                  <view class="title-2">{{item.goods_name}}</view>
+                  <view class="tag-new"> {{item.tag}}
+                    <!--{{item.subtitle}}-->
+                  </view>
+                  <view class="between-center">
+                    <view class="left-center">
+                      <view class="price">￥{{item.shop_price}}</view>
+                    </view>
+                    <view class="right-center">
+                      <image class="icon-2" catchtap="addCart" style="margin: 15rpx 0"
+                        src="https://hbimg.huabanimg.com/ff8af7f0827e85d34cc15b364ff139c61e6fe5bc5b3-0QRyv2_fw658"
+                        data-id="{{item.goods_id}}" />
+                    </view>
+                  </view>
+                </view>
+              </block>
+            </view>
+          </swiper-item>
+          <swiper-item class="" item-id="">
+            <view scroll-x class="shangpin-wrap padding-lr-30 padding-bottom-20">
+              <block wx:for="{{item.goodslist}}" wx:key>
+                <view class="scro-item " data-id="{{item.goods_id}}" bindtap="toCon">
+                  <view class="poster-wrap">
+                    <image class="icon-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+                  </view>
+                  <view class="title-2">{{item.goods_name}}</view>
+                  <view class="tag-new"> {{item.tag}}
+                    <!--{{item.subtitle}}-->
+                  </view>
+                  <view class="between-center">
+                    <view class="left-center">
+                      <view class="price">￥{{item.shop_price}}</view>
+                    </view>
+                    <view class="right-center">
+                      <image class="icon-2" catchtap="addCart" style="margin: 15rpx 0"
+                        src="https://hbimg.huabanimg.com/ff8af7f0827e85d34cc15b364ff139c61e6fe5bc5b3-0QRyv2_fw658"
+                        data-id="{{item.goods_id}}" />
+                    </view>
+                  </view>
+                </view>
+              </block>
+            </view>
+          </swiper-item>
+          <swiper-item class="" item-id="">
+            <view scroll-x class="shangpin-wrap padding-lr-30 padding-bottom-20">
+              <block wx:for="{{item.goodslist}}" wx:key>
+                <view class="scro-item " data-id="{{item.goods_id}}" bindtap="toCon">
+                  <view class="poster-wrap">
+                    <image class="icon-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+                  </view>
+                  <view class="title-2">{{item.goods_name}}</view>
+                  <view class="tag-new"> {{item.tag}}
+                    <!--{{item.subtitle}}-->
+                  </view>
+                  <view class="between-center">
+                    <view class="left-center">
+                      <view class="price">￥{{item.shop_price}}</view>
+                    </view>
+                    <view class="right-center">
+                      <image class="icon-2" catchtap="addCart" style="margin: 15rpx 0"
+                        src="https://hbimg.huabanimg.com/ff8af7f0827e85d34cc15b364ff139c61e6fe5bc5b3-0QRyv2_fw658"
+                        data-id="{{item.goods_id}}" />
+                    </view>
+                  </view>
+                </view>
+              </block>
+            </view>
+          </swiper-item>
+        </swiper>
+      </block>
+
+
+      <!-- 奶品水饮 -->
+      <!-- <image style="width:100%" class="padding-30" mode="widthFix"
+        src="https://hbimg.huabanimg.com/548cd84711d9a3728e406d1748ddd1380fff97e227e41-zTRNwP_fw658" />
+      <view class="shangpin-wrap padding-30">
+        <block wx:for="{{6}}" wx:key>
+          <view class="scro-item shadow">
+            <view class="poster-wrap">
+              <image class="icon-poster"
+                src="https://hbimg.huabanimg.com/663b0cf68f9fda4f1d11a452f4d053f5dfdb663f9b05-S6Gi4W_fw658" />
+            </view>
+            <view class="title-2">标题</view>
+            <view class="tag-new">标题</view>
+            <view class="between-center">
+              <view class="left-center">
+                <view class="price">￥12.9</view>
+              </view>
+              <view class="right-center">
+                <image class="icon-2"
+                  src="https://hbimg.huabanimg.com/395ddec5f781d44541ddda4c5281687e3f0ed9e39b2-76juRm_fw658" />
+              </view>
+            </view>
+          </view>
+        </block>
+      </view> -->
+      <!-- 奶品水饮 END -->
+
+
+
+    </view>
+  </swiper-item>
+  <block wx:for="{{categoryList}}" wx:key>
+    <swiper-item>
+      <view class="item-box-{{index}}">
+        <!-- {{index+1}} -->
+        <view class="list-wrapper">
+          <image class="icon-bg" mode="widthFix" src="https://app.zhuoyumall.com:444{{fenleiList[index].image}}" />
+          <view class="padding-30 padding-top-50 font-weight-6" style="color: #296B8E;font-size: 32rpx;">
+            {{fenleiList[index].name}} >
+          </view>
+          <view class="lists">
+            <block wx:for="{{fenleiList[index].goodslist}}" wx:key>
+              <view class="item-list-box" data-id="{{item.goods_id}}" bindtap="toCon" data-id="{{item.goods_id}}">
+                <view class="poster-wrapper">
+                  <image class="icon-shop" mode="widthFix" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+                </view>
+                <view class="title-3 shop-title">{{item.goods_name}}</view>
+                <view class="title-3_f shop-title">{{item.subtitle}}</view>
+                <view class="bottom margin-top-30">
+                  <view class="left-center">
+                    <view class="price">{{item.shop_price}}</view>
+                  </view>
+                  <image data-id="{{item.goods_id}}" catchtap="addCart" class="icon-2" mode="widthFix"
+                    src="https://hbimg.huabanimg.com/ff8af7f0827e85d34cc15b364ff139c61e6fe5bc5b3-0QRyv2_fw658" />
+                </view>
+              </view>
+            </block>
+          </view>
+        </view>
+      </view>
+    </swiper-item>
+  </block>
+  <!-- <swiper-item>
+    <view class="item-box-2">
+      <view>22222222</view>
+      <view>22222222</view>
+      <view>22222222</view>
+      <view>22222222</view>
+      <view>22222222</view>
+    </view>
+  </swiper-item>
+  <swiper-item>
+    <view class="item-box-3">
+      <view>33333333</view>
+      <view>33333333</view>
+      <view>33333333</view>
+      <view>33333333</view>
+      <view>33333333</view>
+    </view>
+  </swiper-item> -->
+</swiper>
+
+
+<!-- alert box -->
+<view class="alert-box" wx:if="{{cityShow}}"></view>
+<!-- alert box -->
+<!-- 选择城市弹窗 -->
+<view class="box" wx:if="{{cityShow}}">
+  <view class="city-box">
+    <view class="city-btn">
+      <view class="cancel-btn" bindtap="cityCancel">取消</view>
+      <view class="ok-btn" bindtap="cityOk">确定</view>
+    </view>
+    <picker-view indicator-style="height: 50px;" style="width: 100%; height: 300px;" value="{{value}}"
+      bindchange="changeCity">
+      <picker-view-column>
+        <view wx:for="{{multiArray}}" style="line-height: 50px" wx:key>{{item.name}}</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:for="{{multiArray[index0].sub}}" style="line-height: 50px" wx:key>{{item.name}}</view>
+      </picker-view-column>
+    </picker-view>
+  </view>
+</view>
+<!-- 选择城市弹窗 END-->
+
+<!-- 红包弹窗 -->
+<!-- <view class="redBag-box">
+  <view class="content">
+    <image src="https://app.zhuoyumall.com:444/wx/img/hongbao.png" />
+    <view class="text">
+      <view class="price">10</view>
+    </view>
+  </view>
+</view> -->
+<!-- 红包弹窗 END -->
+
+
+
