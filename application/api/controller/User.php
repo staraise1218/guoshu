@@ -161,7 +161,7 @@ class User extends Base {
             ->where('send_start_time', ['<', time()])
             ->where('send_end_time', ['>', time()])
             ->where('status', 1)
-            ->where('send_num', ['>=', 'createnum'])
+            ->where('send_num', ['>', 'createnum'])
             ->field('id, name, money, condition, use_start_time, use_end_time')
             ->order('id desc')
             ->page($page)
