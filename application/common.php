@@ -704,7 +704,7 @@ function orderBtn($order_id = 0, $order = array())
         $btn_arr['pay_btn'] = 1; // 去支付按钮
         $btn_arr['cancel_btn'] = 1; // 取消按钮
     }
-    if($order['pay_status'] == 1 && in_array($order['order_status'],array(0,1)) && $order['shipping_status'] == 0) // 待发货
+    if($order['pay_status'] == 1 && $order['order_status'] == 0 && $order['shipping_status'] == 0) // 待发货
     {
         //  $btn_arr['return_btn'] = 1; // 退货按钮 (联系客服)
         $btn_arr['cancel_btn'] = 1; // 取消按钮
