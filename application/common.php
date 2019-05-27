@@ -721,42 +721,42 @@ function orderBtn($order_id = 0, $order = array())
             //  $btn_arr['return_btn'] = 1; // 退货按钮 (联系客服)
             $btn_arr['cancel_btn'] = 1; // 取消按钮
         }
-        if($order['pay_status'] == 1 && $order['order_status'] == 1  && $order['shipping_status'] == 1) //待收货
+       /* if($order['pay_status'] == 1 && $order['order_status'] == 1  && $order['shipping_status'] == 1) //待收货
         {
             $btn_arr['receive_btn'] = 1;  // 确认收货
             //$btn_arr['return_btn'] = 1; // 退货按钮 (联系客服)
-        }
+        }*/
     }
-    if($order['order_status'] == 2)
+    /*if($order['order_status'] == 2)
     {
         $btn_arr['comment_btn'] = 1;  // 评价按钮
         $btn_arr['return_btn'] = 1; // 退货按钮 (联系客服)
-    }
-    if($order['shipping_status'] != 0 && in_array($order['order_status'], [1,2,4]))
+    }*/
+    /*if($order['shipping_status'] != 0 && in_array($order['order_status'], [1,2,4]))
     {
         $btn_arr['shipping_btn'] = 1; // 查看物流
-    }
+    }*/
     if($order['shipping_status'] == 2  && $order['order_status'] == 1) // 部分发货
     {
         //$btn_arr['return_btn'] = 1; // 退货按钮 (联系客服)
     }
     
-    if($order['pay_status'] == 1  && shipping_status && $order['order_status'] == 4) // 已完成(已支付, 已发货 , 已完成)
+    /*if($order['pay_status'] == 1  && shipping_status && $order['order_status'] == 4) // 已完成(已支付, 已发货 , 已完成)
     {
             $btn_arr['return_btn'] = 1; // 退货按钮
-    }
+    }*/
     
     if($order['order_status'] == 3 && ($order['pay_status'] == 1 || $order['pay_status'] == 4)){
     	$btn_arr['cancel_info'] = 1; // 取消订单详情
     }
 
-    if($order['order_status'] == 3 || $order['order_status'] == 5){
+    /*if($order['order_status'] == 3 || $order['order_status'] == 5){
         $btn_arr['del_btn'] = 1; // 可删除订单
-    }
+    }*/
 
-    if($order['order_status'] == 1 && $order['shipping_status'] == 1 && $order['pay_status'] == 1 && $order['is_arrive'] == 0){
+    /*if($order['order_status'] == 1 && $order['shipping_status'] == 1 && $order['pay_status'] == 1 && $order['is_arrive'] == 0){
         $btn_arr['arrive_btn'] = 1; // 可点击送达
-    }
+    }*/
 
     return $btn_arr;
 }
@@ -789,14 +789,17 @@ function orderStatusDesc($order_id = 0, $order = array())
     if($order['pay_status'] == 1 && $order['order_status'] == 0)
         return 'WAITCONFIRM'; //'待确认',
 
-    if($order['pay_status'] == 1 &&  in_array($order['order_status'],array(0,1)) && $order['shipping_status'] == 0)
+    if($order['pay_status'] == 1  && $order['shipping_status'] == 0 && $order['order_status'] == 1)
         return 'WAITSEND'; //'待发货',
-    if(($order['shipping_status'] == 1) && ($order['order_status'] == 1))
+    if($order['pay_status'] == 1  && $order['shipping_status'] == 1 && $order['order_status'] == 1)
         return 'WAITRECEIVE'; //'待收货',
-    if($order['order_status'] == 2)
+    if($order['pay_status'] == 1  && $order['shipping_status'] == 1 && $order['order_status'] == 2)
         return 'WAITCCOMMENT'; //'待评价',
-    if($order['order_status'] == 3)
-        return 'CANCEL'; //'已取消',
+    if($order['pay_status'] == 1  && $order['shipping_status'] == 1 && $order['order_status'] == 3)
+        return 'WAITREFUND'; //'待退款',
+
+    /*if($order['order_status'] == 3)
+        return 'CANCEL'; //'已取消',*/
     if($order['order_status'] == 4)
         return 'FINISH'; //'已完成',
     if($order['order_status'] == 5)
@@ -804,8 +807,8 @@ function orderStatusDesc($order_id = 0, $order = array())
 
     // 用于自提点看到的订单
     if($type == 'pickup'){
-        if($order['is_arrive'] == 0)
-            return 'NO_ARRIVE'; //'未送达',
+        /*if($order['is_arrive'] == 0)
+            return 'NO_ARRIVE'; //'未送达',*/
         if($order['order_status'] == 1)
             return 'NO_RECEIVE'; //'未提货',
         if($order['order_status'] == 2)
