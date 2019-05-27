@@ -309,8 +309,8 @@ return [
     'CANCEL'=> ' AND order_status = 3 ', // 已取消
     'CANCELLED'=> ' AND order_status = 5 ',//已作废
     'RETURNBACK'=> ' AND order_status = 6 AND pay_status = 3',//退货
-    'PAYED'=>' AND (order_status=2 OR (order_status=1 AND pay_status=1) ) ', //虚拟订单状态:已付款
-    'PAID'=> ' and pay_status = 1 and order_status IN (0, 1, 2, 4) ',// 已支付 （自定义）
+    // 'PAYED'=>' AND (order_status=2 OR (order_status=1 AND pay_status=1) ) ', //虚拟订单状态:已付款
+    'PAIED'=> ' and pay_status = 1 and order_status IN (0, 1, 2, 4) ',// 已支付 （自定义）
     'REFUND'=> ' and order_status = 3',// 退款 （自定义）
     
     'ORDER_STATUS_DESC' => [
