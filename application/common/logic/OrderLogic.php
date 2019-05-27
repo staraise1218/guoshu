@@ -53,7 +53,7 @@ class OrderLogic
 		
 		if(false !== $row){
 			$reduce = tpCache('shopping.reduce');
-			if(($reduce == 1 || empty($reduce)) && $changeOrderStatusTo == 3){
+			if(($reduce == 1 || empty($reduce)) && $changeOrderStatusTo == 5){
 				$this->alterReturnGoodsInventory($order);
 			}
 
