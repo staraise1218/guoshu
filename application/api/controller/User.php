@@ -156,16 +156,20 @@ class User extends Base {
         $user_id = I('user_id');
         $page = I('page', 1);
 
+        $where = array(
+            'type'  => 2,
+            'send_start_time'   => ['<', time()],
+            'send_end_time' => ['>', time()],
+            'status'    => 1,
+            'createnum' => ['exp', ' > send_num'],
+        );
         $list = Db::name('coupon')
-            ->where('type', 2)
-            ->where('send_start_time', ['<', time()])
-            ->where('send_end_time', ['>', time()])
-            ->where('status', 1)
-            ->where('createnum', ['>', 'send_num'])
+            ->where($where)
             ->field('id, name, money, condition, use_start_time, use_end_time')
             ->order('id desc')
             ->page($page)
             ->limit(20)
+            ->fetchSql()
             ->select();
 
         if(!empty($list)){
