@@ -161,7 +161,7 @@ class User extends Base {
             'send_start_time'   => ['<', time()],
             'send_end_time' => ['>', time()],
             'status'    => 1,
-            'createnum' => ['exp', ' > send_num'],
+            'createnum' => ['exp', ' > `send_num`'],
         );
         $list = Db::name('coupon')
             ->where($where)
@@ -169,9 +169,8 @@ class User extends Base {
             ->order('id desc')
             ->page($page)
             ->limit(20)
-            ->fetchSql()
             ->select();
-p($list);
+
         if(!empty($list)){
             foreach ($list as &$item) {
                 $count =  Db::name('coupon_list')
