@@ -714,11 +714,11 @@ function orderBtn($order_id = 0, $order = array())
         $btn_arr['receive_btn'] = 1;  // 确认收货
         //$btn_arr['return_btn'] = 1; // 退货按钮 (联系客服)
     }*/
-    /*if($order['order_status'] == 2)
+    if($order['order_status'] == 2)
     {
         $btn_arr['comment_btn'] = 1;  // 评价按钮
-        $btn_arr['return_btn'] = 1; // 退货按钮 (联系客服)
-    }*/
+        // $btn_arr['return_btn'] = 1; // 退货按钮 (联系客服)
+    }
     /*if($order['shipping_status'] != 0 && in_array($order['order_status'], [1,2,4]))
     {
         $btn_arr['shipping_btn'] = 1; // 查看物流
