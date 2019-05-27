@@ -328,6 +328,7 @@ return [
         'ARRIVED' => '已送达',
         'WAITCONFIRM' => '待确认',
         'WAITREFUND' => '待退款',
+        'REFUNDED' => '已退款',
     ],
 
     'REFUND_STATUS'=>array(

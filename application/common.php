@@ -791,6 +791,8 @@ function orderStatusDesc($order_id = 0, $order = array())
         return 'FINISH'; //'已完成',
     if($order['order_status'] == 5)
         return 'CANCELLED'; //'已作废',
+    if($order['order_status'] == 6)
+        return 'REFUNDED'; //'已退款',
 
     // 用于自提点看到的订单
     if($type == 'pickup'){
