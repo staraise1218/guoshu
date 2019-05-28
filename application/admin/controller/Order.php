@@ -39,6 +39,17 @@ class Order extends Base {
      *订单首页
      */
     public function index(){
+        // 获取配送员
+        $where = array(
+            'is_lock' => 0,
+            'role' => 2,
+        );
+        if($this->role_id == 2) $where['city_code'] = $this->adminInfo['city_code'];
+        $expressUsers = Db::name('users')
+            ->where($where)
+            ->select();
+
+        $this->assign('expressUsers', $expressUsers);
         return $this->fetch();
     }
 
