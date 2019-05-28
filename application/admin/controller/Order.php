@@ -855,7 +855,7 @@ exit("请联系TPshop官网客服购买高级版支持此功能");
                 $convert_action= C('CONVERT_ACTION')["$action"];
                 $res = $orderLogic->orderActionLog($order_id,$convert_action,I('note'));
             }
-        	 $a = $orderLogic->orderProcessHandle($order_id,$action,array('note'=>I('note'),'admin_id'=>0));
+        	 $a = $orderLogic->orderProcessHandle($order_id, $action,array('note'=>I('note'),'admin_id'=>$this->admini));
         	 if($res !== false && $a !== false){
                  if ($action == 'remove') {
                      $this->ajaxReturn(['status' => 1, 'msg' => '操作成功', 'url' => U('Order/index')]);
@@ -1290,13 +1290,58 @@ exit("请联系TPshop官网客服购买高级版支持此功能");
         }
     }
 
+    // 分配派送员--->选择派送员
+    public function select_deliver()
+    {
+        
+        // 获取派送员
+        $where = array(
+            'role' => 2,
+            'is_lock' => 0,
+        );
+        // 不同配送点筛选
+        if($this->role == 2) $where['city_code'] = $this->adminInfo['city_code'];
+
+        $list = Db::name('users')
+            ->where($where)
+            ->field('user_id, nickname, mobile, fullname')
+            ->select();
+        
+        $this->assign('list', $list);
+        return $this->fetch();
+    }
+
+    // 分配派送员
+    public function doDispatchOrder()
+    {
+        $order_id = I('order_id');
+        $express_user_id = I('express_user_id');
+
+        $order = Db::name('order')->where('order_id', $order_id)->find();
+        if($order['order_status'] != 1) exit(json_encode(array('code'=>400, 'msg'=>'订单状态不允许')));
+
+        $updatedata = array(
+            'express_user_id' => $express_user_id,
+            'shipping_status' => 1,
+        );
+        $result = Db::name('order')->where('order_id', $order_id)
+            ->update($updatedata);
+        
+        if(false !== $result){
+            exit(json_encode(array('code'=>200, 'msg'=>'操作成功')));
+        } else {
+            exit(json_encode(array('code'=>400, 'msg'=>'操作失败')));
+        }
+    }
+
+
     /**
      *
      * @time 2016/08/31
      * @author dyr
      * 分配派送员
      */
-    public function dispatchOrder()
+    /*public function dispatchOrder()
     {
         $order_id_array = trim(I('get.order_id_array'), ',');
         $orders = array();
@@ -1308,7 +1353,7 @@ exit("请联系TPshop官网客服购买高级版支持此功能");
             'role' => 2,
             'is_lock' => 0,
         );
-        if($this->role == 2) $where['city_code'] = $this->adminInfo['city_code'];
+        if($this->role == 2) $expresswhere['city_code'] = $this->adminInfo['city_code'];
         $expresslist = Db::name('users')
             ->where($expresswhere)
             ->field('user_id, nickname, fullname')
@@ -1317,14 +1362,14 @@ exit("请联系TPshop官网客服购买高级版支持此功能");
         $this->assign('orders',$orders);
         $this->assign('expresslist',$expresslist);
         return $this->fetch();
-    }
+    }*/
 
     /**
-     * 发送系统消息
+     * 执行分配派送员
      * @author dyr
      * @time  2016/09/01
      */
-    public function doDispatchOrder()
+    /*public function doDispatchOrder()
     {
         $call_back = I('call_back');//回调方法
         $order_ids = I('post.order_ids/a');//个体id
@@ -1337,6 +1382,6 @@ exit("请联系TPshop官网客服购买高级版支持此功能");
         
         echo "<script>parent.{$call_back}(1);</script>";
         exit();
-    }
+    }*/
 
 }

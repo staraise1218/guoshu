@@ -180,6 +180,13 @@ class OrderLogic
     		case 'delivery_confirm'://确认收货
     			confirm_order($order_id); // 调用确认收货按钮
     			return true;
+            case 'cancelto3': // 取消订单变为退款中
+                $updata['order_status'] = 3;
+                break;
+
+            case 'refunded': // 将订单状态变为已退款 6
+                $updata['order_status'] = 6;
+                break;
     		default:
     			return true;
     	}

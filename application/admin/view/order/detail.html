@@ -69,12 +69,7 @@ a.green:hover { color: #FFF; background-color: #1BBC9D; border-color: #16A086; }
         <h5>商城实物商品交易订单查询及管理</h5>
       </div>
       <div class="subject" style="width:62%">
-	     <if condition="$order['order_status'] lt 2 and $order.pay_status eq 0">
-      		<a href="{:U('Admin/order/edit_order',array('order_id'=>$order['order_id']))}" style="float:right;margin-right:10px" class="ncap-btn-big ncap-btn-green" ><i class="fa fa-pencil-square-o"></i>修改订单</a>
-      	 </if>
-      	 <if condition="($split eq 1) and ($order['order_status'] lt 2)">
-      		<a href="{:U('Admin/order/split_order',array('order_id'=>$order['order_id']))}" style="float:right;margin-right:10px" class="ncap-btn-big ncap-btn-green" ><i class="fa fa-external-link-square"></i>拆分订单</a>
-      	 </if>
+	     
       	 <a href="{:U('Order/order_print',array('order_id'=>$order['order_id']))}" target="_blank"  style="float:right;margin-right:10px" class="ncap-btn-big ncap-btn-green" ><i class="fa fa-print"></i>打印订单</a>
       </div>
     </div>
@@ -289,19 +284,14 @@ a.green:hover { color: #FFF; background-color: #1BBC9D; border-color: #16A086; }
 	          <label for="note">可执行操作</label>
 	        </dt>
 	        <dd class="opt" style="margin-left:10px">
-	         	<foreach name="$order.adminOrderButton" item="vo" key="k">
-               		<if condition="$k eq 'pay_cancel'">
-               			<!--<a class="ncap-btn-big ncap-btn-green" href="javascript:void(0)" data-url="{:U('Order/pay_cancel',array('order_id'=>$order['order_id']))}" onclick="pay_cancel(this)">{$vo}</a>-->
-                        <a class="ncap-btn-big ncap-btn-green" onclick="verifyForm('order-action','{:U('Admin/order/order_action',array('order_id'=>$order['order_id'],'type'=>$k))}');" >{$vo}</a>
-               		<elseif condition="$k eq 'delivery'"/>                                                 
-               			<a class="ncap-btn-big ncap-btn-green" href="{:U('Order/delivery_info',array('order_id'=>$order['order_id']))}">{$vo}</a>
-               		<elseif condition="$k eq 'refund'"/>
-               		<else/>
-               		<a class="ncap-btn-big ncap-btn-green" onclick="verifyForm('order-action','{:U('Admin/order/order_action',array('order_id'=>$order['order_id'],'type'=>$k))}');" >
+	         	     <foreach name="$order.adminOrderButton" item="vo" key="k">
+               		
+               		 <a class="ncap-btn-big ncap-btn-green" onclick="verifyForm('order-action','{:U('Admin/order/order_action',array('order_id'=>$order['order_id'],'type'=>$k))}');" >
                		{$vo}</a>
-               		</if>
                	</foreach>
-                <a href="javascript:;" class="ncap-btn-big ncap-btn-green" onclick="dispatch_order();">分配派送员</a>
+                <if condition="$order[pay_status] eq 1 && $order[order_status] eq 1 ">
+                <a href="javascript:;" class="ncap-btn-big ncap-btn-green" onclick="selectDeliver()">分配派送员</a>
+                </if>
 	        </dd>
 	      </dl> 
         </div>
@@ -406,29 +396,41 @@ a.green:hover { color: #FFF; background-color: #1BBC9D; border-color: #16A086; }
 
 
 
-    // 批量指派配送员
-    function dispatch_order()
-    {
-        var obj = $('.trSelected');
-        var url = "{:U('Admin/order/dispatchOrder')}";
-        if(obj.length > 0){
-            var check_val = [];
-            obj.each(function(){
-                check_val.push($(this).attr('data-order-id'));
-            });
-            url += "?order_id_array="+check_val;
-            layer.open({
-                type: 2,
-                title: '分配派送员',
-                shadeClose: true,
-                shade: 0.8,
-                area: ['580px', '480px'],
-                content: url
-            });
-        }else{
-            layer.msg('请选择订单',{icon:2});
-        }
+    // 指派配送员
+    function selectDeliver(){
+        var url = "{:U('Order/select_deliver',array('order_id'=>$info[order_id]))}";
+        layer.open({
+            type: 2,
+            title: '选择商品',
+            shadeClose: true,
+            shade: 0.2,
+            area: ['75%', '75%'],
+            content: url,
+        });
+    }
 
+    function selectDeliverCallback(user_id){
+      var order_id = "{$order.order_id}";
+
+        layer.load();
+        $.ajax({
+            url: "{:U('admin/order/doDispatchOrder')}",
+            type: 'post',
+            dataType: 'json',
+            data: {order_id: order_id, express_user_id: user_id},
+            success: function(data){
+                layer.closeAll('loading');
+                if(data.code == 200){
+                    layer.msg('操作成功', {icon: 1}, function(){
+                        layer.closeAll('iframe');
+                    })
+                } else {
+                    layer.msg(data.msg, {icon: 2});
+                }
+            }
+        })
+
+        
     }
 </script>
 </body>

@@ -118,51 +118,28 @@ class Order extends Model
         $shipping_status = $data['shipping_status'];//发货状态
         $pay_status = $data['pay_status'];//支付状态
         $prom_type = $data['prom_type'];//订单类型：0默认1抢购2团购3优惠4预售5虚拟6拼团
+
         $btn = array();
-        if($data['pay_code'] == 'cod') {
-            if($order_status == 0 && $shipping_status == 0){
-                if($prom_type != 6){
-                    $btn['confirm'] = '确认';
-                }
-            }elseif($order_status == 1 && ($shipping_status == 0 || $shipping_status == 2)){
-                $btn['delivery'] = '去发货';
-                if($prom_type != 6){
-                    // $btn['cancel'] = '取消确认';
-                }
-            }elseif($shipping_status == 1 && $order_status == 1 && $pay_status == 0){
-                $btn['pay'] = '付款';
-            }elseif($pay_status == 1 && $shipping_status == 1 && $order_status == 1){
-                if($prom_type != 6){
-                    // $btn['pay_cancel'] = '设为未付款';
-                }
-            }
-        }else{
-            if($pay_status == 0 && $order_status == 0 || $pay_status == 2){
-                $btn['pay'] = '付款';
-            }elseif($order_status == 0 && $pay_status == 1){
-                if($prom_type != 6){
-                    // $btn['pay_cancel'] = '设为未付款';
-                    $btn['confirm'] = '确认';
-                }
-            }elseif($order_status == 1 && $pay_status == 1 && ($shipping_status == 0 || $shipping_status == 2)){
-                if($prom_type != 6){
-                    // $btn['cancel'] = '取消确认';
-                }
-                $btn['delivery'] = '去发货';
-            }
+        if($pay_status == 1 && $shipping_status == 0 && $order_status == 0){
+            $btn['confirm'] = '确认';
+            $btn['cancelto3'] = '取消'; // 取消订单变为退款中
         }
 
-        if($shipping_status == 1 && $order_status == 1 && $pay_status == 1){
+        if($pay_status == 1 && $order_status == 3){
+            $btn['refunded'] = '已退款';
+        }
+
+        /*if($shipping_status == 1 && $order_status == 1 && $pay_status == 1){
 //        	$btn['delivery_confirm'] = '确认收货';
             $btn['refund'] = '申请退货';
         }elseif($order_status == 2 || $order_status == 4){
             $btn['refund'] = '申请退货';
         }elseif($order_status == 3 || $order_status == 5){
-            $btn['remove'] = '移除';
+            // $btn['remove'] = '移除';
         }
         if($order_status != 5){
             // $btn['invalid'] = '无效';
-        }
+        }*/
         return $btn;
     }
 

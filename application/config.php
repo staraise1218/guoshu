@@ -398,6 +398,8 @@ return [
         'remove'=>'删除订单',
         'delivery'=>'确认发货',
         'delivery_confirm'=>'确认收货',
+        'cancelto3' => '取消订单',
+        'refunded' => '已退款',
     ],
     'WITHDRAW_STATUS'=>[
         '-2'=>'删除作废',
