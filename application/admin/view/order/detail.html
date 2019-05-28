@@ -423,6 +423,7 @@ a.green:hover { color: #FFF; background-color: #1BBC9D; border-color: #16A086; }
                 if(data.code == 200){
                     layer.msg('操作成功', {icon: 1}, function(){
                         layer.closeAll('iframe');
+                        self.location.reload();
                     })
                 } else {
                     layer.msg(data.msg, {icon: 2});
