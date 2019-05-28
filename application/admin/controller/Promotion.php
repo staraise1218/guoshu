@@ -136,17 +136,17 @@ class Promotion extends Base
         $Page = new Page($count, 10);
         $show = $Page->show();
         $prom_list = M('prom_order')->limit($Page->firstRow . ',' . $Page->listRows)->select();
-//        if ($res) {  //获得适用范围（用户等级）
-//            foreach ($res as $val) {
-//                if (!empty($val['group']) && !empty($lv)) {
-//                    $val['group'] = explode(',', $val['group']);
-//                    foreach ($val['group'] as $v) {
-//                        $val['group_name'] .= $lv[$v] . ',';
-//                    }
-//                }
-//                $prom_list[] = $val;
-//            }
-//        }
+        // if ($res) {  //获得适用范围（用户等级）
+        //     foreach ($res as $val) {
+        //         if (!empty($val['group']) && !empty($lv)) {
+        //             $val['group'] = explode(',', $val['group']);
+        //             foreach ($val['group'] as $v) {
+        //                 $val['group_name'] .= $lv[$v] . ',';
+        //             }
+        //         }
+        //         $prom_list[] = $val;
+        //     }
+        // }
         $this->assign('pager', $Page);// 赋值分页输出
         $this->assign('page', $show);// 赋值分页输出
         $this->assign("parse_type", $parse_type);

@@ -78,21 +78,33 @@ class Comment extends Base {
     }
 
     public function ajaxindex(){
-        $model = M('comment');
         $username = I('nickname','','trim');
         $content = I('content','','trim');
-        $where['parent_id'] = 0;
+        
+        $where['c.parent_id'] = 0;
         if($username){
-            $where['username'] = $username;
+            $where['c.username'] = $username;
         }
         if ($content) {
-            $where['content'] = ['like', '%' . $content . '%'];
+            $where['c.content'] = ['like', '%' . $content . '%'];
         }
-        $count = $model->where($where)->count();
+        // 配送点筛选
+        if($this->role_id == 2){
+            $where['g.city_code'] = $this->adminInfo['city_code'];
+        }
+
+        $count = Db::name('comment')->alias('c')
+            ->join('goods g', 'c.goods_id=g.goods_id')
+            ->where($where)->count();
         $Page = $pager = new AjaxPage($count,16);
         $show = $Page->show();
                 
-        $comment_list = $model->where($where)->order('add_time DESC')->limit($Page->firstRow.','.$Page->listRows)->select();
+        $comment_list = Db::name('comment')->alias('c')
+            ->join('goods g', 'c.goods_id=g.goods_id')
+            ->where($where)
+            ->order('add_time DESC')
+            ->limit($Page->firstRow.','.$Page->listRows)
+            ->select();
         if(!empty($comment_list))
         {
             $goods_id_arr = get_arr_column($comment_list, 'goods_id');
