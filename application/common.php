@@ -782,7 +782,7 @@ function orderStatusDesc($order_id = 0, $order = array())
         return 'WAITRECEIVE'; //'待收货',
     if($order['pay_status'] == 1  && $order['shipping_status'] == 1 && $order['order_status'] == 2)
         return 'WAITCCOMMENT'; //'待评价',
-    if($order['pay_status'] == 1  && $order['shipping_status'] == 1 && $order['order_status'] == 3)
+    if($order['pay_status'] == 1 && $order['order_status'] == 3)
         return 'WAITREFUND'; //'待退款',
 
     /*if($order['order_status'] == 3)
