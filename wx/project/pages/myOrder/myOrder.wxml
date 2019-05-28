@@ -9,7 +9,6 @@
 <swiper class="xianshimiaosha" style="{{reaHeight}}" current="{{currentTab}}" duration="300" bindchange="swiperTab">
 
 
-
     <!--    =================================================
             全部订单 ——》 未支付
     ================================================= -->
@@ -22,10 +21,21 @@
                         <view class="title-2_f">{{item.add_time}}</view>
                         <view class="title-2_f">{{item.order_status_desc}}</view>
                     </view>
-                    <view class="order-poster border-bottom padding-30">
+                    <!-- <view class="order-poster border-bottom padding-30">
                         <block wx:for="{{item.goods_list}}" wx:key>
                             <image class="icon-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}"
                                 mode="widthFix" />
+                        </block>
+                    </view> -->
+                    
+                    <view class="shop-list-wrapper order-poster border-bottom padding-30">
+                        <block wx:for="{{item.goods_list}}" wx:key>
+                            <view wx:if="{{index <= 2}}" class="list-item">
+                                <view class="list-title"> {{item.goods_name}}</view>
+                                <view class="list-title_f">{{item.subtitle}}</view>
+                                <image class="icon-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}"
+                                    mode="widthFix" />
+                            </view>
                         </block>
                     </view>
                     <view class="btn-wrap padding-lr-30 padding-tb-20">
@@ -47,6 +57,7 @@
                                 class="title-3 pingjia margin-left-20"
                                 data-order-sn="{{item.order_sn}}" 
                                 data-order-id="{{item.order_id}}" 
+                                data-orderAmount="{{item.order_amount}}"
                                 catchtap="toPay">付款
                             </view>
 
@@ -62,7 +73,7 @@
                     <view class="line"></view>
                 </view>
             </block>
-            <view class="margin-top-30 text-center title-2_f">没有更多了~</view>
+            <view class="empty margin-top-30 text-center title-2_f">没有更多了~</view>
         </scroll-view>
     </swiper-item>
 
@@ -77,17 +88,21 @@
     <swiper-item>
         <scroll-view scroll-y class="item-box-2">
             <!-- 待评价 -->
-            <block wx:for="{{waitSendMsg}}" wx:key>
+            <block wx:for="{{paiedMsg}}" wx:key>
                 <view class="order-item" catchtap="go" data-orderid="{{item.order_id}}"
                     data-state="{{item.order_status_code}}">
                     <view class="padding-30 between-center border-bottom">
-                        <view class="title-2_f">{{item.add_time}}</view>
+                        <view class="title-2_f">{{item.pay_time}}</view>
                         <view class="title-2_f">{{item.order_status_desc}}</view>
                     </view>
-                    <view class="order-poster border-bottom padding-30">
+                    <view class="shop-list-wrapper order-poster border-bottom padding-30">
                         <block wx:for="{{item.goods_list}}" wx:key>
-                            <image class="icon-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}"
-                                mode="widthFix" />
+                            <view wx:if="{{index <= 2}}" class="list-item">
+                                <view class="list-title"> {{item.goods_name}}</view>
+                                <view class="list-title_f">{{item.subtitle}}</view>
+                                <image class="icon-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}"
+                                    mode="widthFix" />
+                            </view>
                         </block>
                     </view>
                     <view class="btn-wrap padding-lr-30 padding-tb-20">
@@ -109,6 +124,7 @@
                                 class="title-3 pingjia margin-left-20"
                                 data-order-sn="{{item.order_sn}}" 
                                 data-order-id="{{item.order_id}}" 
+                                data-orderAmount="{{item.order_amount}}"
                                 catchtap="toPay">付款
                             </view>
 
@@ -123,7 +139,7 @@
                     <view class="line"></view>
                 </view>
             </block>
-            <view class="margin-top-30 text-center title-2_f">没有更多了~</view>
+            <view class="empty margin-top-30 text-center title-2_f">没有更多了~</view>
         </scroll-view>
     </swiper-item>
 
@@ -135,27 +151,28 @@
     ================================================= -->
     <swiper-item>
         <scroll-view scroll-y class="item-box-3">
-            <view class="margin-top-30 text-center title-2_f">没有更多了~</view>
-        </scroll-view>
-    </swiper-item>
-
-
-    <!--    =================================================
-            退款
-    ================================================= -->
-    <swiper-item>
-        <scroll-view scroll-y class="item-box-4">
-            <block wx:for="{{tuiKuanMsg}}" wx:key>
+            <block wx:for="{{waitccommentMsg}}" wx:key>
                 <view class="order-item" catchtap="go" data-orderid="{{item.order_id}}"
                     data-state="{{item.order_status_code}}">
                     <view class="padding-30 between-center border-bottom">
-                        <view class="title-2_f">{{item.add_time}}</view>
+                        <view class="title-2_f">{{item.pay_time}}</view>
                         <view class="title-2_f">{{item.order_status_desc}}</view>
                     </view>
-                    <view class="order-poster border-bottom padding-30">
+                    <!-- <view class="order-poster border-bottom padding-30">
                         <block wx:for="{{item.goods_list}}" wx:key>
                             <image class="icon-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}"
                                 mode="widthFix" />
+                        </block>
+                    </view> -->
+                    
+                    <view class="shop-list-wrapper order-poster border-bottom padding-30">
+                        <block wx:for="{{item.goods_list}}" wx:key>
+                            <view wx:if="{{index <= 2}}" class="list-item">
+                                <view class="list-title"> {{item.goods_name}}</view>
+                                <view class="list-title_f">{{item.subtitle}}</view>
+                                <image class="icon-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}"
+                                    mode="widthFix" />
+                            </view>
                         </block>
                     </view>
                     <view class="btn-wrap padding-lr-30 padding-tb-20">
@@ -177,6 +194,7 @@
                                 class="title-3 pingjia margin-left-20"
                                 data-order-sn="{{item.order_sn}}" 
                                 data-order-id="{{item.order_id}}" 
+                                data-orderAmount="{{item.order_amount}}"
                                 catchtap="toPay">付款
                             </view>
 
@@ -191,8 +209,136 @@
                     <view class="line"></view>
                 </view>
             </block>
-            <view class="margin-top-30 text-center title-2_f">没有更多了~</view>
+            <view class="empty margin-top-30 text-center title-2_f">没有更多了~</view>
+        </scroll-view>
+    </swiper-item>
+
+
+    <!--    =================================================
+            退款
+    ================================================= -->
+    <swiper-item>
+        <scroll-view scroll-y class="item-box-4">
+            <!-- 退款 -->
+            <block wx:for="{{refundMsg}}" wx:key>
+                <view class="order-item" catchtap="go" data-orderid="{{item.order_id}}"
+                    data-state="{{item.order_status_code}}">
+                    <view class="padding-30 between-center border-bottom">
+                        <view class="title-2_f">{{item.add_time}}</view>
+                        <view class="title-2_f">{{item.order_status_desc}}</view>
+                    </view>
+                    <!-- <view class="order-poster border-bottom padding-30">
+                        <block wx:for="{{item.goods_list}}" wx:key>
+                            <image class="icon-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}"
+                                mode="widthFix" />
+                        </block>
+                    </view> -->
+                    
+                    <view class="shop-list-wrapper order-poster border-bottom padding-30">
+                        <block wx:for="{{item.goods_list}}" wx:key>
+                            <view wx:if="{{index <= 2}}" class="list-item">
+                                <view class="list-title"> {{item.goods_name}}</view>
+                                <view class="list-title_f">{{item.subtitle}}</view>
+                                <image class="icon-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}"
+                                    mode="widthFix" />
+                            </view>
+                        </block>
+                    </view>
+                    <view class="btn-wrap padding-lr-30 padding-tb-20">
+                        <view class="end-center ">
+                            <view class="title-3">共{{item.count_goods_num}}件商品</view>
+                            <view class="title-3 margin-left-20 left-center align-middle">
+                                合计:<view class="price-color">￥{{item.order_amount}}</view>
+                            </view>
+                        </view>
+                        <!-- 按钮 -->
+                        <view class="end padding-tb-20">
+                            <view wx:if="{{item.cancel_btn == 1}}" 
+                                class="title-3 agein margin-left-20"
+                                data-order-sn="{{item.order_sn}}" 
+                                data-order-id="{{item.order_id}}"
+                                catchtap="cancelOrder">取消订单</view>
+
+                            <view wx:if="{{item.pay_btn == 1}}" 
+                                class="title-3 pingjia margin-left-20"
+                                data-order-sn="{{item.order_sn}}" 
+                                data-order-id="{{item.order_id}}" 
+                                data-orderAmount="{{item.order_amount}}"
+                                catchtap="toPay">付款
+                            </view>
+
+                            <view wx:if="{{item.comment_btn == 1}}" 
+                                class="title-3 pingjia margin-left-20"
+                                data-order-sn="{{item.order_sn}}" 
+                                data-order-id="{{item.order_id}}"
+                                catchtap="toPinglun">评价</view>
+                        </view>
+                        <!-- 按钮 END -->
+                    </view>
+                    <view class="line"></view>
+                </view>
+            </block>
+            <view class="empty margin-top-30 text-center title-2_f">没有更多了~</view>
         </scroll-view>
     </swiper-item>
 
 </swiper>
+
+
+
+
+
+
+
+
+<view wx-if="{{alertPayShow}}" class="alert-bg" bindtap="closePay"></view>
+<view wx-if="{{alertPayShow}}" class="alert-pay">
+    <view class="wx" data-method="wx" bindtap="wxpay">
+        <image src="https://app.zhuoyumall.com:444/wx/img/组166@2x.png" />
+        <view class="pay-title">微信支付</view>
+    </view>
+    <view class="yue" data-method="yue" bindtap="yuepay">
+        <image src="https://app.zhuoyumall.com:444/wx/img/pay_yue.png" />
+        <view class="pay-title">余额支付</view>
+    </view>
+</view>
+
+
+
+
+
+    <!-- 余额支付密码弹窗 -->
+    <view wx:if="{{yueShow}}" class="wallets-password">
+        <view class="input-content-wrap">
+            <view class="top">
+                <view catchtap="close_wallets_password" class="close">×</view>
+                <view class="txt">请输入支付密码</view>
+                <view catchtap="modify_password" class="forget"></view>
+            </view>
+            <view class="actual_fee">
+                <span>￥{{orderamount}}</span>
+                <text>{{ ORDERINFO.order_amount }}</text>
+            </view>
+            <view catchtap="set_Focus" class="input-password-wrap">
+                <view class="password_dot">
+                    <i wx:if="{{wallets_password.length>=1}}"></i>
+                </view>
+                <view class="password_dot">
+                    <i wx:if="{{wallets_password.length>=2}}"></i>
+                </view>
+                <view class="password_dot">
+                    <i wx:if="{{wallets_password.length>=3}}"></i>
+                </view>
+                <view class="password_dot">
+                    <i wx:if="{{wallets_password.length>=4}}"></i>
+                </view>
+                <view class="password_dot">
+                    <i wx:if="{{wallets_password.length>=5}}"></i>
+                </view>
+                <view class="password_dot">
+                    <i wx:if="{{wallets_password.length>=6}}"></i>
+                </view>
+            </view>
+        </view>
+        <input bindinput="set_wallets_password" class="input-content" password type="number" focus="{{isFocus}}" maxlength="6" />
+    </view>

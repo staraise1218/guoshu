@@ -32,6 +32,7 @@ Page({
       success: function(res) {
         let data = res.data.data
         console.log(data)
+        data.add_time = that.formatDate(data.add_time)
         that.setData({
           msg: data
         })
@@ -267,5 +268,153 @@ Page({
     wx.switchTab({
       url: '/pages/index/index'
     })
-  }
+  },
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  /**
+   * 支付方式弹窗
+   */
+  toPay: function (e) {
+    console.log(e.currentTarget.dataset)
+    let orderId = e.currentTarget.dataset.orderId
+    console.log(orderId)
+    this.setData({
+      alertPayShow: true,
+      orderId: orderId,
+      order_sn: e.currentTarget.dataset.orderSn,
+      orderamount: e.currentTarget.dataset.orderamount
+    })
+  },
+  // 关闭支付弹窗
+  closePay: function () {
+    this.setData({
+      alertPayShow: false,
+    })
+  },
+  // 微信支付
+  wxpay: function () {
+    let that = this;
+    this.setData({
+      alertPayShow: false
+    })
+    wx.request({
+      url: Globalhost + 'Api/Wxapplet/unifiedOrder',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        order_sn: that.data.order_sn,
+        openid: wx.getStorageSync('openid')
+      },
+      success: function(res) {
+        console.log(res)
+        wx.showToast({
+          title: res.data.msg,
+          icon: 'none'
+        })
+        wx.requestPayment({
+          'timeStamp': res.data.data.timeStamp, // 时间
+          'nonceStr': res.data.data.nonceStr, // 随机字符串
+          'package': res.data.data.package, // prepayId
+          'signType': res.data.data.signType, // 签名算法
+          'paySign': res.data.data.paySign, // 签名
+          'success': function (res) {
+            console.log(res)
+            wx.navigateTo({
+              url: '/pages/paySuccess/paySuccess?order_id=' + orderId
+            })
+          }
+        })
+      }
+    })
+  },
+
+  yuepay: function () {
+    this.setData({
+      alertPayShow: false,
+      yueShow: true
+    })
+  },
+  
+
+
+  // 余额支付弹出
+  set_wallets_password(e) { //获取钱包密码
+    let that = this;
+    this.setData({
+      wallets_password: e.detail.value
+    });
+    if (this.data.wallets_password.length == 6) { //密码长度6位时，自动验证钱包支付结果
+      that.setData({
+        yueShow: false
+      })
+      wx.request({
+        url: Globalhost + 'api/pay/topay',
+        method: 'POST',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        data: {
+          order_sn: that.data.order_sn,
+          paymentMethod: 'money'
+        },
+        success: function (res) {
+          wx.navigateTo({
+            url: '/pages/paySuccess/paySuccess?order_amount=' + wx.getStorageSync('order_amount') + '&order_id=' + wx.getStorageSync('order_id') + '&order_sn=' + wx.getStorageSync('order_sn')
+          })
+        }
+      })
+    }
+  },
+  set_Focus() { //聚焦input
+    console.log('isFocus', this.data.isFocus)
+    this.setData({
+      isFocus: true
+    })
+  },
+  set_notFocus() { //失去焦点
+    this.setData({
+      isFocus: false
+    })
+  },
+  close_wallets_password() { //关闭钱包输入密码遮罩
+    this.setData({
+      isFocus: false, //失去焦点
+      yueShow: false,
+      wallets_password: ''
+    })
+  },
+  closeError: function () {
+    this.setData({
+      errorShow: false
+    })
+  },
+  
+  formatDate : function (date) {
+    if(date.length == 10) {
+      date = date*1000
+    }
+    date = Number(date)
+    date = new Date(date);
+    var y = date.getFullYear();
+    var m = date.getMonth() + 1;  
+    m = m < 10 ? '0' + m : m;  
+    var d = date.getDate();  
+    d = d < 10 ? ('0' + d) : d;  
+    return y + '-' + m + '-' + d;  
+}
+
 })

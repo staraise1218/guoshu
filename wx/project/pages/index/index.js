@@ -279,7 +279,7 @@ Page({
   /**
    * 首页接口
    */
-  index: function (that) {
+  index: function (that, status) {
     loadingfunc(); // 加载函数
     wx.request({
       url: Globalhost + 'Api/index/index',
@@ -293,6 +293,9 @@ Page({
       },
       success: function (res) {
         let data = res.data.data
+        if(status == 'Refresh') {
+          that.miaosha(that, 'Refresh'); // 下拉刷新 秒杀商品
+        }
         // console.log(data)
         /**
          * 轮播图
@@ -300,8 +303,6 @@ Page({
         that.setData({
           imgUrls: data.bannerList
         })
-        console.log(that.data.imgUrls)
-
         data.topCateGoods.forEach((item,index) => {
           item.goodslist.forEach((item, index) => {
             item.SHOW = false;
@@ -442,7 +443,7 @@ Page({
   /**
    * 秒杀商品
    */
-  miaosha: function (that) {
+  miaosha: function (that, status) {
     loadingfunc(); // 加载函数
     wx.request({
       url: Globalhost + 'Api/activity/flash_sale_list',
@@ -460,6 +461,11 @@ Page({
           miaosha: res.data.data
         })
         // console.log(that.data.miaosha[0])
+      },
+      complete: function () {
+        if(status == 'Refresh') {
+          wx.stopPullDownRefresh();
+        }
       }
     })
   },
@@ -880,6 +886,7 @@ Page({
   toCoup: function () {
     this.setData({
       'coup.status': 1,
+      redBagNum: 0
     })
     wx.navigateTo({
       url: '/pages/couponlist/couponlist'
@@ -999,20 +1006,25 @@ Page({
     }
   },
   // 下拉刷新
-  onPullDownRefresh: function () {
-    var that = this;
-    wx.startPullDownRefresh({
-      success: function () {
-        wx.showNavigationBarLoading();
-        that.index(that); // 首页
-        that.miaosha(that); // 秒杀商品
-      },
-      complete: function () {
-        wx.hideNavigationBarLoading();
-        wx.stopPullDownRefresh();
-      }
-    })
-  },
+  // onPullDownRefresh: function () {
+  //   var that = this;
+  //   wx.startPullDownRefresh({
+  //     success: function () {
+  //       wx.showNavigationBarLoading();
+  //       that.index(that); // 首页
+  //       that.miaosha(that); // 秒杀商品
+  //     },
+  //     complete: function () {
+  //       wx.hideNavigationBarLoading();
+  //       wx.stopPullDownRefresh();
+  //     }
+  //   })
+  // },
+  
+  onPullDownRefresh: function(){
+    let that = this;
+    that.index(that, 'Refresh'); // 首页
+},
   // 购物车动画
 
   /**

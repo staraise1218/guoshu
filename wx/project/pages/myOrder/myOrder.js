@@ -5,26 +5,13 @@ Page({
     currentTab: 0,
     reaHeight: 0,
     orderInfo: [],
-    waitPayMsg: {
-      0: {
-        add_time: "1552297167",
-        count_goods_num: 8,
-        goods_list: [{
-          goods_id: "2",
-          goods_num: "8",
-          goods_price: "19.00",
-          original_img: 'http://img.hb.aicdn.com/31a74c50f9a1d938d8026f4978665eb1f3af59491c5a-VC6S3o_fw658',
-          rec_id: "4"
-        }],
-        goods_price: "152.00",
-        order_amount: "152.00",
-        order_id: "8",
-        order_status: "2",
-        order_status_code: "WAITCCOMMENT",
-        order_status_desc: "待评价"
-      }
-    },
+    waitPayMsg: [],       // 未支付
+    paiedMsg: [],         // 已支付
+    waitccommentMsg: [],  // 待评价
+    refundMsg: [],        // 退款
     wait: [],
+
+    // 未支付：WAITPAY， 已支付：PAIED， 待评价：WAITCCOMMENT， 退款：REFUND
   },
   onLoad: function (options) {
     let that = this;
@@ -59,6 +46,7 @@ Page({
     that.loadWaitpay(that);
     that.loadWaitCcomment(that);
     that.loadWaitSend(that);
+    that.loadTuiKuan(that);
   },
 
   //滑动切换 
@@ -196,11 +184,14 @@ Page({
       },
       success: function (res) {
         let data = res.data.data;
-        console.log(data)
-        that.setData({
-          waitPayMsg: data
-        })
-        console.log(that.data.waitPayMsg)
+        for(var i = 0; i < data.length; i++) {
+          data[i].add_time = that.formatDate(Number(data[i].add_time))
+        }
+        setTimeout(()=> {
+          that.setData({
+            waitPayMsg: data
+          })
+        }, 200)
       }
     })
   },
@@ -214,16 +205,19 @@ Page({
       },
       data: {
         user_id: wx.getStorageSync('user_id') ,
-        type: 'WAITSEND',
+        type: 'PAIED',
         page: 1
       },
       success: function (res) {
         let data = res.data.data;
-        console.log(data)
-        that.setData({
-          waitSendMsg: data
-        })
-        console.log(that.data.waitSendMsg)
+        for(var i = 0; i < data.length; i++) {
+          data[i].pay_time = that.formatDate(Number(data[i].pay_time))
+        }
+        setTimeout(()=> {
+          that.setData({
+            paiedMsg: data
+          })
+        }, 200)
       }
     })
   },
@@ -242,14 +236,18 @@ Page({
       },
       success: function(res) {
         let data = res.data.data;
-        console.log(data)
-        that.setData({
-          wait: data
-        })
+        for(var i = 0; i < data.length; i++) {
+          data[i].pay_time = that.formatDate(Number(data[i].pay_time))
+        }
+        setTimeout(()=> {
+          that.setData({
+            waitccommentMsg: data
+          })
+        }, 200)
       }
     })
   },
-  // 待评价
+  // 退款
   loadTuiKuan: function (that) {
     wx.request({
       url: Globalhost + 'Api/order/order_list',
@@ -259,15 +257,19 @@ Page({
       },
       data: {
         user_id: wx.getStorageSync('user_id'),
-        type: 'WAITCCOMMENT',
+        type: 'REFUND',
         page: 1
       },
       success: function(res) {
         let data = res.data.data;
-        console.log(data)
-        that.setData({
-          tuiKuanMsg: data
-        })
+        for(var i = 0; i < data.length; i++) {
+          data[i].pay_time = that.formatDate(Number(data[i].pay_time))
+        }
+        setTimeout(()=> {
+          that.setData({
+            refundMsg: data
+          })
+        }, 200)
       }
     })
   },
@@ -362,12 +364,31 @@ Page({
     })
   },
   /**
-   * 去付款
+   * 支付方式弹窗
    */
   toPay: function (e) {
     console.log(e.currentTarget.dataset)
     let orderId = e.currentTarget.dataset.orderId
     console.log(orderId)
+    this.setData({
+      alertPayShow: true,
+      orderId: orderId,
+      order_sn: e.currentTarget.dataset.orderSn,
+      orderamount: e.currentTarget.dataset.orderamount
+    })
+  },
+  // 关闭支付弹窗
+  closePay: function () {
+    this.setData({
+      alertPayShow: false,
+    })
+  },
+  // 微信支付
+  wxpay: function () {
+    let that = this;
+    this.setData({
+      alertPayShow: false
+    })
     wx.request({
       url: Globalhost + 'Api/Wxapplet/unifiedOrder',
       method: 'POST',
@@ -375,7 +396,7 @@ Page({
         'content-type': 'application/x-www-form-urlencoded'
       },
       data: {
-        order_sn: e.currentTarget.dataset.orderSn,
+        order_sn: that.data.order_sn,
         openid: wx.getStorageSync('openid')
       },
       success: function(res) {
@@ -400,4 +421,83 @@ Page({
       }
     })
   },
+
+  yuepay: function () {
+    this.setData({
+      alertPayShow: false,
+      yueShow: true
+    })
+  },
+  
+
+
+  // 余额支付弹出
+  set_wallets_password(e) { //获取钱包密码
+    let that = this;
+    this.setData({
+      wallets_password: e.detail.value
+    });
+    if (this.data.wallets_password.length == 6) { //密码长度6位时，自动验证钱包支付结果
+      that.setData({
+        yueShow: false
+      })
+      wx.request({
+        url: Globalhost + 'api/pay/topay',
+        method: 'POST',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        data: {
+          order_sn: that.data.order_sn,
+          paymentMethod: 'money'
+        },
+        success: function (res) {
+          wx.navigateTo({
+            url: '/pages/paySuccess/paySuccess?order_amount=' + wx.getStorageSync('order_amount') + '&order_id=' + wx.getStorageSync('order_id') + '&order_sn=' + wx.getStorageSync('order_sn')
+          })
+        }
+      })
+    }
+  },
+  set_Focus() { //聚焦input
+    console.log('isFocus', this.data.isFocus)
+    this.setData({
+      isFocus: true
+    })
+  },
+  set_notFocus() { //失去焦点
+    this.setData({
+      isFocus: false
+    })
+  },
+  close_wallets_password() { //关闭钱包输入密码遮罩
+    this.setData({
+      isFocus: false, //失去焦点
+      yueShow: false,
+      wallets_password: ''
+    })
+  },
+  closeError: function () {
+    this.setData({
+      errorShow: false
+    })
+  },
+
+  
+  formatDate : function (date) {
+      // if(date.length == 10) {
+      // }
+      date = Number(date)
+      date = date*1000
+      date = new Date(date);
+      var y = date.getFullYear();
+      var m = date.getMonth() + 1;  
+      m = m < 10 ? '0' + m : m;  
+      var d = date.getDate();  
+      d = d < 10 ? ('0' + d) : d;  
+      var asd = y + '-' + m + '-' + d
+      console.log(asd)
+      return y + '-' + m + '-' + d;  
+  }
+
 })

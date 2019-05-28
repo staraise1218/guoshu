@@ -20,7 +20,25 @@
 
 </view>
 
-<view class="padding-30">
+<!-- 自提订单 -->
+<view class="padding-30" wx:if="{{msg.pickupInfo.pickup_name}}">
+    <view class="left-center">
+        <image  class="icon-3" src="http://img.hb.aicdn.com/c49cf39cdcf3190d4ec2cb94e70ee269546408d282c-LeO6F6_fw658" mode="widthFix" />
+        <view class="title-2 margin-left-20">收货人： {{msg.consignee}} </view>
+        <view class="end title-2_f">{{msg.mobile}}</view>
+    </view>
+    <view class="title-2_f margin-left-50 margin-top-20">
+        自提点：{{msg.pickupInfo.pickup_name}}
+    </view>
+    <view class="title-2_f margin-left-50 ">
+        自提点地址：{{msg.pickupInfo.pickup_address}}
+    </view>
+    <view class="title-2_f margin-left-50 ">
+        自提点联系方式：{{msg.pickupInfo.pickup_phone}}
+    </view>
+</view>
+<!-- 配送订单 -->
+<view class="padding-30" wx:else>
     <view class="left-center">
         <image  class="icon-3" src="http://img.hb.aicdn.com/c49cf39cdcf3190d4ec2cb94e70ee269546408d282c-LeO6F6_fw658" mode="widthFix" />
         <view class="title-2 margin-left-20">收货人： {{msg.consignee}} </view>
@@ -30,6 +48,7 @@
         收货地址：{{msg.fulladdress}}
     </view>
 </view>
+
 
 <view class="line"></view>
 
@@ -66,7 +85,7 @@
 
 
 
-<view class="padding-lr-30 padding-tb-30 between-center more-0">
+<view class="padding-lr-30 padding-tb-30 between-center ">
     <view class="left-center">
         <image class="icon-3 margin-right-20" src="http://img.hb.aicdn.com/b7a8f0cd63dda76a08423835a1a1898cef6228f85c6-huGl9M_fw658" />
         <view class="title-2">红包</view>
@@ -93,7 +112,7 @@
         <view class="title-3">商品实付</view>
     </view>
     <view class="">
-        <view class="title-3 margin-right-30">{{msg.coupon_price}}</view>
+        <view class="title-3 margin-right-30">{{msg.order_amount}}</view>
     </view>
 </view>
 
@@ -144,7 +163,7 @@
     </view>
 </view>
 
-<view class="line"></view>
+<!-- <view class="line"></view> -->
 
 
 
@@ -174,11 +193,19 @@
     <view 
         class="pay" 
         wx:if="{{msg.pay_btn==1}}"
-        data-orderid="{{msg.order_id}}"
-        data-ordersn="{{msg.order_sn}}"
+        data-order-sn="{{msg.order_sn}}" 
+        data-order-id="{{msg.order_id}}" 
+        data-orderAmount="{{msg.order_amount}}"
         bindtap="toPay">
         付款
     </view>
+
+
+
+
+
+
+
     <view 
         class="pay" 
         wx:if="{{msg.del_btn==1}}"
@@ -202,3 +229,84 @@
 <view class="toHome" bindtap="toHome">
     <image src="https://app.zhuoyumall.com:444/wx/img/home.png" />
 </view>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<view wx-if="{{alertPayShow}}" class="alert-bg" bindtap="closePay"></view>
+<view wx-if="{{alertPayShow}}" class="alert-pay">
+    <view class="wx" data-method="wx" bindtap="wxpay">
+        <image src="https://app.zhuoyumall.com:444/wx/img/组166@2x.png" />
+        <view class="pay-title">微信支付</view>
+    </view>
+    <view class="yue" data-method="yue" bindtap="yuepay">
+        <image src="https://app.zhuoyumall.com:444/wx/img/pay_yue.png" />
+        <view class="pay-title">余额支付</view>
+    </view>
+</view>
+
+
+
+
+
+    <!-- 余额支付密码弹窗 -->
+    <view wx:if="{{yueShow}}" class="wallets-password">
+        <view class="input-content-wrap">
+            <view class="top">
+                <view catchtap="close_wallets_password" class="close">×</view>
+                <view class="txt">请输入支付密码</view>
+                <view catchtap="modify_password" class="forget"></view>
+            </view>
+            <view class="actual_fee">
+                <span>￥{{orderamount}}</span>
+                <text>{{ ORDERINFO.order_amount }}</text>
+            </view>
+            <view catchtap="set_Focus" class="input-password-wrap">
+                <view class="password_dot">
+                    <i wx:if="{{wallets_password.length>=1}}"></i>
+                </view>
+                <view class="password_dot">
+                    <i wx:if="{{wallets_password.length>=2}}"></i>
+                </view>
+                <view class="password_dot">
+                    <i wx:if="{{wallets_password.length>=3}}"></i>
+                </view>
+                <view class="password_dot">
+                    <i wx:if="{{wallets_password.length>=4}}"></i>
+                </view>
+                <view class="password_dot">
+                    <i wx:if="{{wallets_password.length>=5}}"></i>
+                </view>
+                <view class="password_dot">
+                    <i wx:if="{{wallets_password.length>=6}}"></i>
+                </view>
+            </view>
+        </view>
+        <input bindinput="set_wallets_password" class="input-content" password type="number" focus="{{isFocus}}" maxlength="6" />
+    </view>
