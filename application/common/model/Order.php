@@ -125,6 +125,10 @@ class Order extends Model
             $btn['cancelto3'] = '取消'; // 取消订单变为退款中
         }
 
+        if($pay_status == 1 && $order_status == 2){
+            $btn['cancelto3'] = '退货';
+        }
+
         if($pay_status == 1 && $order_status == 3){
             $btn['refunded'] = '已退款';
         }
