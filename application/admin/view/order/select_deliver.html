@@ -1,0 +1,105 @@
+<include file="public/layout"/>
+<style>
+    th, td {padding: 10px 5px;}
+    .flexigrid .bDiv{min-height: 200px; padding-bottom: 30px;}
+</style>
+<body style="background-color: rgb(255, 255, 255); overflow: auto; cursor: default; -moz-user-select: inherit;">
+<div class="page" style="padding: 0px 1% 0 1%;">
+    <!-- 操作说明 -->
+    <div class="flexigrid">
+        <div class="mDiv">
+            <div class="ftitle">
+                <h3>派送员列表</h3>
+                <!-- <h5>(共{$page->totalRows}条记录)</h5> -->
+            </div>
+            <!-- <div title="刷新数据" class="pReload"><i class="fa fa-refresh"></i></div> -->
+            <!-- <form class="navbar-form form-inline" id="search-form2" action="{:U('Order/search_deliver',['tpl'=>'search_deliver'])}" method="get">
+               
+                    <div class="sDiv2">
+                        <select name="status" class="select">
+                            <option value="">活动状态</option>
+                        </select>
+                        <input size="30" name="keywords" value="{$Request.param.keywords}" class="qsbox" placeholder="商品名称或者关键词" type="text">
+                        <input type="hidden" name="exvirtual" value="{$Request.param.exvirtual}"/>
+                        <input class="btn" value="搜索" type="submit">
+                    </div>
+                </div>
+            </form> -->
+        </div>
+        <div class="hDiv">
+            <div class="hDivBox">
+                <table cellspacing="0" cellpadding="0">
+                    <thead>
+                    <tr>
+                        <th abbr="article_title" axis="col3" class="" align="left">
+                            <div style="text-align: left; width: 50px;" class="">选择</div>
+                        </th>
+                        <th abbr="article_time" axis="col6" class="" align="left">
+                            <div style="text-align: left; width: 300px;" class="">昵称</div>
+                        </th>
+                        <th abbr="ac_id" axis="col4" class="" align="left">
+                            <div style="text-align: center; width: 80px;" class="">手机号</div>
+                        </th>
+                        <th style="width:100%" axis="col7">
+                            <div></div>
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="bDiv" style="height: auto;">
+            <div id="flexigrid" cellpadding="0" cellspacing="0" border="0">
+                <table>
+                    <tbody>
+                    <volist name="list" id="item">
+                        <tr>
+                            <td class="" align="left">
+                                <div style="text-align: left; width: 50px;">
+                                    <input type="radio" name="user_id" 
+                                           data-id="{$item.user_id}" <if condition="$item['user_id'] eq $Request.param.user_id">checked='checked'</if>/>
+                                </div>
+                            </td>
+                            <td class="" align="left">
+                                <div style="text-align: left; width: 300px;">{$item.nickname}</div>
+                            </td>
+                            <td class="" align="left">
+                                <div style="text-align: center; width: 80px;">{$item.mobile}</div>
+                            </td>
+                            <td class="" style="width: 100%;" align="">
+                                <div>&nbsp;</div>
+                            </td>
+                        </tr>
+                    </volist>
+                    </tbody>
+                </table>
+            </div>
+            <div class="iDiv" style="display: none;"></div>
+        </div>
+        <!--分页位置-->
+        <div class="te_le">
+            
+        </div>
+        <div class="bot"><a onclick="selectConfirm();" class="ncap-btn-big ncap-btn-green">确认提交</a></div>
+    </div>
+</div>
+<script>
+
+    
+
+    function selectConfirm()
+    {
+        var input = $("input[type='radio']:checked");
+        if (input.length == 0) {
+            layer.alert('请选择配送员', {icon: 2}); 
+            return false;
+        }
+
+
+        var user_id = input.attr('data-id');
+
+        window.parent.selectDeliverCallback(user_id);
+    }
+</script>
+</body>
+</html>
