@@ -290,7 +290,7 @@ a.green:hover { color: #FFF; background-color: #1BBC9D; border-color: #16A086; }
                		{$vo}</a>
                	</foreach>
                 <if condition="$order[pay_status] eq 1 && $order[order_status] eq 1 && $order['express_user_id'] neq 0">
-                <a href="javascript:;" class="ncap-btn-big ncap-btn-green" onclick="selectDeliver()">分配派送员</a>
+                <a href="javascript:;" class="ncap-btn-big ncap-btn-green" onclick="selectDeliver()">分配派送员{$order['express_user_id']}</a>
                 </if>
 	        </dd>
 	      </dl> 
