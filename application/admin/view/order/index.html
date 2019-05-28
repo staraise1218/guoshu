@@ -160,13 +160,13 @@
           	</a> -->
           </div>
 
-        <div class="fbutton">
+        <!-- <div class="fbutton">
             <a onclick="dispatch_order();">
                 <div class="add" title="分配派送员">
                     <span><i class="fa fa-send"></i>分配派送员</span>
                 </div>
             </a>
-        </div>
+        </div> -->
       </div>
       <div style="clear:both"></div>
     </div>
@@ -276,31 +276,6 @@
         }
 		$('#search-form2').submit();
 	}
-
-    // 批量指派配送员
-    function dispatch_order()
-    {
-        var obj = $('.trSelected');
-        var url = "{:U('Admin/order/dispatchOrder')}";
-        if(obj.length > 0){
-            var check_val = [];
-            obj.each(function(){
-                check_val.push($(this).attr('data-order-id'));
-            });
-            url += "?order_id_array="+check_val;
-            layer.open({
-                type: 2,
-                title: '分配派送员',
-                shadeClose: true,
-                shade: 0.8,
-                area: ['580px', '480px'],
-                content: url
-            });
-        }else{
-            layer.msg('请选择订单',{icon:2});
-        }
-
-    }
     /**
      * 回调函数
      */
