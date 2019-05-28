@@ -380,9 +380,9 @@ class Cart extends Base {
                     $user_latitude = $address['latitude'];
                     if(empty($user_longitude) || empty($user_latitude)) response_error('', '该地址缺少经纬度坐标'.$user_longitude.'---'.$user_latitude);
                     // 配送站点经纬度
-                    $city_code = $address['city'];
+                    /*$city_code = $address['city'];
                     $region = Db::name('region')->where('code', $city_code)->find();
-                    if(empty($region)) response_error('', '该城市不支持配送');
+                    if(empty($region)) response_error('', '该城市不支持配送');*/
                     $delivery_longitude = $region['longitude'];
                     $delivery_latitude = $region['latitude'];
                     if($delivery_longitude == '' || $delivery_latitude == '') response_error('', '未设置配送点坐标');
