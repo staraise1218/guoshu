@@ -1328,7 +1328,6 @@ class Order extends Base {
         );
         // 不同配送点筛选
         if($this->role_id == 2) $where['city_code'] = $this->adminInfo['city_code'];
-p($where, $this->role_id);
         $list = Db::name('users')
             ->where($where)
             ->field('user_id, nickname, mobile, fullname')
