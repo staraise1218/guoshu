@@ -71,7 +71,8 @@ class Goods extends Base {
         // $goods['commentStatistics'] = $goodsLogic->commentStatistics($goods_id);// 获取某个商品的评论统计
       	$goods['sale_num'] = M('order_goods')->where(['goods_id'=>$goods_id,'is_send'=>1])->sum('goods_num');
       	// 获取商品评论
-      	$goods['goodsCommentList'] = $this->goodsComment($goods_id);
+      	// $goods['goodsCommentList'] = $this->goodsComment($goods_id);
+        $goods['goodsCommentList'] = Db::name('Comment')
         //当前用户收藏
         // $collect = M('goods_collect')->where(array("goods_id"=>$goods_id ,"user_id"=>$user_id))->count();
         // $goods_collect_count = M('goods_collect')->where(array("goods_id"=>$goods_id))->count(); //商品收藏数
@@ -141,9 +142,9 @@ class Goods extends Base {
         $list = M('Comment')->alias('c')
         	->join('__USERS__ u','u.user_id = c.user_id','LEFT')
         	->where($where)
-        	->order("add_time desc")
-        	->field('u.nickname, u.head_pic, c.content, c.goods_rank, c.is_anonymous, c.img')
+        	->field('u.nickname, u.head_pic, c.content, ceil((deliver_rank + goods_rank + service_rank) / 3 as goods_rank, c.is_anonymous, c.img')
         	->limit(1)
+        	->order("goods_rank desc")
         	->select();
          
         

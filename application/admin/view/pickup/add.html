@@ -119,8 +119,8 @@
 				<dd class="opt">
 					<div style="padding-bottom: 10px;" class="list">
 						<input id="address_input" type="text" placeholder="点击地图显示地址/输入地址显示位置">
-						<input id="longitude" type="text" name="longitude" placeholder="经度" readonly="readonly" style="width: 120px;">
-						<input id="latitude" type="text" name="latitude" placeholder="纬度" readonly="readonly" style="width: 120px;">
+						<input id="longitude" type="text" name="longitude" value="{$pickup.longitude}" placeholder="经度" readonly="readonly" style="width: 120px;">
+						<input id="latitude" type="text" name="latitude" value="{$pickup.latitude}" placeholder="纬度" readonly="readonly" style="width: 120px;">
 						<input id="city_code" type="hidden" placeholder="城市编码" readonly="readonly" style="width: 80px;">
 					</div>
 					<div id="mapContainer" style="height: 500px;"></div>

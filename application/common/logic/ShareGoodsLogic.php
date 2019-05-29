@@ -45,10 +45,16 @@ class ShareGoodsLogic
 		if(empty($goodsShareList)) return false;
 
 		foreach ($goodsShareList as $item) {
-			// 修改分享记录状态为已使用
-			DB::name('goods_share')->where('id', $item['id'])->setField('is_used', 1);
-			// 给分享者发放佣金
 			$money = number_format($item['shop_price'] * $item['share_ratio'], 2); // 佣金
+			// 修改分享记录状态为已使用|
+			$updatedata = array(
+				'is_used' => 1,
+				'order_id' => $order['order_id'],
+				'order_sn' => $order_sn,
+				'money' => $money,
+			);
+			DB::name('goods_share')->where('id', $item['id'])->update($updatedata);
+			// 给分享者发放佣金
 			$desc = '分享商品得佣金';
 			accountLog($order['user_id'], $money, 0, $desc, 0, $order['order_id'], $order['order_sn'], 4);
 

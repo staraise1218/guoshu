@@ -42,10 +42,10 @@ class Task extends Base {
         Db::name('goods')->where('goods_id', array('IN', $goods_ids))->update(array('prom_type'=>0, 'prom_id'=>0));
     }
 
-    // 订单超过24小时没支付就取消
+    // 次日凌晨之前的未支付订单取消
     public function checkOrder(){
 
-        $time = time() - (24 * 60 * 60);
+        $time = time();
         $list = Db::name('order_goods')->alias('og')
             ->join('order o', 'og.order_id = o.order_id')
             ->where('o.pay_status', 0)
@@ -61,7 +61,7 @@ class Task extends Base {
         try{
             // 取消订单
             $order_ids = array_unique(array_column($list, 'order_id'));
-            Db::name('order')->where('order_id', array('IN', $order_ids))->setField('order_status', 3);
+            Db::name('order')->where('order_id', array('IN', $order_ids))->setField('order_status', 5);
 
             foreach ($list as $item) {
                 // 商品库存返回

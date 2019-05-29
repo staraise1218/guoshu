@@ -85,6 +85,8 @@ class Order extends Base {
         I('pay_code') != '' ? $condition['pay_code'] = I('pay_code') : false;
         I('shipping_status') != '' ? $condition['shipping_status'] = I('shipping_status') : false;
         I('user_id') ? $condition['user_id'] = trim(I('user_id')) : false;
+        I('express_user_id') ? $condition['express_user_id'] = trim(I('express_user_id')) : false;
+
         $sort_order = I('order_by','DESC').' '.I('sort');
         $count = M('order')->where($condition)->count();
         $Page  = new AjaxPage($count,20);
@@ -99,12 +101,12 @@ class Order extends Base {
     //虚拟订单
     public function virtual_list(){
     header("Content-type: text/html; charset=utf-8");
-exit("请联系TPshop官网客服购买高级版支持此功能");
+            exit("");
     }
     // 虚拟订单
     public function virtual_info(){
     header("Content-type: text/html; charset=utf-8");
-exit("请联系TPshop官网客服购买高级版支持此功能");
+            exit("");
     }
 
     public function virtual_cancel(){
@@ -285,7 +287,7 @@ exit("请联系TPshop官网客服购买高级版支持此功能");
                 //取消订单支付原路退回
                 if($order['pay_code'] == 'weixin' || $order['pay_code'] == 'alipay' || $order['pay_code'] == 'alipayMobile'){
 		header("Content-type: text/html; charset=utf-8");
-exit("请联系TPshop官网客服购买高级版支持此功能");
+            exit("");
                 }else{
                     $this->error('该订单支付方式不支持在线退回');
                 }
@@ -308,8 +310,7 @@ exit("请联系TPshop官网客服购买高级版支持此功能");
         $orderGoods =$order['orderGoods'];
         $express = Db::name('delivery_doc')->where("order_id" , $order_id)->select();  //发货信息（可能多个）
         $user = Db::name('users')->where(['user_id'=>$order['user_id']])->find();
-        $this->assign('order',$order);
-        $this->assign('user',$user);
+        
         $split = count($orderGoods) >1 ? 1 : 0;
         foreach ($orderGoods as $val){
         	if($val['goods_num']>1){
@@ -323,6 +324,21 @@ exit("请联系TPshop官网客服购买高级版支持此功能");
             $this->assign('deliverUserInfo', $deliverUserInfo);
         }
 
+        // 获取自提点信息
+        if($order['send_method'] == 2){
+            $pickup_id = $order['pickup_id'];
+            $pickup = Db::name('pick_up')->where('pickup_id', $pickup_id)->find();
+            $this->assign('pickup',$pickup);
+        }
+
+        // 获取实收金额 = 订单应收金额 - 分享出去的钱
+        // $amount_received
+        $share_money = Db::name('goods_share')->where('order_id', $order_id)->sum('money');
+        $order['amount_received'] = number_format($order['order_amount'] - $share_money, 2);
+
+
+        $this->assign('order',$order);
+        $this->assign('user',$user);
         $this->assign('split',$split);
         $this->assign('express',$express);
         return $this->fetch();

@@ -370,6 +370,8 @@ class Cart extends Base {
             $pay->usePayPoints($pay_points);
             // 提交订单
             if ($dosubmit == 1) {
+                // 检测下单时间是否在 23:30 之前
+                if(time() > strtotime(date('Y-m-d').' 23:30:00')) response_error('', '请在每日23:30点之前下单'); 
                 // 检测是否在配送范围
                 if($send_method == 1){
                     // 获取配送范围
