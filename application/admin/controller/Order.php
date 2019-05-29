@@ -1327,8 +1327,8 @@ class Order extends Base {
             'is_lock' => 0,
         );
         // 不同配送点筛选
-        if($this->role == 2) $where['city_code'] = $this->adminInfo['city_code'];
-p($where);
+        if($this->role_id == 2) $where['city_code'] = $this->adminInfo['city_code'];
+
         $list = Db::name('users')
             ->where($where)
             ->field('user_id, nickname, mobile, fullname')
