@@ -387,7 +387,7 @@ class Cart extends Base {
                     if($delivery_longitude == '' || $delivery_latitude == '') response_error('', '未设置配送点坐标');
                     $GeographyLogic = new GeographyLogic();
                     $distance = $GeographyLogic->getDistance($user_longitude, $user_latitude, $delivery_longitude, $delivery_latitude);
-                    if($distance > $delivery_range) response_error('', '该地址超出配送范围,距离：'.$distance.' 配送范围：'.$delivery_range);
+                    if($distance > $delivery_range) response_error('', '请回首页选择合适的配送中心或调整收货地址、或放弃本次购买');
                 }
                 $placeOrder = new PlaceOrder($pay);
                 $placeOrder->setUserAddress($address);
