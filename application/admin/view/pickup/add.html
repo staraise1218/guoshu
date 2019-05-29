@@ -63,7 +63,7 @@
                     <p class="notic">请上传图片格式文件</p>
                 </dd>
             </dl>
-			<dl class="row">
+			<!-- <dl class="row">
 				<dt class="tit">
 					<label><em>*</em>自提点地址</label>
 				</dt>
@@ -80,15 +80,37 @@
 							<option <if condition="$pickup['city_code'] eq $p['code']">selected</if>  value="{$p.code}">{$p.name}</option>
 						</volist>
 					</select>
-					<!-- <select name="district_code" id="district">
+					<select name="district_code" id="district">
 						<option  value="0">请选择</option>
 						<volist name="district" id="p">
 							<option <if condition="$pickup['district_code'] eq $p['code']">selected</if>  value="{$p.code}">{$p.name}</option>
 						</volist>
-					</select> -->
+					</select>
 					<p class="notic">自提点地址</p>
 				</dd>
-			</dl>
+			</dl> -->
+			<dl class="row">
+                <dt class="tit">
+                    <label for="record_no">自提点地址</label>
+                </dt>
+                <dd class="opt">
+                      <select name="province_id" id="province_id"  class="small form-control">
+                          <option value="0">请选择省份</option>   
+                               <foreach name="provincelist" item="item" key="k" >
+                                 <option data-id="{$item['id']}" value="{$item['id']}" <if condition="$item['id'] eq $goodsInfo['province_id']">selected="selected"</if> >
+                                      {$item['name']}
+                                 </option>
+                               </foreach>
+                        </select>
+                        <select name="city_code" id="city_code" class="small form-control">
+                          <option value="0">请选择城市</option>
+                          <foreach name="citylist" item="item" key="k" >
+                          <option value="{$item['code']}" <if condition="$item['code'] eq $goodsInfo['city_code']">selected="selected"</if>>{$item['name']}</option>
+                          </foreach>
+                        </select>                            
+                    <span class="err" id="err_cat_id" style="color:#F00; display:none;"></span>
+                </dd>
+            </dl>
 			<!-- <dl class="row">
 				<dt class="tit">
 					<label><em>*</em>供货商</label>
@@ -143,12 +165,12 @@
 		if(pickup_name == ''){
 			error += '自提点名称不能为空 <br/>';
 		}
-		if(province_code==0){
+		/*if(province_code==0){
 			error += '请选择省份 <br/>';
 		}
 		if(city_code==0){
 			error += '请选择城市 <br/>';
-		}
+		}*/
 		// if(district_code==0){
 		// 	error += '请选择区域 <br/>';
 		// }
@@ -163,6 +185,26 @@
 		}
 		$('#handleForm').submit();
 	}
+
+	
+        //选择城市
+        $(document).on("change",'#province_id',function(){
+           var id = $("#province_id option:selected").attr("data-id");
+            
+            $.ajax({
+                url:"{:U('admin/api/ajaxGetCity')}",
+                type:'post',
+                data: {id:id},
+                dataType:'json',
+                success:function(data){
+                    var html = '<option value="0">请选择</option>';
+                    $.each(data.data, function(){
+                        html += '<option value="'+this.code+'">'+this.name+'</option>';
+                    })
+                    $('#city_code').html(html);
+                }
+            })
+        })
 </script>
 <!-- 高德地图 -->
 <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.3&key=e4e3ea6a620450b47bd7e2be728d240a"></script>

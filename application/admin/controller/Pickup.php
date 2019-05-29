@@ -110,8 +110,8 @@ class Pickup extends Base {
 		// $d = M('region')->where(array('parentCode'=>$pickup['city_code']))->select();
 		$suppliers = M('suppliers')->where(array('is_check'=>1))->select();
 
-		$this->assign('province',$p);
-		$this->assign('city',$c);
+		$this->assign('provincelist',$p);
+		$this->assign('citylist',$c);
 		$this->assign('district',$d);
 		$this->assign('suppliers',$suppliers);
 		$this->assign('pickup',$pickup);
