@@ -72,7 +72,7 @@ class Goods extends Base {
       	$goods['sale_num'] = M('order_goods')->where(['goods_id'=>$goods_id,'is_send'=>1])->sum('goods_num');
       	// 获取商品评论
       	// $goods['goodsCommentList'] = $this->goodsComment($goods_id);
-        $goods['goodsCommentList'] = Db::name('Comment')
+        $goods['goodsCommentList'] = Db::name('Comment');
         //当前用户收藏
         // $collect = M('goods_collect')->where(array("goods_id"=>$goods_id ,"user_id"=>$user_id))->count();
         // $goods_collect_count = M('goods_collect')->where(array("goods_id"=>$goods_id))->count(); //商品收藏数
