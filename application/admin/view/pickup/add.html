@@ -94,10 +94,10 @@
                     <label for="record_no">自提点地址</label>
                 </dt>
                 <dd class="opt">
-                      <select name="province_id" id="province_id"  class="small form-control">
+                      <select name="province_code" id="province_code"  class="small form-control">
                           <option value="0">请选择省份</option>   
                                <foreach name="provincelist" item="item" key="k" >
-                                 <option data-id="{$item['id']}" value="{$item['id']}" <if condition="$item['id'] eq $goodsInfo['province_id']">selected="selected"</if> >
+                                 <option data-id="{$item['id']}" value="{$item['id']}" <if condition="$item['id'] eq $pickup['province_code']">selected="selected"</if> >
                                       {$item['name']}
                                  </option>
                                </foreach>
@@ -105,7 +105,7 @@
                         <select name="city_code" id="city_code" class="small form-control">
                           <option value="0">请选择城市</option>
                           <foreach name="citylist" item="item" key="k" >
-                          <option value="{$item['code']}" <if condition="$item['code'] eq $goodsInfo['city_code']">selected="selected"</if>>{$item['name']}</option>
+                          <option value="{$item['code']}" <if condition="$item['code'] eq $pickup['city_code']">selected="selected"</if>>{$item['name']}</option>
                           </foreach>
                         </select>                            
                     <span class="err" id="err_cat_id" style="color:#F00; display:none;"></span>
@@ -186,7 +186,7 @@
 		$('#handleForm').submit();
 	}
 
-	
+
         //选择城市
         $(document).on("change",'#province_id',function(){
            var id = $("#province_id option:selected").attr("data-id");
