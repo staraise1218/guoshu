@@ -84,7 +84,7 @@ class Order extends Base
 
         $where = ' pickup_id=' . $pickup['pickup_id'] . ' and deleted = 0 and pay_status = 1 && shipping_status =1 ';
         //条件搜索
-        if($type == 'WAITRECEIVE') $where .= ' and order_status == 1';
+        if($type == 'WAITRECEIVE') $where .= ' and order_status = 1';
         if($type == 'TODAYRECIEVE') {
             $start_time = strtotime(date('Y-m-d'));
             $end_time = strtotime(date('Y-m-d').' 23:59:59');
