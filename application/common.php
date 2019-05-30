@@ -639,12 +639,16 @@ function orderStatusDesc_for_pickup($order_id = 0, $order = array())
         $order = M('Order')->where("order_id", $order_id)->find();
 
   
-    if($order['is_arrive'] == 0)
+    /*if($order['is_arrive'] == 0)
         return 'NO_ARRIVE'; //'未送达',
     if($order['order_status'] == 1)
         return 'NO_RECEIVE'; //'未提货',
     if($order['order_status'] == 2)
-        return 'RECEIVED'; //'已提货',
+        return 'RECEIVED'; //'已提货',*/
+    if($order['pay_status'] == 1 &&  $order['order_status'] == 1 && $order['shipping_status'] == 1)
+        return 'NO_RECEIVE'; //'待收货',
+    if($order['pay_status'] == 1 && in_array($order['order_status'], arrya(2, 4)) && $order['shipping_status'] == 1)
+        return 'RECEIVED'; //'已送达',
 
     return 'OTHER';
 }
@@ -662,7 +666,7 @@ function orderStatusDesc_for_express($order_id = 0, $order = array())
     if($order['pay_status'] == 1 &&  $order['order_status'] == 1 && $order['shipping_status'] == 1)
         return 'NO_ARRIVE'; //'待收货',
     if($order['pay_status'] == 1 && $order['order_status'] == 2 && $order['shipping_status'] == 1)
-        return 'ARRIVED'; //'未送达',
+        return 'ARRIVED'; //'已送达',
     /*if($order['shipping_status'] == 1 && $order['is_arrive'] == 1)
         return 'ARRIVED'; //'未提货',*/
 

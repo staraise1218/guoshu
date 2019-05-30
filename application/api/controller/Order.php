@@ -471,7 +471,7 @@ class Order extends Base
         if($order['order_status'] == 2) response_error('', '已提货');
 
         if($order['order_status'] != 1 || $order['pay_status'] != 1 || $order['shipping_status'] != 1) response_error('', '订单异常');
-        if($order['is_arrive'] != 1) response_error('', '该订单未送达');
+        // if($order['is_arrive'] != 1) response_error('', '该订单未送达');
 
         // 查找改自提点用户的自提点id
         $pickup = Db::name('pick_up')->where('user_id', $user_id)->find();
@@ -486,10 +486,10 @@ class Order extends Base
         try{
             // 更改订单状态
             M('order')->where('order_id', $order_id)->update(array('order_status'=>2, 'confirm_time'=>time()));
-            // 记录金额变动
+            /*// 记录金额变动
             $basicinfo = tpCache('basic');
             $pickup_money = $basicinfo['pickup_money'];
-            accountLog($user_id, $pickup_money, 0, '自提点订单分佣', 0, $order_id, $order['order_sn'], 2);
+            accountLog($user_id, $pickup_money, 0, '自提点订单分佣', 0, $order_id, $order['order_sn'], 2);*/
 
             // 提交事务
             Db::commit();
