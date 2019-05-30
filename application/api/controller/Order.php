@@ -840,7 +840,7 @@ class Order extends Base
         exit(json_encode($result));
     }
 
-    // 配送员操作：送达
+    // 配送员操作：送达(确认收货)
     public function arrive(){
         $user_id = I('user_id');
         $order_id = I('order_id');
@@ -854,13 +854,14 @@ class Order extends Base
         if($order['express_user_id'] != $user_id) response_error('非法操作');
 
         $updatedata = array(
-            'is_arrive'=>1
+            // 'is_arrive'=>1
+            'order_status' => '2',
         );
         if(false !== Db::name('order')->where('order_id', $order_id)->update($updatedata)){
             // 站内消息
-            $MessageLogic = new MessageLogic();
-            $message = '您的订单'.$order['order_sn'].'已送达';
-            $MessageLogic->add($user_id, $message);
+            // $MessageLogic = new MessageLogic();
+            // $message = '您的订单'.$order['order_sn'].'已送达';
+            // $MessageLogic->add($user_id, $message);
 
             response_success('', '操作成功');
         } else {
