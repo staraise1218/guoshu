@@ -659,12 +659,12 @@ function orderStatusDesc_for_express($order_id = 0, $order = array())
     if(empty($order))
         $order = M('Order')->where("order_id", $order_id)->find();
   
-    if($order['pay_status'] == 1 &&  in_array($order['order_status'], array(0,1)) && $order['shipping_status'] == 0)
-        return 'WAITSEND'; //'待发货',
-    if($order['shipping_status'] == 1 && $order['is_arrive'] == 0)
-        return 'NO_ARRIVE'; //'未送达',
-    if($order['shipping_status'] == 1 && $order['is_arrive'] == 1)
-        return 'ARRIVED'; //'未提货',
+    if($order['pay_status'] == 1 &&  $order['order_status'] == 1 && $order['shipping_status'] == 1)
+        return 'NO_ARRIVE'; //'待收货',
+    if($order['pay_status'] == 1 && $order['order_status'] == 2 && $order['shipping_status'] == 1)
+        return 'ARRIVED'; //'未送达',
+    /*if($order['shipping_status'] == 1 && $order['is_arrive'] == 1)
+        return 'ARRIVED'; //'未提货',*/
 
     return 'OTHER';
 }
@@ -734,7 +734,7 @@ function orderBtn($order_id = 0, $order = array())
     }*/
     
     if($order['order_status'] == 3 && ($order['pay_status'] == 1 || $order['pay_status'] == 4)){
-    	$btn_arr['cancel_info'] = 1; // 取消订单详情
+        $btn_arr['cancel_info'] = 1; // 取消订单详情
     }
 
     /*if($order['order_status'] == 3 || $order['order_status'] == 5){
@@ -744,6 +744,36 @@ function orderBtn($order_id = 0, $order = array())
     /*if($order['order_status'] == 1 && $order['shipping_status'] == 1 && $order['pay_status'] == 1 && $order['is_arrive'] == 0){
         $btn_arr['arrive_btn'] = 1; // 可点击送达
     }*/
+
+    return $btn_arr;
+}
+
+/**
+ * 获取配送员订单状态的 显示按钮
+ * @param type $order_id  订单id
+ * @param type $order     订单数组
+ * @return array()
+ */
+function orderBtn_for_express($order_id = 0, $order = array())
+{
+    if(empty($order))
+        $order = M('Order')->where("order_id", $order_id)->find();
+    /**
+     *  订单用户端显示按钮
+    去支付     AND pay_status=0 AND order_status=0 AND pay_code ! ="cod"
+    取消按钮  AND pay_status=0 AND shipping_status=0 AND order_status=0
+    确认收货  AND shipping_status=1 AND order_status=0
+    评价      AND order_status=1
+    查看物流  if(!empty(物流单号))
+     */
+    $btn_arr = array(
+        'arrive_btn' => 0, // 送达按钮（新增，用于配送员）
+    );
+
+
+    if($order['order_status'] == 1 && $order['shipping_status'] == 1 && $order['pay_status'] == 1){
+        $btn_arr['arrive_btn'] = 1; // 可点击送达
+    }
 
     return $btn_arr;
 }
@@ -830,7 +860,7 @@ function set_btn_order_status_for_express($order)
     $order_status_arr = C('ORDER_STATUS_DESC');
     $order['order_status_code'] = $order_status_code = orderStatusDesc_for_express(0, $order, 'pickup'); // 订单状态显示给用户看的
     $order['order_status_desc'] = $order_status_arr[$order_status_code];
-    $orderBtnArr = orderBtn(0, $order);
+    $orderBtnArr = orderBtn_for_express(0, $order);
 
     return array_merge($order,$orderBtnArr); // 订单该显示的按钮
 }

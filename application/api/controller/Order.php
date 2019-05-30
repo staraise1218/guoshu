@@ -128,7 +128,7 @@ class Order extends Base
     /**
      * 配送员看到的订单列表
      * @return mixed
-     * @param  $[type] [< <待发货：WAITSEND; 待送达：WAITARRIVE>]]
+     * @param  $[type] [< <配送中： SENDING; 今日送达： TODAY ； 已送达： SENDED；>]]
      */
     public function expressman_order_list()
     {
@@ -136,10 +136,15 @@ class Order extends Base
         $type = input('type');
         $page = input('page/d', 1);
 
-        $where = ' express_user_id = '.$user_id.' and deleted = 0 and order_status=1 ';
+        $where = ' express_user_id = '.$user_id.' and deleted = 0 ';
         //条件搜索
-        if($type) $where .= C(strtoupper(I('get.type')));
-        $where.=' and prom_type < 5 ';//虚拟订单和拼团订单不列出来
+        if($type == 'SENDING') $where .= ' and shipping_status = 1 and order_status=1';
+        if($type == 'TODAY') {
+            $start_time = strtotime(date('Y-m-d'));
+            $end_time = strtotime(date('Y-m-d').' 23:59:59');
+            $where .= " and shipping_status = 1 and order_status=2 and confirm_time >= {$start_time} and confirm_time <= {$end_time}";
+        }
+        if($type == 'TODAY') $where .= " and shipping_status = 1 and order_status=2";
 
         $order_str = "order_id DESC";
         $order_list = M('order')
