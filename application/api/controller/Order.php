@@ -320,6 +320,68 @@ class Order extends Base
     }
 
     /**
+     * 订单详情
+     * @return mixed
+     */
+    public function order_detail_express()
+    {
+        $order_id = input('order_id');
+
+        $map['order_id'] = $order_id;
+        $order_info = M('order')->where($map)->find();
+        $order_info = set_btn_order_status_for_express($order_info);  // 添加属性 ,包括按钮显示属性和订单状态显示属性
+        if (!$order_info) response_error('', '没有获取到订单信息');
+
+
+        //获取订单商品
+        $model = new UsersLogic();
+        $data = $model->get_order_goods($order_info['order_id']);
+        $order_info['goods_list'] = $data['result'];
+        
+        // if($order_info['prom_type'] == 4){
+        //     $pre_sell_item =  M('goods_activity')->where(array('act_id'=>$order_info['prom_id']))->find();
+        //     $pre_sell_item = array_merge($pre_sell_item,unserialize($pre_sell_item['ext_info']));
+        //     $order_info['pre_sell_is_finished'] = $pre_sell_item['is_finished'];
+        //     $order_info['pre_sell_retainage_start'] = $pre_sell_item['retainage_start'];
+        //     $order_info['pre_sell_retainage_end'] = $pre_sell_item['retainage_end'];
+        //     $order_info['pre_sell_deliver_goods'] = $pre_sell_item['deliver_goods'];
+        // }else{
+        //     $order_info['pre_sell_is_finished'] = -1;//没有参与预售的订单
+        // }
+        
+        // 计算完成地址
+        $area_id[] = $order_info['province'];
+        $area_id[] = $order_info['city'];
+        $area_id[] = $order_info['district'];
+        $area_id = array_filter($area_id);
+        $area_id = implode(',', $area_id);
+        $regionList = Db::name('region2')->where("code", "in", $area_id)->getField('code,name');
+        $order_info['fulladdress'] = $regionList[$order_info['province']].$regionList[$order_info['city']].$regionList[$order_info['district']].$order_info['address'];
+
+        //获取订单操作记录
+        $order_action = M('order_action')->where(array('order_id' => $id))->select();
+
+        // 获取自提点信息
+        $pickupInfo = array();
+        if($order_info['send_method'] == 2){
+            $pickupInfo = Db::name('pick_up')->where('pickup_id', $order_info['pickup_id'])
+                ->field('pickup_id, pickup_name, pickup_phone, pickup_contact, pickup_address')
+                ->find();
+
+        }
+        $order_info['pickupInfo'] = $pickupInfo;
+
+        // $this->assign('order_status', C('ORDER_STATUS'));
+        // $this->assign('shipping_status', C('SHIPPING_STATUS'));
+        // $this->assign('pay_status', C('PAY_STATUS'));
+        // $this->assign('region_list', $region_list);
+        // $this->assign('order_info', $order_info);
+        // $this->assign('order_action', $order_action);
+
+        response_success($order_info);
+    }
+
+    /**
      * 物流信息
      * @return mixed
      */
