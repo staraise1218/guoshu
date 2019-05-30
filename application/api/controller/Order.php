@@ -94,7 +94,6 @@ class Order extends Base
             $where .= " and order_status in (2, 4)";
         }
 
-
         $order_str = "order_id DESC";
         $order_list = M('order')
             ->order($order_str)

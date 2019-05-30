@@ -647,7 +647,7 @@ function orderStatusDesc_for_pickup($order_id = 0, $order = array())
         return 'RECEIVED'; //'已提货',*/
     if($order['pay_status'] == 1 &&  $order['order_status'] == 1 && $order['shipping_status'] == 1)
         return 'NO_RECEIVE'; //'待收货',
-    if($order['pay_status'] == 1 && in_array($order['order_status'], arrya(2, 4)) && $order['shipping_status'] == 1)
+    if($order['pay_status'] == 1 && in_array($order['order_status'], array(2, 4)) && $order['shipping_status'] == 1)
         return 'RECEIVED'; //'已送达',
 
     return 'OTHER';
