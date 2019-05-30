@@ -70,7 +70,7 @@ class Order extends Base
     /**
      * 自提点看到的订单列表
      * @return mixed
-     * @param  $[type] [< 待收货（未提货）：WAITRECEIVE，已提货（已收货/待评价）：WAITCCOMMENT >]
+     * @param  $[type] [< 待收货（未提货）：WAITRECEIVE，今日提货： TODAYRECIEVE , 全部 ALL >]
      */
     public function pickup_order_list()
     {
@@ -82,10 +82,18 @@ class Order extends Base
         $pickup = Db::name('pick_up')->where('user_id', $user_id)->find();
         if(empty($pickup) || $pickup['status'] != 2 || $pickup['is_open'] != 1) response_error('', '你无权查看');
 
-        $where = ' pickup_id=' . $pickup['pickup_id'] . ' and deleted = 0 and shipping_status =1 ';
+        $where = ' pickup_id=' . $pickup['pickup_id'] . ' and deleted = 0 and pay_status = 1 && shipping_status =1 ';
         //条件搜索
-        if($type) $where .= C(strtoupper(I('get.type')));
-        $where.=' and prom_type < 5 ';//虚拟订单和拼团订单不列出来
+        if($type == 'WAITRECEIVE') $where .= ' and order_status == 1';
+        if($type == 'TODAYRECIEVE') {
+            $start_time = strtotime(date('Y-m-d'));
+            $end_time = strtotime(date('Y-m-d').' 23:59:59');
+            $where .= " and order_status in (2, 4) and confirm_time >= {$start_time} and confirm_time <= {$end_time}";
+        }
+        if($type == 'ALL') {
+            $where .= " and order_status in (2, 4)";
+        }
+
 
         $order_str = "order_id DESC";
         $order_list = M('order')
@@ -142,9 +150,9 @@ class Order extends Base
         if($type == 'TODAY') {
             $start_time = strtotime(date('Y-m-d'));
             $end_time = strtotime(date('Y-m-d').' 23:59:59');
-            $where .= " and shipping_status = 1 and order_status=2 and confirm_time >= {$start_time} and confirm_time <= {$end_time}";
+            $where .= " and shipping_status = 1 and order_status in (2, 4) and confirm_time >= {$start_time} and confirm_time <= {$end_time}";
         }
-        if($type == 'TODAY') $where .= " and shipping_status = 1 and order_status=2";
+        if($type == 'SENDED') $where .= " and shipping_status = 1 and order_status in (2, 4)";
 
         $order_str = "order_id DESC";
         $order_list = M('order')
@@ -325,7 +333,7 @@ class Order extends Base
      */
     public function order_detail_express()
     {
-        $order_id = input('order_id');
+        $order_id = input('order_id');Zzz/
 
         $map['order_id'] = $order_id;
         $order_info = M('order')->where($map)->find();
