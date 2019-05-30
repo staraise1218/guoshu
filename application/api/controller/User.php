@@ -397,4 +397,15 @@ class User extends Base {
 
         response_success();
     }
+
+    // 获取自提点信息
+    public function getPickupInfo(){
+        $user_id = I('user_id');
+
+        $info = Db::name('pick_up')
+            ->where('user_id', $user_id)
+            ->field('pickup_id, pickup_name, pickup_phone, pickup_contact')
+            ->find();
+        response_success($info);
+    }
 }
