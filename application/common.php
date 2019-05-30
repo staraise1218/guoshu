@@ -665,7 +665,7 @@ function orderStatusDesc_for_express($order_id = 0, $order = array())
   
     if($order['pay_status'] == 1 &&  $order['order_status'] == 1 && $order['shipping_status'] == 1)
         return 'NO_ARRIVE'; //'待收货',
-    if($order['pay_status'] == 1 && $order['order_status'] == 2 && $order['shipping_status'] == 1)
+    if($order['pay_status'] == 1 &&  in_array($order['order_status'], array(2, 4)) && $order['shipping_status'] == 1)
         return 'ARRIVED'; //'已送达',
     /*if($order['shipping_status'] == 1 && $order['is_arrive'] == 1)
         return 'ARRIVED'; //'未提货',*/
