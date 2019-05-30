@@ -138,7 +138,7 @@ class Pickup extends Base {
 		if($status == 2){
 			$pick_update_data['is_open'] = 1;
 
-			$user_update_data['role'] = 3; // 设为自提点角色
+			$user_update_data['role'] = 2; // 设为自提点角色
 		} else {
 			$pick_update_data['is_open'] = 0;
 
