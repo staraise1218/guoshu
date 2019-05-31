@@ -316,6 +316,16 @@ class Order extends Base
         }
         $order_info['pickupInfo'] = $pickupInfo;
 
+        // 获取派送员信息
+        $expressInfo = array();
+        if($order_info['send_method'] == 1){
+            $expressInfo = Db::name('users')->where('user_id', $order_info['express_user_id'])
+                ->field('nickname, mobile')
+                ->find();
+        }
+        $order_info['expressInfo'] = $expressInfo;
+        
+
         // $this->assign('order_status', C('ORDER_STATUS'));
         // $this->assign('shipping_status', C('SHIPPING_STATUS'));
         // $this->assign('pay_status', C('PAY_STATUS'));
