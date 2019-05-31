@@ -70,9 +70,9 @@ class OrderLogic
 			$data['status_desc'] = '用户取消订单';
 			M('order_action')->add($data);//订单操作记录
 
-			return array('status'=>-1,'msg'=>'操作成功','result'=>'');
+			return array('status'=>1,'msg'=>'操作成功','result'=>'');
 		}
-		return array('status'=>1,'msg'=>'操作失败','result'=>'');
+		return array('status'=>-1,'msg'=>'操作失败','result'=>'');
 
 	}
 
