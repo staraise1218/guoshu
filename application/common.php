@@ -783,6 +783,29 @@ function orderBtn_for_express($order_id = 0, $order = array())
 }
 
 /**
+ * 自提点获取订单状态的 显示按钮
+ * @param type $order_id  订单id
+ * @param type $order     订单数组
+ * @return array()
+ */
+function orderBtn_for_pickup($order_id = 0, $order = array())
+{
+    if(empty($order))
+        $order = M('Order')->where("order_id", $order_id)->find();
+
+    $btn_arr = array(
+        'receive_btn' => 0, // 确认收货
+    );
+
+    if($order['pay_status'] == 1 && $order['order_status'] == 1  && $order['shipping_status'] == 1) //待收货
+    {
+        $btn_arr['receive_btn'] = 1;  // 确认收货
+    }
+
+    return $btn_arr;
+}
+
+/**
  * 给订单数组添加属性  包括按钮显示属性 和 订单状态显示属性
  * @param type $order
  */
@@ -850,7 +873,7 @@ function set_btn_order_status_for_pickup($order)
     $order_status_arr = C('ORDER_STATUS_DESC');
     $order['order_status_code'] = $order_status_code = orderStatusDesc_for_pickup(0, $order, 'pickup'); // 订单状态显示给用户看的
     $order['order_status_desc'] = $order_status_arr[$order_status_code];
-    $orderBtnArr = orderBtn(0, $order);
+    $orderBtnArr = orderBtn_for_pickup(0, $order);
     return array_merge($order,$orderBtnArr); // 订单该显示的按钮
 }
 
