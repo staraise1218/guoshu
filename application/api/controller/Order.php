@@ -320,7 +320,7 @@ class Order extends Base
         $expressInfo = array();
         if($order_info['send_method'] == 1){
             $expressInfo = Db::name('users')->where('user_id', $order_info['express_user_id'])
-                ->field('nickname, mobile')
+                ->field('nickname, fullname, mobile')
                 ->find();
         }
         $order_info['expressInfo'] = $expressInfo;
