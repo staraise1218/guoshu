@@ -917,6 +917,7 @@ class Order extends Base
         $updatedata = array(
             // 'is_arrive'=>1
             'order_status' => '2',
+            'confirm_time' => time(),
         );
         if(false !== Db::name('order')->where('order_id', $order_id)->update($updatedata)){
             // 站内消息

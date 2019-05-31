@@ -166,6 +166,8 @@ class OrderLogic
     			$this->order_pay_cancel($order_id);
     			return true;
     		case 'confirm': //确认订单
+                $send_method = M('order')->where("order_id = $order_id")->getField("send_method");
+                if($send_method == 2) $updata['shipping_status'] = 1;
     			$updata['order_status'] = 1;
     			break;
     		case 'cancel': //取消确认
