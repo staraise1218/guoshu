@@ -18,7 +18,6 @@ class FileLogic extends Controller {
 
 		$images = array();
 		$files = $this->request->file($field);
-        p($files);
         foreach ($files as $file) {
 	        $info = $file->move($uploadPath, true);
 	        if($info){
