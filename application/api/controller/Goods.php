@@ -71,8 +71,7 @@ class Goods extends Base {
         // $goods['commentStatistics'] = $goodsLogic->commentStatistics($goods_id);// 获取某个商品的评论统计
       	$goods['sale_num'] = M('order_goods')->where(['goods_id'=>$goods_id,'is_send'=>1])->sum('goods_num');
       	// 获取商品评论
-      	// $goods['goodsCommentList'] = $this->goodsComment($goods_id);
-        $goods['goodsCommentList'] = Db::name('Comment');
+      	$goods['goodsCommentList'] = $this->goodsComment($goods_id);
         //当前用户收藏
         // $collect = M('goods_collect')->where(array("goods_id"=>$goods_id ,"user_id"=>$user_id))->count();
         // $goods_collect_count = M('goods_collect')->where(array("goods_id"=>$goods_id))->count(); //商品收藏数
@@ -146,7 +145,6 @@ class Goods extends Base {
         	->limit(1)
         	->order("goods_rank desc")
         	->select();
-         p($goods_id, $list);
         
         foreach($list as $k => $v){
             $list[$k]['img'] = $v['img'] ? unserialize($v['img']) : array(); // 晒单图片
