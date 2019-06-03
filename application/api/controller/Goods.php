@@ -141,7 +141,7 @@ class Goods extends Base {
         $list = M('Comment')->alias('c')
         	->join('__USERS__ u','u.user_id = c.user_id','LEFT')
         	->where($where)
-        	->field('u.nickname, u.head_pic, c.content, ceil((deliver_rank + goods_rank + service_rank) / 3 as goods_rank, c.is_anonymous, c.img')
+        	->field('u.nickname, u.head_pic, c.content, ceil((deliver_rank + goods_rank + service_rank) / 3) as goods_rank, c.is_anonymous, c.img')
         	->limit(1)
         	->order("goods_rank desc")
         	->select();
