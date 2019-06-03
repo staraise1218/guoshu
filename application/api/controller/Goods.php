@@ -146,7 +146,7 @@ class Goods extends Base {
         	->limit(1)
         	->order("goods_rank desc")
         	->select();
-         
+         p($goods_id, $list);
         
         foreach($list as $k => $v){
             $list[$k]['img'] = $v['img'] ? unserialize($v['img']) : array(); // 晒单图片
