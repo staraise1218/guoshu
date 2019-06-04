@@ -43,7 +43,7 @@ class ShareGoodsLogic
 			->where('gs.is_used', 0)
 			->field('g.goods_id, g.goods_name, g.shop_price, g.share_ratio')
 			->select();
-p($goodsShareList);
+
 		if(empty($goodsShareList)) return false;
 
 		foreach ($goodsShareList as $item) {
