@@ -189,7 +189,8 @@ class Goods extends Base {
 		// 获取分享者用户信息
 		$shareUserInfo = Db::name('users')->where('userCode', $share_userCode)->find();
 		if(empty($shareUserInfo) || $shareUserInfo['is_lock'] == 1) response_error('', '分享者不存在');
-
+        if($shareUserInfo['user_id'] == ! $user_id) response_error('', '给自己分享无效');
+        
 		$data = array(
 			'user_id' => $user_id,
 			'goods_id' => $goods_id,

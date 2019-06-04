@@ -352,8 +352,7 @@ class User extends Base {
         $page = I('page/d', 1);
 
         $limit_start = ($page-1)*20;
-
-        $message = Db::name('message')->alias('m')
+        $list = Db::name('message')->alias('m')
             ->join('user_message um', 'um.message_id=m.message_id', 'left')
             ->where('user_id', $user_id)
             ->whereOr('m.type', 1)
@@ -362,11 +361,11 @@ class User extends Base {
             ->limit($limit_start, 20)
             ->select();
 
-        if(!empty($message)){
+        if(!empty($list)){
             // $now_date = strtotime(date('Y-m-d')); // 今日凌晨
             // $mid_date = strtotime(date('Y-m-d 12:00:00')) ;// 今日中午
 
-            foreach ($message as &$item) {
+            foreach ($list as &$item) {
                 // if($item['send_time'] < $now_date) $item['send_time'] = date('Y-m-d', $item['send_time']);
                 // if($item['send_time'] > $now_date && $item['send_time'] < $mid_date) $item['send_time'] = '上午'.date('H:i', $item['send_time']);
                 // if($item['send_time'] > $mid_date) $item['send_time'] = '下午'.date('H:i', $item['send_time']);
@@ -376,7 +375,7 @@ class User extends Base {
             }
         }
 
-        response_success($message);
+        response_success($list);
     }
 
         // 标记读消息
