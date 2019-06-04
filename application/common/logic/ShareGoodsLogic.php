@@ -41,7 +41,7 @@ class ShareGoodsLogic
 			->where('goods_id', array('IN', $goodsIds))
 			->where('is_used', 0)
 			->select();
-
+p($goodsShareList);
 		if(empty($goodsShareList)) return false;
 
 		foreach ($goodsShareList as $item) {
