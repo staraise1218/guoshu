@@ -49,6 +49,7 @@
                   <view class="title-2">{{item.goods_name}}</view>
                   <view class="title-3_f">{{item.subtitle}}</view>
                   <view wx-if="{{item.virtual_num != 0}}" class="title-3_f">已购{{item.virtual_num}} 份</view>
+                  <view class="tag-date" wx:if="{{item.tag}}">{{item.tag}}</view>
                   <view class="margin-top-50 between-center">
                     <view  class="price title">￥{{item.shop_price}}</view>
                     <image class="icon-2" data-id="{{item.goods_id}}" catchtap="{{item.store_count == 0 ? '' : 'addCart'}}" src="https://hbimg.huabanimg.com/ff8af7f0827e85d34cc15b364ff139c61e6fe5bc5b3-0QRyv2_fw658" />
@@ -74,6 +75,7 @@
               <view class="title-2">{{item.goods_name}}</view>
               <view class="title-3_f">{{item.subtitle}}</view>
               <view wx-if="{{item.virtual_num != 0}}" class="title-3_f">已购 {{item.virtual_num}} 份</view>
+                  <view class="tag-date" wx:if="{{item.tag}}">{{item.tag}}</view>
               <view class="margin-top-50 between-center">
                 <view class="price">￥{{item.shop_price}}</view>
                 <image class="icon-2" data-id="{{item.goods_id}}" catchtap="{{item.store_count == 0 ? '' : 'addCart'}}" src="https://hbimg.huabanimg.com/ff8af7f0827e85d34cc15b364ff139c61e6fe5bc5b3-0QRyv2_fw658" />

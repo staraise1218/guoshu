@@ -74,6 +74,7 @@ page {
 }
 .order-title {
     border-bottom: 1rpx solid rgba(0,0,0,0.05);
+    position: relative;
 }
 .order-list {
     display: flex;
@@ -113,4 +114,18 @@ page {
 
 
 
+.add_ {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.ml-100 {
+    margin-left: 100rpx;
+}
 
+.ziti {
+    border-bottom: 1rpx solid #04B4F3
+}
+.pzisong {
+    border-bottom: 1rpx solid #E02F72
+}

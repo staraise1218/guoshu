@@ -7,40 +7,22 @@ Page({
     goodId: '', // 商品 id 【立即购买进入页面时】
     Page: '', // 页面
     TARGET: '', // 选中的id
+    LoadStatus: 0,
   },
   onLoad: function (options) {
+    wx.showToast({
+      title: '加载中...',
+      icon: 'loading',
+      duration: 20000
+    })
     let that = this;
     console.log(options)
     that.getUserLocation(that);
     that.setData({
       options: options
     })
-    let posdata = {};
-    let location = wx.getStorageSync('location').split(',');
 
 
-    console.log(location)
-    setTimeout(function () {
-      // if(wx.getStorageSync('ADDRESSCODE') == wx.getStorageSync('addressCode')) { // 本地
-      //   posdata = {
-      //     user_id: wx.getStorageSync('user_id'),
-      //     user_longitude: location[1],
-      //     user_latitude: location[0],
-      //     isLocalCity: 1,
-      //     city_code: wx.getStorageSync('addressCode'),
-      //     page: 1
-      //   }
-      //   that.loadList(that, posdata);
-      // } else { // 非本地
-      //   posdata = {
-      //     user_id: wx.getStorageSync('user_id'),
-      //     isLocalCity: 0,
-      //     city_code: wx.getStorageSync('addressCode'),
-      //     page: 1
-      //   }
-      //   that.loadList(that, posdata);
-      // }
-    }, 200)
     console.log(options)
     if(options.goodId) {
       that.setData({
@@ -78,6 +60,11 @@ Page({
       },
       data: posdata,
       success: function(res) {
+        wx.showToast({
+          title: '加载中....',
+          icon: 'loading',
+          duration: 20000
+        })
         console.log(res)
         if(res.data.code == 200) {
           posdata = JSON.stringify(posdata);
@@ -91,6 +78,12 @@ Page({
             icon: 'none'
           })
         }
+      },
+      complete: function() {
+        wx.hideToast();
+        that.setData({
+          LoadStatus: 1
+        })
       }
     })
   },
@@ -99,38 +92,17 @@ Page({
    */
   toOrder: function () {
     let that = this;
-    // let options = JSON.stringify(that.data.options)
     if(this.data.currentID != -1) {
       console.log(that.data)
-      
       wx.setStorageSync('pickup_id', this.data.currentID)
-      wx.navigateTo({
+      wx.redirectTo({
         url: '/pages/demo/demo'
       })
-
-
-
-      // if(that.data.getPickupListPosdata) {
-      //   wx.navigateTo({
-      //     url: '/pages/demo/demo?Store_id=' + this.data.currentID + 
-      //         '&goodId=' + that.data.goodId + 
-      //         '&page=' + that.data.page + 
-      //         '&status=' + that.data.status + 
-      //         '&options=' + options + 
-      //         '&send_method=' + that.data.options.send_method + 
-      //         '&getPickupListPosdata=' + that.data.getPickupListPosdata
-      //   })
-
-      // } else {
-      //   wx.navigateTo({
-      //     url: '/pages/demo/demo?Store_id=' + this.data.currentID + 
-      //         '&goodId=' + that.data.goodId + 
-      //         '&page=' + that.data.page + 
-      //         '&status=' + that.data.status + 
-      //         '&options=' + options + 
-      //         '&send_method=' + that.data.options.send_method
-      //   })
-      // }
+    } else {
+      wx.showToast({
+        title: '请选择自提点',
+        icon: 'none'
+      })
     }
   },
   
@@ -263,7 +235,7 @@ Page({
         console.log(res)
         let address = res.data.regeocode.addressComponent.city
         // console.log('当前城市：', address);
-        wx.setStorageSync('address', address)
+        // wx.setStorageSync('address', address)
         that.setData({
           address: address
         })

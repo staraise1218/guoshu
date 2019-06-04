@@ -18,7 +18,7 @@
                 <view class="order-item" catchtap="go" data-orderid="{{item.order_id}}"
                     data-state="{{item.order_status_code}}">
                     <view class="padding-30 between-center border-bottom">
-                        <view class="title-2_f">{{item.add_time}}</view>
+                        <view class="title-2_f">{{item.add_time}}  订单号：{{item.order_sn}}</view>
                         <view class="title-2_f">{{item.order_status_desc}}</view>
                     </view>
                     <!-- <view class="order-poster border-bottom padding-30">
@@ -92,7 +92,7 @@
                 <view class="order-item" catchtap="go" data-orderid="{{item.order_id}}"
                     data-state="{{item.order_status_code}}">
                     <view class="padding-30 between-center border-bottom">
-                        <view class="title-2_f">{{item.pay_time}}</view>
+                        <view class="title-2_f">{{item.pay_time}}  订单号：{{item.order_sn}}</view>
                         <view class="title-2_f">{{item.order_status_desc}}</view>
                     </view>
                     <view class="shop-list-wrapper order-poster border-bottom padding-30">
@@ -114,11 +114,11 @@
                         </view>
                         <!-- 按钮 -->
                         <view class="end padding-tb-20">
-                            <view wx:if="{{item.cancel_btn == 1}}" 
+                            <!-- <view wx:if="{{item.cancel_btn == 1}}" 
                                 class="title-3 agein margin-left-20"
                                 data-order-sn="{{item.order_sn}}" 
                                 data-order-id="{{item.order_id}}"
-                                catchtap="cancelOrder">取消订单</view>
+                                catchtap="cancelOrder">取消订单</view> -->
 
                             <view wx:if="{{item.pay_btn == 1}}" 
                                 class="title-3 pingjia margin-left-20"
@@ -155,7 +155,7 @@
                 <view class="order-item" catchtap="go" data-orderid="{{item.order_id}}"
                     data-state="{{item.order_status_code}}">
                     <view class="padding-30 between-center border-bottom">
-                        <view class="title-2_f">{{item.pay_time}}</view>
+                        <view class="title-2_f">{{item.pay_time}}  订单号：{{item.order_sn}}</view>
                         <view class="title-2_f">{{item.order_status_desc}}</view>
                     </view>
                     <!-- <view class="order-poster border-bottom padding-30">
@@ -224,7 +224,7 @@
                 <view class="order-item" catchtap="go" data-orderid="{{item.order_id}}"
                     data-state="{{item.order_status_code}}">
                     <view class="padding-30 between-center border-bottom">
-                        <view class="title-2_f">{{item.add_time}}</view>
+                        <view class="title-2_f">{{item.pay_time}}  订单号：{{item.order_sn}}</view>
                         <view class="title-2_f">{{item.order_status_desc}}</view>
                     </view>
                     <!-- <view class="order-poster border-bottom padding-30">

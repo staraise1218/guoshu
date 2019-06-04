@@ -1,271 +1,102 @@
 const app = getApp()
 const Globalhost = getApp().globalData.Globalhost;
+const loadingfunc = getApp().globalData.loadingfunc;
 Page({
   data: {
-    currentTab: 0,
-    reaHeight: 0,
-    orderInfo: [],
-    orderMsg: [], // 全部
-    loadTihuo: [],     // 已提货
-    weiTiHuo: [], // 未提货
+    opSTATUS: '',         // 上一个页面传过来的加载页面状态  [默认 配送中]
+    STATUS: 'SENDING',    // 显示与加载的页面 默认 配送中
+    SENDING: [],          // 配送中
+    TODAY: [],            // 今日送达
+    SENDED: [],           // 已送达
 
   },
   onLoad: function (options) {
     let that = this;
-    console.log(options.pageStatus == "loadPinglun")
+    
+    // 判断高亮显示
     that.setData({
-      currentTab: options.pageStatus
+      STATUS: options.opSTATUS || 'SENDING'
     })
-
-    /**
-     * 判断高度
-     */
-    setTimeout(function () {
-      var query = wx.createSelectorQuery()
-      query.select('.item-box-1').boundingClientRect()
-      query.selectViewport().scrollOffset()
-      query.exec(function (res) {
-        res[0].top // #the-id节点的上边界坐标
-        res[1].scrollTop // 显示区域的竖直滚动位置
-        // console.log('打印demo的元素的信息', res);
-        // console.log('打印高度', res[0].height);
-        that.setData({
-          reaHeight: 'height:' + (res[0].height + 20) + 'px'
-        })
-      })
-    }, 1000)
-    // 判断高度 END
-    that.listLoad(that);  // 全部
-    that.loadTihuo(that); // 已提货
-    that.weiTiHuo(that);  // 未提货
   },
   onShow: function () {
     let that = this;
-    // that.listLoad(that);  // 全部
-    // that.loadTihuo(that); // 已提货
-    // that.weiTiHuo(that);  // 未提货
+    that.getOrderInfo(that, that.data.STATUS); // 配送中： SENDING; 今日送达： TODAY ； 已送达： SENDED
   },
-
-  //滑动切换 
-  swiperTab: function (e) {
-    var that = this;
-    that.setData({
-      currentTab: e.detail.current
-    });
-    if (e.currentTarget.dataset.current == 0) {
-      var query = wx.createSelectorQuery()
-      query.select('.item-box-1').boundingClientRect()
-      query.selectViewport().scrollOffset()
-      query.exec(function (res) {
-        res[0].top // #the-id节点的上边界坐标
-        res[1].scrollTop // 显示区域的竖直滚动位置
-        console.log('打印demo的元素的信息', res);
-        console.log('打印高度', res[0].height);
-        that.setData({
-          reaHeight: 'height:' + (res[0].height + 20) + 'px'
-        })
-      })
-    } else if (e.currentTarget.dataset.current == 1) {
-      var query = wx.createSelectorQuery()
-      query.select('.item-box-2').boundingClientRect()
-      query.selectViewport().scrollOffset()
-      query.exec(function (res) {
-        res[0].top // #the-id节点的上边界坐标
-        res[1].scrollTop // 显示区域的竖直滚动位置
-        console.log('打印demo的元素的信息', res);
-        console.log('打印高度', res[0].height);
-        that.setData({
-          reaHeight: 'height:' + (res[0].height + 20) + 'px'
-        })
-      })
-    } else if (e.currentTarget.dataset.current == 2) {
-      var query = wx.createSelectorQuery()
-      query.select('.item-box-3').boundingClientRect()
-      query.selectViewport().scrollOffset()
-      query.exec(function (res) {
-        res[0].top // #the-id节点的上边界坐标
-        res[1].scrollTop // 显示区域的竖直滚动位置
-        console.log('打印demo的元素的信息', res);
-        console.log('打印高度', res[0].height);
-        that.setData({
-          reaHeight: 'height:' + (res[0].height + 20) + 'px'
-        })
-      })
+  // 加载列表
+  getOrderInfo: function (that, type, page) {
+    let posData = {
+      user_id: wx.getStorageSync('user_id'),
+      page: page || 1,
+      type: type || 'SENDING'
     }
-  },
-  //点击切换 
-  clickTap: function (e) {
-    var that = this;
-    console.log(e)
-    console.log(e.currentTarget.dataset.current)
-    that.setData({
-      currentTab: e.currentTarget.dataset.current
-    })
-    if (e.currentTarget.dataset.current == 0) {
-      var query = wx.createSelectorQuery()
-      query.select('.item-box-1').boundingClientRect()
-      query.selectViewport().scrollOffset()
-      query.exec(function (res) {
-        res[0].top // #the-id节点的上边界坐标
-        res[1].scrollTop // 显示区域的竖直滚动位置
-        console.log('打印demo的元素的信息', res);
-        console.log('打印高度', res[0].height);
-        that.setData({
-          reaHeight: 'height:' + (res[0].height + 20) + 'px'
-        })
-      })
-    } else if (e.currentTarget.dataset.current == 1) {
-      var query = wx.createSelectorQuery()
-      query.select('.item-box-2').boundingClientRect()
-      query.selectViewport().scrollOffset()
-      query.exec(function (res) {
-        res[0].top // #the-id节点的上边界坐标
-        res[1].scrollTop // 显示区域的竖直滚动位置
-        console.log('打印demo的元素的信息', res);
-        console.log('打印高度', res[0].height);
-        that.setData({
-          reaHeight: 'height:' + (res[0].height + 20) + 'px'
-        })
-      })
-    } else if (e.currentTarget.dataset.current == 2) {
-      var query = wx.createSelectorQuery()
-      query.select('.item-box-3').boundingClientRect()
-      query.selectViewport().scrollOffset()
-      query.exec(function (res) {
-        res[0].top // #the-id节点的上边界坐标
-        res[1].scrollTop // 显示区域的竖直滚动位置
-        console.log('打印demo的元素的信息', res);
-        console.log('打印高度', res[0].height);
-        that.setData({
-          reaHeight: 'height:' + (res[0].height + 20) + 'px'
-        })
-      })
-    }
-  },
-  /**
-   * 列表
-   */
-  listLoad: function (that) {
     wx.request({
       url: Globalhost + 'Api/order/expressman_order_list',
       method: 'POST',
       header: {
         'content-type': 'application/x-www-form-urlencoded'
       },
-      data: {
-        user_id: wx.getStorageSync('user_id'),
-        page: 1,
-      },
-      success: function (res) {
-        let data = res.data.data;
-        console.log(data)
-        that.setData({
-          orderMsg: data
-        })
-      }
-    })
-  },
-  /**
-   * 已提货
-   */
-  loadTihuo: function (that) {
-    wx.request({
-      url: Globalhost + 'Api/order/expressman_order_list',
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      data: {
-        user_id: wx.getStorageSync('user_id'),
-        type: 'WAITSEND',
-        page: 1
-      },
-      success: function (res) {
-        let data = res.data.data;
-        console.log(data)
-        that.setData({
-          loadTihuo: data
-        })
-        wx.setStorageSync('user_money', data.user_money)
-      }
-    })
-  },
-  /**
-   * 未提货
-   */
-  weiTiHuo: function (that) {
-    wx.request({
-      url: Globalhost + 'Api/order/expressman_order_list',
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      data: {
-        user_id: wx.getStorageSync('user_id'),
-        type: 'WAITARRIVE',
-        page: 1
-      },
-      success: function (res) {
-        let data = res.data.data;
-        console.log(data)
-        that.setData({
-          weiTiHuo: data
-        })
-      }
-    })
-  },
-  /**
-   * 确定送达
-   */
-  toOk: function (e) {
-    console.log(e.currentTarget.dataset.orderId)
-    wx.showModal({
-      content: '确定送达吗？',
-      success(res) {
-        if (res.confirm) {
-          console.log('用户点击确定')
-          wx.request({
-            url: Globalhost + 'Api/order/arrive',
-            method: 'POST',
-            header: {
-              'content-type': 'application/x-www-form-urlencoded'
-            },
-            data: {
-              user_id: wx.getStorageSync('user_id'),
-              order_id:e.currentTarget.dataset.orderId
-            },
-            success: function (res) {
-              console.log(res)
-              wx.showToast({
-                title: res.data.msg,
-                icon: 'none'
-              })
-              that.listLoad(that);  // 全部
-              that.loadTihuo(that); // 已提货
-              that.weiTiHuo(that);  // 未提货
-            }
+      data: posData,
+      success: function(res) {
+        console.log(res)
+        if(res.data.code == 200) {
+          wx.showToast({
+            title: 'loading...',
+            icon: 'loading',
+            duration: 60000
           })
-        } else if (res.cancel) {
-          console.log('用户点击取消')
+          let data = res.data.data;
+          var len = data.length;
+          for(var i = 0; i < len; i++) {
+            data[i].pay_time = that.formatDate(data[i].pay_time)
+          }
+          switch (type) {
+            case 'SENDING': // 配送中
+              that.setData({
+                SENDING: data
+              })
+              break;
+            case 'TODAY':
+                that.setData({
+                  TODAY: data
+                })
+                break;
+            case 'SENDED':
+                that.setData({
+                  SENDED: data
+                })
+                break;
+            default:
+              console.log('参数错误')
+                that.setData({
+                  SENDING: data
+                })
+                break;
+          }
+        } else {
+          wx.showToast({
+            title: '请求错误 ： getOrderInfo',
+            icon: 'none'
+          })
         }
+      },
+      complete: function () {
+        setTimeout(() => {
+          wx.hideToast()
+        }, 500)
       }
     })
   },
-  toYue: function () {
-    wx.navigateTo({
-      url: '/pages/shouyiB/shouyiB'
-    })
-  },
+  // 打电话
   toCall: function (e) {
-    console.log(e.currentTarget.dataset.tell)
+    console.log(e.currentTarget.dataset.phone)
     wx.showModal({
       title: '拨打电话？',
-      content: e.currentTarget.dataset.tell,
+      content: e.currentTarget.dataset.phone,
       success(res) {
         if (res.confirm) {
           console.log('用户点击确定')
           wx.makePhoneCall({
-            phoneNumber: e.currentTarget.dataset.tell
+            phoneNumber: e.currentTarget.dataset.phone
           })
         } else if (res.cancel) {
           console.log('用户点击取消')
@@ -273,4 +104,38 @@ Page({
       }
     })
   },
+  formatDate : function (date) {
+      if(date.length == 10) {
+        date = date*1000
+      }
+      date = Number(date)
+      date = new Date(date);
+      var y = date.getFullYear();
+      var m = date.getMonth() + 1;  
+      m = m < 10 ? '0' + m : m;  
+      var d = date.getDate();  
+      d = d < 10 ? ('0' + d) : d;  
+      return y + '-' + m + '-' + d;  
+  },
+  // 切换
+  changTab: function (e) {
+    let that = this;
+    this.setData({
+      STATUS: e.currentTarget.dataset.status
+    })
+    that.getOrderInfo(that, e.currentTarget.dataset.status)
+    // console.log(this.data)
+  },
+  // 跳转详情
+  toCon: function (e) {
+    console.log(e.currentTarget.dataset.orderid)
+    wx.navigateTo({
+      url: '/pages/peisonCon/peisonCon?DO=peisong&orderid=' + e.currentTarget.dataset.orderid
+    })
+  },
+  // 上拉加载
+  loadMore: function (e) {
+    console.log(e)
+  }
+
 })

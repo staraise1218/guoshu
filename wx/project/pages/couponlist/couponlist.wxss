@@ -1,5 +1,26 @@
 page {
     background: rgba(0,0,0,0.05);
+    font-size: 26rpx;
+}
+.tips-empty {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    text-align: center;
+    background: #fff;
+    z-index: 1;
+}
+.tips-3 {
+    text-align: center;
+    padding-top: 200rpx;
+}
+.tips-empty .content {
+    position: absolute;
+    left: 50%;
+    top: 200rpx;
+    transform: translateX(-50%);
 }
 .tag {
     border: none;
@@ -11,10 +32,10 @@ page {
 }
 
 .tip {
-    display: block;
+    /* display: block;
     text-align: center;
     margin-top: 300rpx;
-    font-size: 26rpx;
+    font-size: 26rpx; */
 }
 
 

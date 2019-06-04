@@ -1,4 +1,6 @@
-<image class="poster" src="{{bannerList}}" mode="" />
+<view class="padding-20">
+    <image class="poster_" src="{{bannerList}}" mode="" />
+</view>
 
 <!-- 秒杀 -->
 <view class="group-title margin-20">限时秒杀</view>
@@ -114,7 +116,7 @@
 
 
     </view>
-    <view class="group-title">超值团购</view>
+    <view class="group-title group-title_">超值团购</view>
     <block wx:for="{{toDayTuijian}}" wx:key>
         <view class="tuijian-item"  data-id="{{item.goods_id}}" bindtap="toCon">
             <view class="poster-wrap">

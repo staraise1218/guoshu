@@ -1,6 +1,7 @@
 {
   "usingComponents": {
-    "van-tab": "/src/dist/tab/index"
+    "van-tab": "/src/dist/tab/index",
+    "van-dialog": "/src/dist/dialog/index"
   },
   "navigationBarTitleText": "确认订单"
 }

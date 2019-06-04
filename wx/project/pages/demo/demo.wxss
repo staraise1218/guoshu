@@ -1,5 +1,6 @@
 page {
     padding-bottom: 120rpx;
+    font-size: 26rpx;
 }
 .order-top {
     position: relative;
@@ -312,3 +313,112 @@ page .wallets-password {
 .active_self {
   background: #eee;
 }
+
+.my_alert_bg {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: rgba(0,0,0,.5);
+  z-index: 998;
+}
+.my_alert {
+  background: #fff;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  border-radius: 15rpx;
+  min-width: 500rpx;
+}
+.my_title {
+  text-align: center;
+  padding: 20rpx;
+}
+.my_con {
+  padding: 10rpx 20rpx;
+  min-height: 150rpx;
+  color: rgba(0,0,0,.5)
+}
+.my_btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1rpx solid rgba(0,0,0,.5);
+  padding: 20rpx;
+
+}
+.my_btn view {
+  flex: 1;
+  text-align: center;
+}
+.my_ok {
+  color: #38f;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.alert_error_bg {
+  width: 100%;
+  height: 100vh;
+  background: rgba(0,0,0,.5);
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 998;
+}
+.alert_error {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20rpx;
+  align-items: center;
+  width: 450rpx;
+  min-height: 250rpx;
+  text-align: center;
+  background: #fff;
+  border-radius: 15rpx;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+}
+.error_title {
+  margin-bottom: 30rpx;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

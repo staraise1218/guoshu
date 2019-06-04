@@ -15,7 +15,15 @@ Page({
     name: '',
     phone: '',
     code: '',
-    index: 0
+    index: 0,
+
+
+    
+    // 选择城市
+    array: [],
+    index: 0,
+    addressStatus: 0,
+    chooseAlerShow: false,
 
   },
   onLoad: function (options) {
@@ -42,6 +50,10 @@ Page({
         },
         success: function (res) {
           console.log(res)
+          wx.showToast({
+            title: '验证码已发送',
+            icon: 'none'
+          })
           // let code = res.data.data.code
           // wx.showModal({
           //   title: '温馨提示',
@@ -126,7 +138,7 @@ Page({
               icon: 'none'
             })
           } else {
-            if (that.data.codeChange == '') {
+            if (that.data.addressCode == '') {
               wx.showToast({
                 title: '请选择城市',
                 icon: 'none'
@@ -149,7 +161,7 @@ Page({
                     pickup_name: that.data.name, //	自提点名称
                     pickup_phone: that.data.phone, //	联系电话
                     mobile_code: that.data.code, //	验证码
-                    city_code: that.data.codeChange, // 城市 code
+                    city_code: that.data.addressCode, // 城市 code
                     pickup_address: that.data.addressCon //	详细地址
                   },
                   success: function (res) {
@@ -344,6 +356,56 @@ Page({
     })
   },
 
+
+
+
+
+  
+// 数据 [code, code, code]
+chooseAddressShow: function () {
+  this.setData({
+    chooseAlerShow: true
+  })
+},
+// 选择省
+changeProvince: function (e) {
+  let that = this;
+  console.log(e)
+  that.setData({
+    'chooseIndex[0]': e.currentTarget.dataset.index,
+    'chooseIndex[1]': 0,
+    chooseAddressCode: that.data.multiArray[e.currentTarget.dataset.index].sub[0].code,
+    chooseAddressName:  that.data.multiArray[e.currentTarget.dataset.index].sub[0].name
+  })
+  console.log(that.data)
+},
+// 选择配送点
+changeCity: function (e) {
+  let that = this;
+  console.log(e)
+  that.setData({
+    'chooseIndex[1]': e.currentTarget.dataset.index,
+    chooseAddressCode: e.currentTarget.dataset.code,
+    chooseAddressName: e.currentTarget.dataset.name
+  })
+},
+
+// 确定修改
+chooseCity: function () {
+  let that = this;
+  that.setData({
+    chooseAlerShow: false,
+    address: that.data.chooseAddressName,
+    addressCode: that.data.chooseAddressCode
+  })
+  console.log(that.data)
+},
+// 取消修改
+cancleCity: function () {
+  this.setData({
+    chooseAlerShow: false
+  })
+},
 
 
 

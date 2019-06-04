@@ -22,10 +22,17 @@ page {
   font-size:26rpx;
   margin-left:8rpx;
   vertical-align:middle;
-  max-width:190rpx;
+  max-width:220rpx;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
+}
+.price.title {
+  font-size: 32rpx;
+  font-weight: 400;
+}
+.price {
+  font-weight: 400;
 }
 .news-icon {
   height: 40rpx !important;
@@ -288,4 +295,12 @@ page {
   .btn-wrapper .ok {
     background: #FF8A00;
     color: #fff;
+  }
+  .tag-date {
+    background: #F9F252;
+    white-space: nowrap;
+    padding: 5rpx 8rpx;
+    font-size: 18rpx;
+    color: #fff;
+    display: inline-block;
   }

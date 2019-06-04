@@ -61,35 +61,35 @@ Page({
     ],
     zhandian: [
       {
-        url: 'https://hbimg.huabanimg.com/a762eb29424005cced4b0b4cfcb11ed99a2377b965d-smw58j_fw658',
-        title: '全部订单',
-        func: 'toMyOrderB'
-      },
-      {
-        url: 'https://hbimg.huabanimg.com/5ac27cc5f1dd184c2ce3b0b45af294960bc39a966bd-O5zJVF_fw658',
-        title: '已提货',
-        func: 'toLoadPinglunB'
-      },
-      {
         url: 'https://hbimg.huabanimg.com/d5ca7feae4a8b05631125a2736727bdd37089fc6771-5ZfC4k_fw658',
         title: '未提货',
         func: 'toTuikuanB'
-      }
+      },
+      {
+        url: 'https://hbimg.huabanimg.com/5ac27cc5f1dd184c2ce3b0b45af294960bc39a966bd-O5zJVF_fw658',
+        title: '今日提货',
+        func: 'toLoadPinglunB'
+      },
+      {
+        url: 'https://hbimg.huabanimg.com/a762eb29424005cced4b0b4cfcb11ed99a2377b965d-smw58j_fw658',
+        title: '已提货',
+        func: 'toMyOrderB'
+      },
     ],
     peisong: [
       {
         url: 'https://hbimg.huabanimg.com/63a3f4ac37fa4572fae03d1dd2dd8db71910df0163b-hskLOg_fw658',
-        title: '全部订单',
+        title: '配送中',
         func: 'toPeisong'
       },
       {
         url: 'https://hbimg.huabanimg.com/c8498c8fd5d1d2a58cae4c4e39a5666fa61ddf02851-xFCgOa_fw658',
-        title: '已提货',
+        title: '今日送达',
         func: 'toPeisong1'
       },
       {
         url: 'https://hbimg.huabanimg.com/14fa2b764da0496ef868dadda39be76b835853fe5f5-kltWPr_fw658',
-        title: '未提货',
+        title: '已送达',
         func: 'toPeisong2'
       }
     ],
@@ -193,6 +193,7 @@ Page({
         }
       })
     }
+    that.getPickupInfo()
   },
   onShow: function () {
     let that = this;
@@ -291,34 +292,34 @@ Page({
   toMyOrderB: function () { // 全部订单
     loadingfunc();
     wx.navigateTo({
-      url: '/pages/myOrderB/myOrderB'
+      url: '/pages/myOrderB/myOrderB?opSTATUS=ALL'
     })
   },
   toLoadPinglunB: function () { // 待评论
     loadingfunc();
     wx.navigateTo({
-      url: '/pages/myOrderB/myOrderB?pageStatus=1'
+      url: '/pages/myOrderB/myOrderB?opSTATUS=TODAYRECIEVE'
     })
   },
   toTuikuanB: function () { // 退款/售后
     loadingfunc();
     wx.navigateTo({
-      url: '/pages/myOrderB/myOrderB?pageStatus=2'
+      url: '/pages/myOrderB/myOrderB?opSTATUS=WAITRECEIVE'
     })
   },
   toPeisong: function () { // 配送1
     wx.navigateTo({
-      url: '/pages/peisongList/peisongList'
+      url: '/pages/peisongList/peisongList?opSTATUS=SENDING'
     })
   },
   toPeisong1: function () { // 配送2
     wx.navigateTo({
-      url: '/pages/peisongList/peisongList?pageStatus=1'
+      url: '/pages/peisongList/peisongList?opSTATUS=TODAY'
     })
   },
   toPeisong2: function () { // 配送3
     wx.navigateTo({
-      url: '/pages/peisongList/peisongList?pageStatus=2'
+      url: '/pages/peisongList/peisongList?opSTATUS=SENDED'
     })
   },
 
@@ -428,6 +429,30 @@ Page({
             url: '/pages/shoppingCart/shoppingCart'
           })
     }
+  },
+  // 获取站点名
+  getPickupInfo() {
+    let that = this;
+    wx.request({
+      url: Globalhost + 'Api/user/getPickupInfo',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        user_id: wx.getStorageSync('user_id')
+      },
+      success: function(res) {
+        console.log(res)
+        if(res.data.code == 200) {
+          that.setData({
+            pickupName: res.data.data.pickup_name
+          })
+        } else {
+          console.log('获取站点名 ERROR')
+        }
+      }
+    })
   }
 
 })

@@ -66,14 +66,15 @@
             <view class="left-center left-box">地址</view>
             <view class="right-center right-box border-left">
                 <view class="inp color-6 between-center">
-                    <view bindtap="cityshow" class="left-center padding-tb-10">
+                    <view bindtap="chooseAddressShow" class="left-center padding-tb-10">
                         <image class="icon-4" mode="widthFix" src="https://hbimg.huabanimg.com/c49cf39cdcf3190d4ec2cb94e70ee269546408d282c-LeO6F6_fw658" />
                         <!-- <view class="margin-left-20">{{address}}</view> -->
-                        <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+                        <!-- <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
                             <view class="picker" >
                                 {{multiArray[index].name}}
                             </view>
-                        </picker>
+                        </picker> -->
+                        {{address}}
                     </view>
                     <view class="right-center">
                         <image class="icon-1" src="https://hbimg.huabanimg.com/3bc04df372e9e3f66421a5573743687437b517954fb-sgjpU5_fw658" />
@@ -132,3 +133,30 @@
     </picker-view>
   </view>
 </view> -->
+
+
+
+        
+        <view class="alert-box_"  wx:if="{{chooseAlerShow}}"></view>
+        <view class="cityshow-alert" wx:if="{{chooseAlerShow}}">
+          <scroll-view scroll-y class="left">
+            <block wx:for="{{multiArray}}" wx:key>
+              <view bindtap="changeProvince" data-index="{{index}}" data-code="{{item.code}}" data-name="{{item.name}}" data-parentCode="{{item.parentCode}}" class="{{index ==  chooseIndex[0]? 'active' : ''}} content">
+                {{item.name}}
+              </view>
+            </block>
+          </scroll-view>
+          <scroll-view scroll-y class="center">
+            <block wx:for="{{multiArray[chooseIndex[0]].sub}}" wx:key>
+              <!-- <block wx:for="{{item.}}" wx:key> -->
+                <view  data-name="{{item.name}}" data-index="{{index}}" bindtap="changeCity" data-code="{{item.code}}" data-parentCode="{{item.parentCode}}" class="{{index == chooseIndex[1] ? 'active' : ''}} content">
+                  {{item.name}}
+                </view>
+              <!-- </block> -->
+            </block>
+          </scroll-view>
+          <view class="btn-wrapper">
+            <view class="cancel" bindtap="cancleCity">取消</view>
+            <view class="ok" bindtap="chooseCity">确定</view>
+          </view>
+        </view>

@@ -65,9 +65,12 @@ Page({
                   title: '订单已取消',
                   icon: 'none'
                 })
-                wx.navigateBack({
-                  delta: 1
-                });
+                // wx.navigateBack({
+                //   delta: 1
+                // });
+                wx.switchTab({
+                  url: '/pages/index/index'
+                })
               } else if(res.data.code == 400){
                 wx.showModal({
                   title: '温馨提示',
@@ -175,7 +178,7 @@ Page({
                   console.log(res)
                   
                   // wx.setStorageSync('chooseStatus', 'END')  // 清空优惠券状态
-                  wx.navigateTo({
+                  wx.redirectTo({
                     url: '/pages/paySuccess/paySuccess?order_amount=' + that.data.msg.total_amount + '&order_id=' + that.data.msg.order_id + '&order_sn=' + that.data.msg.order_sn
                   })
                 }
@@ -333,8 +336,8 @@ Page({
           'paySign': res.data.data.paySign, // 签名
           'success': function (res) {
             console.log(res)
-            wx.navigateTo({
-              url: '/pages/paySuccess/paySuccess?order_id=' + orderId
+            wx.redirectTo({
+              url: '/pages/paySuccess/paySuccess?order_id=' + that.data.orderId
             })
           }
         })
@@ -372,7 +375,7 @@ Page({
           paymentMethod: 'money'
         },
         success: function (res) {
-          wx.navigateTo({
+          wx.redirectTo({
             url: '/pages/paySuccess/paySuccess?order_amount=' + wx.getStorageSync('order_amount') + '&order_id=' + wx.getStorageSync('order_id') + '&order_sn=' + wx.getStorageSync('order_sn')
           })
         }
@@ -415,6 +418,25 @@ Page({
     var d = date.getDate();  
     d = d < 10 ? ('0' + d) : d;  
     return y + '-' + m + '-' + d;  
-}
+},
 
+  // 打电话
+  toCall: function (e) {
+    console.log(e.currentTarget.dataset.phone)
+    console.log('打电话功能暂时不用')
+    // wx.showModal({
+    //   title: '拨打电话？',
+    //   content: e.currentTarget.dataset.phone,
+    //   success(res) {
+    //     if (res.confirm) {
+    //       console.log('用户点击确定')
+    //       wx.makePhoneCall({
+    //         phoneNumber: e.currentTarget.dataset.phone
+    //       })
+    //     } else if (res.cancel) {
+    //       console.log('用户点击取消')
+    //     }
+    //   }
+    // })
+  },
 })

@@ -2,23 +2,40 @@
     <image wx:if="{{state == 'close'}}" class="icon-best" src="http://img.hb.aicdn.com/a568cc1552e3dd7afb23f01c04704d82a43d16b6455a-MgwxFA_fw658" />
     <view wx:if="{{state == 'close'}}" class="text-center title-2">交易关闭</view>
     
-    <image wx:if="{{state == 'WAITSEND'}}" class="icon-best" src="http://img.hb.aicdn.com/afb5f1a90a9bad803d8bc76b4602643a873aff78465e-ghun04_fw658" />
-    <view wx:if="{{state == 'WAITSEND'}}" class="text-center title-2">等待卖家发货</view>
+    <image wx:if="{{msg.order_status_code == 'WAITCONFIRM'}}" class="icon-best" src="http://img.hb.aicdn.com/afb5f1a90a9bad803d8bc76b4602643a873aff78465e-ghun04_fw658" />
+    <view wx:if="{{msg.order_status_code == 'WAITCONFIRM'}}" class="text-center title-2">{{msg.order_status_desc}}</view>
     
-    <image wx:if="{{state == 'WAITPAY'}}" class="icon-best" src="http://img.hb.aicdn.com/3bf9b0befabbb8376c47e035c07ac95377c182c74601-owXMPn_fw658" />
-    <view wx:if="{{state == 'WAITPAY'}}" class="text-center title-2">等待买家付款</view>
+    <image wx:if="{{msg.order_status_code == 'WAITPAY'}}" class="icon-best" src="http://img.hb.aicdn.com/3bf9b0befabbb8376c47e035c07ac95377c182c74601-owXMPn_fw658" />
+    <view wx:if="{{msg.order_status_code == 'WAITPAY'}}" class="text-center title-2">{{msg.order_status_desc}}</view>
     
-    <image wx:if="{{state == 'WAITCCOMMENT'}}" class="icon-best" src="http://img.hb.aicdn.com/2a6bb975ce84d617f4587600f5c174e8f2e934de4570-wYxc1V_fw658" />
-    <view wx:if="{{state == 'WAITCCOMMENT'}}" class="text-center title-2">交易成功</view>
+    <!-- <image wx:if="{{state == 'WAITCCOMMENT'}}" class="icon-best" src="http://img.hb.aicdn.com/2a6bb975ce84d617f4587600f5c174e8f2e934de4570-wYxc1V_fw658" />
+    <view wx:if="{{state == 'WAITCCOMMENT'}}" class="text-center title-2">交易成功</view> -->
     
-    <image wx:if="{{state == 'WAITRECEIVE'}}" class="icon-best" src="http://img.hb.aicdn.com/6fdff69e2da153fc963d217e9ed3d1382a97c6a24709-1s5QKm_fw658" />
-    <view wx:if="{{state == 'WAITRECEIVE'}}" class="text-center title-2">等待买家收货</view>
+    <image wx:if="{{msg.order_status_code == 'WAITCCOMMENT'}}" class="icon-best" src="http://img.hb.aicdn.com/6fdff69e2da153fc963d217e9ed3d1382a97c6a24709-1s5QKm_fw658" />
+    <view wx:if="{{msg.order_status_code == 'WAITCCOMMENT'}}" class="text-center title-2">{{msg.order_status_desc}}</view>
 
-    <image wx:if="{{state == 'CANCEL'}}" class="icon-best" src="https://hbimg.huabanimg.com/a568cc1552e3dd7afb23f01c04704d82a43d16b6455a-MgwxFA_fw658" />
-    <view wx:if="{{state == 'CANCEL'}}" class="text-center title-2">订单已取消</view>
+    <image wx:if="{{msg.order_status_code == 'WAITREFUND'}}" class="icon-best" src="https://hbimg.huabanimg.com/a568cc1552e3dd7afb23f01c04704d82a43d16b6455a-MgwxFA_fw658" />
+    <view wx:if="{{msg.order_status_code == 'WAITREFUND'}}" class="text-center title-2">{{msg.order_status_desc}}</view>
 
 
 </view>
+
+<!-- 显示配送员 -->
+<view wx:if="{{msg.send_method == 1}}">
+    <view class="peisongyuan-wrap" wx:if="{{msg.order_status_code == 'WAITCONFIRM' || msg.order_status_code == 'WAITCCOMMENT' || msg.order_status_code == 'WAITREFUND' }}">
+        <view class="left">
+            <image src="https://app.zhuoyumall.com:444//wx/img/peisong.png" />
+            <view class="peisong-name">{{msg.expressInfo.nickname}}   派送中</view>
+        </view>
+        <view class="peisong-phone" bindtap="toCall" data-phone="17696639860">
+            <!-- <image src="https://app.zhuoyumall.com:444//wx/img/phone.png" />
+            <view class="phone-con">电话</view> -->
+            {{msg.expressInfo.mobile}}
+        </view>
+    </view>
+</view>
+
+
 
 <!-- 自提订单 -->
 <view class="padding-30" wx:if="{{msg.pickupInfo.pickup_name}}">
@@ -62,7 +79,7 @@
                 <view class="title-2">{{item.goods_name}}</view>
                 <view class="title-2_f">{{item.subtitle}}</view>
                 <view class="bottom">
-                    <view class="price-color">￥{{item.goods_price}}</view>
+                    <view class="price-color">￥{{item.member_goods_price}}</view>
                     <view class="title-2_f">x{{item.goods_num}}</view>
                 </view>
             </view>
@@ -91,7 +108,7 @@
         <view class="title-2">红包</view>
     </view>
     <view class="">
-        <view class="title-2_f margin-right-30">{{msg.red_packet}}</view>
+        <view class="title-2_f margin-right-30">{{msg.coupon_price}}</view>
     </view>
 </view>
 
@@ -106,6 +123,12 @@
     </view>
 </view> -->
 
+
+<view wx:if="{{msg.user_note}}" class="padding-lr-30 padding-tb-20  between-center">
+    <view class="left-center title-3 self_beiz">
+        备注：{{msg.user_note}}
+    </view>
+</view>
 
 <view class="padding-lr-30 padding-tb-20  between-center">
     <view class="left-center">
@@ -170,7 +193,7 @@
 
 <view class="border-bottom margin-lr-30 padding-tb-30 title-2">订单信息</view>
 <view class="border-bottom margin-lr-30 padding-tb-20 title-2_f">订单编号：{{msg.order_sn}}</view>
-<view class="border-bottom margin-lr-30 padding-tb-20 title-2_f">创建时间：{{msg.add_time}}</view>
+<view class="border-bottom margin-lr-30 padding-tb-20 title-2_f">下单时间：{{msg.add_time}}</view>
 
 
 <view  class="right-center padding-lr-20 ">

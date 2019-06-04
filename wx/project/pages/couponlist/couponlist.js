@@ -11,6 +11,7 @@ Page({
       "use_end_time": 1607417732
     }],
     readNum: 0,
+    loadStatus: 0
   },
   onLoad: function (options) {
     let that = this;
@@ -24,6 +25,11 @@ Page({
    * 优惠券数据
    */
   list: function (that) {
+    wx.showToast({
+      title: 'loading...',
+      icon: 'loading',
+      duration: 200000
+    })
     wx.request({
       url: Globalhost + 'Api/user/couponlist',
       method: 'POST',
@@ -70,6 +76,12 @@ Page({
         that.setData({
           readNum: Number(readNum)
         })
+      },
+      complete: function() {
+        wx.hideToast()
+        that.setData({
+          loadStatus: 1
+        })
       }
     })
   },
@@ -77,6 +89,7 @@ Page({
    * 领取优惠券
    */
   lingqu: function (e) {
+    let that = this;
     console.log(e.currentTarget.dataset.id)
     wx.request({
       url: Globalhost + 'Api/user/getCoupon',
@@ -95,6 +108,7 @@ Page({
             title: res.data.msg,
             icon: ''
           })
+          that.list(that);
         } else if (res.data.code == 400) {
           wx.showModal({
             title: '',

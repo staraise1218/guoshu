@@ -1,0 +1,12 @@
+
+
+
+<view class="my_alert_bg" wx:if="{{my_alert_show}}" bindtap="close_my_alert"></view>
+<view class="my_alert" wx:if="{{my_alert_show}}">
+    <view class="my_title">{{title}}</view>
+    <view class="my_con">{{content}}</view>
+    <view class="my_btn">
+        <view class="my_cancel" bindtap="my_alert_cancel">{{cancel}}</view>
+        <view class="my_ok" bindtap="my_alert_ok">{{ok}}</view>
+    </view>
+</view>

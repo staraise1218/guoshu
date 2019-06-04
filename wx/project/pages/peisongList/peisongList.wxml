@@ -1,181 +1,90 @@
-<view class="around-center padding-30">
-    <view class="tab-item {{currentTab==0?'tab-active':''}}" data-current="0" catchtap="clickTap">全部</view>
-    <view class="tab-item {{currentTab==1?'tab-active':''}}" data-current="1" catchtap="clickTap">代发货</view>
-    <view class="tab-item {{currentTab==2?'tab-active':''}}" data-current="2" catchtap="clickTap">待送达</view>
+<view class="topBar">
+    <view catchtap="changTab" data-status="SENDING" class="topbar-item {{STATUS == 'SENDING' ? 'active' : ''}}">配送中</view>
+    <view catchtap="changTab" data-status="TODAY" class="topbar-item {{STATUS == 'TODAY' ? 'active' : ''}}">今日送达</view>
+    <view catchtap="changTab" data-status="SENDED" class="topbar-item {{STATUS == 'SENDED' ? 'active' : ''}}">已送达</view>
 </view>
 
 
-
-<swiper class="xianshimiaosha" style="{{reaHeight}}" current="{{currentTab}}" duration="300" bindchange="swiperTab">
-
-    <!--    =================================================
-            全部订单
-    ================================================= -->
-    <swiper-item>
-        <view class="item-box-1">
-            <block wx:for="{{orderMsg}}" wx:key>
-                <view class="order-item" data-orderid="{{item.order_id}}" data-state="{{item.order_status_code}}">
-                    <view class="line"></view>
-                    <view class="between-center" style="padding: 30rpx 30rpx 0 30rpx;">
-                        <view class="left-center">
-                                <image src="https://hbimg.huabanimg.com/e3d41b21683df1d53a7ef3e2fc4e85b85caf6f42e69-jsbiQt_fw658" class="icon-1" />
-                            <view class="margin-left-20">
-                                <view class="title-2_f">订单编号：{{item.order_sn}}</view>
-                                <view class="title-2_f">下单时间：{{item.pay_time}}</view>
-                            </view>
-                        </view>
-                        <view class="title-2_f">{{item.order_status_desc}}</view>
-                    </view>
-                    <view class="order-poster border-bottom padding-30">
-                    <view class="order-item-wrapper">
-                        <view class="title-2_f order-left">用户姓名：</view>
-                        <view class="title-2_f order-right">{{item.consignee}}</view>
-                    </view>
-                    <view class="order-item-wrapper">
-                        <view class="title-2_f order-left">联系方式：</view>
-                        <view class="title-2_f order-right">{{item.mobile}}</view>
-                    </view>
-                    <view class="order-item-wrapper">
-                        <view class="title-2_f order-left">用户地址：</view>
-                        <view class="title-2_f order-right">{{item.address}}</view>
-                    </view>
-                    </view>
-                    <view class="btn-wrap padding-lr-30 padding-tb-20">
-                        <view class="end padding-tb-20">
-                            <view wx:if="{{item.receive_btn == 1}}" class="title-3 pingjia margin-left-20"
-                                data-order-sn="{{item.order_sn}}" data-order-id="{{item.order_id}}" catchtap="toOk">确认送达
-                            </view>
-                        </view>
-                        <!-- <view class="right-center">
-                            <button class="title-2_f order-right btn-defalt" data-tell="{{item.mobile}}" bindtap="toCall">拨打电话</button>
-                        </view> -->
-                        <!-- 按钮 END -->
-                    </view>
+<view class="wrap">
+    <!-- 未送达 -->
+    <scroll-view class="item_box SENDING" wx-if="{{STATUS == 'SENDING'}}" scroll-y="{{true}}">
+        <image wx:if="{{SENDING.length == 0}}" class="empty" src="https://app.zhuoyumall.com:444/wx/img/empty2.png" />
+        <block wx:for="{{SENDING}}" wx:key="{{item.order_id}}">
+            <view class="list-item" data-orderid="{{item.order_id}}" catchtap="toCon">
+                <view class="item-title">
+                    <view class="left">{{item.pay_time}} 订单号: {{item.order_sn}}</view>
+                    <view class="right">{{item.order_status_desc}}</view>
                 </view>
-            </block>
-            <view class="margin-top-30 text-center title-2_f">没有更多了~</view>
-        </view>
-    </swiper-item>
-
-
-
-
-
-
-    <!--    =================================================
-            已提货
-    ================================================= -->
-    <swiper-item>
-        <view class="item-box-2">
-            <block wx:for="{{loadTihuo}}" wx:key>
-
-                <view class="order-item" data-orderid="{{item.order_id}}" data-state="{{item.order_status_code}}">
-                    <view class="line"></view>
-                    <view class="between-center" style="padding: 30rpx 30rpx 0 30rpx;">
-                        <view class="left-center">
-                                <image src="https://hbimg.huabanimg.com/e3d41b21683df1d53a7ef3e2fc4e85b85caf6f42e69-jsbiQt_fw658" class="icon-1" />
-                            <view class="margin-left-20">
-                                <view class="title-2_f">订单编号：{{item.order_sn}}</view>
-                                <view class="title-2_f">下单时间：{{item.pay_time}}</view>
-                            </view>
+                <view class="goods-list">
+                    <block  wx:for="{{item.goods_list}}" wx:key>
+                        <view class="goods-item">
+                            <view class="title-name">{{item.goods_name}}</view>
+                            <image class="goods-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
                         </view>
-                        <view class="title-2_f">{{item.order_status_desc}}</view>
-                    </view>
-                    <view class="order-poster border-bottom padding-30">
-                    <view class="order-item-wrapper">
-                        <view class="title-2_f order-left">用户姓名：</view>
-                        <view class="title-2_f order-right">{{item.consignee}}</view>
-                    </view>
-                    <view class="order-item-wrapper">
-                        <view class="title-2_f order-left">联系方式：</view>
-                        <view class="title-2_f order-right">{{item.mobile}}</view>
-                    </view>
-                    <view class="order-item-wrapper">
-                        <view class="title-2_f order-left">用户地址：</view>
-                        <view class="title-2_f order-right">{{item.address}}</view>
-                    </view>
-                    </view>
-                    <view class="btn-wrap padding-lr-30 padding-tb-20">
-                        <view class="end padding-tb-20">
-                            <view wx:if="{{item.receive_btn == 1}}" class="title-3 pingjia margin-left-20"
-                                data-order-sn="{{item.order_sn}}" data-order-id="{{item.order_id}}" catchtap="toOk">确认提货
-                            </view>
-                        </view>
-                        <!-- <view class="right-center">
-                            <button class="title-2_f order-right btn-defalt" data-tell="{{item.mobile}}" bindtap="toCall">拨打电话</button>
-                        </view> -->
-                        <!-- 按钮 END -->
-                    </view>
+                    </block>
                 </view>
-            </block>
-            <view class="margin-top-30 text-center title-2_f">没有更多了~</view>
-        </view>
-    </swiper-item>
-
-
-
-
-    <!--    =================================================
-            未提货
-    ================================================= -->
-    <swiper-item>
-        <view class="item-box-3">
-
-
-            <block wx:for="{{weiTiHuo}}" wx:key>
-
-                <view class="order-item" data-orderid="{{item.order_id}}" data-state="{{item.order_status_code}}">
-                    <view class="line"></view>
-                    <view class="between-center" style="padding: 30rpx 30rpx 0 30rpx;">
-                        <view class="left-center">
-                                <image src="https://hbimg.huabanimg.com/e3d41b21683df1d53a7ef3e2fc4e85b85caf6f42e69-jsbiQt_fw658" class="icon-1" />
-                            <view class="margin-left-20">
-                                <view class="title-2_f">订单编号：{{item.order_sn}}</view>
-                                <view class="title-2_f">下单时间：{{item.pay_time}}</view>
-                            </view>
-                        </view>
-                        <view class="title-2_f">{{item.order_status_desc}}</view>
-                    </view>
-                    <view class="order-poster border-bottom padding-30">
-                    <view class="order-item-wrapper">
-                        <view class="title-2_f order-left">用户姓名：</view>
-                        <view class="title-2_f order-right">{{item.consignee}}</view>
-                    </view>
-                    <view class="order-item-wrapper">
-                        <view class="title-2_f order-left">联系方式：</view>
-                        <view class="title-2_f order-right">{{item.mobile}}</view>
-                    </view>
-                    <view class="order-item-wrapper">
-                        <view class="title-2_f order-left">用户地址：</view>
-                        <view class="title-2_f order-right">{{item.address}}</view>
-                    </view>
-                    </view>
-                    <view class="btn-wrap padding-lr-30 padding-tb-20">
-                        <view class="end padding-tb-20">
-                            <view wx:if="{{item.receive_btn == 1}}" class="title-3 pingjia margin-left-20"
-                                data-order-sn="{{item.order_sn}}" data-order-id="{{item.order_id}}" catchtap="toOk">确认送达
-                            </view>
-                        </view>
-                        <!-- <view class="right-center">
-                            <button class="title-2_f order-right btn-defalt" data-tell="{{item.mobile}}" bindtap="toCall">拨打电话</button>
-                        </view> -->
-                        <!-- 按钮 END -->
-                    </view>
+                <view class="user-info">
+                    <view class="user-name">收货人：{{item.consignee}}</view>
+                    <view class="user-phone" catchtap="toCall" data-phone="{{item.mobile}}">电话：{{item.mobile}}</view>
                 </view>
-            </block>
+                <view class="address">地址：{{item.address}} {{item.floor}}</view>
+            </view>
+        </block>
+        <view wx:if="{{SENDING.length != 0}}"  class="tips">加载更多</view>
+    </scroll-view>
+    <!-- 今日送达 -->
+    <scroll-view class="item_box SENDING" wx-if="{{STATUS == 'TODAY'}}" scroll-y="{{true}}">
+        <image wx:if="{{TODAY.length == 0}}" class="empty" src="https://app.zhuoyumall.com:444/wx/img/empty2.png" />
+        <block wx:for="{{TODAY}}" wx:key="{{item.order_id}}">
+            <view class="list-item" data-orderid="{{item.order_id}}" catchtap="toCon">
+                <view class="item-title">
+                    <view class="left">{{item.pay_time}} 订单号: {{item.order_sn}}</view>
+                    <view class="right">{{item.order_status_desc}}</view>
+                </view>
+                <view class="goods-list">
+                    <block  wx:for="{{item.goods_list}}" wx:key>
+                        <view class="goods-item">
+                            <view class="title-name">{{item.goods_name}}</view>
+                            <image class="goods-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+                        </view>
+                    </block>
+                </view>
+                <view class="user-info">
+                    <view class="user-name">收货人：{{item.consignee}}</view>
+                    <view class="user-phone" catchtap="toCall" data-phone="{{item.mobile}}">电话：{{item.mobile}}</view>
+                </view>
+                <view class="address">地址：{{item.address}} {{item.floor}}</view>
+            </view>
+        </block>
+        <view wx:if="{{TODAY.length != 0}}"  class="tips">加载更多</view>
+    </scroll-view>
+    <!-- 已送达 -->
+    <scroll-view bindscrolltolower="loadMore" class="item_box SENDING" wx-if="{{STATUS == 'SENDED'}}" scroll-y="{{true}}">
+        <image wx:if="{{SENDED.length == 0}}" class="empty" src="https://app.zhuoyumall.com:444/wx/img/empty2.png" />
+        <block wx:for="{{SENDED}}" wx:key="{{item.order_id}}">
+            <view class="list-item" data-orderid="{{item.order_id}}" catchtap="toCon">
+                <view class="item-title">
+                    <view class="left">{{item.pay_time}} 订单号: {{item.order_sn}}</view>
+                    <view class="right">{{item.order_status_desc}}</view>
+                </view>
+                <view class="goods-list">
+                    <block  wx:for="{{item.goods_list}}" wx:key>
+                        <view class="goods-item">
+                            <view class="title-name">{{item.goods_name}}</view>
+                            <image class="goods-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+                        </view>
+                    </block>
+                </view>
+                <view class="user-info">
+                    <view class="user-name">收货人：{{item.consignee}}</view>
+                    <view class="user-phone" catchtap="toCall" data-phone="{{item.mobile}}">电话：{{item.mobile}}</view>
+                </view>
+                <view class="address">地址：{{item.address}} {{item.floor}}</view>
+            </view>
+        </block>
+        <view wx:if="{{SENDED.length != 0}}"  class="tips">加载更多</view>
+    </scroll-view>
 
 
 
-
-
-
-
-
-
-
-            <view class="margin-top-30 text-center title-2_f">没有更多了~</view>
-        </view>
-    </swiper-item>
-
-
-</swiper>
+</view>

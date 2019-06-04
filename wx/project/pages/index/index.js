@@ -11,47 +11,7 @@ Page({
     categoryList: {}, // tab
     // height: 0,  // 轮播图
     time: {}, // 秒杀倒计时
-    navBtn: [{
-      url: 'http://img.hb.aicdn.com/e5b2e8a1f30c9fc3ba4460d50c36cc244838ade31070-Xe3xpS_fw658',
-      title: '热卖',
-      func: ''
-    }, {
-      url: 'http://img.hb.aicdn.com/b4cbe5bd214e1a1c49cddde07e5b49db0121c3df2a67-B8NBgz_fw658',
-      title: '鲜果',
-      func: 'toXianguo'
-    }, {
-      url: 'https://hbimg.huabanimg.com/013306c1d0bf626d34fc8c91a6b569ac084502932a0a-1Yyc9t_fw658',
-      title: '干果',
-      func: 'toGanguo'
-    }, {
-      url: 'http://img.hb.aicdn.com/4ec94a7282b29432ba23bd4f5631a40a55ab2a912d71-1ShwcV_fw658',
-      title: '时蔬',
-      func: 'toShiShu'
-    }, {
-      url: 'http://img.hb.aicdn.com/5c394ca6d8c5b1c6e5b78c4e871fb1b1574aa39527fb-yOObT8_fw658',
-      title: '乳品',
-      func: 'toRuPin'
-    }, {
-      url: 'http://img.hb.aicdn.com/c64c4f4500721d42c6b1f75944e3b2bb74995d5c2bd5-DIIHJy_fw658',
-      title: '酒饮',
-      func: 'toJiuYin'
-    }, {
-      url: 'http://img.hb.aicdn.com/9e3837087e91797bd4b4230c76176e4cf990283c2fd5-uLKVty_fw658',
-      title: '粮油',
-      func: 'toLiangYou'
-    }, {
-      url: 'http://img.hb.aicdn.com/8d092ef966000b115a9bbb3e40f5335b97f7c639313a-elsS83_fw658',
-      title: '零食',
-      func: 'toLingShi'
-    }, {
-      url: 'http://img.hb.aicdn.com/03c208861c98ed69e81d3931318caa79a4c4e9282432-AOKCSy_fw658',
-      title: '日百',
-      func: 'toRiBai'
-    }, {
-      url: 'http://img.hb.aicdn.com/6fa8d18ec18d9eea5231622d1a7808dbb085c1b5c72-CsPSeI_fw658',
-      title: '更多',
-      func: 'more'
-    }],
+    navBtn: [],
 
     adImg: '',
     shareImg: '',
@@ -99,182 +59,37 @@ Page({
     addressStatus: 0,
     chooseAlerShow: false,
 
-    // 购物车动画
-
-    end: { //结束地方的位置，大小
-      x: '',
-      y: '',
-      width: 16,
-      height: 16,
-    },
-    _parabola: '', //抛物线对象
-    ghost_arr: [], //抛物线数组，支持多个抛物线
-    add_num: 0, //增加的数量
-    sub_num: 0, //减少的数量
-    all_num: 0, //所有的数量
 
 
-
+    newShow: false, // 消息显示
   },
   onLoad: function (options) {
     let that = this;
-    /**
-     * 修改
-     * 每次加载都要获取地理位置
-     */
-    that.getUserLocation(); // 获取定位
     that.setData({
       address: wx.getStorageSync('address')
     })
-
-    /**
-     * 接到分享数据
-     */
-    console.log('*************************************************************')
-    if (options.status == 'share') {
-      console.log(options)
-      wx.navigateTo({
-        url: '/pages/commodityDetails/commodityDetails?goods_id=' + options.goods_id + '&user_id=' + options.user_id + '&share_userCode=' + options.userCode
-      })
-    }
+    console.log('*****************************加载首页********************************')
+    // 应该是红包部分
     if (wx.getStorageSync('readBackAlertStatus') == 0) {
       that.coupList(that);
     }
-
-
-    that.location(that);
-
-
-    
-
-
-
-
-
-
-
+    that.getNews(that); // 加载消息列表
+    that.location(that); // 地址
   },
   onShow: function () {
     let that = this;
-    // if (!wx.getStorageSync('login')) {
-    //   wx.navigateTo({
-    //     url: '/pages/login/login'
-    //   })
-    // }
-
     that.setData({
       address: wx.getStorageSync('address')
     })
-
     that.index(that); // 首页
     that.miaosha(that); // 秒杀商品
-    // that.location(that); // 地址
-    // if (wx.getStorageSync('alertStatus') == 1) {
-    //   that.setData({
-    //     redBagNum: 1
-    //   })
-    // } else {
-    //   // that.coupList(that);
-    // }
     if (!wx.getStorageSync('user_id')) {
       wx.navigateTo({
         url: '/pages/loading/loading'
       })
     }
-    if(!wx.getStorageSync('address')) {
-      that.location(that);
-    }
-    var date = new Date();
-    var str = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + (date.getDate() + 1)
-    that.TimeDown(str)
-
-
-    // const query = wx.createSelectorQuery()
-    // query.select('#container').boundingClientRect()
-    // query.selectViewport().scrollOffset()
-    // query.exec(function (res) {
-    //     console.log('**************************************************************')
-    //     console.log(res)
-    // })
+    that.TimeDown(); // 倒计时
   },
-
-  // 懒加载 弃用
-  // onPageScroll() {
-  //   let that = this;
-  //   this.loadHeight(that);
-  //   let topCateGoods = that.data.topCateGoods;
-  //   let HEIGHTstatus = that.data.HEIGHTstatus;
-  //   // @ 获取图片当前位置
-  //   wx.createSelectorQuery().selectAll('.shop-status').boundingClientRect(function (res) {
-  //       res.forEach((item, index) => {
-  //         var id = item.dataset.goodsid
-  //         for(var i = 0; i < topCateGoods.length; i++) {
-  //           for(var j = 0; j < topCateGoods[i].goodslist.length; j++) {
-  //             if(topCateGoods[i].goodslist[j].goods_id == item.dataset.goodsid) {
-  //               if (item.top <= HEIGHTstatus) { //判断是否在显示范围内
-  //                 topCateGoods[i].goodslist[j].SHOW = true;
-  //               }
-  //             } 
-  //           }
-  //         }
-  //       })
-  //   }).exec()
-  //   that.setData({
-  //     topCateGoods: topCateGoods
-  //   })
-
-
-    
-    // that.data.topCateGoods.forEach((item,index) => {
-    //   item.goodslist.forEach((item, index) => {
-    //     // item.SHOW = false;
-    //     // item.loadImg = '/wx/img/loading.gif'
-    //     console.log(item.goods_id)
-    //   })
-    // })
-
-
-  // },
-
-
-  // 获取页面高度  弃用
-  // loadHeight (that) {
-  //   wx.createSelectorQuery().select('#container').boundingClientRect((ret)=>{
-  //       // console.log(ret)
-  //       that.setData({
-  //         HEIGHTstatus: ret.height
-  //       })
-  //   }).exec()
-  // },
-
-
-  /**
-   * 设置轮播图高度
-   */
-  // setContainerHeight: function (e) {
-  //   console.log(e)
-
-  //   // 图片原始宽度
-  //   let imgWidth = e.detail.width;
-
-  //   // 图片原始高度
-  //   let imgHeight = e.detail.height;
-
-  //   // 同步获取设备宽度
-  //   let sysInfo = wx.getSystemInfoSync();
-  //   console.log('sysInfo:', sysInfo);
-
-  //   // 获取屏幕宽度
-  //   let screenWidth = sysInfo.screenWidth;
-
-  //   // 获取屏幕和原图的比例
-  //   let scale = screenWidth / imgWidth;
-
-  //   // 设置容器的高度
-  //   this.setData({
-  //     height: imgHeight * scale
-  //   })
-  // },
 
   /**
    * 首页接口
@@ -316,7 +131,7 @@ Page({
           // multiArray: region.region.data,     //城市选择json
           topCateGoods: data.topCateGoods
         })
-        console.log(that.data.topCateGoods)
+        // console.log(that.data.topCateGoods)
         for (var j = 0; j < data.topCateGoods.length; j++) {
           var current = 'topCateGoods[' + j + '].STATUS';
           that.setData({
@@ -343,11 +158,6 @@ Page({
       }
     })
   },
-
-
-
-
-
 
   /**
    * 分类切换
@@ -471,19 +281,6 @@ Page({
   },
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
   /**
    * 跳转商品详情
    */
@@ -538,9 +335,9 @@ Page({
    */
   TimeDown: function (endDateStr) {
     var that = this;
-    endDateStr = endDateStr.replace(/-/g, '/');
+    // endDateStr = endDateStr.replace(/-/g, '/');
     //结束时间
-    var endDate = new Date(endDateStr);
+    var endDate = new Date(new Date().toLocaleDateString()).getTime() + 24 * 60 * 60 * 1000 - 1; //new Date().getHours(23);
     //当前时间
     var nowDate = new Date();
 
@@ -569,26 +366,7 @@ Page({
     setTimeout(function () {
       that.TimeDown(endDateStr);
     }, 1000)
-
-
-
-
-
-
-
-
-
   },
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -622,180 +400,6 @@ Page({
     });
   },
 
-  /**
-   * =================================
-   *      位置相关   调起定位
-   * =================================
-   */
-  /**
-   * 小程序调起定位
-   */
-  getUserLocation: function () {
-    var that = this;
-    wx.getSetting({
-      success: (res) => {
-        // console.log(res)
-        if (res.authSetting['scope.userLocation'] != undefined && res.authSetting['scope.userLocation'] != true) {
-          //未授权
-          wx.showModal({
-            title: '请求授权当前位置',
-            content: '需要获取您的地理位置，请确认授权',
-            success: function (res) {
-              if (res.cancel) {
-                //取消授权
-                wx.showToast({
-                  title: '拒绝授权',
-                  icon: 'none',
-                  duration: 1000
-                })
-              } else if (res.confirm) {
-                //确定授权，通过wx.openSetting发起授权请求
-                wx.openSetting({
-                  success: function (res) {
-                    if (res.authSetting["scope.userLocation"] == true) {
-                      wx.showToast({
-                        title: '授权成功',
-                        icon: 'success',
-                        duration: 1000
-                      })
-                      //再次授权，调用wx.getLocation的API
-                      that.geo();
-                      wx.setStorageSync('LOCATIONSTATUS', 1)
-                    } else {
-                      wx.showToast({
-                        title: '授权失败',
-                        icon: 'none',
-                        duration: 1000
-                      })
-                    }
-                  }
-                })
-              }
-            }
-          })
-        } else if (res.authSetting['scope.userLocation'] == undefined) {
-          //用户首次进入页面,调用wx.getLocation的API
-          that.geo();
-        } else {
-          // console.log('授权成功')
-          //调用wx.getLocation的API
-          that.geo();
-        }
-      }
-    })
-
-  },
-
-  /**
-   * 获取定位城市
-   */
-  geo: function () {
-    var that = this;
-    wx.getLocation({
-      type: 'wgs84',
-      success: function (res) {
-        // console.log(res)
-        var latitude = res.latitude
-        var longitude = res.longitude
-        let location = latitude + ',' + longitude
-        // console.log('当前经纬度：', location)
-        wx.setStorageSync('location', location)
-        // that.loadCity(latitude, longitude, that)
-        wx.request({
-          url: Globalhost + 'api/index/getNearCity',
-          method: 'POST',
-          header: {
-            'content-type': 'application/x-www-form-urlencoded'
-          },
-          data: {
-            longitude: longitude,
-            latitude: latitude,
-          },
-          success: function (res) {
-            wx.setStorageSync('address', res.data.data.name);
-            wx.setStorageSync('addressCode', res.data.data.code);
-            wx.setStorageSync('addressId', res.data.data.id);
-            that.setData({
-              // 'array[0]': res.data.data.name
-              address: res.data.data.name
-            })
-            
-            that.index(that); // 首页
-            that.miaosha(that); // 秒杀商品
-          }
-        })
-      }
-    })
-  },
-  /**
-   * 逆地理编码
-   * 弃用
-   */
-  loadCity: function (latitude, longitude, that) {
-    var _self = this;
-    let location = longitude + "," + latitude
-    wx.request({
-      url: 'https://restapi.amap.com/v3/geocode/regeo',
-      data: {
-        key: '18964fba3ee3a4e672956a24b0090f75',
-        location: location,
-        extensions: "all",
-        s: "rsx",
-        sdkversion: "sdkversion",
-        logversion: "logversion"
-      },
-      success: function (res) {
-        console.log(res)
-        let address = res.data.regeocode.formatted_address
-        // let address = res.data.regeocode.addressComponent.city
-        // console.log('当前城市：', address);
-        wx.setStorageSync('address', address)
-        that.setData({
-          address: address
-        })
-        wx.request({
-          url: 'https://restapi.amap.com/v3/geocode/geo?address=' + address + '&key=d1155b6ce952cd80d4ab61f16a9dcb41',
-          header: {
-            'Content-Type': 'application/json'
-          },
-          success: function (res) {
-            let data = res.data.geocodes;
-            console.log(res.data.geocodes[0].adcode)
-            // res.data.geocodes[0].adcode
-            // const adcode = res.data[0].adcode;
-            // console.log('当前城市码：', adcode);
-            // wx.setStorageSync('addressCode', adcode)
-            // wx.setStorageSync('addressCode', res.data.pois[0].pcode)
-            var str = res.data.geocodes[0].adcode;
-            str = str.substring(0, str.length - 1)
-            str = str + '0';
-            console.log(str)
-            wx.setStorageSync('addressCode', str)
-            wx.setStorageSync('address', data[0].city)
-            that.setData({
-              // address: data[0].city
-            })
-
-          }
-        })
-      },
-      fail: function (res) {
-        console.log('获取地理位置失败')
-      }
-    })
-    wx.request({
-      url: 'https://restapi.amap.com/v3/place/around?key=d1155b6ce952cd80d4ab61f16a9dcb41&location=' + location + '&keywords=&types=120302&radius=3000&offset=20&page=1&extensions=all',
-      // url: 'https://restapi.amap.com/v3/geocode/regeo?&location=' + location + '&poitype=商务住宅&key=d1155b6ce952cd80d4ab61f16a9dcb41&radius=10000&extensions=all&roadlevel=1&batch =true',
-      header: {
-        'Content-Type': 'application/json'
-      },
-      success: function (res) {
-        console.log(res)
-        // wx.setStorageSync('addressCode', res.data.pois[0].pcode)
-      }
-    })
-  },
-
 
 
   /**
@@ -811,7 +415,7 @@ Page({
         'content-type': 'application/x-www-form-urlencoded'
       },
       success: function (res) {
-        console.log(res.data.data)
+        // console.log(res.data.data)
         var arr = [];
         for (var i = 0; i < res.data.data.length; i++) {
           arr[i] = res.data.data[i].name
@@ -876,6 +480,9 @@ Page({
    * 跳转消息页面
    */
   toNews: function () {
+    this.setData({
+      newShow: false
+    })
     wx.navigateTo({
       url: '/pages/news/news'
     })
@@ -910,7 +517,7 @@ Page({
       },
       success: function (res) {
         let data = res.data.data;
-        console.log(data)
+        // console.log(data)
         var redBagNum = 0;
         var redBagTitle = '';
         for (var i = 0; i < data.length; i++) {
@@ -959,7 +566,7 @@ Page({
         user_id: wx.getStorageSync('user_id')
       },
       success: function (res) {
-        console.log(res)
+        // console.log(res)
         that.setData({
           cart_num: res.data.data.cartNum
         })
@@ -1005,22 +612,6 @@ Page({
         })
     }
   },
-  // 下拉刷新
-  // onPullDownRefresh: function () {
-  //   var that = this;
-  //   wx.startPullDownRefresh({
-  //     success: function () {
-  //       wx.showNavigationBarLoading();
-  //       that.index(that); // 首页
-  //       that.miaosha(that); // 秒杀商品
-  //     },
-  //     complete: function () {
-  //       wx.hideNavigationBarLoading();
-  //       wx.stopPullDownRefresh();
-  //     }
-  //   })
-  // },
-  
   onPullDownRefresh: function(){
     let that = this;
     that.index(that, 'Refresh'); // 首页
@@ -1135,6 +726,35 @@ chooseCity: function () {
 cancleCity: function () {
   this.setData({
     chooseAlerShow: false
+  })
+},
+getNews(that) {
+  wx.request({
+    url: Globalhost + 'Api/user/message',
+    method: 'POST',
+    header: {
+      'content-type': 'application/x-www-form-urlencoded'
+    },
+    data: {
+      user_id: wx.getStorageSync('user_id'),
+      page: 1
+    },
+    success: function(res) {
+      // console.log(res)
+      let data = res.data.data;
+      let count = 0;
+      data.forEach( (item) => {
+        // console.log(item)
+        if(item.status != 1) {
+          count++;
+        }
+      })
+      if(count > 0) {
+        that.setData({
+          newShow: true
+        })
+      }
+    }
   })
 },
 
