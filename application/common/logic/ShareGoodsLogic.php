@@ -38,9 +38,9 @@ class ShareGoodsLogic
 		$goodsIds = array_column($orderGoodsList, 'goods_id');
 		$goodsShareList = Db::name('goods_share')->alias('gs')
 			->join('goods g', 'gs.goods_id=g.goods_id')
-			->where('user_id', $order['user_id'])
-			->where('goods_id', array('IN', $goodsIds))
-			->where('is_used', 0)
+			->where('gs.user_id', $order['user_id'])
+			->where('gs.goods_id', array('IN', $goodsIds))
+			->where('gs.is_used', 0)
 			->field('g.goods_id, g.goods_name, g.shop_price, g.share_ratio')
 			->select();
 p($goodsShareList);
