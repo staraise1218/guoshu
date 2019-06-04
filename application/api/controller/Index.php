@@ -224,7 +224,7 @@ class Index extends Base {
     }
 
 	function test(){
-		$order_sn = '201904302212107029';
+		$order_sn = '201906041533321855';
 		// 分享商品得佣金
 			$ShareGoodsLogic = new ShareGoodsLogic();
 			$ShareGoodsLogic->shareMoney($order_sn);
