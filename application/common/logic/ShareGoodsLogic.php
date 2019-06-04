@@ -41,11 +41,11 @@ class ShareGoodsLogic
 			->where('gs.user_id', $order['user_id'])
 			->where('gs.goods_id', array('IN', $goodsIds))
 			->where('gs.is_used', 0)
-			->field('gs.id, g.goods_id, g.goods_name, g.shop_price, g.share_ratio')
+			->field('gs.id, gs.share_user_id, g.goods_id, g.goods_name, g.shop_price, g.share_ratio')
 			->select();
 
 		if(empty($goodsShareList)) return false;
-
+p($goodsShareList);
 		foreach ($goodsShareList as $item) {
 			$money = number_format($item['shop_price'] * $item['share_ratio'], 2); // 佣金
 			// 修改分享记录状态为已使用|
@@ -58,12 +58,12 @@ class ShareGoodsLogic
 			DB::name('goods_share')->where('id', $item['id'])->update($updatedata);
 			// 给分享者发放佣金
 			$desc = '分享商品得佣金';
-			accountLog($order['user_id'], $money, 0, $desc, 0, $order['order_id'], $order['order_sn'], 4);
+			accountLog($item['share_user_id'], $money, 0, $desc, 0, $order['order_id'], $order['order_sn'], 4);
 
 			// 发送站内信
 			$MessageLogic = new MessageLogic();
 			$message = '您分享的商品《'.$item['goods_name'].'》获得了佣金。';
-			$MessageLogic->add($order['user_id'], $message);
+			$MessageLogic->add($item['share_user_id'], $message);
 		}
 	}
 }
