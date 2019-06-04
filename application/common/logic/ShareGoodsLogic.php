@@ -25,7 +25,7 @@ class ShareGoodsLogic
 			->where('og.order_id', $order['order_id'])
 			->field('g.goods_id, g.goods_name, g.shop_price, g.share_ratio')
 			->select();
-p($orderGoods);
+
 		if(empty($orderGoods)) return false;
 		// 重组数组，方便下面使用
 		$orderGoodsList = array();
