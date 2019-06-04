@@ -41,7 +41,7 @@ class ShareGoodsLogic
 			->where('gs.user_id', $order['user_id'])
 			->where('gs.goods_id', array('IN', $goodsIds))
 			->where('gs.is_used', 0)
-			->field('g.goods_id, g.goods_name, g.shop_price, g.share_ratio')
+			->field('gs.id, g.goods_id, g.goods_name, g.shop_price, g.share_ratio')
 			->select();
 
 		if(empty($goodsShareList)) return false;
