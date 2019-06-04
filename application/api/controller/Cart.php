@@ -341,6 +341,7 @@ class Cart extends Base {
         $pickup_id          = I('pickup_id');
         $payMethod          = I('payMethod');
         $delivery_code      = I('delivery_code');
+        $user_note          = I('user_note'); // 备足
 
 
         mb_strlen($user_note) > 60 && response_error('', '备注超出限制可输入字符长度！');

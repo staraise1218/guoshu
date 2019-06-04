@@ -36,10 +36,12 @@ class ShareGoodsLogic
 
 		// 获取和该订单商品相关的分享信息
 		$goodsIds = array_column($orderGoodsList, 'goods_id');
-		$goodsShareList = Db::name('goods_share')
+		$goodsShareList = Db::name('goods_share')->alias('gs')
+			->join('goods g', 'gs.goods_id=g.goods_id')
 			->where('user_id', $order['user_id'])
 			->where('goods_id', array('IN', $goodsIds))
 			->where('is_used', 0)
+			->field('g.goods_id, g.goods_name, g.shop_price, g.share_ratio')
 			->select();
 p($goodsShareList);
 		if(empty($goodsShareList)) return false;
