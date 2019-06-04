@@ -143,7 +143,7 @@ class Goods extends Base {
         	->where($where)
         	->field('u.nickname, u.head_pic, c.content, ceil((deliver_rank + goods_rank + service_rank) / 3) as goods_rank, c.is_anonymous, c.img')
         	->limit(1)
-        	->order("goods_rank desc")
+        	->order("goods_rank desc, comment_id desc")
         	->select();
         
         foreach($list as $k => $v){
