@@ -63,10 +63,10 @@ class Task extends Base {
             $order_ids = array_unique(array_column($list, 'order_id'));
             Db::name('order')->where('order_id', array('IN', $order_ids))->setField('order_status', 5);
 
-            foreach ($list as $item) {
+            /*foreach ($list as $item) {
                 // 商品库存返回
                 Db::name('goods')->where('goods_id', $item['goods_id'])->setInc('store_count', $item['goods_num']);
-            }
+            }*/
 
             // 提交事务
             Db::commit();
