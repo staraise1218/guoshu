@@ -371,7 +371,7 @@ class User extends Base {
                 // if($item['send_time'] > $now_date && $item['send_time'] < $mid_date) $item['send_time'] = '上午'.date('H:i', $item['send_time']);
                 // if($item['send_time'] > $mid_date) $item['send_time'] = '下午'.date('H:i', $item['send_time']);
 
-                if(empty($item)) $item['status'] = 0;
+                if(empty($item['status'])) $item['status'] = 0;
                 if($item['data']) $item['data'] = unserialize($item['data']);
             }
         }
