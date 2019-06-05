@@ -29,9 +29,11 @@ class User extends Base {
             'user_money' => $userInfo['user_money'],
         );
 
-        $result['redpack_num'] = Db::name('coupon_list')
-                                        ->where('uid', $user_id)
-                                        ->where('status', 0)
+        $result['redpack_num'] = Db::name('coupon_list')->alias('cl')
+                                        ->join('coupon c', 'cl.cid=c.id', 'left')
+                                        ->where('cl.uid', $user_id)
+                                        ->where('cl.status', 0)
+                                        ->where('c.use_end_time', 'gt', time())
                                         ->count();
         response_success($result);
     }
