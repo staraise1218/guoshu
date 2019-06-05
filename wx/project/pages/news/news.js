@@ -2,10 +2,18 @@ const app = getApp()
 const Globalhost = getApp().globalData.Globalhost;
 Page({
   data: {
-    newsList: []
+    newsList: [],
+    my_error_alert_show: false,
+    my_alert_title: '系统公告',
+    alert_message: '123',
+    alert_time: '',
+
   },
   onLoad: function (options) {
     let that = this;
+    that.getList(that);
+  },
+  getList(that) {
     wx.request({
       url: Globalhost + 'Api/user/message',
       method: 'POST',
@@ -45,6 +53,38 @@ Page({
     } else {
         return '';
     }
+  },
+  readMessage(that, id) {
+    wx.request({
+      url: Globalhost + 'Api/User/readMessage',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        user_id: wx.getStorageSync('user_id'),
+        message_id: id
+      },
+      success: function(res) {
+        console.log(res)
+        that.getList(that);
+      }
+    })
+  },
+  show_alert(e) {
+    let that = this;
+    console.log(e.currentTarget.dataset)
+    this.setData({
+      my_error_alert_show: true,
+      alert_message: e.currentTarget.dataset.message,
+      alert_time: e.currentTarget.dataset.time
+    })
+    that.readMessage(that, e.currentTarget.dataset.id); // 读
+  },
+  close_my_alert() {
+    this.setData({
+      my_error_alert_show: false
+    })
   },
   onShow: function (options) {
     

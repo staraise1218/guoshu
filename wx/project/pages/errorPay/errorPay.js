@@ -1,6 +1,7 @@
 Page({
   data: {
-    orderid: ''
+    orderid: '',
+    order_amount: '',
   },
   onLoad: function (options) {
     console.log(options)
@@ -9,11 +10,20 @@ Page({
         orderid: options.order_id
       })
     }
+    this.setData({
+      order_amount: wx.getStorageSync('order_amount') || '',
+      payMethod: wx.getStorageSync('payMethod')
+    })
+
+    
   },
   toOrder: function () {
-    wx.reLaunch({
+    wx.redirectTo({
       url: '/pages/orderSuccess/orderSuccess?status=errorPay&orderid=' + this.data.orderid
     })
+    // wx.reLaunch({
+    //   url: '/pages/orderSuccess/orderSuccess?status=errorPay&orderid=' + this.data.orderid
+    // })
   },
   toHome: function () {
     wx.switchTab({

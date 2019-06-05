@@ -96,6 +96,7 @@ page {
   padding-top: 0;
   margin-left: 10rpx;
   /* border: 1px solid red; */
+  overflow: hidden;
 }
 .shopListWrap .scro-item:first-child {
   margin-left: 20rpx;
@@ -120,7 +121,8 @@ page {
   font-size: 18rpx;
   color: #666;
   padding: 5rpx 8rpx;
-  margin-top: 16rpx;
+  /* margin-top: 16rpx; */
+  color: #fff;
 }
 
 .icon-2 {
@@ -283,7 +285,7 @@ swiper-item {
   /* flex: 1; */
   margin-left: 40rpx;
   position: relative;
-  width: 450rpx;
+  width: 360rpx;
 }
 
 .serach-input {
@@ -303,6 +305,20 @@ swiper-item {
   margin: 0;
   border: 0 !important;
   display: flex;
+
+}
+.news_btn.active {
+  position: relative;
+}
+.news_btn.active::before {
+  /* content: '';
+  width: 12rpx;
+  height: 12rpx;
+  background: red;
+  border-radius: 50%;
+  position: absolute;
+  right: 0rpx;
+  top: 4rpx; */
 }
 
 .search-icon {
@@ -312,6 +328,30 @@ swiper-item {
   width:20px;
   height:20px;
   transform: translateY(-50%);  
+}
+.tips_alert {
+  position: fixed;
+  right: 0rpx;
+  top: 100rpx;
+  font-size: 22rpx;
+  background: #9ED7F5;
+  color: #fff;
+  padding: 15rpx 20rpx;
+  border-radius: 25rpx;
+  z-index: 100;
+}
+.tips_alert::before {
+  content: '';
+  width: 1rpx;
+  height: 1rpx;
+  display: block;
+  border-top:solid 20rpx transparent;
+  border-left:solid 20rpx transparent;
+  border-right:solid 20rpx transparent;
+  border-bottom:solid 20rpx #9ED7F5;
+  position: absolute;
+  right: 20rpx;
+  top: -40rpx;
 }
 
 .news {
@@ -537,8 +577,8 @@ swiper-item {
 }
 
 .miaosha-title {
-  font-weight: 600;
-  font-size: 36rpx;
+  /* font-weight: 600; */
+  font-size: 32rpx;
   color: #743C0D;
 }
 
@@ -549,20 +589,20 @@ swiper-item {
 }
 
 .time-item {
-  color: #fff;
-  background: #FF7709;
-  padding: 5rpx;
-  width: 40rpx;
-  text-align: center;
-  border-radius: 10rpx;
-  margin: 0 5rpx;
-  font-size: 28rpx;
+  color:#fff;
+  background:#FF7709;
+  padding:5rpx;
+  width:32rpx;
+  text-align:center;
+  border-radius:10rpx;
+  margin:0 5rpx;
+  font-size:22rpx;
 }
 
 .next-btn {
   padding: 10rpx 20rpx;
   border-radius: 50rpx;
-  border: 1rpx solid rgba(0, 0, 0, 0.5);
+  /* border: 1rpx solid rgba(0, 0, 0, 0.5); */
   font-size: 28rpx;
 }
 

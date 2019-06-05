@@ -5,17 +5,9 @@
             <view class="user margin-left-20 font-size-32">收货人: {{Address.consignee}}</view>
             <view class="margin-left-20 font-size-32 end ">{{Address.mobile}}</view>
         </view>
-        <view class="margin-left-50 margin-top-20 title-2_f">收货地址：{{Address.fulladdress}}</view>
+        <view class="margin-left-50 margin-top-20 title-2_f">收货地址：{{Address.fulladdress}} {{Address.floor}}</view>
     </view>
-    <!-- <block wx:for="{{List}}" wx:key>
-    <view wx:if="{{item.pickup_id == pickup_id}}" class="border-top order-top padding-30 " catchtap="toziqu">
-        <view class="top left-center ">
-            <image class="icon-2" mode="widthFix" src="https://hbimg.huabanimg.com/94fede0dd495760802a3c29889a95c227cde1bbfa19-cizqzZ_fw658" />
-            <view class="user margin-left-20 font-size-32">{{item.pickup_name}}</view>
-        </view>
-        <view class="margin-left-50 margin-top-20 title-2_f">{{item.fulladdress}}</view>
-    </view>
-</block> -->
+
     <block wx:for="{{StoreList}}" wx:key>
         <view wx:if="{{item.pickup_id == pickup_id}}" class="address-wrapper">
             <view class="left">
@@ -57,19 +49,12 @@
         <view class="title-3">商品总价</view>
         <view class="title-3">￥{{ORDERINFO.goods_price}}</view>
     </view>
-    <!-- <view class="border-bottom padding-tb-30 margin-lr-30 padding-right-50 between-center more-0">
-    <view class="title-3 left-center">
-        <image class="icon-3 margin-right-20" mode="widthFix" src="http://img.hb.aicdn.com/b7a8f0cd63dda76a08423835a1a1898cef6228f85c6-huGl9M_fw658" />
-        红包
-    </view>
-    <view class="title-3_f">0</view>
-</view> -->
+
     <view wx:if="{{couponList == -1}}" class="border-bottom padding-tb-30 margin-lr-30 padding-right-50 between-center more-0" catchtap="">
         <view class="title-3 left-center">
             <image class="icon-3 margin-right-20" mode="widthFix" src="http://img.hb.aicdn.com/81716659127cb51c349ebe3d734efe5bf57335164f7-m4GiTZ_fw658" />
             红包
         </view>
-        <!-- <view class="price-color" data-id="{{CouponList[0].coupon.id}}" style="font-size:26rpx;">{{CouponList[CouponIndex].coupon.money}} </view> -->
             <view  class="price-color" data-id="{{item.id}}" style="font-size:26rpx;">
                 暂无红包
             </view>
@@ -79,13 +64,20 @@
             <image class="icon-3 margin-right-20" mode="widthFix" src="http://img.hb.aicdn.com/81716659127cb51c349ebe3d734efe5bf57335164f7-m4GiTZ_fw658" />
             红包
         </view>
-        <!-- <view class="price-color" data-id="{{CouponList[0].coupon.id}}" style="font-size:26rpx;">{{CouponList[CouponIndex].coupon.money}} </view> -->
         <block wx:for="{{couponList}}" wx:key>
             <view wx:if="{{item.id == coupon_id}}" class="price-color" data-id="{{item.id}}" style="font-size:26rpx;">
                 {{item.coupon.money}}
             </view>
         </block>
     </view>
+
+    <!-- 备注 -->
+    <view class="border-bottom padding-tb-30 margin-lr-30 between-center">
+        <view class="title-3 left-center">订单备注</view>
+        <input class="margin-left-20 flex-1" type="text" placeholder="输入备注" bindinput="beizhu" />
+    </view>
+
+
     <view class="padding-30">
         <view class="row">
             <view class="flex-space_between">
@@ -137,7 +129,7 @@
             合计:
             <view class="price">￥{{ORDERINFO.order_amount}}</view>
         </view>
-        <view class="sub" catchtap="toPay">提交订单</view>
+        <view class="sub" catchtap="{{isToPay == 0 ? 'toPay' : ''}}">确认付款</view>
     </view>
     <!-- 余额支付密码弹窗 -->
     <view wx:if="{{wxShow}}" class="wallets-password">
@@ -235,4 +227,34 @@
             </view>
         </block>
     </scroll-view>
+</view>
+
+
+
+
+<!-- 弹窗 -->
+<view class="my_alert_bg" wx:if="{{my_error_alert_show}}" bindtap="close_my_alert"></view>
+<view class="my_alert" wx:if="{{my_error_alert_show}}">
+    <view class="my_title">{{my_alert_title}}</view>
+    <view class="my_con">{{alert_errorMsg}}</view>
+    <view class="my_btn">
+        <view class="my_cancel" bindtap="my_alert_cancel">{{cancel}}</view>
+        <view class="my_ok" bindtap="my_alert_ok">{{ok}}</view>
+    </view>
+</view>
+
+
+
+
+
+
+
+<!-- 400 -->
+<view wx:if="{{alertShow}}" class="alert_error_bg"></view>
+<view wx:if="{{alertShow}}" class="alert_error">
+    <view>
+        <view class="error_title">温馨提示</view>
+        <view>{{errorMsg}}</view>
+    </view>
+    <view class="goBack" bindtap="goBack">返回上一页</view>
 </view>

@@ -1,18 +1,24 @@
-<view class="tip" wx:if="{{readNum == 0}}">没有可领取的红包</view>
+<view class="tips-3" wx:if="{{loadStatus == 0}}"></view>
 <view wx:else>
-    <block   wx:for="{{card}}" wx:key>
-        <view class="quan-item active radius-30" wx:if="{{item.is_get != 1}}">
-        <!-- <view class="quan-item {{item.is_get == 0 ? 'active' : ''}} radius-30" wx:if="{{item.is_get != 1}}"> -->
-            <view class="tag" data-id="{{item.id}}" bindtap="lingqu">立即领取</view>
-            <!-- <view wx:if="{{item.is_get == 0}}" class="tag" data-id="{{item.id}}" bindtap="lingqu">立即领取</view> -->
-            <view class="price-left">
-                <view class="price">￥<view class="price-big">{{item.money}}</view></view>
-                <view class="right">
-                    <view class="title price">红包</view>
-                    <view class="price-none title-3">满{{item.condition}}元可用</view>
-                </view>
-            </view>
-            <view class="title-2_f margin-top-20">有效期: {{item.use_start_time}} 至 {{item.use_end_time}} </view>
+    <view class="tips-empty"  wx:if="{{readNum == 0}}">
+        <view class="content">
+            <image src="https://app.zhuoyumall.com:444/wx/img/empty2.png" />
+            <view class="tip">没有可领取的红包</view>
         </view>
-    </block>
+    </view>
+    <view wx:else>
+        <block   wx:for="{{card}}" wx:key>
+            <view class="quan-item active radius-30" wx:if="{{item.is_get != 1}}">
+                <view class="tag" data-id="{{item.id}}" bindtap="lingqu">立即领取</view>
+                <view class="price-left">
+                    <view class="price">￥<view class="price-big">{{item.money}}</view></view>
+                    <view class="right">
+                        <view class="title price">红包</view>
+                        <view class="price-none title-3">满{{item.condition}}元可用</view>
+                    </view>
+                </view>
+                <view class="title-2_f margin-top-20">有效期: {{item.use_start_time}} 至 {{item.use_end_time}} </view>
+            </view>
+        </block>
+    </view>
 </view>

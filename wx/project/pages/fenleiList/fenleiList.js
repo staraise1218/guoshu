@@ -3,11 +3,21 @@ const Globalhost = getApp().globalData.Globalhost;
 const loadingfunc = getApp().globalData.loadingfunc;
 Page({
   data: {
+    cat_id: '',   // 分类id
 
   },
   onLoad: function (options) {
     const that = this;
-    console.log(options.id)
+    console.log(options)
+    that.setData({
+      cat_id: options.id
+    })
+  },
+  onShow: function () {
+    let that = this;
+    that.getList(that, that.data.cat_id);
+  },
+  getList (that, id) {
     wx.request({
       url: Globalhost + 'Api/index/getGoodsByCat',
       method: 'POST',
@@ -15,7 +25,7 @@ Page({
         'content-type': 'application/x-www-form-urlencoded'
       },
       data: {
-        cat_id: options.id,
+        cat_id: id,
         city_code: wx.getStorageSync('addressCode'),//110100
       },
       success: function(res) {
@@ -72,6 +82,10 @@ Page({
         }
       }
     })
+  },
+  // 加载更多
+  getMore: function (e) {
+    console.log(e)
   },
   onShareAppMessage: function () {
 

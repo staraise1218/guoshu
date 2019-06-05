@@ -8,6 +8,14 @@ Page({
     tuijian: [{}], // 推荐商品
     cartList: [], // 选中的商品
     OldList: [],    // 上传购物车状态
+    load_shopcart: 0,
+    // 弹窗
+    my_error_alert_show: false,
+    my_alert_title: '温馨提示',
+    alert_errorMsg: '在您确定订单之前，请选择您的收货方式，我们提供了两种收货方式：门店自取和送货上门。',
+    cancel: '门店自取',
+    ok: '送货上门',
+
   },
   onShow: function () {
     let that = this;
@@ -29,40 +37,38 @@ Page({
     }
     // 加载上次的购物车状态
     if(wx.getStorageSync('OldListSTATUS') == 'shopcart') {
-        // console.log(wx.getStorageSync('OldList'))
         console.log(JSON.parse(wx.getStorageSync('OldList')))
-
-
-        
-        // var orderList = that.orderList;
-        // var selected = 'orderList[' + e.currentTarget.dataset.index + '].selected'
-        // if (that.data.orderList[e.currentTarget.dataset.index].selected == 0) {
-        // that.setData({
-        //     [selected]: 1
-        // })
-        // } else {
-        // that.setData({
-        //     [selected]: 0
-        // })
-        // }
-        // console.log(that.data.orderList)
-        // /**
-        //  * 记录购物车状态
-        //  */
-        // let OldList = that.data.orderList;
-        // OldList = JSON.stringify(OldList)
-        // wx.setStorageSync('OldList', OldList);
-        // wx.setStorageSync('OldListSTATUS', 'shopcart');     // 购物车加载判断 如果是 shopcart 就是购物车，其他为跳出购物车页面，不用加载上一次购物车状态
-
-        // setTimeout(function () {
-        //     console.log(wx.getStorageSync('OldList'))
-        // }, 200)
-
-        // console.log(that.data.cartList)
-        // that.calculation(that);
-        // that.isChooseAll(that); // 判断全选按钮状态
     }
     that.loadingShopcartNum(that);
+  },
+  // 关闭弹窗
+  close_my_alert() {
+    this.setData({
+      my_error_alert_show: false
+    })
+  },
+  // 门店自取
+  my_alert_cancel() {
+    this.close_my_alert();
+    console.log('门店自取')
+    wx.setStorageSync('PAYSTATUS', 1);
+    wx.setStorageSync('action', 'cart');
+    wx.setStorageSync('send_method', 2);
+    wx.navigateTo({
+      url: '/pages/storeList/storeList?page=shoppingCart&send_method=2&action=cart'
+    })
+  },
+  // 送货上门
+  my_alert_ok() {
+    this.close_my_alert();
+    console.log('送货上门')
+    wx.setStorageSync('PAYSTATUS', 0);
+    wx.setStorageSync('action', 'cart');
+    wx.setStorageSync('send_method', 1);
+    wx.navigateTo({
+      url: '/pages/demo/demo?page=shoppingCart&send_method=1&action=cart'
+    })
+
   },
   /**
    * 去结算
@@ -73,31 +79,34 @@ Page({
       
     // console.log(that.data.orderList)
     if (that.data.cartList.length > 0) {
-      wx.showModal({
-        title: '尊敬的用户：',
-        content: '在您确定订单之前，请选择您的收货方式，我们提供了两种收货方式：门店自取和送货上门。',
-        confirmText: '送货上门',
-        cancelText: '门店自取',
-        success(res) {
-          if (res.confirm) {
-            console.log('送货上门')
-            wx.setStorageSync('PAYSTATUS', 0);
-            wx.setStorageSync('action', 'cart');
-            wx.setStorageSync('send_method', 1);
-            wx.navigateTo({
-              url: '/pages/demo/demo?page=shoppingCart&send_method=1&action=cart'
-            })
-          } else if (res.cancel) {
-            console.log('门店自取')
-            wx.setStorageSync('PAYSTATUS', 1);
-            wx.setStorageSync('action', 'cart');
-            wx.setStorageSync('send_method', 2);
-            wx.navigateTo({
-              url: '/pages/storeList/storeList?page=shoppingCart&send_method=2&action=cart'
-            })
-          }
-        }
+      that.setData({
+        my_error_alert_show: true
       })
+      // wx.showModal({
+      //   title: '尊敬的用户：',
+      //   content: '在您确定订单之前，请选择您的收货方式，我们提供了两种收货方式：门店自取和送货上门。',
+      //   confirmText: '送货上门',
+      //   cancelText: '门店自取',
+      //   success(res) {
+      //     if (res.confirm) {
+      //       console.log('送货上门')
+      //       wx.setStorageSync('PAYSTATUS', 0);
+      //       wx.setStorageSync('action', 'cart');
+      //       wx.setStorageSync('send_method', 1);
+      //       wx.navigateTo({
+      //         url: '/pages/demo/demo?page=shoppingCart&send_method=1&action=cart'
+      //       })
+      //     } else if (res.cancel) {
+      //       console.log('门店自取')
+      //       wx.setStorageSync('PAYSTATUS', 1);
+      //       wx.setStorageSync('action', 'cart');
+      //       wx.setStorageSync('send_method', 2);
+      //       wx.navigateTo({
+      //         url: '/pages/storeList/storeList?page=shoppingCart&send_method=2&action=cart'
+      //       })
+      //     }
+      //   }
+      // })
     } else {
       wx.showToast({
         title: '未选择商品',
@@ -111,93 +120,102 @@ Page({
     console.log(e.target.dataset)
     console.log(that.data.orderList)
     var orderList = [];
-    for (var i = 0; i < that.data.orderList.length; i++) {
-      if (e.target.dataset.catId == that.data.orderList[i].cat_id) {
-        console.log(that.data.orderList[i])
-        orderList[i] = {};
-        var num = 'orderList[' + i + '].goods_num'
-        var cart = {
-          id: e.target.dataset.catId,
-          goods_num: that.data.orderList[i].goods_num,
-          selected: that.data.orderList[i].selected
-        };
-        if (e.target.dataset.msg == "reduce") {
-          if (cart.goods_num == 1) {
-            wx.showModal({
-              title: '是否删除该商品',
-              success(res) {
-                if (res.confirm) {
-                  wx.request({
-                    url: Globalhost + 'Api/cart/delete',
-                    method: 'POST',
-                    header: {
-                      'content-type': 'application/x-www-form-urlencoded'
-                    },
-                    data: {
-                      user_id: wx.getStorageSync('user_id'),
-                      cart_ids: e.target.dataset.catId
-                    },
-                    success: function (res) {
-                      cart.goods_num--
-                      that.setData({
-                        [num]: cart.goods_num
-                      })
-                      that.createList(that);  // 渲染列表
-                      that.calculation(that);
-                      console.log(res)
-                    }
-                  })
+
+      // 库存足够时执行
+      for (var i = 0; i < that.data.orderList.length; i++) {
+        if (e.target.dataset.catId == that.data.orderList[i].cat_id) {
+          console.log(that.data.orderList[i])
+          orderList[i] = {};
+          var num = 'orderList[' + i + '].goods_num'
+          var cart = {
+            id: e.target.dataset.catId,
+            goods_num: that.data.orderList[i].goods_num,
+            selected: that.data.orderList[i].selected
+          };
+          if (e.target.dataset.msg == "reduce") {
+            if (cart.goods_num == 1) {
+              wx.showModal({
+                title: '是否删除该商品',
+                success(res) {
+                  if (res.confirm) {
+                    wx.request({
+                      url: Globalhost + 'Api/cart/delete',
+                      method: 'POST',
+                      header: {
+                        'content-type': 'application/x-www-form-urlencoded'
+                      },
+                      data: {
+                        user_id: wx.getStorageSync('user_id'),
+                        cart_ids: e.target.dataset.catId
+                      },
+                      success: function (res) {
+                        cart.goods_num--
+                        that.setData({
+                          [num]: cart.goods_num
+                        })
+                        that.createList(that);  // 渲染列表
+                        that.calculation(that);
+                        console.log(res)
+                      }
+                    })
+                  }
                 }
-              }
-            })
-          } else {
-            cart.goods_num--
-            that.setData({
-              [num]: cart.goods_num
-            })
-            console.log(cart.goods_num)
-            cart = JSON.stringify(cart);
-            wx.request({
-              url: Globalhost + 'Api/cart/changeNum',
-              method: 'POST',
-              header: {
-                'content-type': 'application/x-www-form-urlencoded'
-              },
-              data: {
-                user_id: wx.getStorageSync('user_id'),
-                cart: cart
-              },
-              success: function (res) {
-                console.log(res)
-                that.calculation(that);
-                // that.loadingShopcartNum(that);
-              }
-            })
-          }
-        } else if (e.target.dataset.msg == "add") {
-          cart.goods_num++
-          that.setData({
-            [num]: cart.goods_num
-          })
-          cart = JSON.stringify(cart);
-          wx.request({
-            url: Globalhost + 'Api/cart/changeNum',
-            method: 'POST',
-            header: {
-              'content-type': 'application/x-www-form-urlencoded'
-            },
-            data: {
-              user_id: wx.getStorageSync('user_id'),
-              cart: cart
-            },
-            success: function (res) {
-              console.log(res)
-              that.calculation(that);
+              })
+            } else {
+              cart.goods_num--
+              that.setData({
+                [num]: cart.goods_num
+              })
+              console.log(cart.goods_num)
+              cart = JSON.stringify(cart);
+              wx.request({
+                url: Globalhost + 'Api/cart/changeNum',
+                method: 'POST',
+                header: {
+                  'content-type': 'application/x-www-form-urlencoded'
+                },
+                data: {
+                  user_id: wx.getStorageSync('user_id'),
+                  cart: cart
+                },
+                success: function (res) {
+                  console.log(res)
+                  that.calculation(that);
+                  // that.loadingShopcartNum(that);
+                }
+              })
             }
-          })
+          } else if (e.target.dataset.msg == "add") {
+            if(e.target.dataset.goodsNum == e.target.dataset.storeCount) {
+              wx.showToast({
+                title: '该商品库存不足',
+                icon: 'none'
+              })
+            } else {
+              cart.goods_num++
+              that.setData({
+                [num]: cart.goods_num
+              })
+              cart = JSON.stringify(cart);
+              wx.request({
+                url: Globalhost + 'Api/cart/changeNum',
+                method: 'POST',
+                header: {
+                  'content-type': 'application/x-www-form-urlencoded'
+                },
+                data: {
+                  user_id: wx.getStorageSync('user_id'),
+                  cart: cart
+                },
+                success: function (res) {
+                  console.log(res)
+                  that.calculation(that);
+                }
+              })
+            }
+          }
         }
       }
-    }
     // that.calculation(that); // 更新购物并计算结果
   },
   /**
@@ -215,6 +233,11 @@ Page({
         city_code: wx.getStorageSync('addressCode'),// 110100
       },
       success: function (res) {
+        wx.showToast({
+          title: '购物车加载中',
+          icon: 'loadubg',
+          duration: 20000
+        })
         that.setData({
           orderList: ''
         })
@@ -235,7 +258,8 @@ Page({
             ORselect = 'orderList[' + i + '].selected',
             ORimg = 'orderList[' + i + '].goods.original_img' ,
             tag = 'orderList[' + i + '].goods.tag',
-            subtitle = 'orderList[' + i + '].subtitle'
+            subtitle = 'orderList[' + i + '].subtitle',
+            count = 'orderList[' + i + '].store_count'
 
           that.setData({
             [ORid]: data[i].goods_id,
@@ -245,7 +269,8 @@ Page({
             [ORprice]: data[i].member_goods_price,
             [ORimg]: 'https://app.zhuoyumall.com:444' + data[i].goods.original_img,
             [tag]: data[i].goods.tag,
-            [subtitle]: data[i].goods.subtitle
+            [subtitle]: data[i].goods.subtitle,
+            [count]: data[i].goods.store_count
           })
           if(that.data.chooseAllShow) {
             that.setData({
@@ -259,6 +284,12 @@ Page({
         }
         console.log(that.data.orderList)
         that.calculation(that); // 更新购物并计算结果
+      },
+      complete: function() {
+        wx.hideToast();
+        that.setData({
+          load_shopcart: 1
+        })
       }
     })
   },

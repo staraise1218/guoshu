@@ -5,7 +5,7 @@
         <view class="margin-left-20 title-2">{{item.goods_name}}</view>
     </view>
     <view class="section">
-      <textarea class="input padding-30 font-size-26" bindinput="changeinput" placeholder="请填写您对商品的评价" focus="{{focus}}" />
+      <textarea class="input padding-30 font-size-26" bindinput="changeinput" data-goodsid="{{item.goods_id}}" placeholder="请填写您对商品的评价" focus="{{focus}}" />
       <view class="addimg-wrap">
           <view class="addimg" bindtap="upimg" data-goodsid="{{item.goods_id}}">
               <image class="icon-1" src="/src/img/xiangji(1)@2x.png" />

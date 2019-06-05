@@ -18,8 +18,8 @@
                 <view class="title-2 margin-bottom-20">{{item.desc}}</view>
                 <view class="title-3_f">{{item.change_time}}</view>
             </view>
-            <view wx:if="{{item.user_money >= 0}}" class="right-center title-2">+ {{item.user_money}}</view>
-            <view wx:else class="right-center title-2">- {{item.user_money}}</view>
+            <view class="right-center title-2">{{item.user_money}}</view>
+            <!-- <view wx:else class="right-center title-2">- {{item.user_money}}</view> -->
         </view>
     </view>
 </block>

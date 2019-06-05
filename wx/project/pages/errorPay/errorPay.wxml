@@ -1,4 +1,4 @@
-<view class="content">
+<!-- <view class="content">
     <view class="top">
         <image mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/error_pay.png" />
     </view>
@@ -6,4 +6,34 @@
         <view class="btn" bindtap="toOrder">查看订单</view>
         <view class="btn" bindtap="toHome">返回首页</view>
     </view>
+</view> -->
+
+
+
+
+
+
+<view class="text-center margin-top-30">
+    <!-- <image class="icon-best" src="/src/img/椭圆3@2x.png" /> -->
+    <image class="icon-best" src="http://img.hb.aicdn.com/a568cc1552e3dd7afb23f01c04704d82a43d16b6455a-MgwxFA_fw658" />
 </view>
+<view class="text-center title-2_ font-weight-6">支付失败</view>
+<!-- <view class="text-center title-big font-weight-6 margin-top-20">￥{{order_amount}}</view> -->
+
+
+
+<view class="border-top border-bottom margin-30 padding-tb-30">
+    <view class="between-center">
+        <view class="title-3_f">付款方式</view>
+        <view class="title-3">{{payMethod == 'wxpay' ? '微信支付' : '余额支付'}}</view>
+    </view>
+    <view class="between-center margin-top-20">
+        <view class="title-3_f">收款方式</view>
+        <view class="title-3">果蔬直销平台</view>
+    </view>
+</view>
+
+<button class="toIndex" bindtap="toOrder">查看订单</button>
+<button class="toIndex" bindtap="toHome">继续浏览</button>
+<!-- <button class="toOrder" data-order-id="{{orderid}}" bindtap="toOrder">查看订单</button> -->
+

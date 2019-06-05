@@ -10,17 +10,7 @@
           <view class='topbar'>
             <image bindtap="chooseAddressShow" class="location-icon" src="https://hbimg.huabanimg.com/698f1951de21b12c43072ae841182f165e05e9cd890-xBN8IX_fw658" />
             <view bindtap="chooseAddressShow" class="location" selectable="false" space="false" decode="false">
-              <!-- {{address}} -->
-              <!-- <view class="section"> -->
-              <!-- <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}"> -->
-                <!-- <view class="picker" wx:if="{{addressStatus == 1}}">
-                  {{multiArray[index].name}}
-                </view> -->
-                <!-- <view class="" bindtap="chooseAddressShow "> -->
                   {{address}}
-                <!-- </view> -->
-              <!-- </picker> -->
-            <!-- </view> -->
             </view>
             <view class="search-flex"></view>
             <!-- </view> -->
@@ -29,14 +19,16 @@
               <input class="serach-input" disabled='true' placeholder="火龙果" auto-focus bindtap="toSearch" />
             </view>
             <view bindtap="toNews" class="news" hover-class="none" hover-stop-propagation="false">
-              <button class="news_btn" send-message-title="分享标题" send-message-img="分享的单个图片链接" show-message-card="true" send-message-path="../index/index?id={{id}}" plain>
+              <button class="news_btn active" send-message-title="分享标题" send-message-img="分享的单个图片链接" show-message-card="true" send-message-path="../index/index?id={{id}}" plain>
                 <image class="news-icon" src="https://hbimg.huabanimg.com/deb427e3df46fa36177cf43e28494ada7db19f72668-iwUuto_fw658" />
               </button>
             </view>
           </view>
         </view>
         <!-- 吸附顶部 END -->
-        
+        <view class="tips_alert" wx:if="{{newShow}}">
+          您有未读的消息...
+        </view>
         
         
         
@@ -79,16 +71,18 @@
                     <view class="poster-wrap">
                       <image lazy-load="true" class="icon-group" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
                     </view>
-                    <view class="title-2">{{item.goods_name}}</view>
+                    <view class="title-2">{{item.title}}</view>
                     <view class="title-3">{{item.subtitle}}</view>
                     <view class="self-flex title-3 margin-bottom-20 "><view class="tag-new">{{item.tag}}</view> <view wx-if="{{item.virtual_num != 0}}" class="selt-right">已购 {{item.virtual_num}} 份</view> </view>
+                    
+                    <view class="del margin-left-10">{{item.goods_price}}</view>
                     <view class="between-center">
                       <view class="left-center">
                         <view class="price">
                           <view style="font-size: 22rpx">￥</view>
                           {{item.price}}
                         </view>
-                        <view class="del margin-left-10">{{item.goods_price}}</view>
+                        <!-- <view class="del margin-left-10">{{item.goods_price}}</view> -->
                       </view>
                       <view class="right-center">
                         <image lazy-load="true" data-img="https://app.zhuoyumall.com:444{{item.original_img}}" class="icon-2" src="https://hbimg.huabanimg.com/ff8af7f0827e85d34cc15b364ff139c61e6fe5bc5b3-0QRyv2_fw658" data-id="{{item.goods_id}}" catchtap="{{item.store_count == 0 ? '' : 'addCart'}}" />
@@ -110,16 +104,17 @@
                     <view class="poster-wrap">
                       <image lazy-load="true" class="icon-group" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
                     </view>
-                    <view class="title-2">{{item.goods_name}}</view>
+                    <view class="title-2">{{item.title}}</view>
                     <view class="title-3">{{item.subtitle}}</view>
                     <view class="self-flex title-3 margin-bottom-20 "><view class="tag-new">{{item.tag}}</view> <view wx-if="{{item.virtual_num != 0}}" class="selt-right ">已购 {{item.virtual_num}} 份</view> </view>
+                    <view class="del margin-left-10">{{item.goods_price}}</view>
                     <view class="between-center">
                       <view class="left-center">
                         <view class="price">
                           <view style="font-size: 22rpx">￥</view>
                           {{item.price}}
                         </view>
-                        <view class="del margin-left-10">{{item.goods_price}}</view>
+                        <!-- <view class="del margin-left-10">{{item.goods_price}}</view> -->
                       </view>
                       <view class="right-center">
                         <image lazy-load="true" data-img="https://app.zhuoyumall.com:444{{item.original_img}}" class="icon-2" src="https://hbimg.huabanimg.com/ff8af7f0827e85d34cc15b364ff139c61e6fe5bc5b3-0QRyv2_fw658" data-id="{{item.goods_id}}" catchtap="addCart" />
@@ -147,7 +142,7 @@
           <!-- AD 2  END -->
           <view class="line"></view>
           <!-- 限时秒杀 -->
-          <view wxLif="{{miaosha}}">
+          <view wx-if="{{miaosha}}">
             <view class="padding-30 between-center">
               <view class=" left-center">
                 <view class="miaosha-title">限时秒杀</view>

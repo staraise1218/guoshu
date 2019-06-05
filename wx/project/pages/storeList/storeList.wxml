@@ -1,21 +1,3 @@
-<!-- <view class="container">
-    <block wx:for="{{List}}" wx:key>
-        <view data-id="{{item.pickup_id}}" bindtap="choose" class="between-center padding-lr-20 padding-tb-10 border-bottom">
-            <view class="left-center">
-                <image wx:if="{{item.pickup_id == currentID}}" class="icon-3" src="https://hbimg.huabanimg.com/af0f6c8f8b4ba1608f1985fd5c491db279dd940c6cf-efCOPl_fw658" />
-                <image wx:else class="icon-3" src="https://hbimg.huabanimg.com/af41d36cf3423f49b5180fab5f14f2b3db82652a67e-dDcFEg_fw658" />
-            </view>
-            <view class="flex-1 margin-left-20 between-center">
-                <view class="flex-1 padding-lr-10">
-                    <view class="title-2 margin-bottom-10">{{item.pickup_name}}</view>
-                    <view class="title-3_f">{{item.fulladdress}}</view>
-                </view>
-            </view>
-        </view>
-    </block>
-</view> -->
-
-
 
 
 
@@ -30,12 +12,12 @@
                 <view class="juli"><view wx:if="{{item.distance}}"> {{item.distance}}千米 </view></view>
             </view>
             <view class="con">{{item.fulladdress}}</view>
-            <view class="con">{{item.pickup_phone}}</view>
+            <view class="con">联系电话：{{item.pickup_phone}}</view>
         </view>
     </view>
 </block>
 
-<view class="empty-wrap" wx:if="{{List.length == 0}}">
+<view class="empty-wrap" wx:if="{{LoadStatus == 1 && List.length == 0}}">
     <image src="https://app.zhuoyumall.com:444/wx/img/empty.png" />
     <view class="text-center">没有搜索到站点</view>
 </view>

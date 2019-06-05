@@ -49,12 +49,13 @@ Page({
         url: '/pages/loading/loading'
       })
     }
-    if(wx.getStorageSync('targetID')) {
-      that.setData({
-        targetID: wx.getStorageSync('targetID')
-      })
-      that.yiji(that, that.data.targetID) 
-    } else {
+    // if(wx.getStorageSync('targetID')) {
+    //   that.setData({
+    //     targetID: wx.getStorageSync('targetID')
+    //   })
+    //   that.yiji(that, that.data.targetID) 
+    // } 
+    // else {
       wx.request({ // 获取分类 -- 左侧
         url: Globalhost + 'Api/category/getAllCategory',
         method: 'POST',
@@ -66,9 +67,8 @@ Page({
           that.setData({
             targetID: res.data.data[0].id
           })
-        }
-      })
-      setTimeout(function () {
+        },
+        complete: function() {
           if (wx.getStorageSync('indexCatid')) {
             that.setData({
               targetID: wx.getStorageSync('indexCatid')
@@ -77,8 +77,19 @@ Page({
           } else {
             that.yiji(that, that.data.targetID);
           }
-        }, 1000)
-    }
+        }
+      })
+      // setTimeout(function () {
+      //     if (wx.getStorageSync('indexCatid')) {
+      //       that.setData({
+      //         targetID: wx.getStorageSync('indexCatid')
+      //       })
+      //       that.yiji(that, wx.getStorageSync('indexCatid'));
+      //     } else {
+      //       that.yiji(that, that.data.targetID);
+      //     }
+      //   }, 1000)
+    // }
   },
   toLik: function () {
     console.log(this.data)
@@ -242,7 +253,8 @@ Page({
               goodslistShop_price = 'sub[' + i + '].goodslist[' + j + '].shop_price',
               goodslistStore_count = 'sub[' + i + '].goodslist[' + j + '].store_count',
               goodslistSubtitle = 'sub[' + i + '].goodslist[' + j + '].subtitle',
-              goodslistSales_sum = 'sub[' + i + '].goodslist[' + j + '].virtual_num'
+              goodslistSales_sum = 'sub[' + i + '].goodslist[' + j + '].virtual_num',
+              goodslistSales_tag = 'sub[' + i + '].goodslist[' + j + '].tag'
 
             that.setData({
               [goodslistGoods_id]: data[i].goodslist[j].goods_id,
@@ -251,7 +263,8 @@ Page({
               [goodslistShop_price]: data[i].goodslist[j].shop_price,
               [goodslistStore_count]: data[i].goodslist[j].store_count,
               [goodslistSubtitle]: data[i].goodslist[j].subtitle,
-              [goodslistSales_sum]: data[i].goodslist[j].virtual_num
+              [goodslistSales_sum]: data[i].goodslist[j].virtual_num,
+              [goodslistSales_tag]: data[i].goodslist[j].tag
             })
           }
         }
@@ -380,20 +393,6 @@ Page({
     })
   },
   location: function (that) {
-    // wx.request({
-    //   url: 'https://app.zhuoyumall.com:444/api/region/getJson',
-    //   method: 'POST',
-    //   header: {
-    //     'content-type': 'application/x-www-form-urlencoded'
-    //   },
-    //   success: function(res) {
-    //     // console.log(res.data.data)
-    //     that.setData({
-    //       multiArray: res.data.data
-    //     })
-    //   }
-    // })
-    
     wx.request({
       url: Globalhost + 'Api/index/getDeliveryCity',
       method: 'POST',
@@ -462,44 +461,6 @@ Page({
       }
     })
   },
-
-
- 
-
-  /**
-   * footer 跳转
-   */
-  LINK: function (e) {
-    console.log(e.currentTarget.dataset.link) // index classification group shopcart mine
-    switch (e.currentTarget.dataset.link) {
-      case 'index':
-        wx.redirectTo({
-          url: '/pages/index/index'
-        })
-        break;
-      case 'classification':
-        wx.redirectTo({
-          url: '/pages/classification/classification'
-        })
-        break;
-      case 'group':
-        wx.redirectTo({
-          url: '/pages/group/group'
-        })
-        break;
-        case 'shoppingCart':
-          wx.redirectTo({
-            url: '/pages/shoppingCart/shoppingCart'
-          })
-          break;
-      case 'mine':
-        wx.redirectTo({
-          url: '/pages/mine/mine'
-        })
-    }
-  },
-
-
 
 
 

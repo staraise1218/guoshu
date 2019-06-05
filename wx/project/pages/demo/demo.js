@@ -27,59 +27,24 @@ Page({
     wallets_password_flag: false, //密码输入遮罩
     storeListShow: false,
     addressListShow: false,
-    hongbaoShow: false
+    hongbaoShow: false,
+
+
+    // 弹窗
+    alert_errorMsg: '',
+    my_error_alert_show: false,
+    my_alert_title: '温馨提示',
+    cancel: '取消',
+    ok: '确定',
+
+    isToPay: 0, // 付款误触 0 可以点击 1 不可点击
+    user_note: '',  // 备注内容
+
+    alertShow: false
   },
+  
   onLoad: function (options) {
     let that = this;
-    // console.log(options)
-    // if(options.getPickupListPosdata) {
-    //   let getPickupListPosdata = options.getPickupListPosdata;
-    //   getPickupListPosdata = JSON.parse(getPickupListPosdata);
-    //   that.loadList(that, getPickupListPosdata)
-    // }
-    // that.setData({
-    //   options: options
-    // })
-    // // 购物车
-    // let posdata2 = {};
-    // if(options.page == 'shoppingCart') {  
-    //   if(options.send_method == 1) {// 配送
-    //     posdata2 = {
-    //       user_id: wx.getStorageSync('user_id'),
-    //       action: 'cart'
-    //     }
-    //   } else {  // 自取
-    //     posdata2 = {
-    //       user_id: wx.getStorageSync('user_id'),
-    //       action: 'cart'
-    //     }
-    //   }
-    // }
-    // // 自取
-    // // if(options.page == 'storeList') {
-    // //   options.options = JSON.parse(options.options);
-    // //   that.setData({
-    // //     'options.options': options.options
-    // //   })
-    // //   posdata2 = {
-    // //     user_id: wx.getStorageSync('user_id'),
-    // //     action: 'buy_now'
-    // //   }
-    // // }
-    // // 详情
-    // if(options.page == "commodityDeatils") {
-    //   if(options) { // 配送
-    //     posdata2 = {
-    //       user_id: wx.getStorageSync('user_id'),
-    //       action: 'buy_now',
-    //       goods_id: options.goodId,
-    //       goods_num: 1
-    //     }
-    //   } else { // 自取
-
-    //   }
-    // }
-
     that.setData({
       PAYSTATUS: wx.getStorageSync('PAYSTATUS'),
       send_method: wx.getStorageSync('send_method')
@@ -149,36 +114,36 @@ Page({
       data: posdata2,
       success: function (res) {
         console.log(res)
-        if(res.data.data.couponList == 0) {
-          that.setData({
-            couponList: -1,
-            coupon_id: -1
-          })
-        } else {
-          that.setData({
-            couponList: res.data.data.couponList,
-            coupon_id: res.data.data.couponList[0].id
-          })
-        }
-        if (res.data.data.address.length == 0) {
-          wx.showModal({
-            title: '未设置地址',
-            content: '请先填写地址',
-            confirmText: '去填写',
-            success(res) {
-              if (res.confirm) {
-                wx.navigateTo({
-                  url: '/pages/address/address'
-                })
-              } else if (res.cancel) {
-                wx.navigateBack({
-                  delta: 1
-                });
-              }
-            }
-          })
-        }
         if (res.data.code == 200) {
+          if(res.data.data.couponList == 0) {
+            that.setData({
+              couponList: -1,
+              coupon_id: -1
+            })
+          } else {
+            that.setData({
+              couponList: res.data.data.couponList,
+              coupon_id: res.data.data.couponList[0].id
+            })
+          }
+          if (res.data.data.address.length == 0) {
+            wx.showModal({
+              title: '未设置地址',
+              content: '请先填写地址',
+              confirmText: '去填写',
+              success(res) {
+                if (res.confirm) {
+                  wx.navigateTo({
+                    url: '/pages/address/address'
+                  })
+                } else if (res.cancel) {
+                  wx.navigateBack({
+                    delta: 1
+                  });
+                }
+              }
+            })
+          }
           let posdata3 = {}
           that.setData({
             Address: res.data.data.address, // 地址
@@ -234,12 +199,19 @@ Page({
           })
           that.cart3(that, posdata3)
 
+        } else {
+          console.log('*********************************')
+          that.setData({
+            alertShow: true,
+            errorMsg: res.data.msg
+          })
         }
       }
     })
   },
   cart3: function (that, posdata3) {
     console.log(posdata3)
+    posdata3.user_note = that.data.user_note;
     wx.request({
       url: Globalhost + 'Api/cart/cart3',
       method: 'POST',
@@ -252,6 +224,7 @@ Page({
         that.setData({
           ORDERINFO: res.data.data // 订单详情
         })
+        wx.setStorageSync('order_amount', res.data.data.order_amount);
       }
     })
   },
@@ -305,35 +278,6 @@ Page({
     that.setData({
       hongbaoShow: true
     })
-    // var arr = [];
-    // for (var i = 0; i < that.data.CouponList.length; i++) {
-    //   arr[i] = that.data.CouponList[i].coupon.money
-    // }
-    // wx.showActionSheet({
-    //   itemList: arr,
-    //   success(res) {
-    //     console.log(that.data.CouponList)
-    //     console.log(res.tapIndex)
-    //     for (var j = 0; j < that.data.CouponList.length; j++) {
-    //       that.setData({
-    //         Coupon_id: that.data.CouponList[res.tapIndex].id
-    //       })
-    //     }
-    //     that.setData({
-    //       'posdata3.coupon_id': that.data.CouponList[res.tapIndex].id,
-    //     })
-    //     setTimeout(() => {
-    //       that.cart3(that, that.data.posdata3);
-    //     }, 200);
-    //   },
-    //   fail(res) {
-    //     console.log(res.errMsg)
-    //     wx.showToast({
-    //       title: '没有其他可用红包',
-    //       icon: 'none'
-    //     })
-    //   }
-    // })
   },
   alertHongBao: function () {
     this.setData({
@@ -403,6 +347,7 @@ Page({
       if (that.data.ADDRESSLIST[i].address_id == e.currentTarget.dataset.id) {
         that.setData({
           Address: that.data.ADDRESSLIST[i],
+          Address_id: that.data.ADDRESSLIST[i].address_id,
           addressListShow: false,
         })
       }
@@ -418,32 +363,6 @@ Page({
    * 选择自提点
    */
   toStoreList: function () {
-    // let that = this;
-    // console.log(that.data.StoreList)
-    // var arr = [];
-    // for(var i = 0; i < that.data.StoreList.length; i++) {
-    //   arr[i] = that.data.StoreList[i].fulladdress;
-    // }
-    // wx.showActionSheet({
-    //   itemList: arr,
-    //   success(res) {
-    //     console.log(res.tapIndex)
-    //     for(var j = 0; j < that.data.StoreList.length; j ++) {
-    //       that.setData({
-    //         'options.Store_id': that.data.StoreList[res.tapIndex].pickup_id
-    //       })
-    //     }
-    //     that.setData({
-    //       'posdata3.coupon_id': that.data.CouponList[res.tapIndex].id,
-    //     })
-    //     setTimeout(() => {
-    //       that.cart3(that, that.data.posdata3);
-    //     }, 200);
-    //   },
-    //   fail(res) {
-    //     console.log(res.errMsg)
-    //   }
-    // })
     this.setData({
       storeListShow: true
     })
@@ -465,6 +384,9 @@ Page({
 
   toPay: function () {
     let that = this;
+    that.setData({
+      isToPay: 1
+    })
     let payData = {};
     switch(wx.getStorageSync('PAYSTATUS')) {
       case 0:
@@ -524,11 +446,13 @@ Page({
       case 'wx': // 微信支付
         payData.payMethod = 'wxpay';
         that.pabBefore(that, payData)
+        wx.setStorageSync('payMethod', 'wxpay');
         break;
       case 'yue': // 余额支付
         payData.payMethod = 'money';
         payData = JSON.stringify(payData);
         console.log(payData)
+        wx.setStorageSync('payMethod', 'yue');
         that.setData({
           payData: payData
         })
@@ -538,118 +462,11 @@ Page({
         })
         break;
     }
-
-    // if (that.data.payMethods == 'wx') { // 微信支付
-    //   var posdata = {};
-    //   if (that.data.options.page == "shoppingCart") {
-    //     posdata = {
-    //       user_id: wx.getStorageSync('user_id'),
-    //       address_id: that.data.Address_id,
-    //       coupon_id: that.data.Coupon_id,
-    //       user_money: 0,
-    //       action: 'cart',
-    //       goods_num: 1,
-    //       dosubmit: 1,
-    //       send_method: 1,
-    //       delivery_code: wx.getStorageSync('addressCode')
-    //     }
-    //   } else if (that.data.options.page == "commodityDeatils") {
-    //     posdata = {
-    //       user_id: wx.getStorageSync('user_id'),
-    //       address_id: that.data.Address_id,
-    //       coupon_id: that.data.Coupon_id,
-    //       user_money: 0,
-    //       action: 'buy_now',
-    //       goods_id: that.data.options.goodId,
-    //       goods_num: 1,
-    //       dosubmit: 1,
-    //       send_method: 1,
-    //       delivery_code: wx.getStorageSync('addressCode')
-    //     }
-    //   }
-      // if (wx.getStorageSync('openid')) {
-
-
-
-        // wx.request({
-        //   url: Globalhost + 'Api/cart/cart3',
-        //   method: 'POST',
-        //   header: {
-        //     'content-type': 'application/x-www-form-urlencoded'
-        //   },
-        //   data: posdata,
-        //   success: function (res) {
-        //     console.log(res)
-        //     if (res.data.code == 400) {
-        //       that.setData({
-        //         errorShow: true,
-        //         errorMsg: res.data.msg
-        //       })
-        //     } else {
-        //       let ordermsg = res.data.data;
-        //       var orderMsg = {
-        //         status: '支付订单保存',
-        //         order_amount: ordermsg.order_amount,
-        //         order_id: ordermsg.order_id,
-        //         order_sn: ordermsg.order_sn
-        //       }
-        //       that.setData({
-        //         Order_sn: res.data.data.order_sn
-        //       })
-        //       wx.request({
-        //         url: Globalhost + 'Api/Wxapplet/unifiedOrder',
-        //         method: 'POST',
-        //         header: {
-        //           'content-type': 'application/x-www-form-urlencoded'
-        //         },
-        //         data: {
-        //           order_sn: res.data.data.order_sn,
-        //           openid: wx.getStorageSync('openid')
-        //         },
-        //         success: function (res) {
-        //           wx.requestPayment({
-        //             'timeStamp': res.data.data.timeStamp, // 时间
-        //             'nonceStr': res.data.data.nonceStr, // 随机字符串
-        //             'package': res.data.data.package, // prepayId
-        //             'signType': res.data.data.signType, // 签名算法
-        //             'paySign': res.data.data.paySign, // 签名
-        //             'success': function (res) {
-        //               console.log(res)
-        //               wx.setStorageSync('chooseStatus', 'END') // 清空优惠券状态
-        //               wx.navigateTo({
-        //                 url: '/pages/paySuccess/paySuccess?order_amount=' + ordermsg.order_amount + '&order_id=' + ordermsg.order_id + '&order_sn=' + ordermsg.order_sn
-        //               })
-        //             },
-        //             fail(res) {
-        //               console.log(res)
-        //               console.log('ERROR***********************************************************')
-        //               wx.redirectTo({
-        //                 url: '/pages/errorPay/errorPay?status=errorPay&order_id=' + ordermsg.order_id + '&order_sn=' + ordermsg.order_sn
-        //               })
-        //             }
-        //           })
-        //         }
-        //       })
-        //     }
-        //   }
-        // })
-      // } else {
-      //   wx.navigateTo({
-      //     url: '/pages/wxlogin/wxlogin'
-      //   })
-      // }
-    // } else { // 余额支付
-      // wx.showToast({
-      //   title: '余额不足',
-      //   icon: 'none'
-      // })
-      // var query = wx.createSelectorQuery();
-      //选择id
-    // }
   },
 
 
   pabBefore: function (that, payData) {
+    payData.user_note = that.data.user_note
     wx.request({
       url: Globalhost + 'Api/cart/cart3',
       method: 'POST',
@@ -658,16 +475,22 @@ Page({
       },
       data: payData,
       success: function(res) {
+        console.log(res)
         if(res.data.code == 200) {
           wx.setStorageSync('order_amount', res.data.data.order_amount);
           wx.setStorageSync('order_id', res.data.data.order_id);
           wx.setStorageSync('order_sn', res.data.data.order_sn);
           that.wxPay(that);
         } else {
-          wx.showToast({
-            title: res.data.msg,
-            icon: 'none'
+          that.setData({
+            my_error_alert_show: true,
+            alert_errorMsg: '' + res.data.msg
           })
+          console.log(that.data.alert_errorMsg)
+          // wx.showToast({
+          //   title: res.data.msg,
+          //   icon: 'none'
+          // })
         }
       }
     })
@@ -687,6 +510,7 @@ Page({
         openid: wx.getStorageSync('openid')
       },
       success: function(res) {
+        console.log(res)
         if(res.data.code == 200) {
           wx.setStorageSync('appId', res.data.data.appId);
           wx.setStorageSync('nonceStr', res.data.data.nonceStr);
@@ -703,7 +527,7 @@ Page({
             'success': function (res) {
               console.log(res)
               wx.setStorageSync('chooseStatus', 'END') // 清空优惠券状态
-              wx.navigateTo({
+              wx.redirectTo({
                 url: '/pages/paySuccess/paySuccess?order_amount=' + wx.getStorageSync('order_amount') + '&order_id=' + wx.getStorageSync('order_id') + '&order_sn=' + wx.getStorageSync('order_sn')
               })
             },
@@ -798,6 +622,7 @@ Page({
             break;
       }
       console.log(yueData)
+      yueData.user_note = that.data.user_note
       wx.request({
         url: '',
         url: Globalhost + 'Api/cart/cart3',
@@ -824,20 +649,38 @@ Page({
                 paymentMethod: 'money'
               },
               success: function (res) {
-                wx.navigateTo({
+                wx.redirectTo({
                   url: '/pages/paySuccess/paySuccess?order_amount=' + wx.getStorageSync('order_amount') + '&order_id=' + wx.getStorageSync('order_id') + '&order_sn=' + wx.getStorageSync('order_sn')
                 })
               }
             })
           } else {
-            wx.showToast({
-              title: res.data.msg,
-              icon: 'none'
+            that.setData({
+              my_error_alert_show: true,
+              alert_errorMsg: '' + res.data.msg
             })
+            console.log(that.data.alert_errorMsg)
+            // wx.showToast({
+            //   title: res.data.msg,
+            //   icon: 'none'
+            // })
           }
         }
       })
     }
+  },
+  // 关闭弹窗
+  close_my_alert() {
+    this.setData({
+      my_error_alert_show: false,
+      isToPay: false
+    })
+  },
+  my_alert_cancel() {
+    this.close_my_alert();
+  },
+  my_alert_ok() {
+    this.close_my_alert();
   },
   set_Focus() { //聚焦input
     console.log('isFocus', this.data.isFocus)
@@ -869,7 +712,22 @@ Page({
     wx.navigateTo({
       url: '/pages/addressEdit/addressEdit?address_id=' + e.currentTarget.dataset.id
     })
+  },
+  // 备注
+  beizhu(e) {
+    console.log(e)
+    this.setData({
+      user_note: e.detail.value
+    })
+  },
+
+
+  goBack() {
+    wx.navigateBack({
+      delta: 1
+    });
   }
+
 
 
 

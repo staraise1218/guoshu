@@ -1,27 +1,15 @@
-<view class="item-box-1">
+<scroll-view scroll-y="{{true}}" bindscrolltolower="getMore" class="item-box-1">
     <view class="list-wrapper">
         <image class="icon-bg" mode="" src="https://app.zhuoyumall.com:444{{msg.image}}" />
-        <!-- <view class="padding-30 padding-top-50 font-weight-6" style="color: #296B8E;font-size: 32rpx;">
-            {{msg.name}} >
-        </view> -->
         <view class="lists">
-            <!-- {{GOODLIST.name}} -->
             <block wx:for="{{GOODLIST}}" wx:key>
                 <view class="item-list-box" data-id="{{item.goods_id}}" bindtap="toCon" data-id="{{item.goods_id}}">
-                    <!-- <view class="shopping-alert" wx:if="{{item.store_count == 0}}">
-                        <view class="alert-con">
-                            <view>抢光啦</view>
-                            <view>SOLD OUT</view>
-                        </view>
-                    </view> -->
                     <view class="poster-wrapper">
                         <image class="icon-shop" mode="" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
                     </view>
                     <view class="title-3 shop-title">{{item.goods_name}}</view>
                     <view class="title-2_f shop-title">{{item.subtitle}}</view>
-                    <!-- <view wx-if="{{item.virtual_num != 0}}" class="title-2_f shop-title">已购 {{item.virtual_num}} 份</view> -->
                     <view class="self-flex title-3 margin-bottom-20 "><view class="tag-new">{{item.tag}}</view> <view wx-if="{{item.virtual_num != 0}}" class="selt-right">已购{{item.virtual_num}} 份</view> </view>
-                    <!-- <view class="tag-new">{{item.tag}}</view> -->
                     <view class="bottom">
                         <view class="left-center">
                             <view class="price">{{item.shop_price}}</view>
@@ -32,4 +20,4 @@
             </block>
         </view>
     </view>
-</view>
+</scroll-view>
