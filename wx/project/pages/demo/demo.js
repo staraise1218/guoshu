@@ -92,7 +92,6 @@ Page({
     that.cart2(that, posdata2);
 
 
-    
 
 
 
@@ -422,7 +421,7 @@ Page({
             dosubmit: 1,
             coupon_id: that.data.coupon_id,
             send_method: 1,
-            pickup_id: wx.getStorageSync('pickup_id'),
+            // pickup_id: wx.getStorageSync('pickup_id'),
             delivery_code: wx.getStorageSync('addressCode')
           }
           break;
@@ -463,7 +462,6 @@ Page({
         break;
     }
   },
-
 
   pabBefore: function (that, payData) {
     payData.user_note = that.data.user_note

@@ -3,6 +3,10 @@ const Globalhost = getApp().globalData.Globalhost;
 Page({
   onLoad: function (options) {
     let that = this;
+    console.log('*******************************loading********************************')
+    console.log('options', options)
+    console.log('goods_id', options.goods_id)
+    console.log('share_userCode', options.share_userCode)
     wx.showLoading({
       title: '加载中',
     })
@@ -26,7 +30,15 @@ Page({
       that.getUserLocation(that);
     }
   },
-
+  onShow: function (options) {
+    console.log('***********************onShow*************************');
+    console.log(options)
+  },
+  onLaunch: function (options) {
+    console.log('***********************onLaunch*************************');
+    console.log(options)
+  },
+  
   // 授权登陆
   bindGetUserInfo: function () {
     let that = this;
@@ -132,7 +144,9 @@ Page({
             title: '请求授权当前位置',
             content: '需要获取您的地理位置，请确认授权',
             success: function (res) {
+              console.log(res)
               if (res.cancel) {
+                console.log('*********取消授权****************')
                 //取消授权
                 wx.showToast({
                   title: '拒绝授权',
@@ -184,13 +198,20 @@ Page({
     wx.getLocation({
       type: 'wgs84',
       success: function (res) {
-        // console.log(res)
+        console.log(res)
         var latitude = res.latitude
         var longitude = res.longitude
         let location = latitude + ',' + longitude
         // console.log('当前经纬度：', location)
         wx.setStorageSync('location', location)
         that.getNearCity(that, latitude, longitude);
+      },
+      fail: function (error) {
+        console.log(error)
+        that.getUserLocation(that);
+      },
+      complete: function () {
+        console.log('*********************授权结束*********************')
       }
     })
   },
@@ -218,20 +239,51 @@ Page({
       },
       complete: function () {
         wx.hideToast();
+        var shareMsg = {
+          goods_id: '',
+          user_id: '',
+          share_userCode: '',
+          shareStatus: ''
+        }
+        shareMsg = JSON.stringify(shareMsg)
+        console.log(shareMsg)
+        wx.setStorageSync("shareMsg", shareMsg);
         let options = that.data.options;
+        console.log(options)
           // 分享商品
           if(that.data.options.shareAddressCode) {
+            let shareMsg = {}; 
             if(that.data.options.shareAddressCode == wx.getStorageSync('addressCode')) {
               console.log('***************************本地城市******************************')
               console.log(options)
-              wx.navigateTo({
-                url: '/pages/commodityDetails/commodityDetails?goods_id=' + options.goods_id + '&user_id=' + options.user_id + '&share_userCode=' + options.share_userCode
+              shareMsg.goods_id = options.goods_id;
+              shareMsg.user_id = options.user_id;
+              shareMsg.share_userCode = options.share_userCode;
+              shareMsg.shareStatus = '';
+              shareMsg = JSON.stringify(shareMsg);
+              console.log(shareMsg)
+              wx.setStorageSync("shareMsg", shareMsg);
+              // wx.navigateTo({
+              //   url: '/pages/index/index?goods_id=' + options.goods_id + '&user_id=' + options.user_id + '&share_userCode=' + options.share_userCode
+              // })
+              wx.switchTab({
+                url: '/pages/index/index'
               })
             } else {
               console.log('***************************外地城市******************************')
               console.log(options)
-              wx.navigateTo({
-                url: '/pages/commodityDetails/commodityDetails?goods_id=' + options.goods_id + '&user_id=' + options.user_id + '&share_userCode=' + options.share_userCode + '&shareStatus=Back'
+              shareMsg.goods_id = options.goods_id;
+              shareMsg.user_id = options.user_id;
+              shareMsg.share_userCode = options.share_userCode;
+              shareMsg.shareStatus = 'Back';
+              shareMsg = JSON.stringify(shareMsg);
+              console.log(shareMsg)
+              wx.setStorageSync("shareMsg", shareMsg);
+              // wx.navigateTo({
+              //   url: '/pages/index/index?goods_id=' + options.goods_id + '&user_id=' + options.user_id + '&share_userCode=' + options.share_userCode + '&shareStatus=Back'
+              // })
+              wx.switchTab({
+                url: '/pages/index/index'
               })
             }
           } else {

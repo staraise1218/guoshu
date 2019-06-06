@@ -73,6 +73,7 @@ Page({
   onLoad: function (options) {
     let that = this;
     console.log('**************商品详情***********************************************************************')
+    wx.setStorageSync('shareMsg', '分享商品打开过')
     console.log(options)
     // 商品不在本地城市
     if(options.shareStatus == 'Back') {
@@ -446,12 +447,19 @@ Page({
   },
   // 分享
   onShareAppMessage: function () {
-    console.log(this.data)
     console.log(wx.getStorageSync('userCode'))
+    var str = '?goods_id=' + this.data.goods_id + '&user_id=' + wx.getStorageSync('user_id') + '&share_userCode=' + wx.getStorageSync('userCode') + '&status=share' + '&shareAddressCode=' + wx.getStorageSync('addressCode')
+    // str = JSON.stringify(str)
+    console.log(str)
     return {
       title: '【' +this.data.MSM.goods_name + '】' + '仅售' + this.data.MSM.shop_price + '元' + '#' + this.data.MSM.subtitle,
       desc: this.data.MSM.goods_name,
-      path: '/pages/loading/loading?goods_id=' + this.data.goods_id + '&user_id=' + wx.getStorageSync('user_id') + '&share_userCode=' + wx.getStorageSync('userCode') + '&status=share' + '&shareAddressCode=' + wx.getStorageSync('addressCode')
+      path: "/pages/loading/loading" + str
+      // path: '/pages/loading/loading?goods_id=' + this.data.goods_id + 
+      //   '&user_id=' + wx.getStorageSync('user_id') + 
+      //   '&share_userCode=' + wx.getStorageSync('userCode') + 
+      //   '&status=share' + 
+      //   '&shareAddressCode=' + wx.getStorageSync('addressCode')
       // path: '/pages/commodityDetails/commodityDetails?goods_id=' + this.data.goods_id + '&user_id=' + wx.getStorageSync('user_id') + '&share_userCode=' + wx.getStorageSync('userCode')
     }
   },

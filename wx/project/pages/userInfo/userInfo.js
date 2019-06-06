@@ -11,6 +11,33 @@ Page({
     test: ''
   },
   onLoad: function (options) {
+    // if(wx.getStorageSync('login') == '手机号登陆') {
+    //   this.setData({
+    //     head_pic: Globalhost + wx.getStorageSync('head_pic')
+    //   })
+    // } else {
+    //   this.setData({
+    //     head_pic: wx.getStorageSync('head_pic')
+    //   })
+    // }
+    // if(wx.getStorageSync('nickname')) {
+    //   this.setData({
+    //     nickname: wx.getStorageSync('nickname')
+    //   })
+    // }
+    // if(wx.getStorageSync('sex')) {
+    //   if(wx.getStorageSync('sex') == 1) {
+    //     this.setData({
+    //       sex: '男'
+    //     })
+    //   } else if (wx.getStorageSync('sex') == 2) {
+    //     this.setData({
+    //       sex: '女'
+    //     })
+    //   }
+    // }
+  },
+  onShow: function () {
     if(wx.getStorageSync('login') == '手机号登陆') {
       this.setData({
         head_pic: Globalhost + wx.getStorageSync('head_pic')
@@ -36,8 +63,6 @@ Page({
         })
       }
     }
-  },
-  onShow: function () {
     wx.getStorageSync('nickname')
   },
   changHeaderPic: function () { // 上传头像
@@ -133,10 +158,12 @@ Page({
           that.setData({
             sex: '男'
           })
+          wx.setStorageSync('sex', '1')
         } else if (res.tapIndex == 1) {
           that.setData({
             sex: '女'
           })
+          wx.setStorageSync('sex', '2')
         }
         var sexVal = 0;
         if(that.data.sex == '男') {

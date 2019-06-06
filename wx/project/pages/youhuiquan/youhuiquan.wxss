@@ -74,3 +74,12 @@ page {
     right:-12rpx;
     top:9rpx;
 }
+
+.empty {
+    position: absolute;
+    left: 50%;
+    top: 250rpx;
+    transform: translateX(-50%);
+    color: #F72F03;
+    text-align: center;
+}

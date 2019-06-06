@@ -141,7 +141,7 @@ Page({
           that.setData({
             nickname: res.data.data.nickname,
             user_id: res.data.data.user_id,
-            'infoMsg[0].num': res.data.data.user_money
+            // 'infoMsg[0].num': res.data.data.user_money
           })
           if(wx.getStorageSync('login') == '手机号登陆') {
             if(res.data.data.head_pic) {
@@ -242,6 +242,19 @@ Page({
             'infoMsg[0].num': res.data.data.userInfo.user_money,
             'infoMsg[1].num': res.data.data.redpack_num
           })
+          
+          // wx.showToast({
+          //   title: '红包' + res.data.data.redpack_num + '用户' + wx.getStorageSync('user_id'),
+          //   icon: 'none',
+          //   duration: 50000
+          // })
+        } else {
+          console.log('ERROR***************************')
+          // wx.showToast({
+          //   title:  'Error' + res.data.data.redpack_num,
+          //   icon: 'none',
+          //   duration: 50000
+          // })
         }
       }
     })

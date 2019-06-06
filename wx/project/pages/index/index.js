@@ -65,16 +65,41 @@ Page({
   },
   onLoad: function (options) {
     let that = this;
+    console.log('*****************************加载首页********************************')
+    console.log(options)
+    console.log(wx.getStorageSync('shareMsg'))
+    let shareMsg = wx.getStorageSync('shareMsg');
+    shareMsg = JSON.parse(shareMsg);
+    console.log(shareMsg)
+    if (shareMsg.shareAddressCode != '') {
+        // 判断分享
+        if (shareMsg.share_userCode) {
+          // 外地
+          if (shareMsg.shareStatus == 'Back') {
+            console.log('*******************首页 分享 外地************************')
+            wx.navigateTo({
+              url: '/pages/commodityDetails/commodityDetails?goods_id=' + shareMsg.goods_id + '&user_id=' + shareMsg.user_id + '&share_userCode=' + shareMsg.share_userCode + '&shareStatus=Back'
+            })
+          } else {
+            // 本地
+            console.log('*******************首页 分享 本地************************')
+            wx.navigateTo({
+              url: '/pages/commodityDetails/commodityDetails?goods_id=' + shareMsg.goods_id + '&user_id=' + shareMsg.user_id + '&share_userCode=' + shareMsg.share_userCode
+            })
+          }
+        }
+      }
+    //  else {
     that.setData({
       address: wx.getStorageSync('address')
     })
-    console.log('*****************************加载首页********************************')
     // 应该是红包部分
     if (wx.getStorageSync('readBackAlertStatus') == 0) {
       that.coupList(that);
     }
     that.getNews(that); // 加载消息列表
     that.location(that); // 地址
+    // }
   },
   onShow: function () {
     let that = this;
@@ -104,11 +129,11 @@ Page({
       },
       data: {
         user_id: wx.getStorageSync('user_id'),
-        city_code: wx.getStorageSync('addressCode')// 110100
+        city_code: wx.getStorageSync('addressCode') // 110100
       },
       success: function (res) {
         let data = res.data.data
-        if(status == 'Refresh') {
+        if (status == 'Refresh') {
           that.miaosha(that, 'Refresh'); // 下拉刷新 秒杀商品
         }
         // console.log(data)
@@ -118,7 +143,7 @@ Page({
         that.setData({
           imgUrls: data.bannerList
         })
-        data.topCateGoods.forEach((item,index) => {
+        data.topCateGoods.forEach((item, index) => {
           item.goodslist.forEach((item, index) => {
             item.SHOW = false;
             item.loadImg = '/wx/img/loading.gif'
@@ -172,7 +197,7 @@ Page({
       },
       data: {
         cat_id: id, //e.currentTarget.dataset.id,
-        city_code: wx.getStorageSync('addressCode')//110100
+        city_code: wx.getStorageSync('addressCode') //110100
       },
       success: function (res) {
         if (res.data.code == 200) {
@@ -263,7 +288,7 @@ Page({
       },
       data: {
         user_id: wx.getStorageSync('user_if'),
-        city_code: wx.getStorageSync('addressCode')//110100
+        city_code: wx.getStorageSync('addressCode') //110100
       },
       success: function (res) {
         // console.log(res);
@@ -273,7 +298,7 @@ Page({
         // console.log(that.data.miaosha[0])
       },
       complete: function () {
-        if(status == 'Refresh') {
+        if (status == 'Refresh') {
           wx.stopPullDownRefresh();
         }
       }
@@ -612,10 +637,10 @@ Page({
         })
     }
   },
-  onPullDownRefresh: function(){
+  onPullDownRefresh: function () {
     let that = this;
     that.index(that, 'Refresh'); // 首页
-},
+  },
   // 购物车动画
 
   /**
@@ -680,83 +705,83 @@ Page({
 
 
 
-  
-// 数据 [code, code, code]
-chooseAddressShow: function () {
-  this.setData({
-    chooseAlerShow: true
-  })
-},
-// 选择省
-changeProvince: function (e) {
-  let that = this;
-  console.log(e)
-  that.setData({
-    'chooseIndex[0]': e.currentTarget.dataset.index,
-    'chooseIndex[1]': 0,
-    chooseAddressCode: that.data.multiArray[e.currentTarget.dataset.index].sub[0].code,
-    chooseAddressName:  that.data.multiArray[e.currentTarget.dataset.index].sub[0].name
-  })
-  console.log(that.data)
-},
-// 选择配送点
-changeCity: function (e) {
-  let that = this;
-  console.log(e)
-  that.setData({
-    'chooseIndex[1]': e.currentTarget.dataset.index,
-    chooseAddressCode: e.currentTarget.dataset.code,
-    chooseAddressName: e.currentTarget.dataset.name
-  })
-},
 
-// 确定修改
-chooseCity: function () {
-  let that = this;
-  that.setData({
-    chooseAlerShow: false,
-    address: that.data.chooseAddressName
-  })
-  wx.setStorageSync('address', that.data.chooseAddressName);
-  wx.setStorageSync('addressCode', that.data.chooseAddressCode);
-  that.index(that); // 首页
-  that.miaosha(that); // 秒杀商品
-},
-// 取消修改
-cancleCity: function () {
-  this.setData({
-    chooseAlerShow: false
-  })
-},
-getNews(that) {
-  wx.request({
-    url: Globalhost + 'Api/user/message',
-    method: 'POST',
-    header: {
-      'content-type': 'application/x-www-form-urlencoded'
-    },
-    data: {
-      user_id: wx.getStorageSync('user_id'),
-      page: 1
-    },
-    success: function(res) {
-      // console.log(res)
-      let data = res.data.data;
-      let count = 0;
-      data.forEach( (item) => {
-        // console.log(item)
-        if(item.status != 1) {
-          count++;
-        }
-      })
-      if(count > 0) {
-        that.setData({
-          newShow: true
+  // 数据 [code, code, code]
+  chooseAddressShow: function () {
+    this.setData({
+      chooseAlerShow: true
+    })
+  },
+  // 选择省
+  changeProvince: function (e) {
+    let that = this;
+    console.log(e)
+    that.setData({
+      'chooseIndex[0]': e.currentTarget.dataset.index,
+      'chooseIndex[1]': 0,
+      chooseAddressCode: that.data.multiArray[e.currentTarget.dataset.index].sub[0].code,
+      chooseAddressName: that.data.multiArray[e.currentTarget.dataset.index].sub[0].name
+    })
+    console.log(that.data)
+  },
+  // 选择配送点
+  changeCity: function (e) {
+    let that = this;
+    console.log(e)
+    that.setData({
+      'chooseIndex[1]': e.currentTarget.dataset.index,
+      chooseAddressCode: e.currentTarget.dataset.code,
+      chooseAddressName: e.currentTarget.dataset.name
+    })
+  },
+
+  // 确定修改
+  chooseCity: function () {
+    let that = this;
+    that.setData({
+      chooseAlerShow: false,
+      address: that.data.chooseAddressName
+    })
+    wx.setStorageSync('address', that.data.chooseAddressName);
+    wx.setStorageSync('addressCode', that.data.chooseAddressCode);
+    that.index(that); // 首页
+    that.miaosha(that); // 秒杀商品
+  },
+  // 取消修改
+  cancleCity: function () {
+    this.setData({
+      chooseAlerShow: false
+    })
+  },
+  getNews(that) {
+    wx.request({
+      url: Globalhost + 'Api/user/message',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        user_id: wx.getStorageSync('user_id'),
+        page: 1
+      },
+      success: function (res) {
+        // console.log(res)
+        let data = res.data.data;
+        let count = 0;
+        data.forEach((item) => {
+          // console.log(item)
+          if (item.status != 1) {
+            count++;
+          }
         })
+        if (count > 0) {
+          that.setData({
+            newShow: true
+          })
+        }
       }
-    }
-  })
-},
+    })
+  },
 
 
 
