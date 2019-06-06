@@ -221,7 +221,6 @@ class PlaceOrder
             'integral_money'   =>$this->pay->getIntegralMoney(),//'使用积分抵多少钱',
             'total_amount'     =>$this->pay->getTotalAmount(),// 订单总额
             'order_amount'     =>$this->pay->getOrderAmount(),//'应付款金额',
-            'real_amount'     =>$this->pay->getOrderAmount(),//'应付款金额',
             'add_time'         =>time(), // 下单时间
         ];
         if(!empty($this->userAddress)){

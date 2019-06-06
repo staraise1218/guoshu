@@ -333,8 +333,8 @@ class Order extends Base {
 
         // 获取实收金额 = 订单应收金额 - 分享出去的钱
         // $amount_received
-        $share_money = Db::name('goods_share')->where('order_id', $order_id)->sum('money');
-        $order['amount_received'] = number_format($order['order_amount'] - $share_money, 2);
+        /*$share_money = Db::name('goods_share')->where('order_id', $order_id)->sum('money');
+        $order['amount_received'] = number_format($order['order_amount'] - $share_money, 2);*/
 
 
         $this->assign('order',$order);

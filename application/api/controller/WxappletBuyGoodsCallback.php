@@ -106,7 +106,7 @@ file_put_contents('runtime/log/request.log', '2---'.$order_sn, FILE_APPEND);
 		if(empty($order) || $order['pay_status'] == 1) return true;
 		
 		// 回调后的业务流程
-		$this->operation($order_sn);
+		$this->operation($order);
 		return true;
 		
 		
@@ -125,7 +125,8 @@ file_put_contents('runtime/log/request.log', '2---'.$order_sn, FILE_APPEND);
 		response_success('', '支付成功');
 	}
 
-	public function operation($order_sn){
+	public function operation($order){
+		$order_sn = $order['order_sn'];
 		// 启动事务
 		Db::startTrans();
 		try{
@@ -134,7 +135,8 @@ file_put_contents('runtime/log/request.log', '2---'.$order_sn, FILE_APPEND);
 				'pay_code' => 'weixin',
 				'pay_name' => '微信支付',
 				'pay_status'=>1 ,
-				'pay_time'=>time()
+				'pay_time'=>time(),
+				'real_amount' => $order['order_amount'],
 			);
 			$resut = Db::name('order')->where('order_sn', $order_sn)->update($updatedata);
 // file_put_contents('runtime/log/request.log', '23----'.var_export($resut, true), FILE_APPEND);
