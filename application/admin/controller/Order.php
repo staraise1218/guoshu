@@ -65,15 +65,22 @@ class Order extends Base {
         $keyType = I("keytype");
         $keywords = I('keywords','','trim');
         
-        $consignee =  ($keyType && $keyType == 'consignee') ? $keywords : I('consignee','','trim');
+        /*$consignee =  ($keyType && $keyType == 'consignee') ? $keywords : I('consignee','','trim');
         $consignee ? $condition['consignee'] = trim($consignee) : false;
+
+        $order_sn = ($keyType && $keyType == 'order_sn') ? $keywords : I('order_sn') ;
+        $order_sn ? $condition['order_sn'] = trim($order_sn) : false;*/
+
+        if($keywords) {
+            if($keyType == 'consignee') $condition['consignee'] = $keywords;
+            if($keyType == 'order_sn') $condition['order_sn'] = $keywords;
+            if($keyType == 'mobile') $condition['mobile'] = $keywords;
+        }
 
         if($begin && $end){
         	$condition['add_time'] = array('between',"$begin,$end");
         }
         $condition['prom_type'] = array('lt',5);
-        $order_sn = ($keyType && $keyType == 'order_sn') ? $keywords : I('order_sn') ;
-        $order_sn ? $condition['order_sn'] = trim($order_sn) : false;
         // 配送点管理员看到自己配送点的商品
         if($this->role_id == 2){
             $city_code = $this->adminInfo['city_code'];
@@ -87,7 +94,7 @@ class Order extends Base {
         I('user_id') ? $condition['user_id'] = trim(I('user_id')) : false;
         I('express_user_id') ? $condition['express_user_id'] = trim(I('express_user_id')) : false;
 
-        $sort_order = I('order_by','DESC').' '.I('sort');
+        $sort_order = 'pay_status desc, shipping_status asc, order_id desc';
         $count = M('order')->where($condition)->count();
         $Page  = new AjaxPage($count,20);
         $show = $Page->show();

@@ -835,7 +835,7 @@ i.fa-external-link { color: #999 !important; font-size: 9px !important; margin-l
 .flexigrid .hDiv .sign div,
 .flexigrid .bDiv .sign div { min-width: 24px !important; max-width: 24px !important; }
 .flexigrid .hDiv .handle div,
-.flexigrid .bDiv .handle div { overflow: visible; min-width: 150px !important; max-width: 174px !important; }
+.flexigrid .bDiv .handle div { overflow: visible; }
 .flexigrid .hDiv .handle-s div,
 .flexigrid .bDiv .handle-s div { overflow: visible; min-width: 60px !important; max-width: 60px !important; }
 .flexigrid.hideBody { height: 26px !important; border-bottom: 1px solid #ccc; }

@@ -12,6 +12,17 @@
         <td class="sign" axis="col0">
           <div style="width: 24px;"><i class="ico-check"></i></div>
         </td>
+        <td align="left" class="handle" align="center">
+            <div style="text-align: left; width: 80px;">
+              <a class="btn green" href="{:U('Admin/order/detail',array('order_id'=>$list['order_id']))}"><i class="fa fa-list-alt"></i>查看</a>
+              <if condition="($list['order_status'] eq 3  and $list['pay_status'] eq 0) or ($list['order_status'] eq 5)">
+                <!-- <a class="btn red" href="javascript:void(0);" data-order-id="{$list['order_id']}" onclick="del(this)"><i class="fa fa-trash-o"></i>删除</a> -->
+              </if>
+              <!--<if condition="($list['order_status'] eq 3  and $list['pay_status'] eq 1)">
+                <a class="btn green" href="{:U('Admin/order/detail',array('order_id'=>$list['order_id']))}"><i class="fa fa-list-alt"></i>查看</a>
+              </if>-->
+            </div>
+        </td>
         <td align="left" abbr="order_sn" axis="col3" class="">
           <div style="text-align: left; width: 140px;" class="">{$list.order_sn}</div>
         </td>
@@ -47,17 +58,6 @@
         </td> -->
         <td align="center" abbr="article_time" axis="col6" class="">
           <div style="text-align: center; width: 120px;" class="">{$list.add_time|date='Y-m-d H:i',###}</div>
-        </td>
-        <td align="left" axis="col1" class="handle" align="center">
-        		<div style="text-align: left; ">
-        			<a class="btn green" href="{:U('Admin/order/detail',array('order_id'=>$list['order_id']))}"><i class="fa fa-list-alt"></i>查看</a>
-        			<if condition="($list['order_status'] eq 3  and $list['pay_status'] eq 0) or ($list['order_status'] eq 5)">
-        				<a class="btn red" href="javascript:void(0);" data-order-id="{$list['order_id']}" onclick="del(this)"><i class="fa fa-trash-o"></i>删除</a>
-        			</if>
-        			<!--<if condition="($list['order_status'] eq 3  and $list['pay_status'] eq 1)">
-        				<a class="btn green" href="{:U('Admin/order/detail',array('order_id'=>$list['order_id']))}"><i class="fa fa-list-alt"></i>查看</a>
-        			</if>-->
-        		</div>
         </td>
 		<td style="width: 100%;">
           <div></div>
