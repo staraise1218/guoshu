@@ -41,7 +41,7 @@ class ShareGoodsLogic
 			->where('gs.user_id', $order['user_id'])
 			->where('gs.goods_id', array('IN', $goodsIds))
 			->where('gs.is_used', 0)
-			->field('gs.id, gs.share_user_id, g.goods_id, g.goods_name, g.shop_price, g.share_ratio')
+			->field('gs.id, gs.user_id, gs.share_user_id, g.goods_id, g.goods_name, g.shop_price, g.share_ratio')
 			->select();
 
 		if(empty($goodsShareList)) return false;
@@ -56,8 +56,14 @@ class ShareGoodsLogic
 				'money' => $money,
 			);
 			DB::name('goods_share')->where('id', $item['id'])->update($updatedata);
+
+			// 减去订单实收金额
+			Db::name('order')->where('order_sn', $order_sn)->setDec('real_amount', $money);
+
+			// 获取用户信息
+			$user = Db::name('users')->where('user_id', $item['user_id'])->field('nickname')->find();
 			// 给分享者发放佣金
-			$desc = '分享商品得佣金';
+			$desc = '分享给'.$user['nickname'].'赚现金';
 			accountLog($item['share_user_id'], $money, 0, $desc, 0, $order['order_id'], $order['order_sn'], 4);
 
 			// 发送站内信
