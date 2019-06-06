@@ -375,14 +375,11 @@ class Cart extends Base {
                 if(time() > strtotime(date('Y-m-d').' 23:30:00')) response_error('', '请在每日23:30点之前下单'); 
                 // 检测是否在配送范围
                 if($send_method == 1){
-                    // 获取配送范围
-                    $basicinfo = tpCache('basic');
-                    $delivery_range = $basicinfo['delivery_range'];
                     // 获取用户地址经纬度
                     $user_longitude = $address['longitude'];
                     $user_latitude = $address['latitude'];
                     if(empty($user_longitude) || empty($user_latitude)) response_error('', '该地址缺少经纬度坐标'.$user_longitude.'---'.$user_latitude);
-                    // 配送站点经纬度
+                    // 配送站点经纬度、配送范围
                     $region = Db::name('region')->where('code', $delivery_code)->find();
                     if(empty($region)) response_error('', '该城市不支持配送');
                     $delivery_longitude = $region['longitude'];
@@ -390,7 +387,7 @@ class Cart extends Base {
                     if($delivery_longitude == '' || $delivery_latitude == '') response_error('', '未设置配送点坐标');
                     $GeographyLogic = new GeographyLogic();
                     $distance = $GeographyLogic->getDistance($user_longitude, $user_latitude, $delivery_longitude, $delivery_latitude);
-                    if($distance > $delivery_range) response_error('', '请回首页选择合适的配送中心或调整收货地址、或放弃本次购买');
+                    if($distance > $region['delivery_range']) response_error('', '请回首页选择合适的配送中心或调整收货地址、或放弃本次购买');
                 }
                 $placeOrder = new PlaceOrder($pay);
                 $placeOrder->setUserAddress($address);

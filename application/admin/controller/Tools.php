@@ -356,6 +356,7 @@ class Tools extends Base {
 			$updatedata = array(
 				'name' => $data['name'],
 				'code' => $data['code'],
+				'delivery_range' => $data['delivery_range'],
 			);
 			if(isset($data['address'])) $updatedata['address'] = $data['address'];
 			if(isset($data['longitude'])) $updatedata['longitude'] = $data['longitude'];
