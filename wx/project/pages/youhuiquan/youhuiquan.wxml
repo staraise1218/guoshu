@@ -24,6 +24,9 @@
     </view>
     <view class="title-2_f margin-top-20">有效期:2019-20-16值2019-03-16</view>
 </view> -->
+<view class="empty" wx:if="{{card.length == 0}}" >
+    <view class="">暂无红包</view>
+</view>
 
 <block wx:if="{{card.length > 0}}" wx:for="{{card}}" wx:key>
     <view class="quan-item  {{item.status == 1 ? 'over' : 'active'}} radius-30" 

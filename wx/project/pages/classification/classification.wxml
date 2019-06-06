@@ -23,7 +23,7 @@
     </block>
   </scroll-view>
   <!-- 右侧内容区 -->
-  <scroll-view scroll-y class="con">
+  <view  class="con">
     <!-- 热卖 -->
     <view class="box-1">
       <scroll-view class="scro-wrap" scroll-x>
@@ -93,64 +93,12 @@
       </scroll-view>
     </view>
     <!-- 热卖 END -->
-  </scroll-view>
+  </view>
 </view>
+
+
+
 <!-- 城市弹窗 -->
-<!-- <view class="alert-box" wx:if="{{cityShow}}"></view>
-<view class="box" wx:if="{{cityShow}}">
-  <view class="city-box">
-    <view class="city-btn">
-      <view class="cancel-btn" bindtap="cityCancel">取消</view>
-      <view class="ok-btn" bindtap="cityOk">确定</view>
-    </view>
-    <picker-view indicator-style="height: 50px;" style="width: 100%; height: 300px;" value="{{value}}" bindchange="changeCity">
-      <picker-view-column>
-        <view wx:for="{{multiArray}}" style="line-height: 50px" wx:key>{{item.name}}</view>
-      </picker-view-column>
-      <picker-view-column>
-        <view wx:for="{{multiArray[index0].sub}}" style="line-height: 50px" wx:key>
-          {{item.name}}
-        </view>
-      </picker-view-column>
-    </picker-view>
-  </view>
-</view> -->
-<!-- 城市弹窗 END -->
-<!-- footer -->
-<view class="footer" wx:if="{{false}}">
-  <view class="item-bar" data-link='index' bindtap="LINK">
-    <image class="bar-icon" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/shouye-pre.png" />
-    <!-- <image class="bar-icon" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/shouye.png" /> -->
-    <view class="title-bar ">首页</view>
-  </view>
-  <view class="item-bar" data-link='classification' bindtap="LINK">
-    <!-- <image class="bar-icon" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/fenlei-pre.png" /> -->
-    <image class="bar-icon" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/fenlei.png" />
-    <view class="title-bar active">分类</view>
-  </view>
-  <view class="item-bar" data-link='group' bindtap="LINK">
-    <!-- <image class="bar-icon" class="group-icon" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/tuangou.png" /> -->
-    <image class="group-icon" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/tuangou.png" />
-    <view class="title-bar shopcart-title">团购</view>
-  </view>
-  <view class="item-bar shopcart-icon" data-link='shoppingCart' bindtap="LINK">
-    <image class="bar-icon" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/gouwuche拷贝3@2x.png" />
-    <!-- <image class="bar-icon" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/gouwuche拷贝3-1@2x.png" /> -->
-    <view class="title-bar ">购物车</view>
-    <i wx:if="{{cart_num > 0}}" class="shopcart-num">{{cart_num}}</i>
-  </view>
-  <view class="item-bar" data-link='mine' bindtap="LINK">
-    <image class="bar-icon" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/wode@2x.png" />
-    <!-- <image class="bar-icon" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/wode.png" /> -->
-    <view class="title-bar">我的</view>
-  </view>
-</view>
-<!-- footer END -->
-
-
-
-
-
 <view class="alert-box_"  wx:if="{{chooseAlerShow}}"></view>
 <view class="cityshow-alert" wx:if="{{chooseAlerShow}}">
   <scroll-view scroll-y class="left">
@@ -162,11 +110,9 @@
   </scroll-view>
   <scroll-view scroll-y class="center">
     <block wx:for="{{multiArray[chooseIndex[0]].sub}}" wx:key>
-      <!-- <block wx:for="{{item.}}" wx:key> -->
         <view  data-name="{{item.name}}" data-index="{{index}}" bindtap="changeCity" data-code="{{item.code}}" data-parentCode="{{item.parentCode}}" class="{{index == chooseIndex[1] ? 'active' : ''}} content">
           {{item.name}}
         </view>
-      <!-- </block> -->
     </block>
   </scroll-view>
   <view class="btn-wrapper">
@@ -174,3 +120,16 @@
     <view class="ok" bindtap="chooseCity">确定</view>
   </view>
 </view>
+
+
+
+<!-- 
+
+<view class="bottom-content">
+  <view class="left-content-nav">
+
+  </view>
+  <view class="right-content">
+    <
+  </view>
+</view> -->
