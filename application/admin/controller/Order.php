@@ -1349,6 +1349,7 @@ class Order extends Base {
         $updatedata = array(
             'express_user_id' => $express_user_id,
             'shipping_status' => 1,
+            'shipping_time' => time(),
         );
         $result = Db::name('order')->where('order_id', $order_id)
             ->update($updatedata);
