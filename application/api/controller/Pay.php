@@ -4,6 +4,7 @@ namespace app\api\controller;
 use think\Db;
 use app\api\logic\AlipayLogic;
 use app\api\logic\WxpayLogic;
+use app\common\logic\ShareGoodsLogic;
 
 class Pay extends Base {
 
@@ -50,9 +51,21 @@ class Pay extends Base {
 			try{
 				
 				// 更改订单状态
-				M('order')->where('order_sn', $order_sn)->update(array('pay_status'=>1, 'pay_time'=>time()));
-			   // 扣除余额，并记录日志
-				accountLog($order['user_id'], -$order['order_amount'], 0, '下单消费', 0, $order['order_id'], $order['order_sn'], 3);
+				$updatedata = array(
+					'pay_code' => 'money',
+					'pay_name' => '零钱支付',
+					'pay_status'=>1 ,
+					'pay_time'=>time(),
+					'real_amount' => $order_amount,
+				);
+				$resut = Db::name('order')->where('order_sn', $order_sn)->update($updatedata);
+// file_put_contents('runtime/log/request.log', '23----'.var_export($resut, true), FILE_APPEND);
+				// 支付成功减库存
+				$order = Db::name('order')->where('order_sn', $order_sn)->find();
+				minus_stock($order);//下单减库存
+				// 分享商品得佣金
+				$ShareGoodsLogic = new ShareGoodsLogic();
+				$ShareGoodsLogic->shareMoney($order_sn);
 
 			    // 提交事务
 			    Db::commit();
