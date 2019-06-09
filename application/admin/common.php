@@ -109,7 +109,7 @@ function format_bytes($size, $delimiter = '') {
  * @param $regionId id
  */
 function getRegionName($regionId){
-    $data = M('region')->where(array('id'=>$regionId))->field('name')->find();
+    $data = M('region2')->where(array('code'=>$regionId))->field('name')->find();
     return $data['name'];
 }
 

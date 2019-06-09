@@ -570,6 +570,14 @@ class Order extends Base {
         $order['city'] = getRegionName($order['city']);
         $order['district'] = getRegionName($order['district']);
         $order['full_address'] = $order['province'].' '.$order['city'].' '.$order['district'].' '. $order['address'];
+        // 商品总数量
+        $order['total_num'] = Db::name('orderGoods')->where('order_id', $order_id)->sum('goods_num');
+        // 配送点信息
+        $order['deliveryInfo'] = Db::name('region')->where('code', $order['delivery_code'])->find();
+        // 配送员信息
+        $order['expressInfo'] = Db::name('users')->where('user_id', $order['express_user_id'])->field('nickname, fullname, mobile')->find();
+        // p($order);
+
         if($id){
             return $order;
         }else{
