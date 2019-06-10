@@ -94,7 +94,7 @@ class Order extends Base {
         I('user_id') ? $condition['user_id'] = trim(I('user_id')) : false;
         I('express_user_id') ? $condition['express_user_id'] = trim(I('express_user_id')) : false;
 
-        $sort_order = 'pay_status desc, shipping_status asc, order_id desc';
+        $sort_order = 'order_id desc';
         $count = M('order')->where($condition)->count();
         $Page  = new AjaxPage($count,20);
         $show = $Page->show();

@@ -62,7 +62,6 @@ class Pay extends Base {
 			// 启动事务
 			Db::startTrans();
 			try{
-				
 				// 更改订单状态
 				$updatedata = array(
 					'pay_code' => 'money',
