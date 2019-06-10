@@ -47,7 +47,7 @@ class Pay extends Base {
 		if($paymentMethod == 'money'){
 			$user = Db::name('users')->where('user_id', $order['user_id'])->find();
 			// 判断支付密码是否正确
-			if (encrypt($payPwd) !== $user['paypwd']) response_error('', '支付密码错误');
+			// if (encrypt($payPwd) !== $user['paypwd']) response_error('', '支付密码错误');
 			if(empty($user) || $user['user_money'] < $order['order_amount']) response_error('', '余额不足');
 			// 判断余额日志和表中记录金额是否对应
 			$sum_money = Db::name('account_log')

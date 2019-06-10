@@ -156,7 +156,7 @@ class PlaceOrder
         $user_money = $this->pay->getUserMoney();
         $payMethod = $this->payMethod;
 
-        if ($pay_points || $user_money || $payMethod == 'money') {
+        /*if ($pay_points || $user_money || $payMethod == 'money') {
             $user = $this->pay->getUser();
             if ($user['is_lock'] == 1) {
                 throw new TpshopException('提交订单', 0, ['status'=>-5,'msg'=>"账号异常已被锁定，不能使用余额支付！",'result'=>'']);
@@ -170,7 +170,7 @@ class PlaceOrder
              if ($this->payPwd !== $user['paypwd'] && encrypt($this->payPwd) !== $user['paypwd']) {
                 throw new TpshopException('提交订单', 0, ['status'=>-8,'msg'=>'支付密码错误','result'=>'']);
             }
-        }
+        }*/
 
         // 当支付方式为余额支付时，检测用户余额是否充足
         if($payMethod == 'money'){
