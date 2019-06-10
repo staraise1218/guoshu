@@ -46,6 +46,13 @@ class Pay extends Base {
 		if($paymentMethod == 'money'){
 			$user = Db::name('users')->where('user_id', $order['user_id'])->find();
 			if(empty($user) || $user['user_money'] < $order['order_amount']) response_error('', '余额不足');
+			// 判断余额日志和表中记录金额是否对应
+			$sum_money = Db::name('account_log')
+				->where('user_id', $order['user_id'])
+				->where('user_money', '<>', 0)
+				->sum('user_money');
+			if($sum_money != $user['user_money']) response_error('', '余额异常');
+
 			// 启动事务
 			Db::startTrans();
 			try{
@@ -59,7 +66,7 @@ class Pay extends Base {
 					'real_amount' => $order_amount,
 				);
 				$resut = Db::name('order')->where('order_sn', $order_sn)->update($updatedata);
-// file_put_contents('runtime/log/request.log', '23----'.var_export($resut, true), FILE_APPEND);
+				// file_put_contents('runtime/log/request.log', '23----'.var_export($resut, true), FILE_APPEND);
 				// 支付成功减库存
 				$order = Db::name('order')->where('order_sn', $order_sn)->find();
 				minus_stock($order);//下单减库存
