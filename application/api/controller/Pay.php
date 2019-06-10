@@ -20,6 +20,7 @@ class Pay extends Base {
 	public function topay(){
 		$order_sn = I('order_sn');
 		$paymentMethod = I('paymentMethod');
+		$payPwd = I('payPwd');
 
 		/********* 判断订单信息 **************/
 		$order = Db::name('order')->where('order_sn', $order_sn)->find();
@@ -45,6 +46,8 @@ class Pay extends Base {
 		// 余额支付
 		if($paymentMethod == 'money'){
 			$user = Db::name('users')->where('user_id', $order['user_id'])->find();
+			// 判断支付密码是否正确
+			if (encrypt($payPwd) !== $user['paypwd']) response_error('', '支付密码错误');
 			if(empty($user) || $user['user_money'] < $order['order_amount']) response_error('', '余额不足');
 			// 判断余额日志和表中记录金额是否对应
 			$sum_money = Db::name('account_log')
