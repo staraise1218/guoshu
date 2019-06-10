@@ -8,7 +8,7 @@
 	     </tr>
 	<else/>
  	<volist name="orderList" id="list">
-  	<tr <if condition="$list.pay_status eq 1 && shipping_status eq 0 && $list.order_status neq 3">
+  	<tr <if condition="$list.pay_status eq 1 && shipping_status eq 0 && !in_array($list.order_status, array(3,6))">
       bgcolor="#ff69b4"
       <elseif condition="$list.order_status eq 3"/>bgcolor="#9acd32"</if>
   data-order-id="{$list.order_id}" id="{$list.order_id}" data_order_status="{$list.order_status}" data_express_user_id="{$list.express_user_id}" data_pay_status="{$list.pay_status}">
