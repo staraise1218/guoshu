@@ -7,7 +7,7 @@
 		<div class="fixed-bar">
 			<div class="item-title">
 				<div class="subject">
-					<h3>考试地点管理</h3>
+					<h3>配送城市管理</h3>
 				</div>
 			</div>
 		</div>
@@ -62,6 +62,17 @@
 						</dd>
 					</dl>
 					<if condition="$info.level eq 2">
+					
+					<dl class="row">
+						<dt class="tit">
+							<label for="limit_money"><em>*</em>最低购买限额</label>
+						</dt>
+						<dd class="opt">
+							<input id="limit_money" name="limit_money" value="{$info.limit_money}" maxlength="6" class="input-txt" type="text">
+							<span class="err"></span>
+							<p class="notic">单位：km</p>
+						</dd>
+					</dl>
 					
 					<dl class="row">
 						<dt class="tit">
