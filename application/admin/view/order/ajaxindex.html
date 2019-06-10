@@ -8,9 +8,9 @@
 	     </tr>
 	<else/>
  	<volist name="orderList" id="list"> 
-  	<tr <if condition="$list.pay_status eq 1 && shipping_status eq 0 && $list.order_status eq 0">
+  	<tr <if condition="$list.pay_status eq 1 && $list.shipping_status eq 0 && $list.order_status eq 0">
       bgcolor="#ffd700"
-      <elseif condition="$list.pay_status eq 1 && shipping_status eq 0 && $list.order_status eq 1"/>
+      <elseif condition="$list.pay_status eq 1 && $list.shipping_status eq 0 && $list.order_status eq 1"/>
        bgcolor="ff69b4"
       <elseif condition="$list.order_status eq 3"/>
       bgcolor="#9acd32"
