@@ -55,6 +55,9 @@ class Pay extends Base {
 				->where('user_money', '<>', 0)
 				->sum('user_money');
 			if($sum_money != $user['user_money']) response_error('', '余额异常');
+			// 判断余额日志是否异常 单笔 不能大于5元
+			$count = Db::name('account_log')->where('user_money', 'gt', 5)->count();
+			if($count) response_error('', '余额异常');
 
 			// 启动事务
 			Db::startTrans();
