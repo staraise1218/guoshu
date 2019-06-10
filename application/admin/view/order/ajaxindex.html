@@ -20,7 +20,7 @@
           <div style="width: 24px;"><i class="ico-check"></i></div>
         </td>
         <td align="left" class="handle" align="center">
-            <div style="text-align: left; width: 80px;">
+            <div style="text-align: left; width: 115px;">
               <a class="btn green" href="{:U('Admin/order/detail',array('order_id'=>$list['order_id']))}"><i class="fa fa-list-alt"></i>查看</a>
               <if condition="($list['order_status'] eq 3  and $list['pay_status'] eq 0) or ($list['order_status'] eq 5)">
                 <a class="btn red" href="javascript:void(0);" data-order-id="{$list['order_id']}" onclick="del(this)"><i class="fa fa-trash-o"></i>删除</a>
