@@ -2,12 +2,14 @@ Page({
   data: {
     orderid: '',
     order_amount: '',
+    msg: '支付失败'
   },
   onLoad: function (options) {
     console.log(options)
     if(options.order_id) {
       this.setData({
-        orderid: options.order_id
+        orderid: options.order_id,
+        msg: options.msg == '' ? '支付失败': options.msg
       })
     }
     this.setData({

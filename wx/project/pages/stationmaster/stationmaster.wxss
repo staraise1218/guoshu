@@ -2,7 +2,7 @@
     width: 100%;
     background-image: url('https://hbimg.huabanimg.com/2c393cc5e7aa9bd3a2d56f0b9d5a510d4d8dee5d43fe-E1bCjo_fw658');
     background-size: contain;
-    height: 100vh;
+    /* height: 100vh; */
     background-repeat: no-repeat;
 }
 
@@ -11,6 +11,7 @@
     margin: 0 auto;
     background: #fff;
     padding: 60rpx;
+    margin-bottom: 40rpx;
 }
 .box-con input {
     font-size: 20rpx
@@ -30,6 +31,12 @@
 .inp-item {
     margin: 20rpx 0;
     position: relative;
+}
+.shuru-con {
+  border: 1rpx solid rgba(0,0,0,.08);
+  border-radius: 15rpx;
+  padding: 20rpx;
+  box-sizing: border-box;
 }
 
 .left-box {

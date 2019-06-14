@@ -1,7 +1,10 @@
 {
   "pages": [
     "pages/loading/loading",
+    "pages/searMsg/searMsg",
+    "pages/passwordSeeting/passwordSeeting",
     "components/alert/alert",
+    "pages/password/password",
     "pages/commodityDetails/commodityDetails",
     "pages/orderSuccess/orderSuccess",
     "pages/myOrderB/myOrderB",
@@ -14,12 +17,10 @@
     "pages/index/index",
     "pages/test/test",
     "pages/siteMsg/siteMsg",
-    "pages/searMsg/searMsg",
     "pages/index2/index2",
     "pages/myOrder/myOrder",
     "pages/demo/demo",
     "pages/addAddress/addAddress",
-    "pages/passwordSeeting/passwordSeeting",
     "pages/errorPay/errorPay",
     "pages/classification/classification",
     "pages/fenleiList/fenleiList",
@@ -41,7 +42,6 @@
     "components/recommend/rec",
     "pages/addressEdit/addressEdit",
     "pages/youhuiquan/youhuiquan",
-    "pages/password/password",
     "pages/mingxi/mingxi",
     "pages/userInfo/userInfo",
     "pages/singup/singup",
@@ -68,37 +68,37 @@
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
-    "color": "#a9b7b7",
+    "color": "#999",
     "selectedColor": "#F75433",
     "borderStyle": "black",
     "list": [
       {
-        "selectedIconPath": "src/img/icon/shouye.png",
-        "iconPath": "src/img/icon/shouye-pre.png",
+        "selectedIconPath": "src/img/nav/2.png",
+        "iconPath": "src/img/nav/2.0.png",
         "pagePath": "pages/index/index",
         "text": "首页"
       },
       {
-        "selectedIconPath": "src/img/icon/fenlei.png",
-        "iconPath": "src/img/icon/fenlei-pre.png",
+        "selectedIconPath": "src/img/nav/3.png",
+        "iconPath": "src/img/nav/3.0.png",
         "pagePath": "pages/classification/classification",
         "text": "分类"
       },
       {
-        "selectedIconPath": "src/img/icon/tuan.png",
-        "iconPath": "src/img/icon/tuan-pre.png",
+        "selectedIconPath": "src/img/nav/1.png",
+        "iconPath": "src/img/nav/1.0.png",
         "pagePath": "pages/group/group",
         "text": "团购"
       },
       {
-        "selectedIconPath": "src/img/icon/gouwuche.png",
-        "iconPath": "src/img/icon/gouwuche-pre.png",
+        "selectedIconPath": "src/img/nav/4.png",
+        "iconPath": "src/img/nav/4.0.png",
         "pagePath": "pages/shoppingCart/shoppingCart",
         "text": "购物车"
       },
       {
-        "selectedIconPath": "src/img/icon/wode.png",
-        "iconPath": "src/img/icon/wode-pre.png",
+        "selectedIconPath": "src/img/nav/5.png",
+        "iconPath": "src/img/nav/5.0.png",
         "pagePath": "pages/mine/mine",
         "text": "我的"
       }

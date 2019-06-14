@@ -108,7 +108,9 @@
 
 
 
-
+    <view class="box-con title-2 shadow1">
+      <textarea class="shuru-con" placeholder="请输入~"></textarea>
+    </view>
 
 
 

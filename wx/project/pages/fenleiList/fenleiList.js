@@ -4,7 +4,9 @@ const loadingfunc = getApp().globalData.loadingfunc;
 Page({
   data: {
     cat_id: '',   // 分类id
-
+    page: 1,
+    GOODLIST: [],
+    getMore: true
   },
   onLoad: function (options) {
     const that = this;
@@ -15,9 +17,10 @@ Page({
   },
   onShow: function () {
     let that = this;
-    that.getList(that, that.data.cat_id);
+    that.getList(that, that.data.cat_id, that.data.page);
   },
-  getList (that, id) {
+  // 获取商品列表
+  getList (that, id, page) {
     wx.request({
       url: Globalhost + 'Api/index/getGoodsByCat',
       method: 'POST',
@@ -27,12 +30,27 @@ Page({
       data: {
         cat_id: id,
         city_code: wx.getStorageSync('addressCode'),//110100
+        page: page
       },
       success: function(res) {
         console.log(res)
+        var arr = that.data.GOODLIST;
+        if(res.data.data.goodslist.length == 0) {
+          that.setData({
+            getMore: false
+          })
+          wx.showToast({
+            title: '没有更多了',
+            icon: 'none'
+          })
+        }
+        res.data.data.goodslist.forEach(item => {
+          arr.push(item)
+        });
+        console.log(arr)
         that.setData({
           msg: res.data.data.category[0],
-          GOODLIST: res.data.data.goodslist
+          GOODLIST: arr
         })
       }
     })
@@ -86,6 +104,24 @@ Page({
   // 加载更多
   getMore: function (e) {
     console.log(e)
+    let that = this;
+    if(that.data.getMore) {
+      wx.showToast({
+        title: '加载更多',
+        icon: 'loading'
+      })
+      that.setData({
+        page: ++that.data.page
+      })
+      setTimeout(() => {
+        that.getList(that, that.data.cat_id, that.data.page)
+      }, 200)
+    } else {
+      wx.showToast({
+        title: '没有更多了',
+        icon: 'none'
+      })
+    }
   },
   onShareAppMessage: function () {
 
