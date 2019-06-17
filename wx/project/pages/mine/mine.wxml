@@ -6,7 +6,7 @@
         <view class="icon-header">
             <image class="user-img" style="width: 100%"  src="{{head_pic}}"  bindtap="toUserinfo"/>
         </view>
-        <view class="user-name"  bindtap="toUserinfo">{{nickname}} (修改)</view>
+        <view class="user-name" style="display: flex"  bindtap="toUserinfo">{{nickname}} <image style="width: 45rpx" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/xiezi@2x.png" /></view>
     </view>
     <view class="header-info"  >
         <block wx:for="{{infoMsg}}" wx:key="item">
@@ -50,7 +50,6 @@
 <!-- 自提点 END -->
 
 <!-- 配送员 -->
-<!-- <view wx:if="{{role == 2}}" class="order radius-30 margin-30"> -->
 <view wx:if="{{true}}" class=" order radius-30 margin-30">
     <view class="pzisong order-title  add_ title-3 font-weight-6 margin-30 padding-tb-20"><view>配送订单</view>  <view class="ml-100">{{nickname}}</view> </view>
     <view class="order-list">

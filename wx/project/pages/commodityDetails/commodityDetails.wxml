@@ -1,25 +1,40 @@
 <view class="swiper-box">
-    <view class="video-wrap" wx:if="{{videoShow && MP4}}">
+    <!-- <view class="video-wrap" wx:if="{{videoShow && MP4}}">
         <video src="https://app.zhuoyumall.com:444{{MP4}}" muted="true" 
             show-mute-btn="true" 
             enable-play-gesture="true" 
             vslide-gesture="true" 
             object-fit="fill" 
             class="mp4"></video>
-    </view>
-    <swiper style='height:750rpx' wx:if="{{!videoShow}}"
+    </view> -->
+    
+    <swiper style='height:750rpx'
         bindchange="change"
         class="slider-box"
         indicator-dots="{{dots}}"
+        controls="true"
         circular="true">
+        <swiper-item wx:if="{{MP4}}" wx:key>
+            <view class="video-wrap" bindtap="videoLoading">
+                <!-- <image class="video-poster" src="https://app.zhuoyumall.com:444{{item.image_url[0]}}" /> -->
+                <video src="https://app.zhuoyumall.com:444{{MP4}}" muted="true" 
+                    show-mute-btn="true" 
+                    vslide-gesture="true" 
+                    object-fit="contain"
+                    bindplay="videoplay"
+                    bindtimeupdate="videoIsPlay"
+                    poster="https://app.zhuoyumall.com:444{{goodLists.goods_images_list[0].image_url}}"
+                    class="mp4"></video>
+            </view>
+        </swiper-item>
         <swiper-item wx:for="{{goodLists.goods_images_list}}" wx:if="{{goodLists.goods_images_list}}" wx:key>
         <image src="https://app.zhuoyumall.com:444{{item.image_url}}" class="slide-image" width="355" height="150" />
         </swiper-item>
     </swiper>
-    <view class="btn-wrap" wx:if="{{MP4}}">
+    <!-- <view class="btn-wrap" wx:if="{{MP4}}">
         <view bindtap="playVideo" class="video {{videoShow ? 'active' : ''}}">视频</view>
         <view bindtap="playImg" class="img {{videoShow ? '' : 'active'}}">图片</view>
-    </view>
+    </view> -->
 </view>
 
 
@@ -73,8 +88,9 @@
         <!-- <image class="icon_2" src="http://img.hb.aicdn.com/c232ac493e51664baa4670b212ba2284ed822b2161e-OcJE12_fw658" /> -->
         <!-- 分享该商品可赚现金{{shareNum}}元 -->
     <!-- </view> -->
-    <view class="">分享该商品可赚现金{{shareNum}}元</view>
-    <image class="icon_2" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/right arrow-b.png" />
+    <view class="share-text">分享该商品可赚现金{{shareNum}}元</view>
+    <!-- <image class="icon_2" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/right arrow-b.png" /> -->
+    <!-- <image class="share_bg" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/去分享.png" /> -->
     <!-- <view class="right font-size-26 color_red">
     </view> -->
 </button>

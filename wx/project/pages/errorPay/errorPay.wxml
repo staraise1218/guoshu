@@ -17,7 +17,7 @@
     <!-- <image class="icon-best" src="/src/img/椭圆3@2x.png" /> -->
     <image class="icon-best" src="http://img.hb.aicdn.com/a568cc1552e3dd7afb23f01c04704d82a43d16b6455a-MgwxFA_fw658" />
 </view>
-<view class="text-center title-2_ font-weight-6">支付失败</view>
+<view class="text-center title-2_ font-weight-6">{{msg}}</view>
 <!-- <view class="text-center title-big font-weight-6 margin-top-20">￥{{order_amount}}</view> -->
 
 

@@ -56,7 +56,9 @@ Page({
     BackStatue: false,  // 分享 返回
     backTime: 10,       // 倒计时返回时间
     videoShow: false,   // 是否显示视频
-    dots: true
+    dots: true,
+
+    firstLoad: true,  // 视频第一次加载
   },
   /**
    * 轮播图自适应高度
@@ -120,6 +122,7 @@ Page({
     that.loading(that);
     that.loadingShopcartNum(that);
   },
+
   loading: function (that) {
     wx.request({
       url: Globalhost + 'Api/goods/goodsInfo',
@@ -176,7 +179,9 @@ Page({
           'MSM.store_count': data.store_count,
           html: data.goods_content,
           goodLists: data,
+          poster: 'https://app.zhuoyumall.com:444' + data.goods_images_list[0].image_url
         })
+        console.log(data.goods_images_list[0])
         if (data.prom_type != 0) {
           wx.request({
             url: Globalhost + 'Api/goods/activity',
@@ -211,6 +216,35 @@ Page({
 
       }
     })
+  },
+
+  // 点击播放
+  videoAlert() {
+    console.log('视频加载中')
+  },
+  videoLoading() {
+    console.log('视频加载中2')
+    if(this.data.firstLoad) {
+      wx.showLoading({
+        title: '视频加载中',
+      })
+    }
+  },
+  videoplay() {
+    console.log('视频加载中3')
+    if(this.data.firstLoad) {
+      wx.showLoading({
+        title: '视频加载中',
+      })
+    }
+  },
+  videoIsPlay() {
+    console.log('视频播放')
+    this.setData({
+      firstLoad: false
+    })
+    wx.hideLoading();
+    // wx.hideToast();
   },
   /**
    * 加入购物车

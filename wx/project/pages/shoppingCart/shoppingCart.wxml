@@ -10,7 +10,7 @@
 <!-- 购物车没有商品提示 -->
 <view class="load-shopcart" wx:if="{{load_shopcart == 1}}">
     <view class="container" wx:if="{{orderList.length == 0}}">
-        <image class="shopcart-image" src="https://app.zhuoyumall.com:444/wx/img/shoppingcart_empty.png" />
+        <image class="shopcart-image" src="https://app.zhuoyumall.com:444/wx/img/购物车页面无商品插图.png" />
         <view class="text-center">购物车中还没有商品</view>
     </view>
     <view wx:else>

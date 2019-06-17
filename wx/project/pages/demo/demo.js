@@ -382,10 +382,16 @@ Page({
   },
 
   toPay: function () {
+    console.log('0000000')
     let that = this;
     that.setData({
       isToPay: 1
     })
+    setTimeout(() => {
+      that.setData({
+        isToPay: 0
+      })
+    }, 2000)
     let payData = {};
     switch(wx.getStorageSync('PAYSTATUS')) {
       case 0:
@@ -455,10 +461,11 @@ Page({
         that.setData({
           payData: payData
         })
-        that.setData({
-          wxShow: true,
-          wallets_password: ''
-        })
+        that.yuePay(that);
+        // that.setData({
+        //   wxShow: true,
+        //   wallets_password: ''
+        // })
         break;
     }
   },
@@ -543,20 +550,140 @@ Page({
       }
     })
   },
-  yuePay: function (that, payData) {
-
+  yuePay: function (that) {
+    let yueData = {};
+    switch(wx.getStorageSync('PAYSTATUS')) {
+      case 0:
+          yueData = {
+            user_id: wx.getStorageSync('user_id'),
+            address_id: that.data.Address_id,
+            action: 'cart',
+            dosubmit: 1,
+            send_method: 1,
+            payMethod: 'money',
+            coupon_id: that.data.coupon_id,
+            // payPwd: this.data.wallets_password,
+            delivery_code: wx.getStorageSync('addressCode')
+          }
+          break;
+      case 1:
+          yueData = {
+            user_id: wx.getStorageSync('user_id'),
+            address_id: that.data.Address_id,
+            action: 'cart',
+            dosubmit: 1,
+            send_method: 2,
+            payMethod: 'money',
+            coupon_id: that.data.coupon_id,
+            pickup_id: wx.getStorageSync('pickup_id'),
+            // payPwd: this.data.wallets_password,
+            delivery_code: wx.getStorageSync('addressCode')
+          }
+          break;
+      case 2:
+          yueData = {
+            user_id: wx.getStorageSync('user_id'),
+            address_id: that.data.Address_id,
+            action: 'buy_now',
+            goods_id: wx.getStorageSync('goods_id'),
+            goods_num: wx.getStorageSync('goods_num'),
+            dosubmit: 1,
+            coupon_id: that.data.coupon_id,
+            send_method: 1,
+            payMethod: 'money',
+            pickup_id: wx.getStorageSync('pickup_id'),
+            // payPwd: this.data.wallets_password,
+            delivery_code: wx.getStorageSync('addressCode')
+          }
+          break;
+      case 3:
+          yueData = {
+            user_id: wx.getStorageSync('user_id'),
+            address_id: that.data.Address_id,
+            action: 'buy_now',
+            goods_id: wx.getStorageSync('goods_id'),
+            goods_num: wx.getStorageSync('goods_num'),
+            dosubmit: 1,
+            coupon_id: that.data.coupon_id,
+            send_method: 2,
+            payMethod: 'money',
+            pickup_id: wx.getStorageSync('pickup_id'),
+            // payPwd: this.data.wallets_password,
+            delivery_code: wx.getStorageSync('addressCode')
+          }
+          break;
+    }
+    console.log(yueData)
+    yueData.user_note = that.data.user_note
+    wx.request({
+      url: '',
+      url: Globalhost + 'Api/cart/cart3',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: yueData,
+      success: function (res) {
+        // let ordermsg = res.data.data;
+        console.log(res)
+        wx.setStorageSync('order_amount', res.data.data.order_amount);
+        wx.setStorageSync('order_id', res.data.data.order_id);
+        wx.setStorageSync('order_sn', res.data.data.order_sn);
+        if (res.data.code == 200) {
+          wx.request({
+            url: Globalhost + 'api/pay/topay',
+            method: 'POST',
+            header: {
+              'content-type': 'application/x-www-form-urlencoded'
+            },
+            data: {
+              order_sn: res.data.data.order_sn,
+              paymentMethod: 'money',
+              // payPwd: that.data.wallets_password
+            },
+            success: function (res) {
+              console.log(res)
+              if(res.code == 200) {
+                wx.redirectTo({
+                  url: '/pages/paySuccess/paySuccess?order_amount=' + wx.getStorageSync('order_amount') + '&order_id=' + wx.getStorageSync('order_id') + '&order_sn=' + wx.getStorageSync('order_sn')
+                })
+              } else {
+                wx.redirectTo({
+                  url: '/pages/errorPay/errorPay?status=errorPay&order_id=' + wx.getStorageSync('order_id') + '&order_sn=' + wx.getStorageSync('order_sn') + '&msg=' + res.data.msg
+                })
+                wx.showToast({
+                  title: res.data.msg,
+                  icon: 'none'
+                })
+              }
+            }
+          })
+        } else {
+          that.setData({
+            my_error_alert_show: true,
+            alert_errorMsg: '' + res.data.msg
+          })
+          console.log(that.data.alert_errorMsg)
+          
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'none'
+          })
+        }
+      }
+    })
   },
   set_wallets_password(e) { //获取钱包密码
     let that = this;
-    this.setData({
-      wallets_password: e.detail.value
-    });
-    if (this.data.wallets_password.length == 6) { //密码长度6位时，自动验证钱包支付结果
-      // wallet_pay(this)
-      that.setData({
-        wxShow: false
-      })
-      var posdata = {};
+    // this.setData({
+    //   wallets_password: e.detail.value
+    // });
+    // if (this.data.wallets_password.length == 6) { //密码长度6位时，自动验证钱包支付结果
+    //   // wallet_pay(this)
+    //   that.setData({
+    //     wxShow: false
+    //   })
+      // var posdata = {};
       let yueData = {};
       switch(wx.getStorageSync('PAYSTATUS')) {
         case 0:
@@ -568,7 +695,7 @@ Page({
               send_method: 1,
               payMethod: 'money',
               coupon_id: that.data.coupon_id,
-              payPwd: this.data.wallets_password,
+              // payPwd: this.data.wallets_password,
               delivery_code: wx.getStorageSync('addressCode')
             }
             break;
@@ -582,7 +709,7 @@ Page({
               payMethod: 'money',
               coupon_id: that.data.coupon_id,
               pickup_id: wx.getStorageSync('pickup_id'),
-              payPwd: this.data.wallets_password,
+              // payPwd: this.data.wallets_password,
               delivery_code: wx.getStorageSync('addressCode')
             }
             break;
@@ -598,7 +725,7 @@ Page({
               send_method: 1,
               payMethod: 'money',
               pickup_id: wx.getStorageSync('pickup_id'),
-              payPwd: this.data.wallets_password,
+              // payPwd: this.data.wallets_password,
               delivery_code: wx.getStorageSync('addressCode')
             }
             break;
@@ -614,7 +741,7 @@ Page({
               send_method: 2,
               payMethod: 'money',
               pickup_id: wx.getStorageSync('pickup_id'),
-              payPwd: this.data.wallets_password,
+              // payPwd: this.data.wallets_password,
               delivery_code: wx.getStorageSync('addressCode')
             }
             break;
@@ -644,12 +771,24 @@ Page({
               },
               data: {
                 order_sn: res.data.data.order_sn,
-                paymentMethod: 'money'
+                paymentMethod: 'money',
+                // payPwd: that.data.wallets_password
               },
               success: function (res) {
-                wx.redirectTo({
-                  url: '/pages/paySuccess/paySuccess?order_amount=' + wx.getStorageSync('order_amount') + '&order_id=' + wx.getStorageSync('order_id') + '&order_sn=' + wx.getStorageSync('order_sn')
-                })
+                console.log(res)
+                if(res.code == 200) {
+                  wx.redirectTo({
+                    url: '/pages/paySuccess/paySuccess?order_amount=' + wx.getStorageSync('order_amount') + '&order_id=' + wx.getStorageSync('order_id') + '&order_sn=' + wx.getStorageSync('order_sn')
+                  })
+                } else {
+                  wx.redirectTo({
+                    url: '/pages/errorPay/errorPay?status=errorPay&order_id=' + wx.getStorageSync('order_id') + '&order_sn=' + wx.getStorageSync('order_sn') + '&msg=' + res.data.msg
+                  })
+                  wx.showToast({
+                    title: res.data.msg,
+                    icon: 'none'
+                  })
+                }
               }
             })
           } else {
@@ -658,14 +797,15 @@ Page({
               alert_errorMsg: '' + res.data.msg
             })
             console.log(that.data.alert_errorMsg)
-            // wx.showToast({
-            //   title: res.data.msg,
-            //   icon: 'none'
-            // })
+            
+            wx.showToast({
+              title: res.data.msg,
+              icon: 'none'
+            })
           }
         }
       })
-    }
+    // }
   },
   // 关闭弹窗
   close_my_alert() {

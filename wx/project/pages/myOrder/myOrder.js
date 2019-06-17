@@ -449,12 +449,20 @@ Page({
         },
         data: {
           order_sn: that.data.order_sn,
-          paymentMethod: 'money'
+          paymentMethod: 'money',
+          payPwd: that.data.wallets_password
         },
         success: function (res) {
-          wx.navigateTo({
-            url: '/pages/paySuccess/paySuccess?order_amount=' + wx.getStorageSync('order_amount') + '&order_id=' + wx.getStorageSync('order_id') + '&order_sn=' + wx.getStorageSync('order_sn')
-          })
+          if(res.code == 200) {
+            wx.navigateTo({
+              url: '/pages/paySuccess/paySuccess?order_amount=' + wx.getStorageSync('order_amount') + '&order_id=' + wx.getStorageSync('order_id') + '&order_sn=' + wx.getStorageSync('order_sn')
+            })
+          } else {
+            wx.showToast({
+              title: res.data.msg,
+              icon: 'none'
+            })
+          }
         }
       })
     }

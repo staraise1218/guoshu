@@ -1,1 +1,16 @@
-分享商品说明
+
+
+
+<view class="content">
+    <view class="shuoming_title">返利说明</view>
+    <view class="shuoming_line">
+        <image class="line-icon" src="https://app.zhuoyumall.com:444/wx/img/shuiguo@2x.png" />
+    </view>
+    <view class="shuoming-text">
+        <view class="text-item">说明</view>
+    </view>
+    <view class="shuoming_footer_img">
+        <image class="footer-icon" src="https://app.zhuoyumall.com:444/wx/img/71cf4b8cacc21c1ebc32bb6abddd0e9e@2x.png" />
+    </view>
+</view>
+

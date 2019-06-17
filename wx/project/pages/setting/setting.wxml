@@ -5,18 +5,18 @@
 
 <view class="text-center title-3">版本号v8.5.0</view>
 
-<view class="padding-30 title-2 more-20" bindtap="toPassword">
+<!-- <view class="padding-30 title-2 more-20" bindtap="toPassword">
     支付密码
-</view>
+</view> -->
 
-<view class="line"></view>
+<!-- <view class="line"></view> -->
 
 <view class="margin-lr-30 padding-tb-30 border-bottom more-0 title-2"  bindtap="toAgreement">用户协议</view>
 <view class="margin-lr-30 padding-tb-30 more-0 title-2" bindtap="toCelve">隐私策略</view>
 
 <view class="line"></view>
 <view class="margin-lr-30 padding-tb-30 border-bottom more-0 title-2" bindtap="edition">版本检测</view>
-<view class="margin-lr-30 padding-tb-30 more-0 title-2"  bindtap="toClear">清除缓存</view>
+<!-- <view class="margin-lr-30 padding-tb-30 more-0 title-2"  bindtap="toClear">清除缓存</view> -->
 
 
 
