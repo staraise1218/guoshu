@@ -38,7 +38,7 @@ class Goods extends Base {
 		$goodslist = Db::name('goods')
 			->where($where)
 			->order('sort asc, goods_id desc')
-			->field('goods_id, goods_name, subtitle, tag, store_count, original_img, shop_price')
+			->field('goods_id, goods_name, subtitle, tag, store_count, original_img, shop_price, market_price')
 			->page($page)
 			->limit(15)
 			->select();
@@ -172,7 +172,7 @@ class Goods extends Base {
 		$goodslist = Db::name('goods')
 			->where($where)
 			->order('sort asc, goods_id desc')
-			->field('goods_id, goods_name, subtitle, tag, store_count, original_img, shop_price, (sales_sum+virtual_num) as virtual_num')
+			->field('goods_id, goods_name, subtitle, tag, store_count, original_img, shop_price, market_price, (sales_sum+virtual_num) as virtual_num')
 			->page($page)
 			->limit(15)
 			->select();

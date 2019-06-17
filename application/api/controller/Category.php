@@ -59,7 +59,7 @@ class Category extends Base {
 					->where('is_on_sale', 1) 
 					->where('prom_type', 0)  // 普通商品
 					->order('sort asc, goods_id desc')
-					->field('goods_id, goods_name, subtitle, tag, store_count, original_img, shop_price, (sales_sum+virtual_num) as virtual_num')
+					->field('goods_id, goods_name, subtitle, tag, store_count, original_img, shop_price, market_price, (sales_sum+virtual_num) as virtual_num')
 					->select();
 				if($goodslist) {
 					$item['goodslist'] = $goodslist;
@@ -87,7 +87,7 @@ class Category extends Base {
 			->where('is_on_sale', 1) 
 			->where('prom_type', 0)  // 普通商品
 			->order('sort asc, goods_id desc')
-			->field('goods_id, goods_name, subtitle, tag, store_count, original_img, shop_price, (sales_sum+virtual_num) as virtual_num')
+			->field('goods_id, goods_name, subtitle, tag, store_count, original_img, shop_price, market_price, (sales_sum+virtual_num) as virtual_num')
 			->page($page)
 			->limit(15)
 			->select();
