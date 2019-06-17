@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/demo2/demo2",
     "pages/loading/loading",
     "pages/searMsg/searMsg",
     "pages/passwordSeeting/passwordSeeting",
@@ -10,7 +11,6 @@
     "pages/myOrderB/myOrderB",
     "pages/peisongList/peisongList",
     "pages/peisonCon/peisonCon",
-    "pages/demo2/demo2",
     "pages/address/address",
     "pages/search/search",
     "pages/shoppingCart/shoppingCart",
@@ -69,36 +69,36 @@
   },
   "tabBar": {
     "color": "#999",
-    "selectedColor": "#F75433",
+    "selectedColor": "#3F69E0",
     "borderStyle": "black",
     "list": [
       {
-        "selectedIconPath": "src/img/nav/2.png",
-        "iconPath": "src/img/nav/2.0.png",
+        "selectedIconPath": "src/img/nav2/1.png",
+        "iconPath": "src/img/nav2/1-1.png",
         "pagePath": "pages/index/index",
         "text": "首页"
       },
       {
-        "selectedIconPath": "src/img/nav/3.png",
-        "iconPath": "src/img/nav/3.0.png",
+        "selectedIconPath": "src/img/nav2/2.png",
+        "iconPath": "src/img/nav2/2-1.png",
         "pagePath": "pages/classification/classification",
         "text": "分类"
       },
       {
-        "selectedIconPath": "src/img/nav/1.png",
-        "iconPath": "src/img/nav/1.0.png",
+        "selectedIconPath": "src/img/nav2/3.png",
+        "iconPath": "src/img/nav2/3-1.png",
         "pagePath": "pages/group/group",
         "text": "团购"
       },
       {
-        "selectedIconPath": "src/img/nav/4.png",
-        "iconPath": "src/img/nav/4.0.png",
+        "selectedIconPath": "src/img/nav2/4.png",
+        "iconPath": "src/img/nav2/4-1.png",
         "pagePath": "pages/shoppingCart/shoppingCart",
         "text": "购物车"
       },
       {
-        "selectedIconPath": "src/img/nav/5.png",
-        "iconPath": "src/img/nav/5.0.png",
+        "selectedIconPath": "src/img/nav2/5.png",
+        "iconPath": "src/img/nav2/5-1.png",
         "pagePath": "pages/mine/mine",
         "text": "我的"
       }

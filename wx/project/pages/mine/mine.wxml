@@ -50,7 +50,6 @@
 <!-- 自提点 END -->
 
 <!-- 配送员 -->
-<!-- <view wx:if="{{role == 2}}" class="order radius-30 margin-30"> -->
 <view wx:if="{{true}}" class=" order radius-30 margin-30">
     <view class="pzisong order-title  add_ title-3 font-weight-6 margin-30 padding-tb-20"><view>配送订单</view>  <view class="ml-100">{{nickname}}</view> </view>
     <view class="order-list">

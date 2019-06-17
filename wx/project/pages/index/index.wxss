@@ -34,6 +34,7 @@ page {
 }
 .del {
   height: 30rpx;
+  font-size: 20rpx;
 }
 .self-flex {
   display: flex;
@@ -75,6 +76,9 @@ page {
   overflow: hidden;
   width: 200rpx;
   height: 35rpx;
+  text-overflow: ellipsis;
+  color: rgb(100,100,100);
+  font-size: 20rpx;
 }
 .toCon .title-2_f {
   overflow: hidden;
@@ -99,17 +103,17 @@ page {
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 220rpx;
+  width: 200rpx;
   /* padding: 10rpx; */
   display: inline-block;
   margin: 10rpx 0;
   padding-top: 0;
-  margin-left: 10rpx;
+  margin-left: 20rpx;
   /* border: 1px solid red; */
   /* overflow: hidden; */
 }
 .shopListWrap .scro-item:first-child {
-  margin-left: 20rpx;
+  margin-left: 30rpx;
 }
 .shopListWrap .scro-item .between-center {
   width: 200rpx;
@@ -125,6 +129,11 @@ page {
 .scro-item .title-2 {
   white-space: nowrap;
   overflow: hidden;
+  font-size: 25rpx;
+  color: rgb(80,80,80);
+  text-overflow: ellipsis;
+  line-height: 42rpx;
+  height: 42rpx;
 }
 
 .scro-item .tag-new {
@@ -157,7 +166,7 @@ page {
 
 
 .poster-wrap {
-  height: 200rpx;
+  height: 190rpx;
   position: relative;
 }
 
@@ -181,7 +190,7 @@ page {
 }
 .tag_self_2 {
   position: absolute;
-  right: 0rpx;
+  right: 15rpx;
   bottom: 0rpx;
   background: #FAA413;
   color: #fff;
@@ -693,7 +702,7 @@ swiper-item {
   width: 100%;
 }
 .shangpin-wrap .scro-item {
-  width: 200rpx;
+  width: 220rpx;
   height: 400rpx;
 }
 
@@ -1033,8 +1042,9 @@ swiper-item {
   height: 100%;
 }
 .icon-group {
-  width: 200rpx;
-  height: 200rpx;
+  width: 190rpx;
+  height: 190rpx;
+  margin-left: 10rpx;
 }
 
 
@@ -1047,8 +1057,13 @@ swiper-item {
 .scroll-wrapper_ .scro-item {
   position: relative;
   height: 350rpx;
-  padding: 10rpx 20rpx;
+  /* padding: 10rpx; */
   display: inline-block;
+  box-sizing: border-box;
+  margin-left: 10rpx;
+}
+.scroll-wrapper_ .scro-item:first-child {
+  margin-left: 30rpx;
 }
 .shopping-alert {
   position: absolute;
@@ -1162,6 +1177,8 @@ swiper-item {
   }
   .price{
     color:rgb(255, 0, 0);
+    font-size: 26rpx;
+    font-weight: 600;
   }
   .add{
     width:24px;
@@ -1298,6 +1315,7 @@ swiper-item {
   color: #fff;
 }
 .icon-poster {
-  width: 200rpx;
-  height: 200rpx;
+  width: 190rpx;
+  height: 190rpx;
+
 }
