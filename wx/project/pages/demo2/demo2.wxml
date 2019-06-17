@@ -1,9 +1,0 @@
-<view class="my-header">
-    <view class="my-header-pic">
-        <image class="header-pic" src="https://app.zhuoyumall.com:444/wx/img/2/自提门店.png" />
-    </view>
-    <view class="my-name">
-        <view >请输入昵称</view>
-        <image style="width: 45rpx" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/改写.png" />
-    </view>
-</view>

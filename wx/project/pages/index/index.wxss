@@ -3,6 +3,37 @@ page {
   height: 100vh;
 }
 
+.search-bar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1rpx solid rgba(0, 0, 0, .1);
+  font-size: 28rpx;
+  background: #fff;
+}
+
+.search-bar .location-wrap {
+  display: flex;
+  align-items: center;
+  font-size: 26rpx;
+}
+
+.search-bar .search-con {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  position: relative;
+  margin: 0 20rpx;
+  background: #F6F6F6;
+  padding: 8rpx 10rpx;
+  border-radius: 30rpx;
+}
 .fix-wrap {
   position: fixed;
   top: 0;
@@ -28,9 +59,14 @@ page {
   display: inline-block;
   font-size: 28rpx;
 }
+.group-icon-poster-box {
+  font-size: 0;
+}
 .group-icon-poster {
   border-radius: 10rpx;
-  margin-top: 20rpx;
+  /* margin-top: 20rpx; */
+  width: 710rpx;
+  margin-left: 20rpx;
 }
 .del {
   height: 30rpx;
@@ -190,15 +226,27 @@ page {
 }
 .tag_self_2 {
   position: absolute;
-  right: 15rpx;
-  bottom: 0rpx;
-  background: #FAA413;
+  left: 15rpx;
+  top: 0rpx;
+  background: #3C7DEC;
   color: #fff;
-  font-size: 24rpx;
-  padding: 2rpx 12rpx;
+  font-size: 18rpx;
+  height: 32rpx;
+  line-height: 32rpx;
+  padding: 0rpx 12rpx;
   box-shadow: 2rpx 2rpx 2rpx rgba(0, 0, 0, 0.08);
-  border-top-left-radius: 20rpx;
-  border-bottom-left-radius: 20rpx;
+  box-sizing: border-box;
+}
+.tag_self_2::after {
+  position: absolute;
+  right: -25rpx;
+  top: 0;
+  content: '';
+  display: block;
+  width: 0px;
+  height: 0px;
+  border: 17rpx solid #3C7DEC;
+  border-right-color: transparent;
 }
 .group-icon {
   position: absolute;
@@ -413,7 +461,7 @@ swiper-item {
   display: flex;
   justify-content: flex-end;
   /* flex: 1; */
-  margin-left: 20rpx;
+  /* margin-left: 20rpx; */
 }
 
 .news-icon {
@@ -700,6 +748,7 @@ swiper-item {
   display: block;
   /* background: #eee; */
   width: 100%;
+  margin: 40rpx 0;
 }
 .shangpin-wrap .scro-item {
   width: 220rpx;
@@ -707,7 +756,36 @@ swiper-item {
 }
 
 
+.shop-content {
+  position: relative;
+}
+.shop-content .shop-left {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.shop-content .shop-left .price-wrap {
+  position: relative;
+  padding-left: 16rpx;
+}
+.shop-content .shop-left .price-wrap image {
+  position: absolute;
+  left: 0;
+  bottom: 6rpx;
+}
+.shop-content .shop-left .del-wrap {
+  display: flex;
+  align-items: flex-end;
+  font-size: 18rpx;
+  text-decoration: line-through;
+  color: rgba(0, 0, 0, 0.5);
 
+}
+.shop-content .shop-right {
+  position: absolute;
+  right: 0;
+  top: 20rpx;
+}
 
 
 
@@ -1176,9 +1254,10 @@ swiper-item {
     margin:10px 5px;
   }
   .price{
-    color:rgb(255, 0, 0);
+    /* color:rgb(255, 0, 0); */
     font-size: 26rpx;
     font-weight: 600;
+    color: #3C7EE7
   }
   .add{
     width:24px;

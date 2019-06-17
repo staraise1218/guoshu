@@ -1,4 +1,4 @@
-<view class="header">
+<!-- <view class="header">
     <view class="news-icon">
         <button class="news_btn" bindtap="toNews" plain><image class="icon-2" src="https://hbimg.huabanimg.com/b1a5e9c3979d5df57a6224d2ceb75c582870bcc161b-sx87no_fw658" /></button>
     </view>
@@ -16,11 +16,11 @@
             </view>
         </block>
     </view>
-</view>
+</view> -->
 
 
 <!-- 我的订单 -->
-<view class="order radius-30 margin-30">
+<!-- <view class="order radius-30 margin-30">
     <view class="order-title title-3 font-weight-6 margin-30 padding-tb-20">我的订单</view>
     <view class="order-list">
         <block wx:for="{{orderMsg}}" wx:key="item">
@@ -30,13 +30,12 @@
             </view>
         </block>
     </view>
-</view>
+</view> -->
 <!-- 我的订单 END -->
 
 
 <!-- 自提点 -->
-<!-- <view wx:if="{{role == 3}}" class="order radius-30 margin-30"> -->
-<view wx:if="{{true}}" class="order radius-30 margin-30">
+<!-- <view wx:if="{{true}}" class="order radius-30 margin-30">
     <view class="ziti order-title add_ title-3 font-weight-6 margin-30 padding-tb-20"><view >站点订单</view><view class="ml-100">{{pickupName}}</view> </view>
     <view class="order-list">
         <block wx:for="{{zhandian}}" wx:key="item">
@@ -46,11 +45,11 @@
             </view>
         </block>
     </view>
-</view>
+</view> -->
 <!-- 自提点 END -->
 
 <!-- 配送员 -->
-<view wx:if="{{true}}" class=" order radius-30 margin-30">
+<!-- <view wx:if="{{true}}" class=" order radius-30 margin-30">
     <view class="pzisong order-title  add_ title-3 font-weight-6 margin-30 padding-tb-20"><view>配送订单</view>  <view class="ml-100">{{nickname}}</view> </view>
     <view class="order-list">
         <block wx:for="{{peisong}}" wx:key="item">
@@ -60,13 +59,13 @@
             </view>
         </block>
     </view>
-</view>
+</view> -->
 <!-- 自提点 END -->
 
 
 
 <!-- 我的服务 -->
-<view class="order radius-30 margin-30">
+<!-- <view class="order radius-30 margin-30">
     <view class="order-title title-3 font-weight-6 margin-30 padding-tb-20">我的服务</view>
     <view class="order-list">
         <block wx:for="{{serviceMsg}}" wx:key="item">
@@ -76,8 +75,83 @@
             </view>
         </block>
     </view>
-</view>
+</view> -->
 <!-- 我的服务 END -->
 
 
 
+
+
+
+
+<!-- Header -->
+<view class="my-header">
+    <view class="my-header-pic">
+        <image class="header-pic" bindtap="toUserinfo" src="https://app.zhuoyumall.com:444{{headPic}}" />
+    </view>
+    <view class="my-name" bindtap="toUserinfo">
+        <view>{{NickName}}</view>
+        <image style="width: 30rpx; margin-left: 14rpx" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/2/改写2.png" />
+    </view>
+    <view class="my-header-wrap">
+        <view class="header-item" bindtap="toYue">
+            <view>{{money}}</view>
+            <view>零钱</view>
+        </view>
+        <view class="header-item" bindtap="toYouhui">
+            <view>{{readBag}}</view>
+            <view>红包</view>
+        </view>
+        <view class="header-item" bindtap="toWeiZhiFu">
+            <view>{{waitOrder}}</view>
+            <view>未付订单</view>
+        </view>
+    </view>
+</view>
+<!-- Header END -->
+
+<!-- Seeting -->
+<view class="seeting bg">
+    <view class="my-item more" bindtap="toWeiZhiFu">
+        <image style="width: 35rpx" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/2/订单.png" />
+        <view>我的订单</view>
+    </view>
+    <view class="my-item more" bindtap="toYue">
+        <image style="width: 35rpx" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/2/零钱.png" />
+        <view>我的余额</view>
+    </view>
+    <view class="my-item more" bindtap="toMaster">
+        <image style="width: 35rpx" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/2/站点.png" />
+        <view>站点申请</view>
+    </view>
+    <view class="my-item more">
+        <image style="width: 35rpx" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/2/供货.png" />
+        <view>供货申请</view>
+    </view>
+    <view class="my-item more" bindtap="toSetting">
+        <image style="width: 35rpx" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/2/设置.png" />
+        <view>设置</view>
+    </view>
+    <view class="my-item more blue" bindtap="toPeisong">
+        <image style="width: 35rpx" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/2/派送员.png" />
+        <view>派送员</view>
+    </view>
+</view>
+<!-- Seeting END -->
+
+<!-- About -->
+<view class="about-wrap">
+    <view class="about-item" bindtap="toAddress">
+        <image style="width: 55rpx" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/2/定位.png" />
+        <view>收货地址</view>
+    </view>
+    <view class="about-item" bindtap="toKefu">
+        <image style="width: 55rpx" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/2/客服电话.png" />
+        <view>客服电话</view>
+    </view>
+    <view class="about-item" bindtap="toAgreement">
+        <image style="width: 55rpx" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/2/关于我们.png" />
+        <view>关于我们</view>
+    </view>
+</view>
+<!-- About END -->

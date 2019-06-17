@@ -1,0 +1,94 @@
+<!-- Header -->
+<view class="search-bar">
+    <view class="location-wrap" bindtap="showCity">
+        <image style="width: 33rpx; margin-right: 20rpx; height: 44rpx;"
+            src="https://app.zhuoyumall.com:444/wx/img/dingwei@2x.png" />
+        <view class="">{{address}}</view>
+    </view>
+    <view class="search-con" bindtap="toSearch">
+        <image class="search-icon" style="width: 45rpx; margin-right: 10rpx" mode="widthFix"
+            src="https://app.zhuoyumall.com:444/wx/img/search.png" />
+        火龙果
+    </view>
+    <view class="news" bindtap="toNews">
+        <image bindtap="toNews" class="icon-2 news-icon"
+            src="https://hbimg.huabanimg.com/deb427e3df46fa36177cf43e28494ada7db19f72668-iwUuto_fw658" />
+    </view>
+</view>
+<!-- Header END -->
+
+
+<!-- Nav -->
+<scroll-view class="nav-wrap" scroll-y="{{true}}">
+    <block wx:for="{{NavList}}" wx:key>
+        <view class="nav-item  {{index == active ? 'active' : ''}}" bindtap="changeNav" data-index="{{index}}"
+            data-id="{{item.id}}">{{item.name}}</view>
+    </block>
+</scroll-view>
+<!-- Nav END -->
+
+<!-- Nav-bar -->
+<scroll-view class="nav-bar" scroll-x="{{true}}">
+    <block wx:for="{{NavList[active].sub}}" wx:key>
+        <view class="nav-bar-item {{item.id == subActiveID ? 'active' : ''}}" data-id="{{item.id}}" bindtap="changeSub">
+            {{item.name}}</view>
+    </block>
+</scroll-view>
+
+<!-- Shop-con -->
+<scroll-view class="shop-con" scroll-y="{{true}}" bindscrolltolower="getMore">
+    <block wx:for="{{GoodList}}" wx:key>
+        <view class="shop-item" data-goods-id="{{item.goods_id}}" bindtap="{{item.store_count == 0 ? '' : 'toCon'}}">
+            <image class="shop-pic" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+            <view class="shop-info">
+                <view class="goods-name">{{item.goods_name}}</view>
+                <view class="goods-name_">{{item.subtitle}}</view>
+                <view class="goods-ctr">
+                    <view class="goods-price">
+                        <image class="RMB" style="width: 13rpx; height: 13rpx"
+                            src="https://app.zhuoyumall.com:444/wx/img/2/￥蓝色.png" />
+                        <view class="goods-price-con">{{item.shop_price}}</view>
+                    </view>
+                    <view class="goods-price_">
+                        <view class="goods-price-del">￥ {{item.market_price}}</view>
+                    </view>
+                    <view class="goods-add">
+                        <image lazy-load="true" style="width: 50rpx; height: 50rpx" data-id="{{item.goods_id}}"
+                            catchtap="{{item.store_count == 0 ? '' : 'addCart'}}"
+                            src="https://app.zhuoyumall.com:444/wx/img/2/购物车蓝色.png" />
+                    </view>
+                </view>
+            </view>
+            <view class="alert-tips" wx:if="{{item.store_count == 0}}">
+                <view>抢光啦</view>
+                <view>SOLD OUT</view>
+            </view>
+        </view>
+    </block>
+</scroll-view>
+
+
+<!-- 城市弹窗 -->
+<view class="alert-box_" wx:if="{{chooseAlerShow}}"></view>
+<view class="cityshow-alert" wx:if="{{chooseAlerShow}}">
+    <scroll-view scroll-y class="left">
+        <block wx:for="{{multiArray}}" wx:key>
+            <view bindtap="changeProvince" data-index="{{index}}" data-code="{{item.code}}" data-name="{{item.name}}"
+                data-parentCode="{{item.parentCode}}" class="{{index ==  chooseIndex[0]? 'active' : ''}} content">
+                {{item.name}}
+            </view>
+        </block>
+    </scroll-view>
+    <scroll-view scroll-y class="center">
+        <block wx:for="{{multiArray[chooseIndex[0]].sub}}" wx:key>
+            <view data-name="{{item.name}}" data-index="{{index}}" bindtap="changeCity" data-code="{{item.code}}"
+                data-parentCode="{{item.parentCode}}" class="{{index == chooseIndex[1] ? 'active' : ''}} content">
+                {{item.name}}
+            </view>
+        </block>
+    </scroll-view>
+    <view class="btn-wrapper">
+        <view class="cancel" bindtap="closeCity">取消</view>
+        <view class="ok" bindtap="chooseCity">确定</view>
+    </view>
+</view>
