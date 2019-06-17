@@ -35,6 +35,12 @@ class User extends Base {
                                         ->where('cl.status', 0)
                                         ->where('c.use_end_time', 'gt', time())
                                         ->count();
+
+        // 未支付订单数量
+        $result['unpaidOrderNum'] = Db::name('order')
+            ->where('pay_status', 0)
+            ->where('order_status', 0)
+            ->count();
         response_success($result);
     }
 
