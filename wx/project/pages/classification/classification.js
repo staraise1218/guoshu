@@ -25,7 +25,7 @@ Page({
     cityShow: false,
 
 
-    
+
     chooseIndex: [0, 0],
     multiArray: [], // 地区json
     index0: 0, // 地区index 0
@@ -36,60 +36,42 @@ Page({
     var that = this;
     console.log(options)
     console.log(that.data.targetID)
-    
+
     that.setData({
       address: wx.getStorageSync('address')
     })
     that.all(that);
     that.location(that);
     that.loadingShopcartNum(that);
-    
-    if(!wx.getStorageSync('user_id')) {
+
+    if (!wx.getStorageSync('user_id')) {
       wx.navigateTo({
         url: '/pages/loading/loading'
       })
     }
-    // if(wx.getStorageSync('targetID')) {
-    //   that.setData({
-    //     targetID: wx.getStorageSync('targetID')
-    //   })
-    //   that.yiji(that, that.data.targetID) 
-    // } 
-    // else {
-      wx.request({ // 获取分类 -- 左侧
-        url: Globalhost + 'Api/category/getAllCategory',
-        method: 'POST',
-        header: {
-          'content-type': 'application/x-www-form-urlencoded'
-        },
-        success: function (res) {
-          console.log(res)
+    wx.request({ // 获取分类 -- 左侧
+      url: Globalhost + 'Api/category/getAllCategory',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function (res) {
+        console.log(res)
+        that.setData({
+          targetID: res.data.data[0].id
+        })
+      },
+      complete: function () {
+        if (wx.getStorageSync('indexCatid')) {
           that.setData({
-            targetID: res.data.data[0].id
+            targetID: wx.getStorageSync('indexCatid')
           })
-        },
-        complete: function() {
-          if (wx.getStorageSync('indexCatid')) {
-            that.setData({
-              targetID: wx.getStorageSync('indexCatid')
-            })
-            that.yiji(that, wx.getStorageSync('indexCatid'));
-          } else {
-            that.yiji(that, that.data.targetID);
-          }
+          that.yiji(that, wx.getStorageSync('indexCatid'));
+        } else {
+          that.yiji(that, that.data.targetID);
         }
-      })
-      // setTimeout(function () {
-      //     if (wx.getStorageSync('indexCatid')) {
-      //       that.setData({
-      //         targetID: wx.getStorageSync('indexCatid')
-      //       })
-      //       that.yiji(that, wx.getStorageSync('indexCatid'));
-      //     } else {
-      //       that.yiji(that, that.data.targetID);
-      //     }
-      //   }, 1000)
-    // }
+      }
+    })
   },
   toLik: function () {
     console.log(this.data)
@@ -105,7 +87,7 @@ Page({
     let that = this;
     console.log(that.data)
     console.log('分类id：', e.currentTarget.dataset.id)
-    
+
     that.setData({
       sub: [],
       targetID: e.currentTarget.dataset.id,
@@ -114,7 +96,7 @@ Page({
       status: 'left',
     })
     that.yiji(that, that.data.targetID)
-    if(that.data.targetID) {
+    if (that.data.targetID) {
       wx.setStorageSync('targetID', that.data.targetID)
     }
   },
@@ -254,7 +236,8 @@ Page({
               goodslistStore_count = 'sub[' + i + '].goodslist[' + j + '].store_count',
               goodslistSubtitle = 'sub[' + i + '].goodslist[' + j + '].subtitle',
               goodslistSales_sum = 'sub[' + i + '].goodslist[' + j + '].virtual_num',
-              goodslistSales_tag = 'sub[' + i + '].goodslist[' + j + '].tag'
+              goodslistSales_tag = 'sub[' + i + '].goodslist[' + j + '].tag',
+              market_price = 'sub[' + i + '].goodslist[' + j + '].tag.market_price'
 
             that.setData({
               [goodslistGoods_id]: data[i].goodslist[j].goods_id,
@@ -264,7 +247,8 @@ Page({
               [goodslistStore_count]: data[i].goodslist[j].store_count,
               [goodslistSubtitle]: data[i].goodslist[j].subtitle,
               [goodslistSales_sum]: data[i].goodslist[j].virtual_num,
-              [goodslistSales_tag]: data[i].goodslist[j].tag
+              [goodslistSales_tag]: data[i].goodslist[j].tag,
+              [market_price]: data[i].goodslist[j].market_price
             })
           }
         }
@@ -283,7 +267,7 @@ Page({
       },
       data: {
         cat_id: id,
-        city_code: wx.getStorageSync('addressCode'),//110100,
+        city_code: wx.getStorageSync('addressCode'), //110100,
         page: 0
       },
       success: function (res) {
@@ -385,7 +369,7 @@ Page({
       cityChange: that.data.multiArray[index0].sub[index1].name,
       codeChange: that.data.multiArray[index0].sub[index1].code
     })
-  
+
   },
   cityt: function () {
     this.setData({
@@ -415,13 +399,13 @@ Page({
     })
   },
   /**
-  * 跳转消息页面
-  */
- toNews: function () {
-   wx.navigateTo({
-     url: '/pages/news/news'
-   })
- },
+   * 跳转消息页面
+   */
+  toNews: function () {
+    wx.navigateTo({
+      url: '/pages/news/news'
+    })
+  },
 
 
 
@@ -443,12 +427,12 @@ Page({
         city_code: wx.getStorageSync('addressCode'),
         user_id: wx.getStorageSync('user_id')
       },
-      success: function(res) {
+      success: function (res) {
         console.log(res)
         that.setData({
           cart_num: res.data.data.cartNum
         })
-        if(res.data.data.cartNum > 0) {
+        if (res.data.data.cartNum > 0) {
           wx.setTabBarBadge({
             index: 3,
             text: '' + res.data.data.cartNum
@@ -466,52 +450,52 @@ Page({
 
 
 
-  
-// 数据 [code, code, code]
-chooseAddressShow: function () {
-  console.log(111111111111111111111111111)
-  this.setData({
-    chooseAlerShow: true
-  })
-},
-// 选择省
-changeProvince: function (e) {
-  let that = this;
-  console.log(e)
-  that.setData({
-    'chooseIndex[0]': e.currentTarget.dataset.index,
-    'chooseIndex[1]': 0,
-    chooseAddressCode: that.data.multiArray[e.currentTarget.dataset.index].sub[0].code,
-    chooseAddressName:  that.data.multiArray[e.currentTarget.dataset.index].sub[0].name
-  })
-  console.log(that.data)
-},
-// 选择配送点
-changeCity: function (e) {
-  let that = this;
-  console.log(e)
-  that.setData({
-    'chooseIndex[1]': e.currentTarget.dataset.index,
-    chooseAddressCode: e.currentTarget.dataset.code,
-    chooseAddressName: e.currentTarget.dataset.name
-  })
-},
 
-// 确定修改
-chooseCity: function () {
-  let that = this;
-  that.setData({
-    chooseAlerShow: false,
-    address: that.data.chooseAddressName
-  })
-  wx.setStorageSync('address', that.data.chooseAddressName);
-  wx.setStorageSync('addressCode', that.data.chooseAddressCode);
-  that.yiji(that, wx.getStorageSync('targetID')) 
-},
-// 取消修改
-cancleCity: function () {
-  this.setData({
-    chooseAlerShow: false
-  })
-},
+  // 数据 [code, code, code]
+  chooseAddressShow: function () {
+    console.log(111111111111111111111111111)
+    this.setData({
+      chooseAlerShow: true
+    })
+  },
+  // 选择省
+  changeProvince: function (e) {
+    let that = this;
+    console.log(e)
+    that.setData({
+      'chooseIndex[0]': e.currentTarget.dataset.index,
+      'chooseIndex[1]': 0,
+      chooseAddressCode: that.data.multiArray[e.currentTarget.dataset.index].sub[0].code,
+      chooseAddressName: that.data.multiArray[e.currentTarget.dataset.index].sub[0].name
+    })
+    console.log(that.data)
+  },
+  // 选择配送点
+  changeCity: function (e) {
+    let that = this;
+    console.log(e)
+    that.setData({
+      'chooseIndex[1]': e.currentTarget.dataset.index,
+      chooseAddressCode: e.currentTarget.dataset.code,
+      chooseAddressName: e.currentTarget.dataset.name
+    })
+  },
+
+  // 确定修改
+  chooseCity: function () {
+    let that = this;
+    that.setData({
+      chooseAlerShow: false,
+      address: that.data.chooseAddressName
+    })
+    wx.setStorageSync('address', that.data.chooseAddressName);
+    wx.setStorageSync('addressCode', that.data.chooseAddressCode);
+    that.yiji(that, wx.getStorageSync('targetID'))
+  },
+  // 取消修改
+  cancleCity: function () {
+    this.setData({
+      chooseAlerShow: false
+    })
+  },
 })

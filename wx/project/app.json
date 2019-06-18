@@ -1,14 +1,17 @@
 {
   "pages": [
-    "pages/demo2/demo2",
+    "pages/group2/group2",
+    "pages/group/group",
     "pages/loading/loading",
+    "pages/fenlei2/fenlei2",
+    "pages/mine/mine",
     "pages/searMsg/searMsg",
     "pages/passwordSeeting/passwordSeeting",
     "components/alert/alert",
     "pages/password/password",
     "pages/commodityDetails/commodityDetails",
     "pages/orderSuccess/orderSuccess",
-    "pages/myOrderB/myOrderB",
+    "pages/myOrderB/myOrderB",  
     "pages/peisongList/peisongList",
     "pages/peisonCon/peisonCon",
     "pages/address/address",
@@ -25,11 +28,9 @@
     "pages/classification/classification",
     "pages/fenleiList/fenleiList",
     "pages/list/list",
-    "pages/mine/mine",
     "pages/storeList/storeList",
     "pages/welcome/welcome",
     "pages/couponlist/couponlist",
-    "pages/group/group",
     "pages/getPhone/getPhone",
     "pages/preCommodityDetails/preCommodityDetails",
     "pages/news/news",
@@ -81,13 +82,13 @@
       {
         "selectedIconPath": "src/img/nav2/2.png",
         "iconPath": "src/img/nav2/2-1.png",
-        "pagePath": "pages/classification/classification",
+        "pagePath": "pages/fenlei2/fenlei2",
         "text": "分类"
       },
       {
         "selectedIconPath": "src/img/nav2/3.png",
         "iconPath": "src/img/nav2/3-1.png",
-        "pagePath": "pages/group/group",
+        "pagePath": "pages/group2/group2",
         "text": "团购"
       },
       {

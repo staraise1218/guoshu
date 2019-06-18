@@ -1,0 +1,98 @@
+<!-- Poster -->
+<view class="poster-wrap">
+    <image style="width: 710rpx; height: 160rpx; margin-left: 20rpx" src="https://app.zhuoyumall.com:444{{poster}}" />
+</view>
+
+<!-- Miaosa -->
+<view class="miaosa">
+    <view class="miaosa-top">
+        <view class="left">
+            <image src="https://app.zhuoyumall.com:444/wx/img/2/clock.png" />
+            <view>限时秒杀</view>
+        </view>
+        <view class="right">
+            <view class="ctr {{Active == 'MIAOSA' ? 'active' : ''}}" data-active="MIAOSA" bindtap="changeActive">
+                <view>正在抢购</view>
+                <view>到23 : 00</view>
+            </view>
+            <view class="ctr {{Active == 'NEXT' ? 'active' : ''}}" data-active="NEXT" bindtap="changeActive">
+                <view>正在抢购</view>
+                <view>明天8 : 00</view>
+            </view>
+        </view>
+    </view>
+    <view class="miaosa-con">
+        <!-- Miaosa -->
+        <scroll-view class="miaosa-scr" scroll-x="{{true}}" wx:if="{{Active == 'MIAOSA'}}">
+            <block wx:for="{{MiaosaList}}" wx:key>
+                <view class="miaosa-item" data-id="{{item.goods_id}}" bindtap="toCon">
+                    <image style="width: 200rpx; height: 200rpx"
+                        src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+                    <view class="goods_name">{{item.goods.goods_name}}</view>
+                    <view class="goods_name_">{{item.goods.subtitle}}</view>
+                    <view class="ctr">
+                        <view class="left">
+                            <image src="https://app.zhuoyumall.com:444/wx/img/2/人民币.png" />
+                            <view class="miaosa_price">{{item.goods.shop_price}}</view>
+                        </view>
+                        <view class="right-btn">马上抢</view>
+                    </view>
+                </view>
+            </block>
+        </scroll-view>
+        <!-- Next -->
+        <scroll-view class="miaosa-scr" scroll-x="{{true}}" wx:if="{{Active == 'NEXT'}}">
+            <block wx:for="{{MiaosaList}}" wx:key>
+                <view class="miaosa-item">
+                    <image style="width: 200rpx; height: 200rpx"
+                        src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+                    <view class="goods_name">{{item.goods.goods_name}}</view>
+                    <view class="goods_name_">{{item.goods.subtitle}}</view>
+                    <view class="ctr">
+                        <view class="left">
+                            <image src="https://app.zhuoyumall.com:444/wx/img/2/人民币.png" />
+                            <view class="miaosa_price">{{item.goods.shop_price}}</view>
+                        </view>
+                        <view class="right-btn">敬请期待</view>
+                    </view>
+                </view>
+            </block>
+        </scroll-view>
+    </view>
+</view>
+
+<!-- Group -->
+<view class="group">
+    <view class="group-top">
+        <view class="left">
+            <image style="width: 36rpx; height: 36rpx;" src="https://app.zhuoyumall.com:444/wx/img/2/拼团.png" />
+            <view>超值团购</view>
+        </view>
+        <view>团购商品次日送达</view>
+        <view class="right">分享商品一次最高返<view class="big-pric">5</view>元现金</view>
+    </view>
+    <!-- list -->
+    <view class="group-list">
+        <block wx:for="{{Grouplist}}">
+            <view class="list-item" data-id="{{item.goods_id}}" bindtap="toCon">
+                <image class="goods_pic" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+                <view class="right">
+                    <view class="goods_name">{{item.goods_name}}</view>
+                    <view class="goods_name_">{{item.subtitle}}</view>
+                    <view class="ctr">
+                        <view class="ctr-left">
+                            <view class="goods_price">
+                                <image class="RMB" style="width: 14rpx; height: 17rpx;" src="https://app.zhuoyumall.com:444/wx/img/2/￥蓝色.png" />
+                                <view>{{item.price}}</view>
+                            </view>
+                            <view class="goods_price_del">
+                                <view>￥{{item.goods_price}}</view>
+                            </view>
+                        </view>
+                        <view class="ctr-right">马上抢</view>
+                    </view>
+                </view>
+            </view>
+        </block>
+    </view>
+</view>

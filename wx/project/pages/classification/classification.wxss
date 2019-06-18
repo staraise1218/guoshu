@@ -27,12 +27,16 @@ page {
   overflow:hidden;
   text-overflow:ellipsis;
 }
+.price-del {
+  font-size: 20rpx;
+}
 .price.title {
   font-size: 32rpx;
   font-weight: 400;
 }
 .price {
-  font-weight: 400;
+  font-weight: 600;
+  color: #3E7CEA;
 }
 .news-icon {
   height: 40rpx !important;
@@ -82,7 +86,7 @@ page {
 }
 .left-bar .left-item.active {
   font-weight: 600%;
-  border-left: 5rpx solid #F8471E;
+  border-left: 6rpx solid #3E7CEA;
   background: #fff;
   font-weight: 600;
 }
@@ -129,20 +133,56 @@ page {
   width: 100%;
   margin-left: 10rpx;
 }
+.scro-con {
+  padding-top: 30rpx;
+}
 .scro-con .title-2 {
   overflow: hidden;
   white-space: nowrap;
   width: 320rpx;
+  height: 80rpx;
 }
 .scro-con .title-3_f {
   overflow: hidden;
   white-space: nowrap;
   width: 320rpx;
 }
+.shop-title,
+.shop-title-2 {
+  width: 300rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: rgba(0,0,0,.8);
+}
+.shop-title-2 {
+  color: rgba(0, 0, 0, 0.5)
+}
 
-
-
-
+.ctr-box {
+  width: 100%;
+  margin-top: 40rpx;
+}
+.ctr-box .left .price-1 {
+  position: relative;
+  padding-left: 16rpx;
+}
+.ctr-box .left .price-2 {
+  color: rgba(0,0,0,.5);
+  text-decoration: line-through;
+}
+.ctr-box .left .price-2 view {
+  font-size: 20rpx;
+}
+.ctr-box .left .RMB {
+  position: absolute;
+  bottom: 4rpx;
+  left: 0;
+}
+.ctr-box .right {
+  position: absolute;
+  right: 20rpx;
+  bottom: -32rpx;
+}
 
 
 /* ================= 
@@ -176,6 +216,19 @@ page {
 }
 .list-item {
   position: relative;
+  box-sizing: border-box;
+  padding: 30rpx 0 30rpx 30rpx;
+}
+.shop-content-msg {
+  position: absolute;
+  left: 240rpx;
+  top: 30rpx;
+}
+.shop-content-msg view {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 26rpx;
 }
 
 .shopping-alert {
@@ -209,6 +262,10 @@ page {
 .location-icon {
   width: 38rpx;
   height: 38rpx;
+}
+.icon-poster {
+  width: 190rpx;
+  height: 190rpx;
 }
 
 
@@ -304,3 +361,56 @@ page {
     color: #fff;
     display: inline-block;
   }
+
+
+  
+.shop-content {
+  position: relative;
+}
+.shop-content .shop-left {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.shop-content .shop-left .price-wrap {
+  position: relative;
+  padding-left: 16rpx;
+}
+.shop-content .shop-left .price-wrap image {
+  position: absolute;
+  left: 0;
+  bottom: 6rpx;
+}
+.shop-content .shop-left .del-wrap {
+  display: flex;
+  align-items: flex-end;
+  font-size: 18rpx;
+  text-decoration: line-through;
+  color: rgba(0, 0, 0, 0.5);
+
+}
+.shop-content .shop-right {
+  position: absolute;
+  right: 0;
+  top: 20rpx;
+}
+
+
+
+
+
+.shopcontent {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 50rpx;
+}
+.padding-b-30 {
+  padding-bottom: 30rpx;
+  box-sizing: border-box;
+}
+.between-center {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}

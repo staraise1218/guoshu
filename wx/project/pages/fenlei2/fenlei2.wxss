@@ -1,0 +1,283 @@
+/* Header */
+.search-bar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1rpx solid rgba(0, 0, 0, .1);
+    font-size: 28rpx;
+}
+
+.search-bar .location-wrap {
+    display: flex;
+    align-items: center;
+    font-size: 26rpx;
+}
+
+.search-bar .search-con {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    position: relative;
+    margin: 0 20rpx;
+    background: #F6F6F6;
+    padding: 8rpx 10rpx;
+    border-radius: 30rpx;
+}
+
+/* Nav */
+.nav-wrap {
+    position: fixed;
+    left: 0;
+    top: 100rpx;
+    width: 200rpx;
+    height: 100vh;
+    background: #F6F6F6;
+    text-align: center;
+    font-size: 28rpx;
+    color: rgba(0, 0, 0, .6);
+}
+
+.nav-wrap .nav-item {
+    height: 60rpx;
+    line-height: 60rpx;
+}
+
+.nav-wrap .nav-item.active {
+    border-left: 6rpx solid #3E7CEA;
+    box-sizing: border-box;
+    background: #fff;
+}
+
+.nav-wrap .nav-item:last-child {
+    margin-bottom: 100rpx;
+}
+
+/* Nav-bar */
+.nav-bar {
+    position: fixed;
+    right: 0;
+    top: 100rpx;
+    width: 550rpx;
+    white-space: nowrap;
+    display: flex;
+    font-size: 22rpx;
+    border-bottom: 1rpx solid rgba(0, 0, 0, .1);
+    height: 62rpx;
+    box-sizing: border-box;
+}
+
+.nav-bar .nav-bar-item {
+    display: inline-block;
+    padding: 0rpx 20rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+    box-sizing: border-box;
+}
+.nav-bar .nav-bar-item.active {
+    color: #3B7BE9;
+}
+
+/* Shop-con */
+.shop-con {
+    position: fixed;
+    right: 0;
+    top: 160rpx;
+    width: 550rpx;
+    height: 100vh;
+    display: flex;
+}
+
+.shop-con .shop-item {
+    padding: 30rpx 0 30rpx 30rpx;
+    border-bottom: 1rpx solid rgba(0, 0, 0, .3);
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.shop-con .shop-item:last-child {
+    margin-bottom: 200rpx;
+}
+
+.shop-con .shop-item .shop-pic {
+    width: 200rpx;
+    height: 200rpx;
+}
+
+.shop-con .shop-item .shop-info {
+    flex: 1;
+    position: relative;
+    margin-left: 20rpx;
+}
+
+.shop-con .shop-item .shop-info .goods-name {
+    font-size: 28rpx;
+    width: 280rpx;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.shop-con .shop-item .shop-info .goods-name_ {
+    font-size: 22rpx;
+    width: 280rpx;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.shop-con .shop-item .shop-info .goods-ctr {
+    margin-top: 45rpx;
+}
+
+.shop-con .shop-item .shop-info .goods-ctr .goods-price {
+    position: relative;
+    padding-left: 16rpx;
+    color: #3B7BE9;
+    font-weight: 600;
+    font-size: 28rpx;
+}
+
+.shop-con .shop-item .shop-info .goods-ctr .goods-price .RMB {
+    position: absolute;
+    left: 0;
+    bottom: 6rpx;
+}
+
+.shop-con .shop-item .shop-info .goods-price-del {
+    color: rgba(0, 0, 0, .5);
+    text-decoration: line-through;
+    font-size: 18rpx;
+}
+
+.shop-con .shop-item .shop-info .goods-add {
+    position: absolute;
+    right: 30rpx;
+    bottom: -20rpx;
+}
+
+
+/* 选择城市弹窗 */
+.alert-box_ {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: rgba(0, 0, 0, .5);
+    z-index: 998;
+}
+
+.cityshow-alert {
+    position: fixed;
+    left: 49.5%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+    background: #fff;
+    display: flex;
+    width: 95%;
+    height: 800rpx;
+    border-radius: 15rpx;
+    overflow: hidden;
+}
+
+.cityshow-alert .left,
+.cityshow-alert .center,
+.cityshow-alert .right {
+    flex: 1;
+    font-weight: 400;
+    font-size: 22rpx;
+    text-align: center;
+    height: 720rpx;
+    padding-bottom: 40rpx;
+}
+
+.cityshow-alert .content {
+    line-height: 60rpx;
+    border-left: 10rpx solid transparent;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.cityshow-alert .active {
+    background: #eee;
+    border-left: 10rpx solid #FC5453
+}
+
+.city-btn_ {
+    position: fixed;
+    bottom: 20rpx;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 200rpx;
+    background: rgba(0, 200, 0, 1);
+    z-index: 999;
+    color: #fff;
+    text-align: center;
+    font-size: 26rpx;
+    border-radius: 10rpx;
+    padding: 20rpx;
+    margin: 0;
+}
+
+.btn-wrapper {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    font-size: 32rpx;
+    border-top: 1rpx solid rgba(0, 0, 0, .1);
+}
+
+.btn-wrapper view {
+    text-align: center;
+    flex: 1;
+    height: 80rpx;
+    line-height: 80rpx;
+}
+
+.btn-wrapper .cancel {
+    background: #eee;
+}
+
+.btn-wrapper .ok {
+    background: #FF8A00;
+    color: #fff;
+}
+
+.tag-date {
+    background: #F9F252;
+    white-space: nowrap;
+    padding: 5rpx 8rpx;
+    font-size: 18rpx;
+    color: #fff;
+    display: inline-block;
+}
+
+/* alert */
+.alert-tips {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    background: rgba(0, 0, 0, .5);
+    transform: translate(-50%, -50%);
+    color: #fff;
+    padding: 20rpx;
+    border-radius: 15rpx;
+    font-size: 26rpx;
+    text-align: center;
+
+}

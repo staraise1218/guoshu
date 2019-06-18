@@ -1,31 +1,20 @@
 <view id="container">
-
-  <!-- 购物车动画 -->
-  <view class="good_box" hidden="{{hide_good_box}}" style="left: {{bus_x}}px; top: {{bus_y}}px;"></view>
-  <!-- 点击加  点击事件 -->
-
-
   <!-- 吸附顶部 -->
   <view class="fix-wrap">
-    <view class='topbar'>
-      <image bindtap="chooseAddressShow" class="location-icon"
-        src="https://hbimg.huabanimg.com/698f1951de21b12c43072ae841182f165e05e9cd890-xBN8IX_fw658" />
-      <view bindtap="chooseAddressShow" class="location" selectable="false" space="false" decode="false">
-        {{address}}
+    <view class="search-bar">
+      <view class="location-wrap" bindtap="chooseAddressShow">
+        <image style="width: 33rpx; margin-right: 20rpx; height: 44rpx;"
+          src="https://app.zhuoyumall.com:444/wx/img/dingwei@2x.png" />
+        <view class="">{{address}}</view>
       </view>
-      <view class="search-flex"></view>
-      <!-- </view> -->
-      <view class="search" hover-class="none" hover-stop-propagation="false">
-        <image class="search-icon"
-          src="http://img.hb.aicdn.com/2428f6e809e53942c9be02543a31d0c59b3f7a286b0-2jNZQl_fw658" />
-        <input class="serach-input" disabled='true' placeholder="火龙果" auto-focus bindtap="toSearch" />
+      <view class="search-con" bindtap="toSearch">
+        <image style="width: 45rpx; margin-right: 10rpx" mode="widthFix"
+          src="https://app.zhuoyumall.com:444/wx/img/search.png" />
+        火龙果
       </view>
-      <view bindtap="toNews" class="news" hover-class="none" hover-stop-propagation="false">
-        <button class="news_btn active" send-message-title="分享标题" send-message-img="分享的单个图片链接" show-message-card="true"
-          send-message-path="../index/index?id={{id}}" plain>
-          <image class="news-icon"
-            src="https://hbimg.huabanimg.com/deb427e3df46fa36177cf43e28494ada7db19f72668-iwUuto_fw658" />
-        </button>
+      <view class="news" bindtap="toNews">
+        <image bindtap="toNews" class="icon-2 news-icon"
+          src="https://hbimg.huabanimg.com/deb427e3df46fa36177cf43e28494ada7db19f72668-iwUuto_fw658" />
       </view>
     </view>
   </view>
@@ -236,12 +225,11 @@
     <!-- share END -->
     <view class="line"></view>
     <block wx:for="{{topCateGoods}}" wx:key="{{item.id}}">
-      <view class="padding-lr-30">
-        <!-- <image style="width: 100%" mode="widthFix" data-catid="{{item.id}}" bindtap="toFenlei" src="https://app.zhuoyumall.com:444{{item.index_image}}" /> -->
-        <image lazy-load="true" class="group-icon-poster" style="width: 100%" mode="widthFix" data-id="{{item.id}}"
-          bindtap="tapchange" src="https://app.zhuoyumall.com:444{{item.index_image}}" />
+      <view class="group-icon-poster-box">
+        <image lazy-load="true" class="group-icon-poster" mode="widthFix" data-id="{{item.id}}" bindtap="tapchange"
+          src="https://app.zhuoyumall.com:444{{item.index_image}}" />
       </view>
-      <scroll-view scroll-x class="shangpin-wrap  padding-bottom-20">
+      <scroll-view scroll-x class="shangpin-wrap">
         <view class="scroll-wrapper_">
           <block wx:for="{{item.goodslist}}" wx:key>
             <view class="scro-item " data-id="{{item.goods_id}}" wx-if="{{index % 2 == 0}}"
@@ -256,25 +244,39 @@
                 <image lazy-load="true" class="shop-status icon-poster"
                   src="https://app.zhuoyumall.com:444{{item.original_img}}" />
                 <view class="tag_self_2" wx:if="{{item.tag}}">{{item.tag}}</view>
-                <!-- <image lazy-load="true"  data-goodsid="{{item.goods_id}}" class="shop-status icon-poster" src="https://app.zhuoyumall.com:444{{item.SHOW ? item.original_img : item.loadImg}}" /> -->
               </view>
               <view class="title-2">{{item.goods_name}}</view>
               <view class="title-2_f">{{item.subtitle}}</view>
-              <view class="self-flex title-3 ">
-                <!-- <view class="tag-new">{{item.tag}}</view> -->
+              <!-- <view class="self-flex title-3 ">
                 <view wx-if="{{item.virtual_num != 0}}" class="selt-right">已购 {{item.virtual_num}} 份</view>
+              </view> -->
+              <view class="shop-content">
+                <view class="shop-left">
+                  <view class="price-wrap">
+                    <image style="width: 13rpx" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/2/￥蓝色.png" />
+                    <view class="price">{{item.shop_price}}</view>
+                  </view>
+                  <view class="del-wrap">
+                    <view class="price-del">￥{{item.market_price}}</view>
+                  </view>
+                </view>
+                <view class="shop-right">
+                  <image lazy-load="true" data-img="https://app.zhuoyumall.com:444{{item.original_img}}"
+                    style="width: 50rpx" mode="widthFix" catchtap="{{item.store_count == 0 ? '' : 'addCart'}}"
+                    src="https://app.zhuoyumall.com:444/wx/img/2/购物车蓝色.png" data-id="{{item.goods_id}}" />
+                </view>
               </view>
-              <view class="between-center good_item_self">
+              <!-- <view class="between-center good_item_self">
                 <view class="left-center">
                   <view class="price">￥{{item.shop_price}}</view>
                 </view>
                 <view class="right-center">
                   <image lazy-load="true" data-img="https://app.zhuoyumall.com:444{{item.original_img}}" class="icon-2"
                     catchtap="{{item.store_count == 0 ? '' : 'addCart'}}" style="margin: 15rpx 0"
-                    src="https://hbimg.huabanimg.com/ff8af7f0827e85d34cc15b364ff139c61e6fe5bc5b3-0QRyv2_fw658"
+                    src="https://app.zhuoyumall.com:444/wx/img/2/购物车蓝色.png"
                     data-id="{{item.goods_id}}" />
                 </view>
-              </view>
+              </view> -->
             </view>
           </block>
         </view>
@@ -295,22 +297,36 @@
               </view>
               <view class="title-2">{{item.goods_name}}</view>
               <view class="title-2_f">{{item.subtitle}}</view>
-              <view class="self-flex title-3">
-                <!-- <view class="tag-new">{{item.tag}}</view> -->
+              <!-- <view class="self-flex title-3">
                 <view wx-if="{{item.virtual_num != 0}}" class="selt-right">已购 {{item.virtual_num}} 份</view>
+              </view> -->
+              <view class="shop-content">
+                <view class="shop-left">
+                  <view class="price-wrap">
+                    <image style="width: 13rpx" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/2/￥蓝色.png" />
+                    <view class="price">{{item.shop_price}}</view>
+                  </view>
+                  <view class="del-wrap">
+                    <view class="price-del">￥{{item.market_price}}</view>
+                  </view>
+                </view>
+                <view class="shop-right">
+                  <image lazy-load="true" data-img="https://app.zhuoyumall.com:444{{item.original_img}}"
+                    style="width: 50rpx" mode="widthFix" catchtap="{{item.store_count == 0 ? '' : 'addCart'}}"
+                    src="https://app.zhuoyumall.com:444/wx/img/2/购物车蓝色.png" data-id="{{item.goods_id}}" />
+                </view>
               </view>
-              <view class="between-center good_item_self">
+              <!-- <view class="between-center good_item_self">
                 <view class="left-center">
                   <view class="price">￥{{item.shop_price}}</view>
                 </view>
                 <view class="right-center">
-                  <image wx-show="{{item.SHOW != 'false'}}" lazy-load="true"
-                    data-img="https://app.zhuoyumall.com:444{{item.original_img}}" class="icon-2"
+                  <image lazy-load="true" data-img="https://app.zhuoyumall.com:444{{item.original_img}}" class="icon-2"
                     catchtap="{{item.store_count == 0 ? '' : 'addCart'}}" style="margin: 15rpx 0"
-                    src="https://hbimg.huabanimg.com/ff8af7f0827e85d34cc15b364ff139c61e6fe5bc5b3-0QRyv2_fw658"
+                    src="https://app.zhuoyumall.com:444/wx/img/2/购物车蓝色.png"
                     data-id="{{item.goods_id}}" />
                 </view>
-              </view>
+              </view> -->
             </view>
           </block>
         </view>
