@@ -38,6 +38,7 @@ class User extends Base {
 
         // 未支付订单数量
         $result['unpaidOrderNum'] = Db::name('order')
+            ->where('user_id', $user_id)
             ->where('pay_status', 0)
             ->where('order_status', 0)
             ->count();
