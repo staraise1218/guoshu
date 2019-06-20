@@ -235,7 +235,8 @@
 <!-- 弹窗 -->
 <view class="my_alert_bg" wx:if="{{my_error_alert_show}}" bindtap="close_my_alert"></view>
 <view class="my_alert" wx:if="{{my_error_alert_show}}">
-    <view class="my_title">{{my_alert_title}}</view>
+    <!-- <view class="my_title">{{my_alert_title}}</view> -->
+    <image style="width: 100%; height: 90rpx;" src="https://app.zhuoyumall.com:444/wx/img/2/321.png" />
     <view class="my_con">{{alert_errorMsg}}</view>
     <view class="my_btn">
         <view class="my_cancel" bindtap="my_alert_cancel">{{cancel}}</view>

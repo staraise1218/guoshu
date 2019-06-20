@@ -53,9 +53,11 @@ page {
     background: #FF4E76;
     color: #fff;
 }
+.miaosa .miaosa-con {
+    height: 405rpx;
+}
 .miaosa .miaosa-con .miaosa-scr {
     white-space: nowrap;
-
 }
 .miaosa .miaosa-con .miaosa-scr .miaosa-item {
     display: inline-block;

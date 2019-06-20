@@ -71,11 +71,11 @@
 .okBtn {
     width: 50%;
     color: #fff;
-    background: linear-gradient(#F46341, #F8461D);
+    background: linear-gradient(#ff3c64, #F8461D);
     text-align: center;
     padding: 18rpx;
     border-radius: 50rpx;
-    border: 2rpx solid #F8461E;
+    border: 2rpx solid #ff3c64;
     margin: 100rpx auto 20rpx auto;
 }
 
@@ -171,7 +171,10 @@
   }
   .cityshow-alert .active {
     background: #eee;
-    border-left: 10rpx solid #FC5453
+    border-left: 10rpx solid #ff3c64
+  }
+  .price {
+    color: #ff3c64 !important
   }
   
   .city-btn_ {

@@ -1,7 +1,7 @@
 <scroll-view scroll-y="{{true}}" bindscrolltolower="getMore" class="item-box-1">
     <view>
         <view class="list-wrapper">
-            <image class="icon-bg" mode="" src="https://app.zhuoyumall.com:444{{msg.image}}" />
+            <!-- <image class="icon-bg" mode="" src="https://app.zhuoyumall.com:444{{msg.image}}" /> -->
             <view class="lists">
                 <block wx:for="{{GOODLIST}}" wx:key>
                     <view class="item-list-box" data-id="{{item.goods_id}}" bindtap="toCon" data-id="{{item.goods_id}}">
@@ -12,16 +12,16 @@
                         </view>
                         <view class="title-3 shop-title">{{item.goods_name}}</view>
                         <view class="title-2_f shop-title">{{item.subtitle}}</view>
-                        <!-- <view class="self-flex title-3 margin-bottom-20 ">
-                            <view wx-if="{{item.virtual_num != 0}}" class="selt-right">已购{{item.virtual_num}} 份</view>
-                        </view> -->
+                        <!-- <view class="self-flex title-3 margin-bottom-20 "> -->
+                            <!-- <view class="tag-new">{{item.tag}}</view> -->
+                            <!-- <view wx-if="{{item.virtual_num != 0}}" class="selt-right">已购{{item.virtual_num}} 份</view> -->
+                        <!-- </view> -->
                         <view class="bottom">
                             <view class="left-center">
                                 <view class="price">{{item.shop_price}}</view>
                             </view>
                             <image data-id="{{item.goods_id}}" catchtap="addCart" class="icon-2" mode="widthFix"
-                                style="width: 50rpx; height: 50rpx;"
-                                src="https://app.zhuoyumall.com:444/wx/img/2/购物车蓝色.png" />
+                                src="https://hbimg.huabanimg.com/ff8af7f0827e85d34cc15b364ff139c61e6fe5bc5b3-0QRyv2_fw658" />
                         </view>
                     </view>
                 </block>

@@ -108,6 +108,7 @@ Page({
     })
     that.index(that); // 首页
     that.miaosha(that); // 秒杀商品
+    that.getTuijian(that);
     if (!wx.getStorageSync('user_id')) {
       wx.navigateTo({
         url: '/pages/loading/loading'
@@ -116,6 +117,24 @@ Page({
     that.TimeDown(); // 倒计时
   },
 
+  getTuijian(that) {
+    wx.request({
+      url: Globalhost + 'Api/goods/recommendgoodslist',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: {
+        user_id: wx.getStorageSync('user_id'),
+        city_code: wx.getStorageSync('addressCode')
+      },
+      success: function(res) {
+        that.setData({
+          tuijianList: res.data.data
+        })
+      }
+    })
+  },
   /**
    * 首页接口
    */
@@ -311,7 +330,7 @@ Page({
    */
   toCon: function (e) {
     loadingfunc(); // 加载函数
-    console.log(e.currentTarget.dataset.id)
+    console.log(e.currentTarget.dataset)
     wx.navigateTo({
       url: '/pages/commodityDetails/commodityDetails?goods_id=' + e.currentTarget.dataset.id + '&msg=index'
     })
@@ -332,7 +351,7 @@ Page({
     loadingfunc(); // 加载函数
     wx.setStorageSync('nextStatus', 1)
     wx.switchTab({
-      url: '/pages/group/group'
+      url: '/pages/group2/group2'
     })
   },
   /**
@@ -342,7 +361,7 @@ Page({
     loadingfunc(); // 加载函数
     wx.setStorageSync('nextStatus', false)
     wx.switchTab({
-      url: '/pages/group/group'
+      url: '/pages/group2/group2'
     })
   },
   /**
@@ -746,6 +765,7 @@ Page({
     wx.setStorageSync('addressCode', that.data.chooseAddressCode);
     that.index(that); // 首页
     that.miaosha(that); // 秒杀商品
+    that.getTuijian(that);  // 推荐商品
   },
   // 取消修改
   cancleCity: function () {
@@ -782,6 +802,16 @@ Page({
       }
     })
   },
+  toTuijian() {
+    wx.navigateTo({
+      url: '/pages/tuijian/tuijian'
+    })
+  },
+  toMingxi() {
+    wx.navigateTo({
+      url: '/pages/mingxi/mingxi'
+    })
+  }
 
 
 

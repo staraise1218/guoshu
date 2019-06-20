@@ -28,7 +28,9 @@
             </view>
         </swiper-item>
         <swiper-item wx:for="{{goodLists.goods_images_list}}" wx:if="{{goodLists.goods_images_list}}" wx:key>
-        <image src="https://app.zhuoyumall.com:444{{item.image_url}}" class="slide-image" width="355" height="150" />
+            <view style="padding: 50rpx">
+                <image src="https://app.zhuoyumall.com:444{{item.image_url}}" class="slide-image" style="width: 650rpx; height: 650rpx;" />
+            </view>
         </swiper-item>
     </swiper>
     <!-- <view class="btn-wrap" wx:if="{{MP4}}">
@@ -40,12 +42,12 @@
 
 
 <!-- 团购价格区域 -->
-<view class="group" wx:if="{{goodLists.prom_type != 0}}">
+<!-- <view class="group" wx:if="{{goodLists.prom_type != 0}}">
     <view class="left">
-        <view wx:if="{{goodLists.prom_type == 1}}">秒杀价 ￥{{MSM.shop_price}}</view>
-        <view wx:if="{{goodLists.prom_type == 2}}">团购价 ￥{{MSM.shop_price}}</view>
+        <view wx:if="{{goodLists.prom_type == 1}}">￥{{MSM.shop_price}}</view>
+        <view wx:if="{{goodLists.prom_type == 2}}">￥{{MSM.shop_price}}</view>
         <view class="tag-wrapper">
-            <view class="del">原价￥{{goodLists.shop_price}}</view>
+            <view class="" style="display: flex">市场价 <view class="del">￥{{goodLists.shop_price}}</view></view>
             <view class="tag">已拼{{MSM.virtual_num}}份</view>
         </view>
     </view>
@@ -61,14 +63,48 @@
             <view class="time-box">{{time.seconds}}</view>
         </view>
     </view>
+</view> -->
+<view class="group_new"  wx:if="{{goodLists.prom_type != 0}}">
+    <view class="left">
+        <view class="left-l">
+            <view class="price_wrap" style="margin-top: 6rpx;">
+                <view>￥</view>
+                <view style="font-weight: 600; font-size: 32rpx;">{{MSM.shop_price}}</view>
+            </view>
+            <view class="price_wrap" style="font-size: 22rpx;">
+                <view>市场价</view>
+                <view>￥{{goodLists.shop_price}}</view>
+            </view>
+        </view>
+        <view class="left-r" style="font-weight: 600; font-size: 24rpx;">
+            <view style="margin-top: 6rpx;">已团</view>
+            <view style="margin-top: 6rpx;">{{MSM.virtual_num}}份</view>
+        </view>
+    </view>
+    <view class="right">
+        <view style="color: rgba(0,0,0,.6);">距离结束还剩</view>
+        <view class="time-wrapper">
+            <view class="time-box">{{time.days}}</view>
+            :
+            <view class="time-box">{{time.hours}}</view>
+            :
+            <view class="time-box">{{time.minutes}}</view>
+            :
+            <view class="time-box">{{time.seconds}}</view>
+        </view>
+    </view>
 </view>
+
+
+
+
 <view class="padding-bottom-20" wx:if="{{goodLists.prom_type == 2}}">
-    <view class="title-2 margin-left-30 margin-top-30">{{goodLists.goods_name}}</view>
-    <view class="title-2_f margin-left-30 margin-top-10">{{goodLists.subtitle}}</view>
+    <view class="title-2 margin-left-30 margin-top-30" style="font-size: 28rpx;">{{goodLists.goods_name}}</view>
+    <view class="title-2_f margin-left-30" style="color: rgba(0,0,0,.7); font-size: 26rpx;">{{goodLists.subtitle}}</view>
 </view>
 <!-- 团购价格区域 END -->
 <!-- 非团购价格区域 -->
-<view wx:if="{{goodLists.prom_type != 2}}">
+<!-- <view wx:if="{{goodLists.prom_type != 2}}">
     <view class="title-2 margin-left-30 margin-top-30">{{goodLists.goods_name}}</view>
     <view class="title-2_f margin-left-30 margin-top-10">{{goodLists.subtitle}}</view>
     <view class="flex-space_between margin-top-30 padding-lr-30">
@@ -80,23 +116,55 @@
         </view>
         <view wx-if="{{goodLists.sales_sum != 0}}" class="title-3_f">已售{{goodLists.sales_sum}}份</view>
     </view>
+</view> -->
+
+<view class="goodsInfo" wx:if="{{goodLists.prom_type != 2}}">
+    <view class="xiaoliang" wx:if="{{goodLists.prom_type == 0}}">销量{{goodLists.sales_sum}}</view>
+    <view class="goods_name">{{goodLists.goods_name}}</view>
+    <view class="goods_name_">{{goodLists.subtitle}}</view>
+    <view class="price-wrap">
+        <view class="left">
+            <view class="price">
+                <image style="width: 22rpx; height: 28rpx;" src="https://app.zhuoyumall.com:444/wx/img/2/人民币.png" />
+                <view>{{goodLists.shop_price}}</view>
+            </view>
+            <view class="price-del-wrap">
+                市场价 
+                <view class="price-del">
+                ￥{{goodLists.market_price}}
+                </view>
+            </view>
+        </view>
+        <view wx:if="{{goodLists.prom_type == 0}}" class="haoping">好评率{{haoping}}%</view>
+    </view>
+
 </view>
+
+
+
+
+
 <!-- 非团购价格区域 END -->
-<!-- <view class="sare flex-space_between flex-align-item margin-lr-30"> -->
 <button open-type="share" class="sare share-btn flex-space_between flex-align-item margin-lr-30">
-    <!-- <view class="left font-size-26 flex-align-item"> -->
-        <!-- <image class="icon_2" src="http://img.hb.aicdn.com/c232ac493e51664baa4670b212ba2284ed822b2161e-OcJE12_fw658" /> -->
-        <!-- 分享该商品可赚现金{{shareNum}}元 -->
-    <!-- </view> -->
-    <view class="share-text">分享该商品可赚现金{{shareNum}}元</view>
-    <!-- <image class="icon_2" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/right arrow-b.png" /> -->
-    <!-- <image class="share_bg" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/去分享.png" /> -->
-    <!-- <view class="right font-size-26 color_red">
-    </view> -->
+    <view class="share-text">
+    {{shareNum}}元
+    </view>
 </button>
+
+
+
+<!-- tips -->
+<view class="tips-tag">
+    <view class="left">
+        <view class="item-tag">当日达</view>
+        <view class="item-tag">门店自提/送货上门</view>
+    </view>
+    <view wx:if="{{goodLists.prom_type != 0}}" class="right">好评率{{haoping}}%</view>
+</view>
+
 <!-- </view> -->
-<view class="line margin-top-30"></view>
 <!-- 精选评价 -->
+<view class="line margin-top-30" wx:if="{{goodsCommentList}}"></view>
 <view class="pingjia padding-20" wx:if="{{goodsCommentList}}">
     <view class="title-2">精选评价</view>
     <view class="flex-space_between user-head">
@@ -117,35 +185,55 @@
     </view>
     <view class="ping-text">{{goodsCommentList.content == 'undefined' ? '暂无评价' : goodsCommentList.content}}</view>
 </view>
+
+
 <!-- 推荐商品 -->
-<view class="tuijian-bg">
-    <view class="title margin-left-30 margin-bottom-30">推荐商品</view>
-    <scroll-view scroll-x class="commodisyScro">
-        <block wx:for="{{tuijian}}" wx:key>
-        <!-- <block wx:for="{{toDayTuijian}}" wx:key> -->
-            <view wx:if="{{item.store_count !=0}}" class="src-item" data-goodsid="{{item.goods_id}}">
-                <view catchtap="go" data-id="{{item.goods_id}}">
-                    <image class="poster" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
-                </view>
-                <view class="title-2">{{item.goods_name}}</view>
-                <view class="title-2_f">{{item.subtitle}}</view>
-                <view class="title-2_f">
-                    <view wx-if="{{item.virtual_num != 0}}">已购 {{item.virtual_num}} 份</view>
-                </view>
-                <view class="bottom">
-                    <view class="price">￥{{item.shop_price}}</view>
-                    <view data-goodsid="{{item.goods_id}}" catchtap="addShopCart">
-                        <image src="https://hbimg.huabanimg.com/ff8af7f0827e85d34cc15b364ff139c61e6fe5bc5b3-0QRyv2_fw658" class="icon-2 shopCartIcon" />
+    <view class="tuijian-bg">
+        <view class="margin-left-30 margin-bottom-30 text-center" style="font-size: 32rpx; color: rgba(0,0,0,.6);">推荐商品</view>
+        <scroll-view scroll-x class="commodisyScro">
+            <block wx:for="{{tuijian}}" wx:key>
+                <view wx:if="{{item.store_count !=0}}" class="src-item" data-goodsid="{{item.goods_id}}">
+                    <view catchtap="{{ item.store_count == 0 ? '' : 'go' }}" data-id="{{item.goods_id}}">
+                        <image class="poster" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+                    </view>
+                    <view style="color: rgba(0,0,0,.7);" class="title-2">{{item.goods_name}}</view>
+                    <view style="color: rgba(0,0,0,.65);" class="title-2_f">{{item.subtitle}}</view>
+                    <view class="bottom">
+                        <view class="left">
+                            <view class="price" style="color: #FF4E76">
+                                <image style="width: 26rpx; height: 28rpx; margin-top: 12rpx;" src="https://app.zhuoyumall.com:444/wx/img/2/人民币.png" />
+                                {{item.shop_price}}
+                            </view>
+                            <view style="text-decoration: line-through; color: rgba(0,0,0,.6); font-size: 22rpx;">￥456</view>
+                        </view>
+                        <view data-goodsid="{{item.goods_id}}" bindtap="{{item.store_count == 0 ? '' : 'addShopCart'}}">
+                            <image style="width: 52rpx; height: 52rpx; margin-top: 22rpx;" src="https://app.zhuoyumall.com:444/wx/img/2/购物车2.png" class="shopCartIcon" />
+                        </view>
+                    </view>
+                    <view class="shopping-alert" wx:if="{{item.store_count == 0}}">
+                        <view class="alert-con">
+                            <view>抢光啦</view>
+                            <view>SOLD OUT</view>
+                        </view>
                     </view>
                 </view>
-            </view>
-        </block>
-    </scroll-view>
-</view>
+            </block>
+        </scroll-view>
+    </view>
+
+
+
+
+
+
+
+
+
+
 <view class="title padding-30 margin-top-10">商品详情</view>
 <rich-text nodes="{{html}}" catchtap="tap"></rich-text>
 <!-- 购物车 -->
-<view class="shopCart-wrap">
+<!-- <view class="shopCart-wrap">
     <view class="schopCart" catchtap="toShopCart">
         <image class="icon-1 schop-icon" src="/src/img/gouwuche(2)@2x.png" />
         <view class="num" wx:if="{{num>0}}">{{num}}</view>
@@ -154,8 +242,19 @@
     <view class="toPay" data-goodsid="{{goods_id}}" catchtap="{{byNowFlag == 'true' ? 'byNow' : ''}}">
         立即购买
     </view>
-</view>
+</view> -->
 
+<view class="shopCart">
+    <view class="home" catchtap="toHome">
+        <image style="width: 50rpx; height: 50rpx;" src="https://app.zhuoyumall.com:444/wx/img/2/home.png" />
+    </view>
+    <view class="cart" catchtap="toShopCart">
+        <image style="width: 50rpx; height: 50rpx;" src="https://app.zhuoyumall.com:444/wx/img/2/购物车.png" />
+        <view class="cartCount" wx:if="{{num > 0}}">{{num}}</view>
+    </view>
+    <view class="addCart" data-id="{{goods_id}}" catchtap="addcart">加入购物车</view>
+    <view class="toPay" data-goodsid="{{goods_id}}" catchtap="{{byNowFlag == 'true' ? 'byNow' : ''}}">立即购买</view>
+</view>
 
 
 
@@ -173,7 +272,8 @@
 <!-- 弹窗 -->
 <view class="my_alert_bg" wx:if="{{my_error_alert_show}}" bindtap="close_my_alert"></view>
 <view class="my_alert" wx:if="{{my_error_alert_show}}">
-    <view class="my_title">温馨提示</view>
+    <!-- <view class="my_title">温馨提示</view> -->
+    <image style="width: 100%; height: 90rpx;" src="https://app.zhuoyumall.com:444/wx/img/2/321.png" />
     <view class="my_con">在您确定订单之前，请选择您的收货方式，我们提供了两种收货方式：门店自取和送货上门。</view>
     <view class="my_btn">
         <view class="my_cancel" bindtap="my_alert_cancel">门店自取</view>

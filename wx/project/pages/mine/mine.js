@@ -341,6 +341,8 @@ Page({
     money: 123, // 零钱
     readBag: 234, // 红包
     waitOrder: 345, // 未付订单
+    role: 1,  // 1普通会员 2 配送员 3团长
+    shenqing: false,  // 申请弹窗
 
 
   },
@@ -368,6 +370,10 @@ Page({
         }
       })
     }
+    that.setData({
+      role: wx.getStorageSync('role') || 1
+    })
+
   },
 
   // 获取用户信息
@@ -432,7 +438,8 @@ Page({
   toYue: function () { // 余额
     loadingfunc();
     wx.navigateTo({
-      url: '/pages/yue/yue'
+      url: '/pages/mingxi/mingxi'
+      // url: '/pages/yue/yue'
     })
   },
   toYouhui: function () { // 优惠券
@@ -445,12 +452,6 @@ Page({
     loadingfunc();
     wx.navigateTo({
       url: '/pages/userInfo/userInfo'
-    })
-  },
-  toYue: function () { // 余额
-    loadingfunc();
-    wx.navigateTo({
-      url: '/pages/yue/yue'
     })
   },
   toWeiZhiFu: function () { // 未支付
@@ -501,8 +502,25 @@ Page({
       url: '/pages/siteMsg/siteMsg'
     })
   },
-
-
+  // 跳转到自提点订单
+  toZiti() {
+    loadingfunc();
+    wx.navigateTo({
+      // url: '/pages/peisongList/peisongList?opSTATUS=SENDING'
+      url: '/pages/myOrderB/myOrderB?opSTATUS=WAITRECEIVE'
+    })
+  },
+  shenqing() {
+    this.setData({
+      shenqing: true
+    })
+  },
+  closeShenqing() {
+    console.log('alsjknm')
+    this.setData({
+      shenqing: false
+    })
+  },
   /**
    * 加载购物车数量
    */

@@ -42,7 +42,7 @@
         </scroll-view>
         <!-- Next -->
         <scroll-view class="miaosa-scr" scroll-x="{{true}}" wx:if="{{Active == 'NEXT'}}">
-            <block wx:for="{{MiaosaList}}" wx:key>
+            <block wx:for="{{NextList}}" wx:key>
                 <view class="miaosa-item">
                     <image style="width: 200rpx; height: 200rpx"
                         src="https://app.zhuoyumall.com:444{{item.original_img}}" />

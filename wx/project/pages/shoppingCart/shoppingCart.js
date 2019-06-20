@@ -233,11 +233,11 @@ Page({
         city_code: wx.getStorageSync('addressCode'),// 110100
       },
       success: function (res) {
-        wx.showToast({
-          title: '购物车加载中',
-          icon: 'loadubg',
-          duration: 20000
-        })
+        // wx.showToast({
+        //   title: '购物车加载中',
+        //   icon: 'loadubg',
+        //   duration: 20000
+        // })
         that.setData({
           orderList: ''
         })
@@ -555,8 +555,39 @@ Page({
 
   
 
+  delItem(e) {
+    let that = this;
+    console.log(e.currentTarget.dataset)
+    wx.request({
+      url: Globalhost + 'Api/cart/delete',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      method: 'POST',
+      data: {
+        cart_ids: JSON.stringify(e.currentTarget.dataset.catId),
+        user_id: wx.getStorageSync('user_id')
+      },
+      success: function(res) {
+        console.log(res)
+        wx.showToast({
+          title: res.data.msg,
+          icon: 'none'
+        })
+        if(res.data.code == 200) {
+          that.createList(that);  // 渲染列表
+          that.loadingShopcartNum(that);
+        }
+      }
+    })
+  },
 
 
+  toHome() {
+    wx.switchTab({
+      url: '/pages/index/index'
+    })
+  },
   
   /**
    * footer 跳转
