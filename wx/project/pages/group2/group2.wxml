@@ -16,7 +16,7 @@
                 <view>到23 : 00</view>
             </view>
             <view class="ctr {{Active == 'NEXT' ? 'active' : ''}}" data-active="NEXT" bindtap="changeActive">
-                <view>正在抢购</view>
+                <view>下期预告</view>
                 <view>明天8 : 00</view>
             </view>
         </view>

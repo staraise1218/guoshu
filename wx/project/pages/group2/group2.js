@@ -77,7 +77,7 @@ Page({
         console.log(data)
         if(status == 'next') {
           that.setData({
-            NextList: ''
+            NextList: data
           })
         } else {
           that.setData({

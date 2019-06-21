@@ -233,13 +233,25 @@
 
 
 
+    <!-- AD 2 -->
+    <view style="background: #eee;">
+      <view class="padding-tb-30 jingcaidali-wrap" >
+        <image lazy-load="true" bindtap="toReadBag" mode="widthFix" data-link="{{shareGoods[0].ad_link}}"
+          class="jingcaidali_2" src="https://app.zhuoyumall.com:444{{shareGoods[0].ad_code}}" />
+        <image lazy-load="true" bindtap="toMingxi" mode="widthFix" data-link="{{shareGoods[1].ad_link}}"
+          class="jingcaidali_2" src="https://app.zhuoyumall.com:444{{shareGoods[1].ad_code}}" />
+      </view>
+    </view>
+    <!-- AD 2  END -->
 
 
 <!-- 团购 -->
-      <scroll-view scroll-x class="shangpin-wrap" style="margin: 20rpx 0;">
-        <view class="scroll-wrapper_">
+  <view style="padding:20rpx; background: #eee;">
+      <scroll-view scroll-x class="shangpin-wrap shangpin-wrap_self" style="padding: 20rpx 0; background: #fff;">
+        <view class="scroll-wrapper_" style="background: #fff;">
           <block wx:for="{{grouplist}}" wx:key>
             <view class="scro-item " data-id="{{item.goods_id}}" wx-if="{{index % 2 == 0}}"
+              style="background: #fff;"
               bindtap="{{item.store_count == 0 ? '' : 'toCon' }}">
               <view class="shopping-alert" wx:if="{{item.store_count == 0}}">
                 <view class="alert-con">
@@ -310,7 +322,7 @@
           </block>
         </view>
       </scroll-view>
-
+</view>
 
 
 
@@ -331,16 +343,8 @@
 
 
     <!-- 团购商品-END -->
-    <view class="line"></view>
-    <!-- AD 2 -->
-    <view class="padding-tb-30 jingcaidali-wrap">
-      <image lazy-load="true" bindtap="toReadBag" mode="widthFix" data-link="{{shareGoods[0].ad_link}}"
-        class="jingcaidali_2" src="https://app.zhuoyumall.com:444{{shareGoods[0].ad_code}}" />
-      <image lazy-load="true" bindtap="toMingxi" mode="widthFix" data-link="{{shareGoods[1].ad_link}}"
-        class="jingcaidali_2" src="https://app.zhuoyumall.com:444{{shareGoods[1].ad_code}}" />
-    </view>
-    <!-- AD 2  END -->
-    <view class="line"></view>
+    <!-- <view class="line"></view> -->
+    <!-- <view class="line"></view> -->
     <!-- share -->
     <view class="share-wrap">
       <view class="share-con">

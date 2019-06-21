@@ -71,36 +71,36 @@
   },
   "tabBar": {
     "color": "#999",
-    "selectedColor": "#3F69E0",
+    "selectedColor": "#ff3c64",
     "borderStyle": "black",
     "list": [
       {
-        "selectedIconPath": "src/img/nav2/1.png",
-        "iconPath": "src/img/nav2/1-1.png",
+        "selectedIconPath": "src/img/nav3/1.png",
+        "iconPath": "src/img/nav3/11.png",
         "pagePath": "pages/index/index",
         "text": "首页"
       },
       {
-        "selectedIconPath": "src/img/nav2/2.png",
-        "iconPath": "src/img/nav2/2-1.png",
+        "selectedIconPath": "src/img/nav3/2.png",
+        "iconPath": "src/img/nav3/22.png",
         "pagePath": "pages/fenlei2/fenlei2",
         "text": "分类"
       },
       {
-        "selectedIconPath": "src/img/nav2/3.png",
-        "iconPath": "src/img/nav2/3-1.png",
+        "selectedIconPath": "src/img/nav3/3.png",
+        "iconPath": "src/img/nav3/33.png",
         "pagePath": "pages/group2/group2",
         "text": "团购"
       },
       {
-        "selectedIconPath": "src/img/nav2/4.png",
-        "iconPath": "src/img/nav2/4-1.png",
+        "selectedIconPath": "src/img/nav3/4.png",
+        "iconPath": "src/img/nav3/44.png",
         "pagePath": "pages/shoppingCart/shoppingCart",
         "text": "购物车"
       },
       {
-        "selectedIconPath": "src/img/nav2/5.png",
-        "iconPath": "src/img/nav2/5-1.png",
+        "selectedIconPath": "src/img/nav3/5.png",
+        "iconPath": "src/img/nav3/55.png",
         "pagePath": "pages/mine/mine",
         "text": "我的"
       }

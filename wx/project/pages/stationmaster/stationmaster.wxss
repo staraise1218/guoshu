@@ -1,6 +1,6 @@
 .container {
     width: 100%;
-    background-image: url('https://hbimg.huabanimg.com/2c393cc5e7aa9bd3a2d56f0b9d5a510d4d8dee5d43fe-E1bCjo_fw658');
+    background-image: url('https://app.zhuoyumall.com:444/wx/img/2/bg1.jpg');
     background-size: contain;
     /* height: 100vh; */
     background-repeat: no-repeat;
@@ -71,7 +71,7 @@
 .okBtn {
     width: 50%;
     color: #fff;
-    background: linear-gradient(#ff3c64, #F8461D);
+    background: #ff3c64;
     text-align: center;
     padding: 18rpx;
     border-radius: 50rpx;

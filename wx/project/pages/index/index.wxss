@@ -669,6 +669,9 @@ swiper-item {
   justify-content: space-between;
   padding: 20rpx;
   margin-top: 15rpx;
+  margin: 0 20rpx;
+  border-radius: 15rpx;
+  background: #fff;
 }
 
 .jingcaidali_2 {
@@ -756,7 +759,14 @@ swiper-item {
   height: 400rpx;
 }
 
-
+.shangpin-wrap_self {
+  margin: 0 !important;
+  border-radius: 15rpx;
+  overflow: hidden;
+}
+.shangpin-wrap_self .scroll-wrapper_ .scr-item:first-child {
+  margin-left: 20rpx;
+}
 .shop-content {
   position: relative;
 }
