@@ -90,7 +90,7 @@
         <image class="header-pic" bindtap="toUserinfo" src="https://app.zhuoyumall.com:444{{headPic}}" />
     </view>
     <view class="my-name" bindtap="toUserinfo">
-        <view>{{NickName}}</view>
+        <view style="font-size: 36rpx;">{{NickName}}</view>
         <image style="width: 30rpx; margin-left: 14rpx" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/2/改写2.png" />
     </view>
     <view class="my-header-wrap">

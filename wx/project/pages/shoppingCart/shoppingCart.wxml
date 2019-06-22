@@ -81,7 +81,7 @@
                                     data-msg="reduce" 
                                     data-goodsid="{{item.goods_id}}"
                                     data-cat-id="{{item.cat_id}}"></view>
-                                <view style="width: 38rpx; text-align: center" class="goodNum">{{item.goods_num}}</view>
+                                <view style="width: 38rpx; text-align: center; font-size: 32rpx;" class="goodNum">{{item.goods_num}}</view>
                                 <view class="add" 
                                     data-msg="add" 
                                     data-goodsid="{{item.goods_id}}"

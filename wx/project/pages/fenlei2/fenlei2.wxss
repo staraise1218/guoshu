@@ -210,7 +210,7 @@
 
 .cityshow-alert .active {
     background: #eee;
-    border-left: 10rpx solid #FC5453
+    border-left: 10rpx solid #ff3c64;
 }
 
 .city-btn_ {
@@ -254,7 +254,7 @@
 }
 
 .btn-wrapper .ok {
-    background: #FF8A00;
+    background: #ff3c64;
     color: #fff;
 }
 

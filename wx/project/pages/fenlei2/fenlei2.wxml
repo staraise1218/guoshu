@@ -45,9 +45,9 @@
                 <view class="goods-name_">{{item.subtitle}}</view>
                 <view class="goods-ctr">
                     <view class="goods-price">
-                        <image class="RMB" style="width: 13rpx; height: 13rpx"
-                            src="https://app.zhuoyumall.com:444/wx/img/2/￥蓝色.png" />
-                        <view class="goods-price-con">{{item.shop_price}}</view>
+                        <image class="RMB" style="width: 24rpx; height: 24rpx"
+                            src="https://app.zhuoyumall.com:444/wx/img/2/人民币.png" />
+                        <view class="goods-price-con" style="color:#ff3c64">{{item.shop_price}}</view>
                     </view>
                     <view class="goods-price_">
                         <view class="goods-price-del">￥ {{item.market_price}}</view>
@@ -55,7 +55,7 @@
                     <view class="goods-add">
                         <image lazy-load="true" style="width: 50rpx; height: 50rpx" data-id="{{item.goods_id}}"
                             catchtap="{{item.store_count == 0 ? '' : 'addCart'}}"
-                            src="https://app.zhuoyumall.com:444/wx/img/2/购物车蓝色.png" />
+                            src="https://app.zhuoyumall.com:444/wx/img/2/shopcart2.png" />
                     </view>
                 </view>
             </view>

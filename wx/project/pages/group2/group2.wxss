@@ -134,6 +134,7 @@ page {
 }
 .group .group-top .left > view {
     margin-left: 20rpx;
+    font-size: 32rpx;
 }
 .group .group-top .right {
     display: flex;
@@ -192,7 +193,7 @@ page {
     background: #3C7CED;
     color: #fff;
     border-radius: 30rpx;
-    padding: 4rpx 22rpx;
+    padding: 16rpx 42rpx;
     color: #fff;
     font-size: 24rpx;
 }

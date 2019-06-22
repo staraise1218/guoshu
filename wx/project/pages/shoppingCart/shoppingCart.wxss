@@ -410,10 +410,11 @@ page {
 
 .goods_list_item .right .goods_info .goods_name,
 .goods_list_item .right .goods_info .goods_name_ {
-    width: 360rpx;
+    width: 300rpx;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    margin-left: 10rpx;
 }
 
 .shopcart_tips {
@@ -426,5 +427,5 @@ page {
 .shop_tips_ {
     padding: 30rpx;
     border-top: 1rpx solid rgba(0, 0, 0, .5);
-    color: rgba(0, 0, 0, .5)
+    color: #222;
 }
