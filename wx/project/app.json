@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/errorPay/errorPay",
     "pages/loading/loading",
+    "pages/errorPay/errorPay",
     "pages/paySuccess/paySuccess",
     "pages/mine/mine",
     "pages/tuijian/tuijian",
