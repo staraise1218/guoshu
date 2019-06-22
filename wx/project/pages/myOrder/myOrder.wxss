@@ -43,8 +43,9 @@ page {
 }
 .agein {
     padding: 5rpx 20rpx;
-    border: 1rpx solid #222;
+    /* border: 1rpx solid #222; */
     border-radius: 50rpx;
+    font-size: 26rpx !important;
 }
 .pingjia {
     padding: 5rpx 20rpx;

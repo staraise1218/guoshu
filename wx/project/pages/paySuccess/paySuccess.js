@@ -25,5 +25,5 @@ Page({
     wx.navigateTo({
       url: '/pages/orderSuccess/orderSuccess?orderid='+e.currentTarget.dataset.orderId
     })
-  }
+  },
 })

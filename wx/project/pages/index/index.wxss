@@ -764,8 +764,8 @@ swiper-item {
   border-radius: 15rpx;
   overflow: hidden;
 }
-.shangpin-wrap_self .scroll-wrapper_ .scr-item:first-child {
-  margin-left: 20rpx;
+.shangpin-wrap_self .scroll-wrapper_ .scro-item:first-child {
+  margin-left: 20rpx !important;
 }
 .shop-content {
   position: relative;

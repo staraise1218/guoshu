@@ -285,9 +285,10 @@
             </view>
           </block>
         </view>
-        <view class="scroll-wrapper_">
-          <block wx:for="{{item.goodslist}}" wx:key>
+        <view class="scroll-wrapper_" style="background: #fff;">
+          <block wx:for="{{grouplist}}" wx:key>
             <view class="scro-item " data-id="{{item.goods_id}}" wx-if="{{index % 2 != 0}}"
+              style="background: #fff;"
               bindtap="{{item.store_count == 0 ? '' : 'toCon' }}">
               <view class="shopping-alert" wx:if="{{item.store_count == 0}}">
                 <view class="alert-con">
@@ -305,7 +306,7 @@
               <view class="shop-content">
                 <view class="shop-left">
                   <view class="price-wrap">
-                    <image style="width: 20rpx" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/2/人民币.png" />
+                    <image style="width: 20rpx; height: 24rpx;" src="https://app.zhuoyumall.com:444/wx/img/2/人民币.png" />
                     <view class="price" style="color: #FF4D75">{{item.price}}</view>
                   </view>
                   <view class="del-wrap">

@@ -1,6 +1,8 @@
 {
   "pages": [
+    "pages/errorPay/errorPay",
     "pages/loading/loading",
+    "pages/paySuccess/paySuccess",
     "pages/mine/mine",
     "pages/tuijian/tuijian",
     "pages/shoppingCart/shoppingCart",
@@ -25,7 +27,6 @@
     "pages/myOrder/myOrder",
     "pages/demo/demo",
     "pages/addAddress/addAddress",
-    "pages/errorPay/errorPay",
     "pages/classification/classification",
     "pages/fenleiList/fenleiList",
     "pages/list/list",
@@ -50,7 +51,6 @@
     "pages/login/login",
     "pages/fahuo/fahuo",
     "pages/agreement/greement",
-    "pages/paySuccess/paySuccess",
     "pages/loadFukuan/loadFukuan",
     "pages/setting/setting",
     "pages/retrieve/retrieve",
