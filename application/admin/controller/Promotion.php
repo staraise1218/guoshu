@@ -230,8 +230,9 @@ class Promotion extends Base
         $act = I('GET.act', 'add');
         $groupbuy_id = I('get.id/d');
         $group_info = array();
-        $group_info['start_time'] = date('Y-m-d');
-        $group_info['end_time'] = date('Y-m-d', time() + 3600 * 365);
+       
+        $group_info['start_time'] = date("Y-m-d H:i:s", strtotime(date('Y-m-d')));
+        $group_info['end_time'] = date("Y-m-d H:i:s", strtotime(date('Y-m-d', strtotime('+1 day'))));
         if ($groupbuy_id) {
             $GroupBy = new GroupBuy();
             $group_info = $GroupBy->with('specGoodsPrice,goods')->find($groupbuy_id);
@@ -475,7 +476,7 @@ class Promotion extends Base
             }
         }
         $id = I('id');
-        $now_time = date('H');
+        /*$now_time = date('H');
         if ($now_time % 2 == 0) {
             $flash_now_time = $now_time;
         } else {
@@ -483,7 +484,9 @@ class Promotion extends Base
         }
         $flash_sale_time = strtotime(date('Y-m-d') . " " . $flash_now_time . ":00:00");
         $info['start_time'] = date("Y-m-d H:i:s", $flash_sale_time);
-        $info['end_time'] = date("Y-m-d H:i:s", $flash_sale_time + 7200);
+        $info['end_time'] = date("Y-m-d H:i:s", $flash_sale_time + 7200);*/
+        $info['start_time'] = date("Y-m-d H:i:s", strtotime(date('Y-m-d')));
+        $info['end_time'] = date("Y-m-d H:i:s", strtotime(date('Y-m-d', strtotime('+1 day'))));
         if ($id > 0) {
             $FlashSale = new FlashSale();
             $info = $FlashSale->with('specGoodsPrice,goods')->find($id);
