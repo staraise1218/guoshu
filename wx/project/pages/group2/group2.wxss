@@ -53,9 +53,11 @@ page {
     background: #FF4E76;
     color: #fff;
 }
+.miaosa .miaosa-con {
+    height: 405rpx;
+}
 .miaosa .miaosa-con .miaosa-scr {
     white-space: nowrap;
-
 }
 .miaosa .miaosa-con .miaosa-scr .miaosa-item {
     display: inline-block;
@@ -132,6 +134,7 @@ page {
 }
 .group .group-top .left > view {
     margin-left: 20rpx;
+    font-size: 32rpx;
 }
 .group .group-top .right {
     display: flex;
@@ -190,7 +193,7 @@ page {
     background: #3C7CED;
     color: #fff;
     border-radius: 30rpx;
-    padding: 4rpx 22rpx;
+    padding: 16rpx 42rpx;
     color: #fff;
     font-size: 24rpx;
 }

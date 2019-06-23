@@ -850,12 +850,15 @@ page {
   .item-list-box {
     width:338rpx;
     background:#fff;
-    border-radius:15rpx;
-    height:460rpx;
+    /* border-radius:15rpx; */
+    height:520rpx;
     overflow:hidden;
     padding:20rpx;
     box-sizing:border-box;
     margin-bottom:15rpx;
+  }
+  .price {
+    color: #3E79EC !important;
   }
   
   .poster-wrapper {
@@ -871,8 +874,8 @@ page {
   .icon-shop {
     /* width: 250rpx; */
     /* max-height: 250rpx; */
-    width: 100%;
-    height: 100%k
+    width: 300rpx;
+    height: 300rpx;
   }
   
   .shop-title {
@@ -884,6 +887,7 @@ page {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: 20rpx;
   }
   
   
@@ -979,6 +983,21 @@ page {
   }
   .jubu-w-swiper .bottom-wrap-item .title-2 {
     overflow: hidden;
+  }
+  .title-3 {
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 28rpx;
+    height: 40rpx;
+    line-height: 40rpx;
+    width: 300rpx;
+    text-overflow: ellipsis;
+    margin-top: 15rpx;
+  }
+  .title-2_f {
+    width: 300rpx;
+    text-overflow: ellipsis;
+    height: 40rpx;
+    line-height: 40rpx;
   }
   
   

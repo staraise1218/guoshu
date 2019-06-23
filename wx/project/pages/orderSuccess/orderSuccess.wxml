@@ -1,4 +1,4 @@
-<view class="gray">
+<!-- <view class="gray">
     <image wx:if="{{state == 'close'}}" class="icon-best" src="http://img.hb.aicdn.com/a568cc1552e3dd7afb23f01c04704d82a43d16b6455a-MgwxFA_fw658" />
     <view wx:if="{{state == 'close'}}" class="text-center title-2">交易关闭</view>
     
@@ -8,17 +8,15 @@
     <image wx:if="{{msg.order_status_code == 'WAITPAY'}}" class="icon-best" src="http://img.hb.aicdn.com/3bf9b0befabbb8376c47e035c07ac95377c182c74601-owXMPn_fw658" />
     <view wx:if="{{msg.order_status_code == 'WAITPAY'}}" class="text-center title-2">{{msg.order_status_desc}}</view>
     
-    <!-- <image wx:if="{{state == 'WAITCCOMMENT'}}" class="icon-best" src="http://img.hb.aicdn.com/2a6bb975ce84d617f4587600f5c174e8f2e934de4570-wYxc1V_fw658" />
-    <view wx:if="{{state == 'WAITCCOMMENT'}}" class="text-center title-2">交易成功</view> -->
     
     <image wx:if="{{msg.order_status_code == 'WAITCCOMMENT'}}" class="icon-best" src="http://img.hb.aicdn.com/6fdff69e2da153fc963d217e9ed3d1382a97c6a24709-1s5QKm_fw658" />
     <view wx:if="{{msg.order_status_code == 'WAITCCOMMENT'}}" class="text-center title-2">{{msg.order_status_desc}}</view>
 
     <image wx:if="{{msg.order_status_code == 'WAITREFUND'}}" class="icon-best" src="https://hbimg.huabanimg.com/a568cc1552e3dd7afb23f01c04704d82a43d16b6455a-MgwxFA_fw658" />
     <view wx:if="{{msg.order_status_code == 'WAITREFUND'}}" class="text-center title-2">{{msg.order_status_desc}}</view>
+</view> -->
 
-
-</view>
+<view class="top-tips">{{msg.order_status_desc}}</view>
 
 <!-- 显示配送员 -->
 <view wx:if="{{msg.send_method == 1}}">

@@ -25,6 +25,8 @@
     z-index: -1;
     width: 75rpx;
     height: 75rpx;
+    border-radius: 50%;
+    overflow: hidden;
 }
 .list-item .left .address-con {
     flex-shrink: 1;
@@ -47,7 +49,7 @@
 }
 
 .add {
-    background: #F65C3A;
+    background: #ff3c64;
     color: #fff;
     width: 95%;
     bottom: 20rpx;

@@ -125,6 +125,7 @@ page {
   /* width: 3000rpx; */
   white-space: nowrap;
   width: 100%;
+  height: 90rpx;
 }
 
 .shopListWrap {
@@ -668,6 +669,9 @@ swiper-item {
   justify-content: space-between;
   padding: 20rpx;
   margin-top: 15rpx;
+  margin: 0 20rpx;
+  border-radius: 15rpx;
+  background: #fff;
 }
 
 .jingcaidali_2 {
@@ -755,7 +759,14 @@ swiper-item {
   height: 400rpx;
 }
 
-
+.shangpin-wrap_self {
+  margin: 0 !important;
+  border-radius: 15rpx;
+  overflow: hidden;
+}
+.shangpin-wrap_self .scroll-wrapper_ .scro-item:first-child {
+  margin-left: 20rpx !important;
+}
 .shop-content {
   position: relative;
 }
@@ -1257,7 +1268,7 @@ swiper-item {
     /* color:rgb(255, 0, 0); */
     font-size: 26rpx;
     font-weight: 600;
-    color: #3C7EE7
+    color: #ff3c64
   }
   .add{
     width:24px;
@@ -1337,7 +1348,7 @@ swiper-item {
 .cityshow-alert .right {
   flex: 1;
   font-weight: 400;
-  font-size: 22rpx;
+  font-size: 26rpx;
   text-align: center;
   height: 720rpx;
   padding-bottom: 40rpx;
@@ -1350,9 +1361,16 @@ swiper-item {
 }
 .cityshow-alert .active {
   background: #eee;
-  border-left: 10rpx solid #FC5453
+  border-left: 10rpx solid #ff3c64
 }
-
+.self-tips {
+  color: #ff3c64;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 20rpx;
+  padding: 20rpx 50rpx;
+}
 .city-btn_ {
   position: fixed;
   bottom: 20rpx;
@@ -1390,7 +1408,7 @@ swiper-item {
   background: #eee;
 }
 .btn-wrapper .ok {
-  background: #FF8A00;
+  background: #ff3c64;
   color: #fff;
 }
 .icon-poster {
@@ -1398,3 +1416,131 @@ swiper-item {
   height: 190rpx;
 
 }
+
+
+
+
+.huodong {
+  background: #EFEFEF;
+  padding: 20rpx;
+}
+.huodong .bgf {
+  background: #fff;
+  border-radius: 10rpx;
+  padding: 20rpx;
+}
+.huodong .top {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 20rpx;
+}
+.huodong .top .t-left {
+  border-right: 1rpx solid rgba(0, 0, 0, .1);
+  padding-right: 13rpx;
+}
+.huodong .top .t-left .l-tt{
+  font-size: 30rpx;
+  display: flex;
+  padding-bottom: 15rpx;
+}
+.huodong .top .t-left .l-tt .l-ttr {
+  color: #FE4C73;
+  font-weight: 600;
+}
+.huodong .name {
+  font-size: 28rpx;
+  color: rgba(0,0,0,.7);
+}
+.huodong .name_ {
+  font-size: 24rpx;
+  color: rgba(0, 0, 0, 0.5)
+}
+.huodong .huodong-price {
+  font-size: 22rpx;
+  display: flex;
+  align-items: flex-end;
+  margin-top: 20rpx;
+}
+.huodong .huodong-price .huodong-price_ {
+  font-size: 26rpx;
+  color: #FE4C77;
+  font-weight: 600;
+  font-size: 32rpx;
+}
+.huodong .huodong-price .price-fh {
+  margin-bottom: 2rpx;
+}
+.huodong .top .t-right {
+  flex: 1;
+  padding-left: 20rpx;
+}
+.huodong .top .t-right .t-r-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 30rpx;
+  padding-bottom: 15rpx;
+}
+.huodong .top .t-right .t-r-title .tr-r {
+  font-size: 24rpx;
+}
+.huodong .top .t-right .shop-item {
+  display: flex;
+  padding-top: 30rpx;
+  padding-bottom: 30rpx;
+}
+.huodong .top .t-right .shop-item:first-child {
+  border-bottom: 1rpx solid #222
+}
+.huodong .top .t-right .shop-item .shop-info {
+  margin-left: 10rpx;
+}
+.huodong .top .t-right .shop-item .shop-info .name,
+.huodong .top .t-right .shop-item .shop-info .name_ {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 160rpx;
+}
+
+
+
+.huodong .hbottom {
+  padding-top: 20rpx;
+  border-top: 1rpx solid rgba(0, 0, 0, .3);
+}
+.huodong .hbottom .b-title {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 24rpx;
+  padding-bottom: 12rpx;
+}
+.huodong .hbottom .b-title .bl {
+  display: flex;
+  align-items: flex-end;
+}
+.huodong .hbottom .shoplist {
+  padding-top: 20rpx;
+  display: flex;
+  white-space: nowrap;
+  display: flex;
+}
+.huodong .hbottom .shoplist .shopitem {
+  display: inline-block;
+}
+.huodong .hbottom .shoplist .shop_ppice {
+  font-size: 30rpx;
+  display: flex;
+  align-items: flex-end;
+}
+.huodong .hbottom .shoplist .name {
+  white-space: nowrap;
+  width: 200rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+
+

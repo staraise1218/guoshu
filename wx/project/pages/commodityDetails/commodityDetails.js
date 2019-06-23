@@ -59,6 +59,7 @@ Page({
     dots: true,
 
     firstLoad: true,  // 视频第一次加载
+    haoping: '',     // 好评率
   },
   /**
    * 轮播图自适应高度
@@ -74,6 +75,10 @@ Page({
   },
   onLoad: function (options) {
     let that = this;
+    var haoping = 95 + Math.floor(Math.random() * 5);
+    this.setData({
+      haoping: haoping
+    })
     console.log('**************商品详情***********************************************************************')
     wx.setStorageSync('shareMsg', '分享商品打开过')
     console.log(options)
@@ -737,6 +742,11 @@ Page({
     this.setData({
       videoShow: false,
       dots: false
+    })
+  },
+  toHome() {
+    wx.switchTab({
+      url: '/pages/index/index'
     })
   }
 

@@ -6,7 +6,7 @@ page {
     width: 95%;
     padding: 20rpx;
     border-radius: 15rpx;
-    background: linear-gradient(#F56646, #F7471E);
+    background: linear-gradient(#ff3c64, #F7471E);
     box-sizing: border-box;
     text-align: center;
     color: #fff;
@@ -51,7 +51,7 @@ page {
     font-size: 28rpx;
 }
 .list-wrap .right .juli {
-    color: #DF5E11;
+    color: #ff3c64;
     font-size: 24rpx;
 }
 .list-wrap .right .con {

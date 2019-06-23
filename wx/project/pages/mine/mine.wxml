@@ -90,7 +90,7 @@
         <image class="header-pic" bindtap="toUserinfo" src="https://app.zhuoyumall.com:444{{headPic}}" />
     </view>
     <view class="my-name" bindtap="toUserinfo">
-        <view>{{NickName}}</view>
+        <view style="font-size: 36rpx;">{{NickName}}</view>
         <image style="width: 30rpx; margin-left: 14rpx" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/2/改写2.png" />
     </view>
     <view class="my-header-wrap">
@@ -113,28 +113,32 @@
 <!-- Seeting -->
 <view class="seeting bg">
     <view class="my-item more" bindtap="toWeiZhiFu">
-        <image style="width: 35rpx" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/2/订单.png" />
+        <image style="width: 35rpx; height: 35rpx;" src="https://app.zhuoyumall.com:444/wx/img/2/订单.png" />
         <view>我的订单</view>
     </view>
     <view class="my-item more" bindtap="toYue">
-        <image style="width: 35rpx" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/2/零钱.png" />
+        <image style="width: 35rpx; height: 35rpx;" src="https://app.zhuoyumall.com:444/wx/img/2/零钱.png" />
         <view>我的余额</view>
     </view>
     <view class="my-item more" bindtap="toMaster">
-        <image style="width: 35rpx" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/2/站点.png" />
+        <image style="width: 35rpx; height: 35rpx;" src="https://app.zhuoyumall.com:444/wx/img/2/站点.png" />
         <view>站点申请</view>
     </view>
-    <view class="my-item more">
-        <image style="width: 35rpx" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/2/供货.png" />
+    <view class="my-item more" bindtap="shenqing">
+        <image style="width: 35rpx; height: 35rpx;" src="https://app.zhuoyumall.com:444/wx/img/2/供货.png" />
         <view>供货申请</view>
     </view>
     <view class="my-item more" bindtap="toSetting">
-        <image style="width: 35rpx" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/2/设置.png" />
+        <image style="width: 35rpx; height: 35rpx;" src="https://app.zhuoyumall.com:444/wx/img/2/设置.png" />
         <view>设置</view>
     </view>
-    <view class="my-item more blue" bindtap="toPeisong">
-        <image style="width: 35rpx" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/2/派送员.png" />
+    <view class="my-item more blue" bindtap="toPeisong" wx:if="{{role == 2}}">
+        <image style="width: 35rpx; height: 35rpx;" src="https://app.zhuoyumall.com:444/wx/img/2/派送员.png" />
         <view>派送员</view>
+    </view>
+    <view class="my-item more blue" bindtap="toZiti" wx:if="{{role == 3}}">
+        <image style="width: 35rpx; height: 35rpx;" src="https://app.zhuoyumall.com:444/wx/img/2/自提门店.png" />
+        <view style="color: #C340D6">自提点</view>
     </view>
 </view>
 <!-- Seeting END -->
@@ -142,16 +146,32 @@
 <!-- About -->
 <view class="about-wrap">
     <view class="about-item" bindtap="toAddress">
-        <image style="width: 55rpx" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/2/定位.png" />
+        <image style="width: 55rpx; height: 55rpx;"  src="https://app.zhuoyumall.com:444/wx/img/2/定位.png" />
         <view>收货地址</view>
     </view>
     <view class="about-item" bindtap="toKefu">
-        <image style="width: 55rpx" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/2/客服电话.png" />
+        <image style="width: 55rpx; height: 55rpx;"  src="https://app.zhuoyumall.com:444/wx/img/2/客服电话.png" />
         <view>客服电话</view>
     </view>
     <view class="about-item" bindtap="toAgreement">
-        <image style="width: 55rpx" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/2/关于我们.png" />
+        <image style="width: 55rpx; height: 55rpx;" src="https://app.zhuoyumall.com:444/wx/img/2/关于我们.png" />
         <view>关于我们</view>
     </view>
 </view>
 <!-- About END -->
+
+
+<!-- 申请弹窗 -->
+<view class="shenqing_bg" wx:if="{{shenqing}}"></view>
+<view class="shenqing" wx:if="{{shenqing}}">
+    <image style="width: 100%; height: 90rpx;" src="https://app.zhuoyumall.com:444/wx/img/2/321.png" />
+    <!-- <view class="shenqing_title">
+        <view class="content">
+            <image src="https://app.zhuoyumall.com:444/wx/img/2/HB11.png" />
+            <view>温馨提示</view>
+        </view>
+    </view> -->
+    <view class="con">请联系当地仓储配送中心管理人员</view>
+    <view class="phone">联系方式：123456789</view>
+    <view class="shenqing_btn" bindtap="closeShenqing">确定</view>
+</view>

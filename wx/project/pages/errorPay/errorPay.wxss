@@ -75,3 +75,62 @@
 
 
 
+page {
+    background: #f8f6f7;
+    font-size: 28rpx;
+}
+.toIndex {
+    width: 95%;
+    font-size: 32rpx;
+    color: #fff;
+    background: linear-gradient(#F67457, #F8481F);
+    border: none;
+    margin-top: 50rpx;
+}
+.toOrder {
+    width: 95%;
+    font-size: 32rpx;
+    color: #222;
+    background: #fff;
+    margin-top: 30rpx;
+    border: 1rpx solid #999;
+}
+.title-2_ {
+    font-size: 45rpx;
+}
+.container {
+    background: #fff;
+}
+.container .list-item {
+    padding: 20rpx 30rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.container .list-item .right {
+    display: flex;
+    align-items: flex-end;
+}
+.container .list-item .right .price {
+    color: #ff3c64;
+    font-size: 36rpx;
+}
+.toOrder {
+    color: #fff;
+    background: #ff3c64;
+    width: 60%;
+    padding: 20rpx 0;
+    text-align: center;
+    border-radius: 50rpx;
+    margin-top: 25rpx;
+    margin-left: 20%;
+    border: none;
+}
+.toHome {
+    width: 60%;
+    padding: 20rpx 0;
+    text-align: center;
+    border-radius: 50rpx;
+    margin-top: 40rpx;
+    margin-left: 20%;
+}

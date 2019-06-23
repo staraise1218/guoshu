@@ -48,7 +48,7 @@ page {
     align-items: center;
 }
 .footer .sub {
-    background: #F8471E;
+    background: #ff3c64;
     color: #fff;
     width: 200rpx;
     text-align: center;
@@ -340,7 +340,8 @@ page .wallets-password {
 .my_con {
   padding: 10rpx 20rpx;
   min-height: 150rpx;
-  color: rgba(0,0,0,.5)
+  color: rgba(0,0,0,.5);
+  padding-top: 50rpx;
 }
 .my_btn {
   display: flex;
@@ -355,10 +356,14 @@ page .wallets-password {
   text-align: center;
 }
 .my_ok {
-  color: #38f;
+  color: #ff3c64;
 }
 
 
+.price,
+.price-color {
+  color: #ff3c64 !important;
+}
 
 
 

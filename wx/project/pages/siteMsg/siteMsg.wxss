@@ -1,1 +1,7 @@
-/* pages/siteMsg/siteMsg.wxss */
+page {
+    width: 100%;
+    height: 100vh;
+    background-image: url('https://app.zhuoyumall.com:444/wx/img/2/自提门店说明.jpg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}

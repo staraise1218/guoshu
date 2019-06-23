@@ -31,10 +31,10 @@
                     <view class="shop-list-wrapper order-poster border-bottom padding-30">
                         <block wx:for="{{item.goods_list}}" wx:key>
                             <view wx:if="{{index <= 2}}" class="list-item">
-                                <view class="list-title"> {{item.goods_name}}</view>
-                                <view class="list-title_f">{{item.subtitle}}</view>
                                 <image class="icon-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}"
                                     mode="widthFix" />
+                                <view class="list-title"> {{item.goods_name}}</view>
+                                <view class="list-title_f">{{item.subtitle}}</view>
                             </view>
                         </block>
                     </view>
@@ -98,10 +98,10 @@
                     <view class="shop-list-wrapper order-poster border-bottom padding-30">
                         <block wx:for="{{item.goods_list}}" wx:key>
                             <view wx:if="{{index <= 2}}" class="list-item">
-                                <view class="list-title"> {{item.goods_name}}</view>
-                                <view class="list-title_f">{{item.subtitle}}</view>
                                 <image class="icon-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}"
                                     mode="widthFix" />
+                                <view class="list-title"> {{item.goods_name}}</view>
+                                <view class="list-title_f">{{item.subtitle}}</view>
                             </view>
                         </block>
                     </view>
@@ -168,10 +168,10 @@
                     <view class="shop-list-wrapper order-poster border-bottom padding-30">
                         <block wx:for="{{item.goods_list}}" wx:key>
                             <view wx:if="{{index <= 2}}" class="list-item">
-                                <view class="list-title"> {{item.goods_name}}</view>
-                                <view class="list-title_f">{{item.subtitle}}</view>
                                 <image class="icon-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}"
                                     mode="widthFix" />
+                                <view class="list-title"> {{item.goods_name}}</view>
+                                <view class="list-title_f">{{item.subtitle}}</view>
                             </view>
                         </block>
                     </view>
@@ -237,10 +237,10 @@
                     <view class="shop-list-wrapper order-poster border-bottom padding-30">
                         <block wx:for="{{item.goods_list}}" wx:key>
                             <view wx:if="{{index <= 2}}" class="list-item">
-                                <view class="list-title"> {{item.goods_name}}</view>
-                                <view class="list-title_f">{{item.subtitle}}</view>
                                 <image class="icon-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}"
                                     mode="widthFix" />
+                                <view class="list-title"> {{item.goods_name}}</view>
+                                <view class="list-title_f">{{item.subtitle}}</view>
                             </view>
                         </block>
                     </view>

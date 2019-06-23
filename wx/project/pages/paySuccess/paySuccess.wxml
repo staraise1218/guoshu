@@ -1,15 +1,37 @@
-<view class="text-center margin-top-30">
-    <image class="icon-best" src="/src/img/椭圆3@2x.png" />
+<view style=" padding: 30rpx 0;">
+    <view class="text-center" style="margin: 20rpx 0;">
+        <image style="width: 100rpx; height: 100rpx;" src="https://app.zhuoyumall.com:444/wx/img/2/HBmart5.png" />
+    </view>
+    <view class="text-center title-3_">支付成功</view>
 </view>
-<view class="text-center title-2_ font-weight-6">支付成功</view>
-<view class="text-center title-big font-weight-6 margin-top-20">￥{{order_amount}}</view>
+
+<view class="container">
+    <view class="border-bottom" style="padding: 20rpx 30rpx; border-bottom: 1rpx solid #eee">您的支付信息</view>
+    <view class="list-item">
+        <view>收款平台</view>
+        <view>海豹城市仓储超市</view>
+    </view>
+    <view class="list-item">
+        <view>支付方式</view>
+        <view>{{payMethod == 'wxpay' ? '微信支付' : '余额支付'}}</view>
+    </view>
+    <view class="list-item">
+        <view>支付金额</view>
+        <view class="right">
+            <view>￥</view>
+            <view class="price">{{order_amount}}</view>
+        </view>
+    </view>
+</view>
 
 
 
+<view class="toHome" bindtap="toHome">返回并浏览其他商品</view>
+
+<!-- <view class="text-center title-big font-weight-6 margin-top-20">￥{{order_amount}}</view>
 <view class="border-top border-bottom margin-30 padding-tb-30">
     <view class="between-center">
         <view class="title-3_f">付款方式</view>
-        <!-- <view class="title-3">微信支付</view> -->
         <view class="title-3">{{payMethod == 'wxpay' ? '微信支付' : '余额支付'}}</view>
     </view>
     <view class="between-center margin-top-20">
@@ -18,6 +40,5 @@
     </view>
 </view>
 
-<button class="toIndex" bindtap="toHome">继续浏览</button>
+<button class="toIndex" bindtap="toHome">继续浏览</button> -->
 <!-- <button class="toOrder" data-order-id="{{orderid}}" bindtap="toOrder">查看订单</button> -->
-

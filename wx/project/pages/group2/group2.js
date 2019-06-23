@@ -7,7 +7,8 @@ Page({
     Grouplist: [],  // 团购列表
     MiaosaList: [], // 秒杀列表
     NextList: [],   // 下次预告
-    Active: 'MIAOSA'
+    Active: 'MIAOSA',
+    nextStatus: '', // 切换下期预告
   },
   onLoad: function (options) {
 
@@ -17,6 +18,15 @@ Page({
     that.group(that);
     that.miaosha(that);
     that.miaosha(that, 'next');
+    if(wx.getStorageSync('nextStatus')) {
+      that.setData({
+        Active: 'NEXT'
+      })
+    } else {
+      that.setData({
+        Active: 'MIAOSA'
+      })
+    }
   },
 
   /**
@@ -67,7 +77,7 @@ Page({
         console.log(data)
         if(status == 'next') {
           that.setData({
-            NextList: ''
+            NextList: data
           })
         } else {
           that.setData({

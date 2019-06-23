@@ -80,7 +80,7 @@
 }
 
 .save {
-    background: #F65C3A;
+    background: #ff3c64;
     color: #fff;
     width: 95%;
     bottom: 20rpx;
