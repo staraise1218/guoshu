@@ -21,7 +21,7 @@ class Category extends Base {
 		$list = Db::name('goods_category')
 			->where('is_show', 1)
 			->order('sort_order')
-			->field('id, name, parent_id')
+			->field('id, name, icon, parent_id')
 			->select();
 
 		$data = array();
@@ -47,7 +47,7 @@ class Category extends Base {
 			->where('is_show', 1)
 			->where('parent_id', $cat_id)
 			->order('sort_order')
-			->field('id, name')
+			->field('id, name, icon')
 			->select();
 
 		if($subcatelist){
