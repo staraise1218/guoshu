@@ -21,10 +21,11 @@ class Index extends Base {
         $city_code = I('city_code');
 
 		// 获取所有的广告图片
-		$bannerList = $adv = $shareGoods = array();
+		$bannerList = $adv = $shareGoods =$otherPic = array();
         $adList = Db::name('ad')
             ->where('enabled', 1)
             ->where('pid', 'in', array(1, 2, 4))
+            ->whereOr('ad_id', 'in', array(19, 20, 21, 22))
             ->field('ad_name, ad_link, ad_code, pid, city_code')
             ->order('orderby asc, ad_id asc')
             ->select();
@@ -36,6 +37,7 @@ class Index extends Base {
         		($item['pid'] == 2 ) && $adv[] = $item;
         		// 分享商品
         		($item['pid'] == 4 ) && $shareGoods[] = $item;
+        		in_array($item['ad_id'], array(19, 20, 21, 22)) &&  $otherPic[] = $item
         	}
         }
 
