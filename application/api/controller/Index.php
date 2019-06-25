@@ -101,9 +101,9 @@ class Index extends Base {
         $result['categoryList'] = $categoryList;
         $result['grouplist'] = $grouplist;
         $result['adv'] = $adv;
+        $result['otherPic'] = $otherPic;
         $result['shareGoods'] = $shareGoods;
         $result['topCateGoods'] = $topCateGoods;
-        $result['otherPic'] = $otherPic;
        	// $result['time_space'] = $time_space;
 		response_success($result);
 	}
