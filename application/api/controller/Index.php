@@ -24,9 +24,8 @@ class Index extends Base {
 		$bannerList = $adv = $shareGoods =$otherPic = array();
         $adList = Db::name('ad')
             ->where('enabled', 1)
-            ->where('pid', 'in', array(1, 2, 4))
-            ->whereOr('ad_id', 'in', array(19, 20, 21, 22))
-            ->field('ad_name, ad_link, ad_code, pid, city_code')
+            ->where('pid', 'in', array(1, 2, 4, 5))
+            ->field('ad_id, ad_name, ad_link, ad_code, pid, city_code')
             ->order('orderby asc, ad_id asc')
             ->select();
         if($adList){
