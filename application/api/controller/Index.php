@@ -104,6 +104,7 @@ class Index extends Base {
         $result['adv'] = $adv;
         $result['shareGoods'] = $shareGoods;
         $result['topCateGoods'] = $topCateGoods;
+        $result['otherPic'] = $otherPic;
        	// $result['time_space'] = $time_space;
 		response_success($result);
 	}
