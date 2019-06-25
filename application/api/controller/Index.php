@@ -24,6 +24,7 @@ class Index extends Base {
 		$bannerList = $adv = $shareGoods = array();
         $adList = Db::name('ad')
             ->where('enabled', 1)
+            ->where('pid', 'in', array(1, 2, 4))
             ->field('ad_name, ad_link, ad_code, pid, city_code')
             ->order('orderby asc, ad_id asc')
             ->select();
