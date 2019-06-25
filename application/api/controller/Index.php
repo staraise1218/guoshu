@@ -37,7 +37,7 @@ class Index extends Base {
         		($item['pid'] == 2 ) && $adv[] = $item;
         		// 分享商品
         		($item['pid'] == 4 ) && $shareGoods[] = $item;
-        		in_array($item['ad_id'], array(19, 20, 21, 22)) &&  $otherPic[] = $item
+        		in_array($item['ad_id'], array(19, 20, 21, 22)) &&  $otherPic[] = $item;
         	}
         }
 
