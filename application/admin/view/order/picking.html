@@ -24,7 +24,7 @@
                 <td style="">
                     <div>收货人：<span style="font-size: 14px;">{$order.consignee}</span></div>
                     <div>电话：<span style="font-size: 14px;">{$order.mobile}</span></div>
-                    <div>收货地址： {$order.province}{$order.city}{$order.district}{$order.address}</div>
+                    <div>收货地址： {$order.send_method == 2 ? $order['pickup']['pickup_address'] : $order.full_address}</div>
                 </td>
             </tr>
             <tr style="height: 80px;">
@@ -78,7 +78,7 @@
                 <td style="">
                     <div>收货人：<span style="font-size: 14px;">{$order.consignee}</span></div>
                     <div>电话：<span style="font-size: 14px;">{$order.mobile}</span></div>
-                    <div>收货地址： {$order.province}{$order.city}{$order.district}{$order.address}</div>
+                    <div>收货地址： {$order.send_method == 2 ? $order['pickup']['pickup_address'] : $order.full_address}</div>
                 </td>
             </tr>
             <tr style="height: 80px;">

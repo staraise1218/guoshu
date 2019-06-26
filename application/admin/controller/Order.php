@@ -576,7 +576,14 @@ class Order extends Base {
         $order['deliveryInfo'] = Db::name('region')->where('code', $order['delivery_code'])->find();
         // 配送员信息
         $order['expressInfo'] = Db::name('users')->where('user_id', $order['express_user_id'])->field('nickname, fullname, mobile')->find();
-        // p($order);
+        // 如果配送方式为自提点，获取自提点地址
+        if($order['send_method'] == 2){
+            if($order['pickup_id']){
+                $order['pickup'] = Db::name('pick_up')->where('pickup_id', $order['pickup_id'])->find();
+            } else {
+                $order['pickup'] = array();
+            }
+        }
 
         if($id){
             return $order;
