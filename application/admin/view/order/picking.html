@@ -19,7 +19,7 @@
             </tr>
         </table>
         <table class="table table-bordered" style="font-size: 12px; min-height: 400px;">
-            <tr>
+            <tr style="height: 70px;">
                 <td style="width: 30px; vertical-align: middle; font-size: 24px;">收</td>
                 <td style="">
                     <div>收货人：<span style="font-size: 14px;">{$order.consignee}</span></div>
@@ -27,7 +27,7 @@
                     <div>收货地址： {$order.province}{$order.city}{$order.district}{$order.address}</div>
                 </td>
             </tr>
-            <tr>
+            <tr style="height: 80px;">
                 <td colspan="2">
                     <div>订单编号：{$order.order_sn}</div>
                     <div>配送方式：<if condition="$order.send_method eq 1">送货上门<else/>门店自提</if></div>
@@ -35,7 +35,7 @@
                     <div>购买时间：{:date('Y-m-d', $order.add_time)}</div>
                 </td>
             </tr>
-            <tr>
+            <tr style="height: 30px">
                 <td colspan="2">
                     <div>配送员：{$order.expressInfo.nickname}  电话：{$order.expressInfo.mobile}</div>
                 </td>
@@ -56,7 +56,7 @@
                     </table>
                 </td>
             </tr>
-            <tr>
+            <tr style="height: 30px;">
                 <td colspan="2">
                     <div>{$order.deliveryInfo.name}</div>
                     <!-- <div>服务电话：0412-5330228</div> -->
@@ -72,8 +72,8 @@
                 <td><div style="font-size: 24px; margin-left: 200px;">核</div></td>
             </tr>
         </table>
-        <table class="table table-bordered" style="font-size: 12px;">
-            <tr>
+        <table class="table table-bordered" style="font-size: 12px; min-height: 400px;">
+            <tr style="height: 70px;">
                 <td style="width: 30px; vertical-align: middle; font-size: 24px;">收</td>
                 <td style="">
                     <div>收货人：<span style="font-size: 14px;">{$order.consignee}</span></div>
@@ -81,7 +81,7 @@
                     <div>收货地址： {$order.province}{$order.city}{$order.district}{$order.address}</div>
                 </td>
             </tr>
-            <tr>
+            <tr style="height: 80px;">
                 <td colspan="2">
                     <div>订单编号：{$order.order_sn}</div>
                     <div>配送方式：<if condition="$order.send_method eq 1">送货上门<else/>门店自提</if></div>
@@ -90,7 +90,7 @@
                     <div>购买时间：{:date('Y-m-d', $order.add_time)}</div>
                 </td>
             </tr>
-            <tr>
+            <tr style="height: 30px;">
                 <td colspan="2">
                     <div>配送员：{$order.expressInfo.nickname}  电话：{$order.expressInfo.mobile}</div>
                 </td>
@@ -111,7 +111,7 @@
                     </table>
                 </td>
             </tr>
-            <tr>
+            <tr style="height: 30px;">
                 <td colspan="2">
                     <table>
                         <tr style="text-align: center;">
@@ -122,7 +122,7 @@
                     </table>
                 </td>
             </tr>
-            <tr>
+            <tr style="height: 30px;">
                 <td colspan="2">
                     <div>{$order.deliveryInfo.name}</div>
                     <!-- <div>服务电话：0412-5330228</div> -->
