@@ -173,7 +173,8 @@ Page({
           categoryList: data.categoryList, // 分类
           grouplist: data.grouplist, // 团购商品
           // multiArray: region.region.data,     //城市选择json
-          topCateGoods: data.topCateGoods
+          topCateGoods: data.topCateGoods,
+          otherPic: data.otherPic
         })
         // console.log(that.data.topCateGoods)
         for (var j = 0; j < data.topCateGoods.length; j++) {

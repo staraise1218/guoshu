@@ -1,10 +1,11 @@
+<scroll-view scroll-y="{{true}}" class="box-fix" bindscrolltolower="getMore">
 <!-- Poster -->
-<view class="poster-wrap">
-    <image style="width: 710rpx; height: 160rpx; margin-left: 20rpx" src="https://app.zhuoyumall.com:444{{poster}}" />
+<view class="poster-wrap" style="display: flex; justify-content: center">
+    <image mode="widthFix" style="width: 710rpx; height: 160rpx; " src="https://app.zhuoyumall.com:444{{poster}}" />
 </view>
 
 <!-- Miaosa -->
-<view class="miaosa">
+<view class="miaosa" style="padding-top: 20rpx;">
     <view class="miaosa-top">
         <view class="left">
             <image src="https://app.zhuoyumall.com:444/wx/img/2/clock.png" />
@@ -83,10 +84,12 @@
                         <view class="ctr-left">
                             <view class="goods_price">
                                 <image class="RMB" style="width: 14rpx; height: 17rpx;" src="https://app.zhuoyumall.com:444/wx/img/2/￥蓝色.png" />
-                                <view>{{item.price}}</view>
+                                <!-- <view>{{item.price}}</view> -->
+                                <text style="font-weight: bold;">{{item.goods_price}}</text>
                             </view>
                             <view class="goods_price_del">
                                 <view>￥{{item.goods_price}}</view>
+                                <!-- <text style="font-weight: bold;">￥{{item.goods_price}}</text> -->
                             </view>
                         </view>
                         <view class="ctr-right">马上抢</view>
@@ -96,3 +99,4 @@
         </block>
     </view>
 </view>
+</scroll-view>

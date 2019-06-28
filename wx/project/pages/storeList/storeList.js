@@ -121,8 +121,9 @@ Page({
    */
   chooseActive: function (e) {
     console.log(e.currentTarget.dataset.id)
-    this.setData({
-      currentID: e.currentTarget.dataset.id
+    wx.setStorageSync('pickup_id', e.currentTarget.dataset.id)
+    wx.redirectTo({
+      url: '/pages/demo/demo'
     })
   },
 

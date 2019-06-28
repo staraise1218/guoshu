@@ -63,10 +63,12 @@ page {
   font-size: 0;
 }
 .group-icon-poster {
-  border-radius: 10rpx;
+  border-top-left-radius: 10rpx;
+  border-top-right-radius: 10rpx;
   /* margin-top: 20rpx; */
   width: 710rpx;
-  margin-left: 20rpx;
+  /* margin-left: 20rpx; */
+  background: #fff;
 }
 .del {
   height: 30rpx;
@@ -115,6 +117,7 @@ page {
   text-overflow: ellipsis;
   color: rgb(100,100,100);
   font-size: 20rpx;
+  margin-bottom: 10rpx;
 }
 .toCon .title-2_f {
   overflow: hidden;
@@ -171,6 +174,7 @@ page {
   text-overflow: ellipsis;
   line-height: 42rpx;
   height: 42rpx;
+  margin-top: 20rpx;
 }
 
 .scro-item .tag-new {
@@ -237,6 +241,7 @@ page {
   padding: 0rpx 12rpx;
   box-shadow: 2rpx 2rpx 2rpx rgba(0, 0, 0, 0.08);
   box-sizing: border-box;
+  display: none;
 }
 .tag_self_2::after {
   position: absolute;
@@ -751,8 +756,13 @@ swiper-item {
   white-space: nowrap;
   display: block;
   /* background: #eee; */
-  width: 100%;
+  /* width: 100%; */
   margin: 40rpx 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  border-bottom-left-radius: 15rpx;
+  border-bottom-right-radius: 15rpx;
+  overflow: hidden;
 }
 .shangpin-wrap .scro-item {
   width: 220rpx;
@@ -790,12 +800,13 @@ swiper-item {
   font-size: 18rpx;
   text-decoration: line-through;
   color: rgba(0, 0, 0, 0.5);
+  height: 18rpx;
 
 }
 .shop-content .shop-right {
   position: absolute;
   right: 0;
-  top: 20rpx;
+  top: 15rpx;
 }
 
 
@@ -934,7 +945,7 @@ swiper-item {
 .share-wrap {
   display: flex;
   flex-direction: column;
-  padding: 30rpx;
+  padding: 20rpx;
 }
 .share-title {
   width: 100%;
@@ -1145,14 +1156,14 @@ swiper-item {
 }
 .scroll-wrapper_ .scro-item {
   position: relative;
-  height: 350rpx;
+  height: 380rpx;
   /* padding: 10rpx; */
   display: inline-block;
   box-sizing: border-box;
-  margin-left: 10rpx;
+  margin-left: 15rpx;
 }
 .scroll-wrapper_ .scro-item:first-child {
-  margin-left: 30rpx;
+  margin-left: 15rpx;
 }
 .shopping-alert {
   position: absolute;
@@ -1267,7 +1278,7 @@ swiper-item {
   .price{
     /* color:rgb(255, 0, 0); */
     font-size: 26rpx;
-    font-weight: 600;
+    font-weight: 600 !important;
     color: #ff3c64
   }
   .add{
@@ -1426,7 +1437,7 @@ swiper-item {
 }
 .huodong .bgf {
   background: #fff;
-  border-radius: 10rpx;
+  border-radius: 15rpx;
   padding: 20rpx;
 }
 .huodong .top {
@@ -1436,7 +1447,7 @@ swiper-item {
 }
 .huodong .top .t-left {
   border-right: 1rpx solid rgba(0, 0, 0, .1);
-  padding-right: 13rpx;
+  padding-right: 10rpx;
 }
 .huodong .top .t-left .l-tt{
   font-size: 30rpx;
@@ -1486,8 +1497,8 @@ swiper-item {
 }
 .huodong .top .t-right .shop-item {
   display: flex;
-  padding-top: 30rpx;
-  padding-bottom: 30rpx;
+  padding-top: 10rpx;
+  padding-bottom: 10rpx;
 }
 .huodong .top .t-right .shop-item:first-child {
   border-bottom: 1rpx solid #222
@@ -1526,8 +1537,12 @@ swiper-item {
   white-space: nowrap;
   display: flex;
 }
+.huodong .hbottom .shoplist .shopitem:first-child {
+  padding-left: 0;
+}
 .huodong .hbottom .shoplist .shopitem {
   display: inline-block;
+  padding-left: 20rpx;
 }
 .huodong .hbottom .shoplist .shop_ppice {
   font-size: 30rpx;
@@ -1544,3 +1559,6 @@ swiper-item {
 
 
 
+.dddddd {
+  width: 710rpx;
+}

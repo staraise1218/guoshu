@@ -374,7 +374,9 @@ page {
     flex: 1;
 }
 
-
+.bold {
+    font-weight: 900 !important;
+}
 
 .row {
     display: block;
@@ -715,3 +717,4 @@ page {
     height: 0;
     color: transparent;
 }
+

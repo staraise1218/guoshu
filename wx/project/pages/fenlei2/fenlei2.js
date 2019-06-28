@@ -1,6 +1,7 @@
 const app = getApp()
 const Globalhost = getApp().globalData.Globalhost;
 Page({
+  page: 0,
   data: {
     NavList: [],      // 分类
     GoodList: [],     // 商品
@@ -14,11 +15,8 @@ Page({
     RightID: -1,      // 右侧点击id
 
     chooseIndex: [0, 0],  // 城市选中数组
-
-
-
   },
-  onShow() {
+  onLoad() {
     let that = this;
     that.getFenlei(that);
     that.getDeliveryCity(that);
@@ -40,7 +38,8 @@ Page({
         let data = res.data.data;
         console.log(data)
         that.setData({
-          NavList: data
+          NavList: data,
+          BaseID: data[0].id
         })
         that.getYiJi(that, data[0].id);
       },
@@ -62,8 +61,14 @@ Page({
         let data = res.data.data;
         console.log(data);
         console.log(data[0])
+        var arr = [];
+        data.forEach(item => {
+          item.goodslist.forEach(el => {
+            arr.push(el)
+          })
+        })
         that.setData({
-          GoodList: data[0] ? data[0].goodslist : [],
+          GoodList: arr,//data[0] ? data[0].goodslist : [],
           subActiveID: -1
         })
       },
@@ -73,7 +78,7 @@ Page({
   /**
    * 获取二级分类下的商品列表
    */
-  erji(that, id) {
+  erji(that, id, page) {
     wx.request({
       url: Globalhost + 'Api/category/goodslist',
       method: 'POST',
@@ -83,13 +88,25 @@ Page({
       data: {
         cat_id: id,
         city_code: wx.getStorageSync('addressCode'), //110100,
-        page: 0
+        page: page
       },
       success: function (res) {
         var data = res.data.data
         console.log(data)
+        if(data.length == 0) {
+          that.setData({
+            page: -1
+          })
+        }
+        var GoodList = that.data.GoodList;
+        if(page == 0) {
+          GoodList = [];
+        }
+        data.forEach(item => {
+          GoodList.push(item);
+        })
         that.setData({
-          GoodList: data
+          GoodList: GoodList
         })
       }
     })
@@ -99,7 +116,9 @@ Page({
     let that = this;
     console.log(e.currentTarget.dataset)
     that.setData({
-      active: e.currentTarget.dataset.index
+      active: e.currentTarget.dataset.index,
+      subActiveID: -1,
+      page: 0
     })
     that.getYiJi(that, e.currentTarget.dataset.id);
   },
@@ -108,9 +127,10 @@ Page({
     let that = this;
     console.log(e.currentTarget.dataset.id);
     that.setData({
-      subActiveID: e.currentTarget.dataset.id
+      subActiveID: e.currentTarget.dataset.id,
+      page: 0
     })
-    that.erji(that, e.currentTarget.dataset.id);
+    that.erji(that, e.currentTarget.dataset.id, 0);
   },
   
   /**
@@ -260,7 +280,8 @@ Page({
     let that = this;
     that.setData({
       chooseAlerShow: false,
-      address: that.data.chooseAddressName
+      address: that.data.chooseAddressName,
+      active: 0
     })
     wx.setStorageSync('address', that.data.chooseAddressName);
     wx.setStorageSync('addressCode', that.data.chooseAddressCode);
@@ -287,24 +308,20 @@ Page({
   },
 
   getMore(e) {
-    console.log(e)
+    console.log("**********加载更多****************")
     let that = this;
-    // if(that.data.RightID == -1) {
-    //   that.getYiJi(that, that.data.LeftID);
-    // }
+    let subActiveID = that.data.subActiveID;
+    let page = that.data.page;
+    if(page != -1) {
+      ++page
+      that.setData({
+        page: page
+      })
+      if(subActiveID != -1) {
+        that.erji(that, subActiveID, page);
+      }
+    }
   }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 })
