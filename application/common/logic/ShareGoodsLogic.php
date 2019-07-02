@@ -30,7 +30,7 @@ class ShareGoodsLogic
 		// 重组数组，方便下面使用
 		$orderGoodsList = array();
 		foreach ($orderGoods as $goods) {
-			if($goods['share_ratio'] > 0 && $goods['share_ratio'] < 1)
+			// if($goods['share_ratio'] > 0 && $goods['share_ratio'] < 1)
 				$orderGoodsList[$goods['goods_id']] = $goods;
 		}
 
@@ -47,7 +47,8 @@ class ShareGoodsLogic
 		if(empty($goodsShareList)) return false;
 
 		foreach ($goodsShareList as $item) {
-			$money = number_format($item['shop_price'] * $item['share_ratio'], 2); // 佣金
+			// $money = number_format($item['shop_price'] * $item['share_ratio'], 2); // 佣金
+			$money = $item['share_ratio']; // 佣金
 			// 修改分享记录状态为已使用|
 			$updatedata = array(
 				'is_used' => 1,
