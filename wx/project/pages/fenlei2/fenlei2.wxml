@@ -27,16 +27,18 @@
 </scroll-view>
 <!-- Nav END -->
 
-<!-- Nav-bar -->
-<scroll-view class="nav-bar" scroll-x="{{true}}">
-    <block wx:for="{{NavList[active].sub}}" wx:key>
-        <view class="nav-bar-item {{item.id == subActiveID ? 'active' : ''}}" data-id="{{item.id}}" bindtap="changeSub">
-            {{item.name}}</view>
-    </block>
-</scroll-view>
 
 <!-- Shop-con -->
 <scroll-view class="shop-con" scroll-y="{{true}}" bindscrolltolower="getMore">
+    <!-- Nav-bar -->
+    <view class="nav-bar" scroll-x="{{true}}">
+        <block wx:for="{{NavList[active].sub}}" wx:key>
+            <view class="nav-item" data-id="{{item.id}}" bindtap="changeSub">
+                <image src="https://app.zhuoyumall.com:444{{item.icon}}" />
+                <view class="nav-bar-item {{item.id == subActiveID ? 'active' : ''}}">{{item.name}}</view>
+            </view>
+        </block>
+    </view>
     <block wx:for="{{GoodList}}" wx:key>
         <view class="shop-item" data-goods-id="{{item.goods_id}}" bindtap="{{item.store_count == 0 ? '' : 'toCon'}}">
             <image class="shop-pic" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
@@ -47,7 +49,8 @@
                     <view class="goods-price">
                         <image class="RMB" style="width: 24rpx; height: 24rpx"
                             src="https://app.zhuoyumall.com:444/wx/img/2/人民币.png" />
-                        <view class="goods-price-con" style="color:#ff3c64">{{item.shop_price}}</view>
+                        <!-- <view class="goods-price-con" style="color:#ff3c64">{{item.shop_price}}</view> -->
+                        <text style="font-weight: bold; font-size: 26rpx;color: #ff3c64">{{item.shop_price}}</text>
                     </view>
                     <view class="goods-price_">
                         <view class="goods-price-del">￥ {{item.market_price}}</view>

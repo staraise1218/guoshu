@@ -118,6 +118,7 @@ page {
   box-shadow: 2rpx 2rpx 2rpx rgba(0, 0, 0, 0.08);
   border-top-left-radius: 20rpx;
   border-bottom-left-radius: 20rpx;
+  display: none;
 }
   .group-icon {
     position: absolute;
@@ -804,26 +805,26 @@ page {
   
   .list-wrapper {
     width: 100%;
-    position: relative;
-    margin-top: 50rpx;
+    /* position: relative;
+    margin-top: 50rpx; */
   }
   
   .icon-bg {
     width: 100%;
-    position: absolute;
-    top: 0;
+    /* position: absolute;
+    top: 0; */
     z-index: -1;
   }
   
   .lists {
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     width: 100%;
-    padding: 30rpx;
+    /* padding: 30rpx; */
     box-sizing: border-box;
-    height: 100vh;
+    max-height: 100vh;
     flex-wrap: wrap;
-    padding-top: 180rpx;
+    padding-top: 20rpx;
   }
   
 .self-flex {
@@ -856,6 +857,7 @@ page {
     padding:20rpx;
     box-sizing:border-box;
     margin-bottom:15rpx;
+    margin-left: 25rpx;
   }
   .price {
     color: #3E79EC !important;

@@ -16,4 +16,4 @@
 <view class="text-center" style="padding-top: 80rpx;">客服电话</view>
 <view class="text-center" style="color: #4d88ec; font-size: 52rpx; padding-top: 20rpx;">400-2356-7878</view>
 
-<view bindtap="callNumber" class="text-center" style="margin-top: 100rpx; background: #4d88ec; color:#fff; width: 50%; margin-left: 25%; padding: 25rpx; border-radius: 100rpx;">确定</view>
+<view bindtap="callNumber" class="text-center" style="margin: 100rpx auto; background: #4d88ec; color:#fff; width: 50%; padding: 25rpx; border-radius: 100rpx;">确定</view>

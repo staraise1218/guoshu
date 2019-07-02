@@ -27,4 +27,4 @@
 
 
 
-<view bindtap="toOrder" class="okBtn">确定</view>
+<!-- <view bindtap="toOrder" class="okBtn">确定</view> -->

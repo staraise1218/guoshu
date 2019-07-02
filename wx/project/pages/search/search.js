@@ -137,7 +137,7 @@ Page({
       },
       data: {
         user_id: wx.getStorageSync('user_id'),
-        goods_id: e.currentTarget.dataset.id,
+        goods_id: e.currentTarget.dataset.goodsid,
         goods_num: 1
       },
       success: function (res) {

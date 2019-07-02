@@ -2,10 +2,17 @@ page {
     font-size: 28rpx;
 }
 
-
+.box-fix {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
 /* Poster */
 .poster-wrap {
-    height: 200rpx;
+    /* height: 200rpx; */
 }
 
 /* Miaosa */
@@ -192,7 +199,7 @@ page {
 .group .group-list .list-item .right .ctr .ctr-right {
     background: #3C7CED;
     color: #fff;
-    border-radius: 30rpx;
+    border-radius: 60rpx;
     padding: 16rpx 42rpx;
     color: #fff;
     font-size: 24rpx;

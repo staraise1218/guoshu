@@ -1,7 +1,7 @@
 <scroll-view scroll-y="{{true}}" bindscrolltolower="getMore" class="item-box-1">
     <view>
         <view class="list-wrapper">
-            <image class="icon-bg" mode="" src="https://app.zhuoyumall.com:444{{msg.image}}" />
+            <image class="icon-bg" mode="widthFix" src="https://app.zhuoyumall.com:444{{msg.image}}" />
             <view class="lists">
                 <block wx:for="{{GOODLIST}}" wx:key>
                     <view class="item-list-box" data-id="{{item.goods_id}}" bindtap="toCon" data-id="{{item.goods_id}}">
@@ -17,7 +17,8 @@
                         </view> -->
                         <view class="bottom">
                             <view class="left-center">
-                                <view class="price">{{item.shop_price}}</view>
+                                <!-- <view class="price">￥{{item.shop_price}}</view> -->
+                                <text style="font-weight: bold; font-size: 30rpx;color: #3E79EC">￥{{item.shop_price}}</text>
                             </view>
                             <image data-id="{{item.goods_id}}" catchtap="addCart" class="icon-2" mode="widthFix"
                                 style="width: 50rpx; height: 50rpx;"

@@ -3,19 +3,21 @@ const Globalhost = getApp().globalData.Globalhost;
 const loadingfunc = getApp().globalData.loadingfunc;
 Page({
   data: {
+    page: 1,
     poster: '',
     Grouplist: [],  // 团购列表
     MiaosaList: [], // 秒杀列表
     NextList: [],   // 下次预告
     Active: 'MIAOSA',
     nextStatus: '', // 切换下期预告
+    STATUS: true
   },
   onLoad: function (options) {
 
   },
   onShow: function () {
     let that = this;
-    that.group(that);
+    that.group(that, 1);
     that.miaosha(that);
     that.miaosha(that, 'next');
     if(wx.getStorageSync('nextStatus')) {
@@ -32,7 +34,7 @@ Page({
   /**
    * 团购首页
    */
-  group: function (that) {
+  group: function (that, page) {
     wx.request({
       url: Globalhost + 'Api/activity/index',
       method: 'POST',
@@ -42,14 +44,25 @@ Page({
       data: {
         user_id: wx.getStorageSync('user_id'),
         city_code: wx.getStorageSync('addressCode'),//110100,
-        page: 1
+        page: page
       },
       success: function (res) {
         let data = res.data.data;
         console.log(data)
         that.setData({
-          poster: data.bannerList[0].ad_code,
-          Grouplist: data.grouplist
+          poster: data.bannerList[0].ad_code
+        })
+        var Grouplist = that.data.Grouplist;
+        if(data.grouplist.length == 0) {
+          that.setData({
+            STATUS: false
+          })
+        }
+        data.grouplist.forEach(item => {
+          Grouplist.push(item);
+        })
+        that.setData({
+          Grouplist: Grouplist
         })
       }
     })
@@ -106,9 +119,18 @@ Page({
   },
 
 
-
-
-
+  getMore(e) {
+    console.log(e)
+    let that = this;
+    let page = that.data.page;
+    if(that.data.STATUS) {
+      ++page;
+      that.setData({
+        page: page
+      })
+      that.group(that, page);
+    }
+  },
   onShareAppMessage: function () {
 
   }
