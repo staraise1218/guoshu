@@ -19,6 +19,7 @@ class Article extends Base {
 		$article_id = 0;
 		if($type == 1) $article_id = 1; // 用户协议
 		if($type == 2) $article_id = 2; // 隐私策略
+		if($type == 3) $article_id = 3; // 关于我们
 
 		$info = Db::name('article')
 			->where('article_id', $article_id)
