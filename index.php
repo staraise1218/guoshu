@@ -19,8 +19,10 @@ if (extension_loaded('zlib')){
     ob_start('ob_gzhandler');
 }
  
+
+ 
 // 检测PHP环境
-if(version_compare(PHP_VERSION,'5.5.0','<') || version_compare(PHP_VERSION,'7.1.0','>'))
+if(version_compare(PHP_VERSION,'5.5.0','<') || version_compare(PHP_VERSION,'7.3.0','>'))
 {
     header("Content-type: text/html; charset=utf-8");  
     die('PHP 版本必须 5.5 至 7.0 !');
