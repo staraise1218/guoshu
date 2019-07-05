@@ -402,10 +402,10 @@ page {
     background-repeat: no-repeat;
 }
 .goods_list_item .right .goods_info .goods_price-wrap .ctr .jian {
-    background-image: url('https://app.zhuoyumall.com:444/wx/img/2/-.png')
+    background-image: url('https://app.zhuoyumall.com/wx/img/2/-.png')
 }
 .goods_list_item .right .goods_info .goods_price-wrap .ctr .add {
-    background-image: url('https://app.zhuoyumall.com:444/wx/img/2/+.png')
+    background-image: url('https://app.zhuoyumall.com/wx/img/2/+.png')
 }
 
 .goods_list_item .right .goods_info .goods_name,

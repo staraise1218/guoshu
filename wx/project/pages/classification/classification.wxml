@@ -50,7 +50,7 @@
                   <view class="ctr-box">
                     <view class="left">
                       <view class="price-1">
-                            <image class="RMB" style="width: 13rpx" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/2/￥蓝色.png" />
+                            <image class="RMB" style="width: 13rpx" mode="widthFix" src="https://app.zhuoyumall.com/wx/img/2/￥蓝色.png" />
                             <view class="price">{{item.shop_price}}</view>
                       </view>
                       <view class="price-2">
@@ -58,11 +58,11 @@
                       </view>
                     </view>
                     <view class="right">
-                        <image lazy-load="true" data-img="https://app.zhuoyumall.com:444{{item.original_img}}"
+                        <image lazy-load="true" data-img="https://app.zhuoyumall.com{{item.original_img}}"
                           style="width: 50rpx"
                           mode="widthFix"
                           catchtap="{{item.store_count == 0 ? '' : 'addCart'}}" 
-                          src="https://app.zhuoyumall.com:444/wx/img/2/购物车蓝色.png"
+                          src="https://app.zhuoyumall.com/wx/img/2/购物车蓝色.png"
                           data-id="{{item.goods_id}}" />
                     </view>
                   </view>
@@ -82,7 +82,7 @@
         <!-- 小分类商品列表 -->
         <block wx:show="{{status == 'right'}}" wx:for="{{subRight}}" wx:key>
           <view  bindtap="{{item.store_count == 0 ? '' : 'toCon'}}" data-goods-id="{{item.goods_id}}"  class="list-item between-center padding-tb-30 border-bottom">
-            <image class="icon-poster"  src="https://app.zhuoyumall.com:444{{item.original_img}}" mode="" />
+            <image class="icon-poster"  src="https://app.zhuoyumall.com{{item.original_img}}" mode="" />
             <!-- <view class="right padding-lr-20" style="flex:1">
               <view class="title-2">{{item.goods_name}}</view>
               <view class="title-3_f">{{item.subtitle}}</view>
@@ -90,7 +90,7 @@
                   <view class="shop-content">
                     <view class="shop-left">
                       <view class="price-wrap">
-                        <image style="width: 13rpx" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/2/￥蓝色.png" />
+                        <image style="width: 13rpx" mode="widthFix" src="https://app.zhuoyumall.com/wx/img/2/￥蓝色.png" />
                         <view class="price">{{item.shop_price}}</view>
                       </view>
                       <view class="del-wrap">
@@ -98,11 +98,11 @@
                       </view>
                     </view>
                     <view class="shop-right">
-                      <image lazy-load="true" data-img="https://app.zhuoyumall.com:444{{item.original_img}}"
+                      <image lazy-load="true" data-img="https://app.zhuoyumall.com{{item.original_img}}"
                         style="width: 50rpx"
                         mode="widthFix"
                         catchtap="{{item.store_count == 0 ? '' : 'addCart'}}" 
-                        src="https://app.zhuoyumall.com:444/wx/img/2/购物车蓝色.png"
+                        src="https://app.zhuoyumall.com/wx/img/2/购物车蓝色.png"
                         data-id="{{item.goods_id}}" />
                     </view>
                   </view>
@@ -113,7 +113,7 @@
                   <view class="ctr-box">
                     <view class="left">
                       <view class="price-1">
-                            <image class="RMB" style="width: 13rpx" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/2/￥蓝色.png" />
+                            <image class="RMB" style="width: 13rpx" mode="widthFix" src="https://app.zhuoyumall.com/wx/img/2/￥蓝色.png" />
                             <view class="price">{{item.shop_price}}</view>
                       </view>
                       <view class="price-2">
@@ -121,11 +121,11 @@
                       </view>
                     </view>
                     <view class="right">
-                        <image lazy-load="true" data-img="https://app.zhuoyumall.com:444{{item.original_img}}"
+                        <image lazy-load="true" data-img="https://app.zhuoyumall.com{{item.original_img}}"
                           style="width: 50rpx"
                           mode="widthFix"
                           catchtap="{{item.store_count == 0 ? '' : 'addCart'}}" 
-                          src="https://app.zhuoyumall.com:444/wx/img/2/购物车蓝色.png"
+                          src="https://app.zhuoyumall.com/wx/img/2/购物车蓝色.png"
                           data-id="{{item.goods_id}}" />
                     </view>
                   </view>
