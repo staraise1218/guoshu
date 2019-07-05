@@ -190,6 +190,10 @@ class Goods extends Base {
 		$shareUserInfo = Db::name('users')->where('userCode', $share_userCode)->find();
 		if(empty($shareUserInfo) || $shareUserInfo['is_lock'] == 1) response_error('', '分享者不存在');
         if($shareUserInfo['user_id'] === $user_id) response_error('', '给自己分享无效');
+        // 判断分享佣金是否大于0
+        $goods = Db::name('goods')->where('goods_id', $goods_id)->field('share_ratio')->find();
+        if(empty($goods)) response_success('', '操作成功');
+        if($goods['share_ratio'] <= 0) response_success('', '操作成功');
         
 		$data = array(
 			'user_id' => $user_id,

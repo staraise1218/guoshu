@@ -49,6 +49,7 @@ class ShareGoodsLogic
 		foreach ($goodsShareList as $item) {
 			// $money = number_format($item['shop_price'] * $item['share_ratio'], 2); // 佣金
 			$money = $item['share_ratio']; // 佣金
+			if($money == 0) continue;
 			// 修改分享记录状态为已使用|
 			$updatedata = array(
 				'is_used' => 1,
