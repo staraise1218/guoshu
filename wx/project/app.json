@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/loading/loading",
+    "pages/aboutus/aboutus",
     "pages/mingxi/mingxi",
     "pages/commodityDetails/commodityDetails",
     "pages/searMsg/searMsg",
@@ -66,7 +67,7 @@
   "window": {
     "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "果蔬直销",
+    "navigationBarTitleText": "海豹超市",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {

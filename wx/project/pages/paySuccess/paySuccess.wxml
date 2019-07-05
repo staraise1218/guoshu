@@ -1,6 +1,6 @@
 <view style=" padding: 30rpx 0;">
     <view class="text-center" style="margin: 20rpx 0;">
-        <image style="width: 100rpx; height: 100rpx;" src="https://app.zhuoyumall.com:444/wx/img/2/HBmart5.png" />
+        <image style="width: 100rpx; height: 100rpx;" src="https://app.zhuoyumall.com/wx/img/2/HBmart5.png" />
     </view>
     <view class="text-center title-3_">支付成功</view>
 </view>

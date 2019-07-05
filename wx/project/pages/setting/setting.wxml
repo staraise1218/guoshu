@@ -1,6 +1,6 @@
 
 <view class="margin-top-30">
-    <image class="icon-poster block center " src="https://app.zhuoyumall.com:444/wx/img/2/HBmart6.png" />
+    <image class="icon-poster block center " src="https://app.zhuoyumall.com/wx/img/2/HBmart6.png" />
 </view>
 
 <view class="text-center title-3">版本号v8.5.0</view>

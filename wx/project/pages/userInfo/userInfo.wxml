@@ -4,7 +4,7 @@
     <view class="title-3">头像</view>
     
     <view class="icon-1">
-        <image class="" style="width: 100%" mode="widthFix" bindtap="changHeaderPic" src="{{head_pic}}" />
+        <image class="" style="width: 100%" mode="widthFix" bindtap="changHeaderPic" src="https://app.zhuoyumall.com{{head_pic}}" />
     </view>
 </view>
 
@@ -15,10 +15,10 @@
 </view>
 
 
-<view class="margin-lr-30 padding-tb-30 border-bottom between-center">
+<!-- <view class="margin-lr-30 padding-tb-30 border-bottom between-center">
     <view class="title-3">性别</view>
     <view class="title-2_f" bindtap="changSex">{{sex}}</view>
-</view>
+</view> -->
 
 <modal hidden="{{nameShow}}" title="修改昵称" confirm-text="提交" cancel-text="取消" bindcancel="nameCanCel"
     bindconfirm="nameConFirm">

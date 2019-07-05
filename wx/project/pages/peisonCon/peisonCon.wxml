@@ -23,7 +23,7 @@
 <!-- 提货人信息 -->
 <view  wx:if="{{DO == 'ziti'}}" class="padding-30">
     <view class="left-center">
-        <image  class="icon-3" src="https://app.zhuoyumall.com:444/wx/img/user.png" mode="widthFix" />
+        <image  class="icon-3" src="https://app.zhuoyumall.com/wx/img/user.png" mode="widthFix" />
         <view class="title-2 margin-left-20">提货人： {{orderInfo.consignee}} </view>
         <view class="end title-2_f">{{orderInfo.mobile}}</view>
     </view>
@@ -33,7 +33,7 @@
 <block wx:for="{{orderInfo.goods_list}}" wx:key>
     <view class="list-item margin-lr-30 padding-30 between-center border-bottom">
         <view class="left">
-            <image mode="" class="item-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+            <image mode="" class="item-poster" src="https://app.zhuoyumall.com{{item.original_img}}" />
         </view>
         <view class="right">
             <view class="left-center item-con">

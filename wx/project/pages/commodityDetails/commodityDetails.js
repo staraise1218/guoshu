@@ -151,7 +151,7 @@ Page({
         }
         that.setData({
           // share_ratio: ((data.share_ratio * 10000) * (data.shop_price)*10000) / 10000,
-          shareNum: ((data.share_ratio * 10000) * (data.shop_price) * 10000) / 100000000
+          shareNum: data.share_ratio//Math.floor(((data.share_ratio * 100) * (data.shop_price) * 10000) / 100000000)
         })
         if (data.goodsCommentList[0]) {
           that.setData({
@@ -165,26 +165,28 @@ Page({
           that.imgH(Globalhost + data.goods_images_list[0].image_url)
           var imgUrls_ = 'imgUrls[' + i + ']'
           that.setData({
-            [imgUrls_]: 'https://app.zhuoyumall.com:444' + data.goods_images_list[i].image_url
+            [imgUrls_]: 'https://app.zhuoyumall.com' + data.goods_images_list[i].image_url
           })
         }
         var reg = /src="/ig
         // reg.test(data.goods_content)
         console.log(data.goods_content)
-        data.goods_content = data.goods_content.replace(reg, 'style="max-width:100%;height:auto" src="https://app.zhuoyumall.com:444')
+        data.goods_content = data.goods_content.replace(reg, 'style="max-width:100%;height:auto" src="https://app.zhuoyumall.com')
         // 轮播图 END
         if (data.prom_type == 0) {
           that.setData({
             'MSM.shop_price': data.shop_price,
           })
         }
+        data.virtual_num = Number(data.virtual_num);
+        data.sales_sum = Number(data.sales_sum);
         that.setData({
           'MSM.goods_name': data.goods_name,
           'MSM.subtitle': data.subtitle,
           'MSM.store_count': data.store_count,
           html: data.goods_content,
           goodLists: data,
-          poster: 'https://app.zhuoyumall.com:444' + data.goods_images_list[0].image_url
+          poster: 'https://app.zhuoyumall.com' + data.goods_images_list[0].image_url
         })
         console.log(data.goods_images_list[0])
         if (data.prom_type != 0) {
@@ -205,7 +207,7 @@ Page({
               that.setData({
                 'MSM.shop_price': res.data.data.activityInfo.shop_price,
                 'MSM.virtual_num': res.data.data.activityInfo.virtual_num,
-                shareNum: ((data.share_ratio * 10000) * (data.shop_price) * 10000) / 100000000,
+                shareNum: data.share_ratio, //Math.floor(((data.share_ratio * 100) * (data.shop_price) * 10000) / 100000000),
                 'goodLists.goods_name': data.activity_title
               })
               console.log(that.data)

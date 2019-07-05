@@ -1,7 +1,7 @@
 
 <block wx:for="{{goods_list}}" wx:key>
     <view class="pinglun-title padding-tb-20 padding-lr-30 border-bottom">
-        <image class="pinglun-icon" mode="widthFix" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+        <image class="pinglun-icon" mode="widthFix" src="https://app.zhuoyumall.com{{item.original_img}}" />
         <view class="margin-left-20 title-2">{{item.goods_name}}</view>
     </view>
     <view class="section">

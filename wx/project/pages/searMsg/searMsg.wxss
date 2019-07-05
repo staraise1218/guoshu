@@ -3,11 +3,11 @@ page {
     height: 100vh;
     background: #FFF1E3;
     padding: 0;
-    background-image: url('https://app.zhuoyumall.com:444/wx/img/2/商品分享说明.jpg');
+    background-image: url('https://app.zhuoyumall.com/wx/img/3/ss.jpg');
     background-repeat: no-repeat;
     background-size: 100% 100%;
 }
-.content {
+/* .content {
     margin: 30rpx;
     margin-top: 100rpx;
     background: #fff;
@@ -49,4 +49,4 @@ page {
 .footer-icon {
     width: 176rpx;
     height: 150rpx;
-}
+} */

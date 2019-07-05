@@ -18,7 +18,7 @@ page {
     color:#fff;
     font-size: 26rpx;
     background: #fff;
-    background-image: url('https://app.zhuoyumall.com:444/wx/img/2/分享背景.png');
+    background-image: url('https://app.zhuoyumall.com/wx/img/2/分享背景.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
     height: 80rpx;
@@ -208,7 +208,7 @@ page {
 .group_new {
   display: flex;
   justify-content: space-between;
-  background-image: url('https://app.zhuoyumall.com:444/wx/img/2/团购背景.jpg');
+  background-image: url('https://app.zhuoyumall.com/wx/img/2/团购背景.jpg');
   background-size: 100% 100%;
   background-repeat: no-repeat;
   color: #fff;
@@ -248,7 +248,7 @@ page {
 .group {
   display: flex;
   justify-content: space-between;
-  background-image: url('https://app.zhuoyumall.com:444/wx/img/2/团购背景.jpg');
+  background-image: url('https://app.zhuoyumall.com/wx/img/2/团购背景.jpg');
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
@@ -604,7 +604,7 @@ page {
   display: block;
   width: 100%;
   height: 50rpx;
-  background-image: url('https://app.zhuoyumall.com:444/wx/img/2/123.png');
+  background-image: url('https://app.zhuoyumall.com/wx/img/2/123.png');
   background-repeat: no-repeat;
   background-size: 100% 100%;
   bottom: -50rpx;

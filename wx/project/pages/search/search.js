@@ -61,7 +61,7 @@ Page({
           that.setData({
             [goodListId]: data[i].goods_id,
             [goodListName]: data[i].goods_name,
-            [goodListImg]: 'https://app.zhuoyumall.com:444' + data[i].original_img,
+            [goodListImg]: 'https://app.zhuoyumall.com' + data[i].original_img,
             [goodListPrice]: data[i].shop_price,
             [goodListCount]: data[i].store_count,
             [goodListTitle]: data[i].subtitle
@@ -100,7 +100,7 @@ Page({
           that.setData({
             [Tid]: data[i].goods_id,
             [Tname]: data[i].goods_name,
-            [original_img]: 'https://app.zhuoyumall.com:444' + data[i].original_img,
+            [original_img]: 'https://app.zhuoyumall.com' + data[i].original_img,
             [Tprice]: data[i].shop_price,
             [Tcount]: data[i].store_count,
             [Tsub]: data[i].subtitle

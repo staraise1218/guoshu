@@ -1,19 +1,8 @@
-<!-- <image style="width:100%" mode="widthFix" src="http://img.hb.aicdn.com/d79242b7d01b6d5c0d263dbb8e9eca829ae43dc613568-1dbgxK_fw658" /> -->
-<!-- <button bindtap="callNumber">联系客服</button> -->
-<!-- <view>*温馨提示:客服工作实即9:00-23:00</view> -->
-
-
-
-
-
 <view style="padding: 40rpx 0; background:#fff;" class="text-center">
-    <image src="https://app.zhuoyumall.com:444/wx/img/2/HBmart6.png" style="width: 150rpx; height: 150rpx;" />
-    <view style=" padding-top: 30rpx;">海报<text style="font-style:italic;">mart</text>仓储超市</view>
+    <image src="https://app.zhuoyumall.com/wx/img/3/N28.png" style="width: 150rpx; height: 150rpx;" />
+    <!-- <view style=" padding-top: 30rpx;">海报<text style="font-style:italic;">mart</text>仓储超市</view> -->
+    <view style=" padding-top: 30rpx;">海豹城市仓储超市</view>
 </view>
-
-
-
 <view class="text-center" style="padding-top: 80rpx;">客服电话</view>
 <view class="text-center" style="color: #4d88ec; font-size: 52rpx; padding-top: 20rpx;">400-2356-7878</view>
-
 <view bindtap="callNumber" class="text-center" style="margin: 100rpx auto; background: #4d88ec; color:#fff; width: 50%; padding: 25rpx; border-radius: 100rpx;">确定</view>

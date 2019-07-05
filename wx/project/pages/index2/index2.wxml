@@ -25,7 +25,7 @@
     <swiper class="slider-box" bindchange="swChange" current autoplay="true" circular="true" interval="5000" duration="500">
       <block wx:for="{{imgUrls}}" wx:key>
         <swiper-item data-current="{{index}}">
-          <image src="https://app.zhuoyumall.com:444{{item.ad_code}}" bindtap='toLink' bindload='setContainerHeight' data-link="{{item.ad_link}}" class="slide-image" />
+          <image src="https://app.zhuoyumall.com{{item.ad_code}}" bindtap='toLink' bindload='setContainerHeight' data-link="{{item.ad_link}}" class="slide-image" />
         </swiper-item>
       </block>
     </swiper>
@@ -36,7 +36,7 @@
   <view class="nav-btn">
     <block wx:for="{{categoryList}}" wx:key>
       <view class="nav-item" data-currentTab="{{index}}" data-id="{{item.id}}" bindtap="{{item.func == 'more' ? 'more' : 'tapchange'}}">
-        <image class="nav-icon" src="https://app.zhuoyumall.com:444{{item.icon}}" />
+        <image class="nav-icon" src="https://app.zhuoyumall.com{{item.icon}}" />
         <view class="nav-text">{{item.name}}</view>
       </view>
     </block>
@@ -54,7 +54,7 @@
         <block wx:for="{{grouplist}}" wx:key>
           <view class="scro-item" data-goodsid="{{item.goods_id}}" data-id="{{item.goods_id}}" bindtap="toCon">
             <view class="poster-wrap">
-              <image class="icon-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+              <image class="icon-poster" src="https://app.zhuoyumall.com{{item.original_img}}" />
             </view>
             <view class="title-2">{{item.goods_name}}</view>
             <view class="title-3 margin-bottom-20">{{item.subtitle}}</view>
@@ -80,8 +80,8 @@
   <view class="line"></view>
   <!-- AD 2 -->
   <view class="padding-tb-30 jingcaidali-wrap">
-    <image bindtap="toLink" mode="widthFix" data-link="{{shareGoods[0].ad_link}}" class="jingcaidali_2" src="https://app.zhuoyumall.com:444{{shareGoods[0].ad_code}}" />
-    <image bindtap="toLink" mode="widthFix" data-link="{{shareGoods[1].ad_link}}" class="jingcaidali_2" src="https://app.zhuoyumall.com:444{{shareGoods[1].ad_code}}" />
+    <image bindtap="toLink" mode="widthFix" data-link="{{shareGoods[0].ad_link}}" class="jingcaidali_2" src="https://app.zhuoyumall.com{{shareGoods[0].ad_code}}" />
+    <image bindtap="toLink" mode="widthFix" data-link="{{shareGoods[1].ad_link}}" class="jingcaidali_2" src="https://app.zhuoyumall.com{{shareGoods[1].ad_code}}" />
   </view>
   <!-- AD 2  END -->
   <view class="line"></view>
@@ -105,7 +105,7 @@
         <view class="scro-shop-wrap" data-id="{{item.goods_id}}" bindtap="toCon">
           <view class="miaosha-shop-item">
             <view class="miaosha-poster-wrap">
-              <image class="icon-poster" mode="widthFix" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+              <image class="icon-poster" mode="widthFix" src="https://app.zhuoyumall.com{{item.original_img}}" />
             </view>
             <view class="title-2 center">{{item.goods_name}}</view>
             <view class="price center">￥{{item.shop_price}}</view>
@@ -137,7 +137,7 @@
   <view class="line"></view>
   <block wx:for="{{topCateGoods}}" wx:key="{{item.id}}">
     <view class="padding-lr-30">
-      <image style="width: 100%" mode="widthFix" data-catid="{{item.cat_id}}" bindtap="toFenlei" src="https://app.zhuoyumall.com:444{{item.index_image}}" />
+      <image style="width: 100%" mode="widthFix" data-catid="{{item.cat_id}}" bindtap="toFenlei" src="https://app.zhuoyumall.com{{item.index_image}}" />
     </view>
     <scroll-view scroll-x class="shangpin-wrap padding-lr-30 padding-bottom-20">
 
@@ -145,7 +145,7 @@
         <block wx:for="{{item.goodslist}}" wx:key>
           <view class="scro-item " data-id="{{item.goods_id}}" wx-if="{{index % 2 == 0}}" bindtap="toCon">
             <view class="poster-wrap">
-              <image class="icon-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+              <image class="icon-poster" src="https://app.zhuoyumall.com{{item.original_img}}" />
             </view>
             <view class="title-2">{{item.goods_name}}</view>
             <view class="tag-new">
@@ -167,7 +167,7 @@
         <block wx:for="{{item.goodslist}}" wx:key>
           <view class="scro-item " data-id="{{item.goods_id}}" wx-if="{{index % 2 != 0}}" bindtap="toCon">
             <view class="poster-wrap">
-              <image class="icon-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+              <image class="icon-poster" src="https://app.zhuoyumall.com{{item.original_img}}" />
             </view>
             <view class="title-2">{{item.goods_name}}</view>
             <view class="tag-new">
@@ -214,7 +214,7 @@
 <!-- 红包弹窗 -->
 <!-- <view class="redBag-box">
   <view class="content">
-    <image src="https://app.zhuoyumall.com:444/wx/img/hongbao.png" />
+    <image src="https://app.zhuoyumall.com/wx/img/hongbao.png" />
     <view class="text">
       <view class="price">10</view>
     </view>

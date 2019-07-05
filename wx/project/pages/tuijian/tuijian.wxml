@@ -6,7 +6,7 @@
                     <view class="item-list-box" data-id="{{item.goods_id}}" bindtap="toCon" data-id="{{item.goods_id}}">
                         <view class="poster-wrapper">
                             <image class="icon-shop" mode=""
-                                src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+                                src="https://app.zhuoyumall.com{{item.original_img}}" />
                             <!-- <view class="tag_self">{{item.tag}}</view> -->
                         </view>
                         <view class="title-3 shop-title">{{item.goods_name}}</view>
@@ -17,7 +17,7 @@
                             </view>
                             <image data-id="{{item.goods_id}}" catchtap="addCart" class="icon-2" mode="widthFix"
                                 style="width: 50rpx; height: 50rpx;"
-                                src="https://app.zhuoyumall.com:444/wx/img/2/购物车蓝色.png" />
+                                src="https://app.zhuoyumall.com/wx/img/2/购物车蓝色.png" />
                         </view>
                     </view>
                 </block>

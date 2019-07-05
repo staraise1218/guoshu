@@ -434,12 +434,15 @@ Page({
   // 余额支付弹出
   set_wallets_password(e) { //获取钱包密码
     let that = this;
-    this.setData({
-      wallets_password: e.detail.value
-    });
-    if (this.data.wallets_password.length == 6) { //密码长度6位时，自动验证钱包支付结果
+    // this.setData({
+    //   wallets_password: e.detail.value
+    // });
+    // if (this.data.wallets_password.length == 6) { //密码长度6位时，自动验证钱包支付结果
+    //   that.setData({
+    //     yueShow: false
+    //   })
       that.setData({
-        yueShow: false
+        alertPayShow: false,
       })
       wx.request({
         url: Globalhost + 'api/pay/topay',
@@ -450,7 +453,7 @@ Page({
         data: {
           order_sn: that.data.order_sn,
           paymentMethod: 'money',
-          payPwd: that.data.wallets_password
+          // payPwd: that.data.wallets_password
         },
         success: function (res) {
           if(res.code == 200) {
@@ -465,26 +468,26 @@ Page({
           }
         }
       })
-    }
+    // }
   },
-  set_Focus() { //聚焦input
-    console.log('isFocus', this.data.isFocus)
-    this.setData({
-      isFocus: true
-    })
-  },
-  set_notFocus() { //失去焦点
-    this.setData({
-      isFocus: false
-    })
-  },
-  close_wallets_password() { //关闭钱包输入密码遮罩
-    this.setData({
-      isFocus: false, //失去焦点
-      yueShow: false,
-      wallets_password: ''
-    })
-  },
+  // set_Focus() { //聚焦input
+  //   console.log('isFocus', this.data.isFocus)
+  //   this.setData({
+  //     isFocus: true
+  //   })
+  // },
+  // set_notFocus() { //失去焦点
+  //   this.setData({
+  //     isFocus: false
+  //   })
+  // },
+  // close_wallets_password() { //关闭钱包输入密码遮罩
+  //   this.setData({
+  //     isFocus: false, //失去焦点
+  //     yueShow: false,
+  //     wallets_password: ''
+  //   })
+  // },
   closeError: function () {
     this.setData({
       errorShow: false

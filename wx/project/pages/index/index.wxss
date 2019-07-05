@@ -1126,7 +1126,7 @@ swiper-item {
   width: 100%;
   height: 100vh;
   background: rgba(0,0,0,.5);
-  background-image: url('https://app.zhuoyumall.com:444/wx/img/hongbao-background.png');
+  background-image: url('https://app.zhuoyumall.com/wx/img/hongbao-background.png');
   background-size: cover;
 }
 .redBag-box .content {
@@ -1195,7 +1195,7 @@ swiper-item {
   width: 100%;
   height: 100vh;
   background: rgba(0,0,0,.5);
-  background-image: url('https://app.zhuoyumall.com:444/wx/img/hongbao-background.png');
+  background-image: url('https://app.zhuoyumall.com/wx/img/hongbao-background.png');
   background-size: cover;
 }
 .redBag-box .content {
@@ -1469,7 +1469,7 @@ swiper-item {
 .huodong .huodong-price {
   font-size: 22rpx;
   display: flex;
-  align-items: flex-end;
+  align-items: baseline;
   margin-top: 20rpx;
 }
 .huodong .huodong-price .huodong-price_ {
@@ -1498,7 +1498,7 @@ swiper-item {
 .huodong .top .t-right .shop-item {
   display: flex;
   padding-top: 10rpx;
-  padding-bottom: 10rpx;
+  padding-bottom: 20rpx;
 }
 .huodong .top .t-right .shop-item:first-child {
   border-bottom: 1rpx solid #222

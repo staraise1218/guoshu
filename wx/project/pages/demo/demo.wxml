@@ -31,7 +31,7 @@
     <block wx:for="{{GoodList}}" wx:key>
         <view class="list left-center border-bottom padding-30" bindtap="consoleData">
             <view class="poster">
-                <image class="poster-image" src="https://app.zhuoyumall.com:444{{item.goods.original_img}}" mode="" />
+                <image class="poster-image" src="https://app.zhuoyumall.com{{item.goods.original_img}}" mode="" />
             </view>
             <view class="right margin-left-20 wrap">
                 <view class="title-3">{{item.goods.goods_name}}</view>
@@ -170,7 +170,7 @@
 
 <view class="alert-error-wrapper" bindtap="closeError" wx:if="{{errorShow}}">
     <view class="alert-error-content">
-        <image  src="https://app.zhuoyumall.com:444/wx/img/error_prisong.png" />
+        <image  src="https://app.zhuoyumall.com/wx/img/error_prisong.png" />
         <view class="error-msg">{{errorMsg}}</view>
     </view>
 </view>
@@ -182,7 +182,7 @@
         <block wx:for="{{StoreList}}" wx:key>
             <view class="list-item {{item.pickup_id == options.Store_id ? 'active' : ''}}" data-id="{{item.pickup_id}}" catchtap="choosePickup">
                 <view class="left">
-                    <image src="https://app.zhuoyumall.com:444{{item.image}}" />
+                    <image src="https://app.zhuoyumall.com{{item.image}}" />
                 </view>
                 <view class="center">
                     <view class="name">{{item.pickup_name}}</view>
@@ -221,7 +221,7 @@
                     <view class="con">{{item.floor}}</view>
                 </view>
                 <view class="right" data-id="{{item.address_id}}" catchtap="toEditAddress">
-                    <image src="https://app.zhuoyumall.com:444/wx/img/xiugai.png" />
+                    <image src="https://app.zhuoyumall.com/wx/img/xiugai.png" />
                     <view class="">修改</view>
                 </view>
             </view>
@@ -236,7 +236,7 @@
 <view class="my_alert_bg" wx:if="{{my_error_alert_show}}" bindtap="close_my_alert"></view>
 <view class="my_alert" wx:if="{{my_error_alert_show}}">
     <!-- <view class="my_title">{{my_alert_title}}</view> -->
-    <image style="width: 100%; height: 90rpx;" src="https://app.zhuoyumall.com:444/wx/img/2/321.png" />
+    <image style="width: 100%; height: 90rpx;" src="https://app.zhuoyumall.com/wx/img/2/321.png" />
     <view class="my_con">{{alert_errorMsg}}</view>
     <view class="my_btn">
         <view class="my_cancel" bindtap="my_alert_cancel">{{cancel}}</view>

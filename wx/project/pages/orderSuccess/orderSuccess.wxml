@@ -22,11 +22,11 @@
 <view wx:if="{{msg.send_method == 1}}">
     <view class="peisongyuan-wrap" wx:if="{{msg.order_status_code == 'WAITCONFIRM' || msg.order_status_code == 'WAITCCOMMENT' || msg.order_status_code == 'WAITREFUND' }}">
         <view class="left">
-            <image src="https://app.zhuoyumall.com:444//wx/img/peisong.png" />
+            <image src="https://app.zhuoyumall.com//wx/img/peisong.png" />
             <view class="peisong-name">{{msg.expressInfo.nickname}}   派送中</view>
         </view>
         <view class="peisong-phone" bindtap="toCall" data-phone="17696639860">
-            <!-- <image src="https://app.zhuoyumall.com:444//wx/img/phone.png" />
+            <!-- <image src="https://app.zhuoyumall.com//wx/img/phone.png" />
             <view class="phone-con">电话</view> -->
             {{msg.expressInfo.mobile}}
         </view>
@@ -70,7 +70,7 @@
 <block wx:for="{{msg.goods_list}}" wx:key>
     <view class="list-item margin-lr-30 padding-30 between-center border-bottom">
         <view class="left">
-            <image mode="" class="item-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+            <image mode="" class="item-poster" src="https://app.zhuoyumall.com{{item.original_img}}" />
         </view>
         <view class="right">
             <view class="left-center item-con">
@@ -248,7 +248,7 @@
 </view>
 
 <view class="toHome" bindtap="toHome">
-    <image src="https://app.zhuoyumall.com:444/wx/img/home.png" />
+    <image src="https://app.zhuoyumall.com/wx/img/home.png" />
 </view>
 
 
@@ -283,15 +283,14 @@
 <view wx-if="{{alertPayShow}}" class="alert-bg" bindtap="closePay"></view>
 <view wx-if="{{alertPayShow}}" class="alert-pay">
     <view class="wx" data-method="wx" bindtap="wxpay">
-        <image src="https://app.zhuoyumall.com:444/wx/img/组166@2x.png" />
+        <image src="https://app.zhuoyumall.com/wx/img/组166@2x.png" />
         <view class="pay-title">微信支付</view>
     </view>
-    <view class="yue" data-method="yue" bindtap="yuepay">
-        <image src="https://app.zhuoyumall.com:444/wx/img/pay_yue.png" />
+    <view class="yue" data-method="yue" bindtap="set_wallets_password">
+        <image src="https://app.zhuoyumall.com/wx/img/pay_yue.png" />
         <view class="pay-title">余额支付</view>
     </view>
 </view>
-
 
 
 

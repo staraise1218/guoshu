@@ -200,10 +200,10 @@ Page({
          * Ad
          */
         that.setData({
-          adImg: 'https://app.zhuoyumall.com:444' + data.adv[0].ad_code,
-          shareImg: 'https://app.zhuoyumall.com:444' + data.adv[1].ad_code,
-          jingcaiAdvl: 'https://app.zhuoyumall.com:444' + data.shareGoods[0].ad_code,
-          jingcaiAdvr: 'https://app.zhuoyumall.com:444' + data.shareGoods[1].ad_code,
+          adImg: 'https://app.zhuoyumall.com' + data.adv[0].ad_code,
+          shareImg: 'https://app.zhuoyumall.com' + data.adv[1].ad_code,
+          jingcaiAdvl: 'https://app.zhuoyumall.com' + data.shareGoods[0].ad_code,
+          jingcaiAdvr: 'https://app.zhuoyumall.com' + data.shareGoods[1].ad_code,
           shareGoods: data.shareGoods
         })
         that.loadingShopcartNum(that);

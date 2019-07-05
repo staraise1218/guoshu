@@ -8,7 +8,7 @@
 <view class="wrap">
     <!-- 未送达 -->
     <scroll-view class="item_box SENDING" wx-if="{{STATUS == 'SENDING'}}" scroll-y="{{true}}">
-        <image wx:if="{{SENDING.length == 0}}" class="empty" src="https://app.zhuoyumall.com:444/wx/img/empty2.png" />
+        <image wx:if="{{SENDING.length == 0}}" class="empty" src="https://app.zhuoyumall.com/wx/img/empty2.png" />
         <block wx:for="{{SENDING}}" wx:key="{{item.order_id}}">
             <view class="list-item" data-orderid="{{item.order_id}}" catchtap="toCon">
                 <view class="item-title">
@@ -19,7 +19,7 @@
                     <block  wx:for="{{item.goods_list}}" wx:key>
                         <view class="goods-item">
                             <view class="title-name">{{item.goods_name}}</view>
-                            <image class="goods-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+                            <image class="goods-poster" src="https://app.zhuoyumall.com{{item.original_img}}" />
                         </view>
                     </block>
                 </view>
@@ -34,7 +34,7 @@
     </scroll-view>
     <!-- 今日送达 -->
     <scroll-view class="item_box SENDING" wx-if="{{STATUS == 'TODAY'}}" scroll-y="{{true}}">
-        <image wx:if="{{TODAY.length == 0}}" class="empty" src="https://app.zhuoyumall.com:444/wx/img/empty2.png" />
+        <image wx:if="{{TODAY.length == 0}}" class="empty" src="https://app.zhuoyumall.com/wx/img/empty2.png" />
         <block wx:for="{{TODAY}}" wx:key="{{item.order_id}}">
             <view class="list-item" data-orderid="{{item.order_id}}" catchtap="toCon">
                 <view class="item-title">
@@ -45,7 +45,7 @@
                     <block  wx:for="{{item.goods_list}}" wx:key>
                         <view class="goods-item">
                             <view class="title-name">{{item.goods_name}}</view>
-                            <image class="goods-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+                            <image class="goods-poster" src="https://app.zhuoyumall.com{{item.original_img}}" />
                         </view>
                     </block>
                 </view>
@@ -60,7 +60,7 @@
     </scroll-view>
     <!-- 已送达 -->
     <scroll-view bindscrolltolower="loadMore" class="item_box SENDING" wx-if="{{STATUS == 'SENDED'}}" scroll-y="{{true}}">
-        <image wx:if="{{SENDED.length == 0}}" class="empty" src="https://app.zhuoyumall.com:444/wx/img/empty2.png" />
+        <image wx:if="{{SENDED.length == 0}}" class="empty" src="https://app.zhuoyumall.com/wx/img/empty2.png" />
         <block wx:for="{{SENDED}}" wx:key="{{item.order_id}}">
             <view class="list-item" data-orderid="{{item.order_id}}" catchtap="toCon">
                 <view class="item-title">
@@ -71,7 +71,7 @@
                     <block  wx:for="{{item.goods_list}}" wx:key>
                         <view class="goods-item">
                             <view class="title-name">{{item.goods_name}}</view>
-                            <image class="goods-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+                            <image class="goods-poster" src="https://app.zhuoyumall.com{{item.original_img}}" />
                         </view>
                     </block>
                 </view>

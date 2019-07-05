@@ -23,7 +23,7 @@
                     </view>
                     <!-- <view class="order-poster border-bottom padding-30">
                         <block wx:for="{{item.goods_list}}" wx:key>
-                            <image class="icon-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}"
+                            <image class="icon-poster" src="https://app.zhuoyumall.com{{item.original_img}}"
                                 mode="widthFix" />
                         </block>
                     </view> -->
@@ -31,7 +31,7 @@
                     <view class="shop-list-wrapper order-poster border-bottom padding-30">
                         <block wx:for="{{item.goods_list}}" wx:key>
                             <view wx:if="{{index <= 2}}" class="list-item">
-                                <image class="icon-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}"
+                                <image class="icon-poster" src="https://app.zhuoyumall.com{{item.original_img}}"
                                     mode="widthFix" />
                                 <view class="list-title"> {{item.goods_name}}</view>
                                 <view class="list-title_f">{{item.subtitle}}</view>
@@ -98,7 +98,7 @@
                     <view class="shop-list-wrapper order-poster border-bottom padding-30">
                         <block wx:for="{{item.goods_list}}" wx:key>
                             <view wx:if="{{index <= 2}}" class="list-item">
-                                <image class="icon-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}"
+                                <image class="icon-poster" src="https://app.zhuoyumall.com{{item.original_img}}"
                                     mode="widthFix" />
                                 <view class="list-title"> {{item.goods_name}}</view>
                                 <view class="list-title_f">{{item.subtitle}}</view>
@@ -160,7 +160,7 @@
                     </view>
                     <!-- <view class="order-poster border-bottom padding-30">
                         <block wx:for="{{item.goods_list}}" wx:key>
-                            <image class="icon-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}"
+                            <image class="icon-poster" src="https://app.zhuoyumall.com{{item.original_img}}"
                                 mode="widthFix" />
                         </block>
                     </view> -->
@@ -168,7 +168,7 @@
                     <view class="shop-list-wrapper order-poster border-bottom padding-30">
                         <block wx:for="{{item.goods_list}}" wx:key>
                             <view wx:if="{{index <= 2}}" class="list-item">
-                                <image class="icon-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}"
+                                <image class="icon-poster" src="https://app.zhuoyumall.com{{item.original_img}}"
                                     mode="widthFix" />
                                 <view class="list-title"> {{item.goods_name}}</view>
                                 <view class="list-title_f">{{item.subtitle}}</view>
@@ -229,7 +229,7 @@
                     </view>
                     <!-- <view class="order-poster border-bottom padding-30">
                         <block wx:for="{{item.goods_list}}" wx:key>
-                            <image class="icon-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}"
+                            <image class="icon-poster" src="https://app.zhuoyumall.com{{item.original_img}}"
                                 mode="widthFix" />
                         </block>
                     </view> -->
@@ -237,7 +237,7 @@
                     <view class="shop-list-wrapper order-poster border-bottom padding-30">
                         <block wx:for="{{item.goods_list}}" wx:key>
                             <view wx:if="{{index <= 2}}" class="list-item">
-                                <image class="icon-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}"
+                                <image class="icon-poster" src="https://app.zhuoyumall.com{{item.original_img}}"
                                     mode="widthFix" />
                                 <view class="list-title"> {{item.goods_name}}</view>
                                 <view class="list-title_f">{{item.subtitle}}</view>
@@ -294,11 +294,11 @@
 <view wx-if="{{alertPayShow}}" class="alert-bg" bindtap="closePay"></view>
 <view wx-if="{{alertPayShow}}" class="alert-pay">
     <view class="wx" data-method="wx" bindtap="wxpay">
-        <image src="https://app.zhuoyumall.com:444/wx/img/组166@2x.png" />
+        <image src="https://app.zhuoyumall.com/wx/img/组166@2x.png" />
         <view class="pay-title">微信支付</view>
     </view>
-    <view class="yue" data-method="yue" bindtap="yuepay">
-        <image src="https://app.zhuoyumall.com:444/wx/img/pay_yue.png" />
+    <view class="yue" data-method="yue" bindtap="set_wallets_password">
+        <image src="https://app.zhuoyumall.com/wx/img/pay_yue.png" />
         <view class="pay-title">余额支付</view>
     </view>
 </view>

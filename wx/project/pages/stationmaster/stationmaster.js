@@ -317,7 +317,7 @@ Page({
       }
     })
     // wx.request({
-    //   url: 'https://app.zhuoyumall.com:444/api/region/getJson',
+    //   url: 'https://app.zhuoyumall.com/api/region/getJson',
     //   method: 'POST',
     //   header: {
     //     'content-type': 'application/x-www-form-urlencoded'

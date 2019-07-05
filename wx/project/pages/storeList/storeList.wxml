@@ -4,7 +4,7 @@
 <block wx:for="{{List}}" wx:key>
     <view data-id="{{item.pickup_id}}" bindtap="chooseActive" class="{{item.pickup_id == currentID ? 'active' : ''}} list-wrap">
         <view class="left">
-            <image src="https://app.zhuoyumall.com:444{{item.image}}" />
+            <image src="https://app.zhuoyumall.com{{item.image}}" />
         </view>
         <view class="right">
             <view class="title">
@@ -18,7 +18,7 @@
 </block>
 
 <view class="empty-wrap" wx:if="{{LoadStatus == 1 && List.length == 0}}">
-    <image src="https://app.zhuoyumall.com:444/wx/img/empty.png" />
+    <image src="https://app.zhuoyumall.com/wx/img/empty.png" />
     <view class="text-center">没有搜索到站点</view>
 </view>
 

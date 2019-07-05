@@ -1,9 +1,9 @@
 Page({
   data: {
     imgUrls: [
-      'https://app.zhuoyumall.com:444/wx/img/引导页1-1.png',
-      'https://app.zhuoyumall.com:444/wx/img/引导页1-2.png',
-      'https://app.zhuoyumall.com:444/wx/img/引导页1-3.png'
+      'https://app.zhuoyumall.com/wx/img/引导页1-1.png',
+      'https://app.zhuoyumall.com/wx/img/引导页1-2.png',
+      'https://app.zhuoyumall.com/wx/img/引导页1-3.png'
     ]
   },
   onLoad: function () {

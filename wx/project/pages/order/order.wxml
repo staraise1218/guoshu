@@ -46,7 +46,7 @@
 <block wx:for="{{cartList.cartList}}" wx:key>
     <view class="list left-center border-bottom padding-30">
         <view class="poster">
-            <image src="https://app.zhuoyumall.com:444{{item.goods.original_img}}" style="width:250rpx" mode="widthFix" />
+            <image src="https://app.zhuoyumall.com{{item.goods.original_img}}" style="width:250rpx" mode="widthFix" />
         </view>
         <view class="right margin-left-20 wrap">
             <view class="title-3">{{item.goods.goods_name}}</view>

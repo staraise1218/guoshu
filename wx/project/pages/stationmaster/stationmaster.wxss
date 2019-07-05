@@ -1,6 +1,6 @@
 .container {
     width: 100%;
-    background-image: url('https://app.zhuoyumall.com:444/wx/img/2/bg1.jpg');
+    background-image: url('https://app.zhuoyumall.com/wx/img/2/bg1.jpg');
     background-size: contain;
     /* height: 100vh; */
     background-repeat: no-repeat;

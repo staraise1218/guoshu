@@ -1,6 +1,6 @@
 <block wx:for="{{topCateGoods}}" wx:key="item.id">
     <view class="padding-30">
-        <image style="width: 100%" mode="widthFix" data-catid="{{item.id}}" bindtap="toFenlei" src="https://app.zhuoyumall.com:444{{item.index_image}}" />
+        <image style="width: 100%" mode="widthFix" data-catid="{{item.id}}" bindtap="toFenlei" src="https://app.zhuoyumall.com{{item.index_image}}" />
     </view>
     <view class="shoppint-box">
         <view class="top-wrap-item" 
@@ -10,7 +10,7 @@
             wx:key="item.id" 
             wx:if="{{index < 6}}">
             <view class="poster-wrap">
-                <image lazy-load="true" class="icon-poster" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+                <image lazy-load="true" class="icon-poster" src="https://app.zhuoyumall.com{{item.original_img}}" />
             </view>
             <view class="title-2">{{item.goods_name}}</view>
             <view class="tag-new">{{item.tag}}</view>

@@ -111,7 +111,7 @@
     <!-- <view class="box-con title-2 shadow1"> -->
       <!-- <textarea class="shuru-con" placeholder="请输入~"></textarea> -->
     <!-- </view> -->
-      <image class="shadow1" style="height: 600rpx; border-radius: 15rpx; overflow: hidden; width: 710rpx; margin: 20rpx 0 0 20rpx;" src="https://app.zhuoyumall.com:444/wx/img/2/tips1.jpg" />
+      <image class="shadow1" mode="widthFix" style=" border-radius: 15rpx; overflow: hidden; width: 690rpx; margin: 10rpx 0 0 30rpx;" src="https://app.zhuoyumall.com/wx/img/3/jm.jpg" />
 
 
 

@@ -2,7 +2,7 @@
 <view wx:else>
     <view class="tips-empty"  wx:if="{{readNum == 0}}">
         <view class="content">
-            <image src="https://app.zhuoyumall.com:444/wx/img/empty2.png" />
+            <image src="https://app.zhuoyumall.com/wx/img/empty2.png" />
             <view class="tip">没有可领取的红包</view>
         </view>
     </view>

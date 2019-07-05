@@ -1,7 +1,7 @@
 <block wx:for="{{addressList}}" wx:key>
     <view class="list-item border-bottom" data-id="{{item.address_id}}" bindtap="changeAddress">
         <view class="left">
-            <view class="address-icon">{{item.consignee[0]}} <image class="icon-title" src="https://app.zhuoyumall.com:444/wx/img/2/bgr.png" /> </view>
+            <view class="address-icon">{{item.consignee[0]}} <image class="icon-title" src="https://app.zhuoyumall.com/wx/img/2/bgr.png" /> </view>
             <view class="address-con">
                 <view class="user-name title-2">
                     {{item.consignee}}

@@ -6,11 +6,9 @@ App({
       })
     }
   },
-  onLaunch: function () {
-
-  },
   globalData: {
-    Globalhost: 'https://app.zhuoyumall.com:444/',
+    Globalhost: 'https://app.zhuoyumall.com/',
+    // Globalhost: 'https://app.zhuoyumall.com:444/',
     // Globalhost : 'http://guoshu.staraise.com.cn/',
     loadingfunc: function () {
       wx.showLoading({

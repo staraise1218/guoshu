@@ -1,7 +1,7 @@
 const app = getApp()
 const Globalhost = getApp().globalData.Globalhost;
 Page({
-  page: 0,
+  page: 1,
   data: {
     NavList: [],      // 分类
     GoodList: [],     // 商品
@@ -13,7 +13,6 @@ Page({
     page: 0,          // 加载page
     LeftID: -1,       // 左侧点击id
     RightID: -1,      // 右侧点击id
-
     chooseIndex: [0, 0],  // 城市选中数组
   },
   onLoad() {
@@ -24,8 +23,6 @@ Page({
       address: wx.getStorageSync('address') || '请选择配送点'
     })
   },
-
-
 // 获取分类 -- 左侧
   getFenlei(that) {
     wx.request({ 
@@ -99,7 +96,7 @@ Page({
           })
         }
         var GoodList = that.data.GoodList;
-        if(page == 0) {
+        if(page == 1) {
           GoodList = [];
         }
         data.forEach(item => {
@@ -118,7 +115,7 @@ Page({
     that.setData({
       active: e.currentTarget.dataset.index,
       subActiveID: -1,
-      page: 0
+      page: 1
     })
     that.getYiJi(that, e.currentTarget.dataset.id);
   },
@@ -128,11 +125,10 @@ Page({
     console.log(e.currentTarget.dataset.id);
     that.setData({
       subActiveID: e.currentTarget.dataset.id,
-      page: 0
+      page: 1
     })
-    that.erji(that, e.currentTarget.dataset.id, 0);
+    that.erji(that, e.currentTarget.dataset.id, 1);
   },
-  
   /**
    * 加入购物车
    */
@@ -167,10 +163,6 @@ Page({
       }
     })
   },
-
-
-
-
   /**
    * 加载购物车数量
    */
@@ -203,8 +195,6 @@ Page({
       }
     })
   },
-
-
   /**
    * 搜索
    */
@@ -213,7 +203,6 @@ Page({
       url: '/pages/search/search'
     })
   },
-
   // 显示城市弹窗
   showCity() {
     this.setData({
@@ -226,8 +215,6 @@ Page({
       chooseAlerShow: false
     })
   },
-
-
   getDeliveryCity: function (that) {
     wx.request({
       url: Globalhost + 'Api/index/getDeliveryCity',
@@ -250,7 +237,6 @@ Page({
       }
     })
   },
-  
   // 选择省
   changeProvince: function (e) {
     let that = this;
@@ -273,8 +259,6 @@ Page({
       chooseAddressName: e.currentTarget.dataset.name
     })
   },
-
-
   // 确定修改
   chooseCity: function () {
     let that = this;
@@ -288,7 +272,6 @@ Page({
     that.getYiJi(that, that.data.NavList[0].id);
     that.loadingShopcartNum(that);
   },
-
   /**
    * 跳转消息页面
    */
@@ -306,7 +289,6 @@ Page({
       url: '/pages/commodityDetails/commodityDetails?goods_id=' + e.currentTarget.dataset.goodsId + '&msg=fenlei'
     })
   },
-
   getMore(e) {
     console.log("**********加载更多****************")
     let that = this;
@@ -322,6 +304,4 @@ Page({
       }
     }
   }
-
-
 })

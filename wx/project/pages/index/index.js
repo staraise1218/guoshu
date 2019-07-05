@@ -193,10 +193,10 @@ Page({
          * Ad
          */
         that.setData({
-          adImg: 'https://app.zhuoyumall.com:444' + data.adv[0].ad_code,
-          shareImg: 'https://app.zhuoyumall.com:444' + data.adv[1].ad_code,
-          jingcaiAdvl: 'https://app.zhuoyumall.com:444' + data.shareGoods[0].ad_code,
-          jingcaiAdvr: 'https://app.zhuoyumall.com:444' + data.shareGoods[1].ad_code,
+          adImg: 'https://app.zhuoyumall.com' + data.adv[0].ad_code,
+          shareImg: 'https://app.zhuoyumall.com' + data.adv[1].ad_code,
+          jingcaiAdvl: 'https://app.zhuoyumall.com' + data.shareGoods[0].ad_code,
+          jingcaiAdvr: 'https://app.zhuoyumall.com' + data.shareGoods[1].ad_code,
           shareGoods: data.shareGoods
         })
         that.loadingShopcartNum(that);
@@ -628,37 +628,9 @@ Page({
       }
     })
   },
-
-  /**
-   * footer 跳转
-   */
-  LINK: function (e) {
-    console.log(e) // index classification group shopcart mine
-    console.log(this)
-    switch (e.currentTarget.dataset.link) {
-      case 'classification':
-        wx.redirectTo({
-          url: '/pages/classification/classification'
-        })
-        break;
-      case 'group':
-        wx.redirectTo({
-          url: '/pages/group/group'
-        })
-        break;
-      case 'shoppingCart':
-        wx.redirectTo({
-          url: '/pages/shoppingCart/shoppingCart'
-        })
-        break;
-      case 'mine':
-        wx.redirectTo({
-          url: '/pages/mine/mine'
-        })
-    }
-  },
   onPullDownRefresh: function () {
     let that = this;
+    console.log('下拉')
     that.index(that, 'Refresh'); // 首页
   },
   // 购物车动画

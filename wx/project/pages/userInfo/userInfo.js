@@ -5,42 +5,18 @@ Page({
     nameShow: true,
     username: '',
     password: '',
-    head_pic: 'http://img.hb.aicdn.com/0d073af2e0eb5b66d800bdc234571d2aeaec4c641700-aZonQZ_fw658',
+    head_pic: '/wx/img/empty.png',
     nickname: '未设置',
     sex: '未设置',
     test: ''
   },
   onLoad: function (options) {
-    // if(wx.getStorageSync('login') == '手机号登陆') {
-    //   this.setData({
-    //     head_pic: Globalhost + wx.getStorageSync('head_pic')
-    //   })
-    // } else {
-    //   this.setData({
-    //     head_pic: wx.getStorageSync('head_pic')
-    //   })
-    // }
-    // if(wx.getStorageSync('nickname')) {
-    //   this.setData({
-    //     nickname: wx.getStorageSync('nickname')
-    //   })
-    // }
-    // if(wx.getStorageSync('sex')) {
-    //   if(wx.getStorageSync('sex') == 1) {
-    //     this.setData({
-    //       sex: '男'
-    //     })
-    //   } else if (wx.getStorageSync('sex') == 2) {
-    //     this.setData({
-    //       sex: '女'
-    //     })
-    //   }
-    // }
+    
   },
   onShow: function () {
     if(wx.getStorageSync('login') == '手机号登陆') {
       this.setData({
-        head_pic: Globalhost + wx.getStorageSync('head_pic')
+        head_pic: wx.getStorageSync('head_pic')
       })
     } else {
       this.setData({
@@ -85,14 +61,10 @@ Page({
           success(res) {
             console.log(JSON.parse(res.data).data.head_pic)
             that.setData({
-              head_pic: Globalhost + JSON.parse(res.data).data.head_pic
+              head_pic: JSON.parse(res.data).data.head_pic
             })
             console.log(JSON.parse(res.data).data.head_pic)
-            wx.setStorageSync('head_pic',  Globalhost + JSON.parse(res.data).data.head_pic)
-            // that.setData({
-            //   head_pic: Globalhost + JSON.parse(res.data).data.head_pic
-            // })
-            // wx.setStorageSync('head_pic',  Globalhost + JSON.parse(res.data).data.head_pic)
+            wx.setStorageSync('head_pic',  JSON.parse(res.data).data.head_pic)
           }
         })
       }

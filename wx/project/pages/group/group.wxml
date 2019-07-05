@@ -31,7 +31,7 @@
                     <scroll-view class="scroll-wrapper" scroll-x>
                         <block wx:for="{{qianggou}}" wx:key>
                             <view class="scr-item" data-id="{{item.goods_id}}" bindtap="toCon">
-                                <image class="scr-pic" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+                                <image class="scr-pic" src="https://app.zhuoyumall.com{{item.original_img}}" />
                                 <view class="title">{{item.goods_name}}</view>
                                 <view class="title">{{item.subtitle}}</view>
                                 <view class="price">￥{{item.price}}</view>
@@ -44,7 +44,7 @@
                     <scroll-view class="scroll-wrapper" scroll-x>
                         <block wx:for="{{nextList}}" wx:key>
                             <view class="scr-item"  data-id="{{item.goods_id}}" bindtap="toCon2">
-                                <image class="scr-pic" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+                                <image class="scr-pic" src="https://app.zhuoyumall.com{{item.original_img}}" />
                                 <view class="title">{{item.goods_name}}</view>
                                 <view class="title">{{item.subtitle}}</view>
                                 <view class="price">￥{{item.price}}</view>
@@ -66,7 +66,7 @@
                     <scroll-view class="scroll-wrapper" scroll-x>
                         <block wx:for="{{qianggou}}" wx:key>
                             <view class="scr-item" data-id="{{item.goods_id}}" bindtap="toCon">
-                                <image class="scr-pic" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+                                <image class="scr-pic" src="https://app.zhuoyumall.com{{item.original_img}}" />
                                 <view class="title">{{item.goods.goods_name}}</view>
                                 <view class="title">{{item.goods.subtitle}}</view>
                                 <view class="price">￥{{item.price}}</view>
@@ -83,7 +83,7 @@
                     <scroll-view class="scroll-wrapper" scroll-x>
                         <block wx:for="{{nextList}}" wx:key>
                             <view class="scr-item"  data-id="{{item.goods_id}}" bindtap="toCon2">
-                                <image class="scr-pic" src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+                                <image class="scr-pic" src="https://app.zhuoyumall.com{{item.original_img}}" />
                                 <view class="title">{{item.goods.goods_name}}</view>
                                 <view class="title">{{item.goods.subtitle}}</view>
                                 <view class="price">￥{{item.price}}</view>
@@ -121,7 +121,7 @@
         <view class="tuijian-item"  data-id="{{item.goods_id}}" bindtap="toCon">
             <view class="poster-wrap">
                 <image class="tuijian-poster" mode=""
-                    src="https://app.zhuoyumall.com:444{{item.original_img}}" />
+                    src="https://app.zhuoyumall.com{{item.original_img}}" />
             </view>
             <view class="right">
                 <view class="top">
@@ -158,29 +158,29 @@
 <!-- footer -->
 <view class="footer" wx:if="{{false}}">
   <view class="item-bar" data-link='index' bindtap="LINK">
-    <image class="bar-icon"  mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/shouye-pre.png" />
-    <!-- <image class="bar-icon"  mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/shouye.png" /> -->
+    <image class="bar-icon"  mode="widthFix" src="https://app.zhuoyumall.com/wx/img/shouye-pre.png" />
+    <!-- <image class="bar-icon"  mode="widthFix" src="https://app.zhuoyumall.com/wx/img/shouye.png" /> -->
     <view class="title-bar ">首页</view>
   </view>
   <view class="item-bar" data-link='classification' bindtap="LINK">
-    <image class="bar-icon"  mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/fenlei-pre.png" />
-    <!-- <image class="bar-icon"  mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/fenlei.png" /> -->
+    <image class="bar-icon"  mode="widthFix" src="https://app.zhuoyumall.com/wx/img/fenlei-pre.png" />
+    <!-- <image class="bar-icon"  mode="widthFix" src="https://app.zhuoyumall.com/wx/img/fenlei.png" /> -->
     <view class="title-bar ">分类</view>
   </view>
   <view class="item-bar" data-link='group' bindtap="LINK">
-    <!-- <image  class="group-icon" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/tuangou.png" /> -->
-    <image  class="group-icon" mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/tuangou.png" />
+    <!-- <image  class="group-icon" mode="widthFix" src="https://app.zhuoyumall.com/wx/img/tuangou.png" /> -->
+    <image  class="group-icon" mode="widthFix" src="https://app.zhuoyumall.com/wx/img/tuangou.png" />
     <view class="title-bar shopcart-title active">团购</view>
   </view>
   <view class="item-bar shopcart-icon" data-link='shoppingCart' bindtap="LINK">
-    <image class="bar-icon"  mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/gouwuche拷贝3@2x.png" />
-    <!-- <image class="bar-icon"  mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/gouwuche拷贝3-1@2x.png" /> -->
+    <image class="bar-icon"  mode="widthFix" src="https://app.zhuoyumall.com/wx/img/gouwuche拷贝3@2x.png" />
+    <!-- <image class="bar-icon"  mode="widthFix" src="https://app.zhuoyumall.com/wx/img/gouwuche拷贝3-1@2x.png" /> -->
     <view class="title-bar ">购物车</view>
     <i wx:if="{{cart_num > 0}}" class="shopcart-num">{{cart_num}}</i>
   </view>
   <view class="item-bar" data-link='mine' bindtap="LINK">
-    <image class="bar-icon"  mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/wode@2x.png" />
-    <!-- <image class="bar-icon"  mode="widthFix" src="https://app.zhuoyumall.com:444/wx/img/wode.png" /> -->
+    <image class="bar-icon"  mode="widthFix" src="https://app.zhuoyumall.com/wx/img/wode@2x.png" />
+    <!-- <image class="bar-icon"  mode="widthFix" src="https://app.zhuoyumall.com/wx/img/wode.png" /> -->
     <view class="title-bar">我的</view>
   </view>
 </view>

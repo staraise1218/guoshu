@@ -358,12 +358,15 @@ Page({
   // 余额支付弹出
   set_wallets_password(e) { //获取钱包密码
     let that = this;
-    this.setData({
-      wallets_password: e.detail.value
-    });
-    if (this.data.wallets_password.length == 6) { //密码长度6位时，自动验证钱包支付结果
+    // this.setData({
+    //   wallets_password: e.detail.value
+    // });
+    // if (this.data.wallets_password.length == 6) { //密码长度6位时，自动验证钱包支付结果
+    //   that.setData({
+    //     yueShow: false
+    //   })
       that.setData({
-        yueShow: false
+        alertPayShow: false,
       })
       wx.request({
         url: Globalhost + 'api/pay/topay',
@@ -389,7 +392,7 @@ Page({
           }
         }
       })
-    }
+    // }
   },
   set_Focus() { //聚焦input
     console.log('isFocus', this.data.isFocus)
