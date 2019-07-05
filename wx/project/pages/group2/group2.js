@@ -17,6 +17,9 @@ Page({
   },
   onShow: function () {
     let that = this;
+    that.setData({
+      Grouplist: []
+    })
     that.group(that, 1);
     that.miaosha(that);
     that.miaosha(that, 'next');

@@ -79,6 +79,7 @@
     <!-- list -->
     <view class="group-list">
         <block wx:for="{{Grouplist}}">
+          <view style='padding: 0 20rpx;'>
             <view class="list-item" data-id="{{item.goods_id}}" bindtap="toCon">
                 <image class="goods_pic" src="https://app.zhuoyumall.com{{item.original_img}}" />
                 <view class="right">
@@ -100,6 +101,7 @@
                     </view>
                 </view>
             </view>
+          </view>
         </block>
     </view>
 </view>

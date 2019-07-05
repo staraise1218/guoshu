@@ -851,7 +851,7 @@ page {
     width:338rpx;
     background:#fff;
     border-radius:15rpx;
-    height:460rpx;
+    height:500rpx;
     overflow:hidden;
     padding:20rpx;
     box-sizing:border-box;
@@ -862,7 +862,7 @@ page {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 300rpx;
     height: 300rpx;
     overflow: hidden;
     position: relative;
@@ -872,18 +872,31 @@ page {
     /* width: 250rpx; */
     /* max-height: 250rpx; */
     width: 100%;
-    height: 100%k
+    height: 100%
   }
   
   .shop-title {
     white-space: nowrap;
     overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 25rpx;
+    margin-top: 20rpx;
+    color: rgb(80,80,80);
   }
-  
+  .shop-title_ {
+    height: 35rpx;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 24rpx;
+    margin-top: 10rpx;
+    color: rgb(100,100,100);
+  }
   .bottom {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: 10rpx;
   }
   
   

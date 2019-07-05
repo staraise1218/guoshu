@@ -10,7 +10,7 @@
                             <!-- <view class="tag_self">{{item.tag}}</view> -->
                         </view>
                         <view class="title-3 shop-title">{{item.goods_name}}</view>
-                        <view class="title-2_f shop-title">{{item.subtitle}}</view>
+                        <view class="title-2_f shop-title_">{{item.subtitle}}</view>
                         <view class="bottom">
                             <view class="left-center">
                                 <text style="font-weight: bold; font-size: 30rpx;color: #3E79EC">￥{{item.shop_price}}</text>

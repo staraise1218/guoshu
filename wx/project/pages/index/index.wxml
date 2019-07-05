@@ -13,7 +13,7 @@
         火龙果
       </view>
       <view class="news" bindtap="toNews">
-        <image bindtap="toNews" class="icon-2 news-icon"
+        <image bindtap="" class="icon-2 news-icon"
           src="https://hbimg.huabanimg.com/deb427e3df46fa36177cf43e28494ada7db19f72668-iwUuto_fw658" />
       </view>
     </view>
@@ -101,8 +101,6 @@
                 <view class="name_">{{tuijianList[0].subtitle}}</view>
                 <view class="huodong-price" style="margin-top: 38rpx;">
                   <view style="font-size: 20rpx;" wx:if="{{tuijianList[0].shop_price}}">￥</view>
-                  <!-- <view style="color: #5A90E2; font-size: 26rpx;" class="huodong-price_">
-                    {{tuijianList[0].shop_price}}</view> -->
                   <text style="margin-left: 6rpx;font-weight: bold; font-size: 26rpx;color: #5A90E2">{{tuijianList[0].shop_price}}</text>
                 </view>
               </view>
@@ -129,8 +127,6 @@
                 <view class="name_">{{tuijianList[2].subtitle}}</view>
                 <view class="huodong-price" style="margin-top: 38rpx;">
                   <view style="font-size: 20rpx;" wx:if="{{tuijianList[2].shop_price}}">￥</view>
-                  <!-- <text style="color: #5A90E2; font-size: 26rpx;" class="huodong-price_">
-                    {{tuijianList[2].shop_price}}</text> -->
                   <text style="margin-left: 6rpx;font-weight: bold; font-size: 26rpx;color: #5A90E2">{{tuijianList[2].shop_price}}</text>
                 </view>
               </view>
@@ -188,7 +184,7 @@
       </view>
       <view style="background: #fff; border-bottom-left-radius: 20rpx;border-bottom-right-radius: 20rpx;overflow:hidden;display: flex;  justify-content: center;">
         <!-- <image style="width: 710rpx;" bindtap='toGroup' src="{{adImg}}" mode="widthFix" /> -->
-        <scroll-view scroll-x class="shangpin-wrap dddddd shangpin-wrap_self" style="padding: 20rpx 0; background: #fff;overflow:hidden;width: 710rpx;">
+        <scroll-view scroll-x class="shangpin-wrap dddddd shangpin-wrap_self" style="padding: 30rpx 0 20rpx 0; background: #fff;overflow:hidden;width: 710rpx;">
           <view class="scroll-wrapper_" style="background: #fff; width: 710rpx;">
             <block wx:for="{{grouplist}}" wx:key>
               <view class="scro-item " data-id="{{item.goods_id}}" wx-if="{{index % 2 == 0}}" style="background: #fff;"

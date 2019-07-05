@@ -62,6 +62,7 @@ Page({
 
 
     newShow: false, // 消息显示
+    toNews: true
   },
   onLoad: function (options) {
     let that = this;
@@ -104,7 +105,8 @@ Page({
   onShow: function () {
     let that = this;
     that.setData({
-      address: wx.getStorageSync('address')
+      address: wx.getStorageSync('address'),
+      toNews: true
     })
     that.index(that); // 首页
     that.miaosha(that); // 秒杀商品
@@ -526,7 +528,8 @@ Page({
    */
   toNews: function () {
     this.setData({
-      newShow: false
+      newShow: false,
+      toNews: false
     })
     wx.navigateTo({
       url: '/pages/news/news'

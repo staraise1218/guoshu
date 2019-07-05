@@ -9,7 +9,7 @@
     <view class="border-bottom" style="padding: 20rpx 30rpx; border-bottom: 1rpx solid #eee">您的支付信息</view>
     <view class="list-item">
         <view>收款平台</view>
-        <view>海豹城市仓储超市</view>
+        <view>茁禹科技旗下海豹超市</view>
     </view>
     <view class="list-item">
         <view>支付方式</view>

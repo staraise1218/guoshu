@@ -1,89 +1,3 @@
-<!-- <view class="header">
-    <view class="news-icon">
-        <button class="news_btn" bindtap="toNews" plain><image class="icon-2" src="https://hbimg.huabanimg.com/b1a5e9c3979d5df57a6224d2ceb75c582870bcc161b-sx87no_fw658" /></button>
-    </view>
-    <view class="user-info">
-        <view class="icon-header">
-            <image class="user-img" style="width: 100%"  src="{{head_pic}}"  bindtap="toUserinfo"/>
-        </view>
-        <view class="user-name" style="display: flex"  bindtap="toUserinfo">{{nickname}} <image style="width: 45rpx" mode="widthFix" src="https://app.zhuoyumall.com/wx/img/xiezi@2x.png" /></view>
-    </view>
-    <view class="header-info"  >
-        <block wx:for="{{infoMsg}}" wx:key="item">
-            <view class="info-item" bindtap="{{item.func}}">
-                <view class="title" style="font-weight: 400">{{item.num}}</view>
-                <view class="_title">{{item.title}}</view>
-            </view>
-        </block>
-    </view>
-</view> -->
-
-
-<!-- 我的订单 -->
-<!-- <view class="order radius-30 margin-30">
-    <view class="order-title title-3 font-weight-6 margin-30 padding-tb-20">我的订单</view>
-    <view class="order-list">
-        <block wx:for="{{orderMsg}}" wx:key="item">
-            <view class="order-list-item" bindtap='{{item.func}}'>
-                <image class="order-icon icon-1-big" mode="widthFix" src="{{item.url}}" />
-                <view class="order-list-title">{{item.title}}</view>
-            </view>
-        </block>
-    </view>
-</view> -->
-<!-- 我的订单 END -->
-
-
-<!-- 自提点 -->
-<!-- <view wx:if="{{true}}" class="order radius-30 margin-30">
-    <view class="ziti order-title add_ title-3 font-weight-6 margin-30 padding-tb-20"><view >站点订单</view><view class="ml-100">{{pickupName}}</view> </view>
-    <view class="order-list">
-        <block wx:for="{{zhandian}}" wx:key="item">
-            <view class="order-list-item" bindtap='{{item.func}}'>
-                <image class="order-icon icon-1-big" mode="widthFix" src="{{item.url}}" />
-                <view class="order-list-title">{{item.title}}</view>
-            </view>
-        </block>
-    </view>
-</view> -->
-<!-- 自提点 END -->
-
-<!-- 配送员 -->
-<!-- <view wx:if="{{true}}" class=" order radius-30 margin-30">
-    <view class="pzisong order-title  add_ title-3 font-weight-6 margin-30 padding-tb-20"><view>配送订单</view>  <view class="ml-100">{{nickname}}</view> </view>
-    <view class="order-list">
-        <block wx:for="{{peisong}}" wx:key="item">
-            <view class="order-list-item" bindtap='{{item.func}}'>
-                <image class="order-icon icon-1-big" mode="widthFix" src="{{item.url}}" />
-                <view class="order-list-title">{{item.title}}</view>
-            </view>
-        </block>
-    </view>
-</view> -->
-<!-- 自提点 END -->
-
-
-
-<!-- 我的服务 -->
-<!-- <view class="order radius-30 margin-30">
-    <view class="order-title title-3 font-weight-6 margin-30 padding-tb-20">我的服务</view>
-    <view class="order-list">
-        <block wx:for="{{serviceMsg}}" wx:key="item">
-            <view class="order-list-item" bindtap="{{item.func}}">
-                <image class="order-icon icon-1-big" mode="widthFix" src="{{item.url}}" />
-                <view class="{{item.style}} order-list-title">{{item.title}}</view>
-            </view>
-        </block>
-    </view>
-</view> -->
-<!-- 我的服务 END -->
-
-
-
-
-
-
-
 <!-- Header -->
 <view class="my-header">
     <view class="my-header-pic">
@@ -91,7 +5,7 @@
     </view>
     <view class="my-name" bindtap="toUserinfo">
         <view style="font-size: 36rpx;">{{NickName}}</view>
-        <image style="width: 30rpx; margin-left: 14rpx" mode="widthFix" src="https://app.zhuoyumall.com/wx/img/2/改写2.png" />
+        <image style="width: 30rpx; height: 30rpx; margin-left: 14rpx" src="https://app.zhuoyumall.com/wx/img/2/改写2.png" />
     </view>
     <view class="my-header-wrap">
         <view class="header-item" bindtap="toYue">

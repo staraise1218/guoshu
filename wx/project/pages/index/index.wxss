@@ -1497,8 +1497,11 @@ swiper-item {
 }
 .huodong .top .t-right .shop-item {
   display: flex;
+  padding-top: 20rpx;
+  padding-bottom: 10rpx;
+}
+.huodong .top .t-right .shop-item:first-child {
   padding-top: 10rpx;
-  padding-bottom: 20rpx;
 }
 .huodong .top .t-right .shop-item:first-child {
   border-bottom: 1rpx solid #222
