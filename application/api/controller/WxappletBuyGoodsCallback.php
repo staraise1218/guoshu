@@ -21,7 +21,7 @@ class WxappletBuyGoodsCallback extends \WxPayNotify
 {
 	// 执行回调
 	public function exec(){
-		$param = $GLOBALS['HTTP_RAW_POST_DATA']; // file_get_contents('php://input');
+		$param = file_get_contents('php://input'); // $GLOBALS['HTTP_RAW_POST_DATA'];
 		$data = "\r\n".var_export($param, true);
 		file_put_contents('runtime/log/request.log', $data, FILE_APPEND);
 		$config = new \WxPayConfig();
