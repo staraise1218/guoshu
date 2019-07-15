@@ -29,7 +29,7 @@ class Wxapplet  extends Base {
 		if(empty($order)) response_error('', '该订单不存在');
 		if($order['paystatus'] == 1) response_error('', '该订单已支付');
 
-		$total_amount = $order['price'];
+		$total_amount = $order['order_amount'];
 
     	//②、统一下单
         $input = new \WxPayUnifiedOrder();
