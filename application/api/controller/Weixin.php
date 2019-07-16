@@ -25,7 +25,7 @@ class Weixin {
         $timestamp = $_GET["timestamp"];
         $nonce = $_GET["nonce"];    
                 
-        $token = 'jiazheng';
+        $token = 'n2w6Yn0B2vEnHRFOQSnxZMa7XtOIFPWf';
         $tmpArr = array($token, $timestamp, $nonce);
         sort($tmpArr);
         $tmpStr = implode( $tmpArr );
