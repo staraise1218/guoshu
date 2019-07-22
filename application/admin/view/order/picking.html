@@ -14,7 +14,7 @@
     <div style="page-break-after: always;">
         <table>
             <tr>
-                <td>logo</td>
+                <td><img src="__PUBLIC__/static/images/logo/logo.png" alt=""></td>
                 <td><div style="font-size: 24px; margin-left: 40px;">茁禹优选</div></td>
             </tr>
         </table>
@@ -22,7 +22,7 @@
             <tr style="height: 70px;">
                 <td style="width: 30px; vertical-align: middle; font-size: 24px;">收</td>
                 <td style="">
-                    <div>收货人：<span style="font-size: 14px;">{$order.consignee}</span></div>
+                    <div>收货人：<span style="font-size: 18px;">{$order.consignee}</span></div>
                     <div>电话：<span style="font-size: 14px;">{$order.mobile}</span></div>
                     <div>收货地址： {$order.send_method == 2 ? $order['pickup']['pickup_name'] : $order.full_address}</div>
                 </td>
@@ -68,7 +68,7 @@
         </table>
         <table>
             <tr>
-                <td>logo</td>
+                <td><img src="__PUBLIC__/static/images/logo/logo.png" alt=""></td>
                 <td><div style="font-size: 24px; margin-left: 200px;">核</div></td>
             </tr>
         </table>
@@ -76,7 +76,7 @@
             <tr style="height: 70px;">
                 <td style="width: 30px; vertical-align: middle; font-size: 24px;">收</td>
                 <td style="">
-                    <div>收货人：<span style="font-size: 14px;">{$order.consignee}</span></div>
+                    <div>收货人：<span style="font-size: 18px;">{$order.consignee}</span></div>
                     <div>电话：<span style="font-size: 14px;">{$order.mobile}</span></div>
                     <div>收货地址： {$order.send_method == 2 ? $order['pickup']['pickup_name'] : $order.full_address}</div>
                 </td>
