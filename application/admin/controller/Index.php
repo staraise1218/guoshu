@@ -111,9 +111,6 @@ class Index extends Base {
 
     // 检查新订单，后台提示
     public function ajaxCheckNewOrder(){
-
-       
-
         $new = 0;
 
         $count = Db::name('order')
