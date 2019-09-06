@@ -112,6 +112,16 @@ class Index extends Base {
     // 检查新订单，后台提示
     public function ajaxCheckNewOrder(){
 
-        die(json_encode(array('new' => 1)));
+       
+
+        $new = 0;
+
+        $count = Db::name('order')
+            ->where('order_status', 0)
+            ->where('pay_status', 1)
+            ->count();
+        if($count > 0) $new = 1;
+
+        die(json_encode(array('new' => $new)));
     }
 }
