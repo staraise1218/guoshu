@@ -27,7 +27,7 @@
                     <div>收货地址： {$order.send_method == 2 ? $order['pickup']['pickup_name'] : $order.full_address}</div>
                 </td>
             </tr>
-            <tr style="height: 80px;">
+            <tr style="height: 80px; font-size: 12px">
                 <td colspan="2">
                     <div>订单编号：{$order.order_sn}</div>
                     <div>配送方式：<if condition="$order.send_method eq 1">送货上门<else/>门店自提</if></div>
@@ -81,11 +81,11 @@
                     <div>收货地址： {$order.send_method == 2 ? $order['pickup']['pickup_name'] : $order.full_address}</div>
                 </td>
             </tr>
-            <tr style="height: 80px; font-size: 14px;">
+            <tr style="height: 80px; font-size: 12px;">
                 <td colspan="2">
                     <div>订单编号：{$order.order_sn}</div>
                     <div>配送方式：<if condition="$order.send_method eq 1">送货上门<else/>门店自提</if>
-                    <span style="margin-left: 5px">支付方式：{$order.pay_name}</span>
+                    <span style="margin-left: 10px">支付方式：{$order.pay_name}</span>
                     </div>
                     <!-- <div></div> -->
                     <div>用户备注：{$order.user_note}</div>
