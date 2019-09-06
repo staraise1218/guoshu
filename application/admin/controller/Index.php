@@ -113,7 +113,10 @@ class Index extends Base {
     public function ajaxCheckNewOrder(){
         $new = 0;
 
+        $start_time = strtotime(date('Y-m-d'));
+        $end_time = strtotime(date('Y-m-d', strtotime('+1 day')));
         $count = Db::name('order')
+            ->where('add_time', 'between', [$start_time, $end_time])
             ->where('order_status', 0)
             ->where('pay_status', 1)
             ->count();
