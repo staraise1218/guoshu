@@ -1002,6 +1002,7 @@ class Order extends Base {
             $where['order_id'] = ['in', $order_ids];
         }
         $orderList = Db::name('order')->field("*,FROM_UNIXTIME(add_time,'%Y-%m-%d') as create_time")->where($where)->order('order_id')->select();
+        p($where, $orderList);
     	$strTable ='<table width="500" border="1">';
     	$strTable .= '<tr>';
     	$strTable .= '<td style="text-align:center;font-size:12px;width:120px;">订单编号</td>';
