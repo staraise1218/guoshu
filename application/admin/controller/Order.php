@@ -105,16 +105,7 @@ class Order extends Base {
         $this->assign('pager',$Page);
         return $this->fetch();
     }
-    //虚拟订单
-    public function virtual_list(){
-    header("Content-type: text/html; charset=utf-8");
-            exit("");
-    }
-    // 虚拟订单
-    public function virtual_info(){
-    header("Content-type: text/html; charset=utf-8");
-            exit("");
-    }
+
 
     public function virtual_cancel(){
         $order_id = I('order_id/d');
@@ -1002,6 +993,7 @@ class Order extends Base {
             $where['order_id'] = ['in', $order_ids];
         }
         $orderList = Db::name('order')->field("*,FROM_UNIXTIME(add_time,'%Y-%m-%d') as create_time")->where($where)->order('order_id')->select();
+
     	$strTable ='<table width="500" border="1">';
     	$strTable .= '<tr>';
     	$strTable .= '<td style="text-align:center;font-size:12px;width:120px;">订单编号</td>';
@@ -1032,12 +1024,14 @@ class Order extends Base {
 	    		$strTable .= '<td style="text-align:left;font-size:12px;">'.$this->pay_status[$val['pay_status']].'</td>';
 	    		$strTable .= '<td style="text-align:left;font-size:12px;">'.$this->shipping_status[$val['shipping_status']].'</td>';
 	    		$orderGoods = D('order_goods')->where('order_id='.$val['order_id'])->select();
+
 	    		$strGoods="";
                 $goods_num = 0;
 	    		foreach($orderGoods as $goods){
                     $goods_num = $goods_num + $goods['goods_num'];
 	    			$strGoods .= "商品编号：".$goods['goods_sn']." 商品名称：".$goods['goods_name'];
-	    			if ($goods['spec_key_name'] != '') $strGoods .= " 规格：".$goods['spec_key_name'];
+	    			if ($goods['spec_key_name'] != '') $strGoods .= " 规格：".$goods['spec_key_name'] ;
+                    $strGoods .= " 小计： " . $goods['member_goods_price']*$goods['goods_num'];
 	    			$strGoods .= "<br />";
 	    		}
 	    		unset($orderGoods);
