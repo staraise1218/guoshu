@@ -263,11 +263,13 @@
 	
 	function exportReport(){
         var selected_ids = '';
-        $('.trSelected' , '#flexigrid').each(function(i){
-            selected_ids += $(this).data('id')+',';
+        $('.trSelected').each(function(i){
+            selected_ids += $(this).attr('id')+',';
         });
         if(selected_ids != ''){
             $('input[name="order_ids"]').val(selected_ids.substring(0,selected_ids.length-1));
+        } else {
+          $('input[name="order_ids"]').val('');
         }
 		$('#search-form2').submit();
 	}
