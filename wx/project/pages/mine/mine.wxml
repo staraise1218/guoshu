@@ -9,15 +9,15 @@
     </view>
     <view class="my-header-wrap">
         <view class="header-item" bindtap="toYue">
-            <view>{{money}}</view>
+            <text style='font-weight: bold; font-size: 32rpx;'>{{money}}</text>
             <view>零钱</view>
         </view>
         <view class="header-item" bindtap="toYouhui">
-            <view>{{readBag}}</view>
+            <text style='font-weight: bold;font-size: 32rpx;'>{{readBag}}</text>
             <view>红包</view>
         </view>
         <view class="header-item" bindtap="toWeiZhiFu">
-            <view>{{waitOrder}}</view>
+            <text style='font-weight: bold;font-size: 32rpx;'>{{waitOrder}}</text>
             <view>未付订单</view>
         </view>
     </view>
@@ -85,7 +85,10 @@
             <view>温馨提示</view>
         </view>
     </view> -->
-    <view class="con">请联系当地仓储配送中心管理人员</view>
-    <view class="phone">联系方式：123456789</view>
-    <view class="shenqing_btn" bindtap="closeShenqing">确定</view>
+    <view class="con">请通过客服服务与我们联系</view>
+    <view class="phone">说明您要提供的商品</view>
+    <view class="bb">
+        <view class="shenqing_btn" bindtap="closeShenqing">取消</view>
+        <button open-type="contact">联系客服</button>
+    </view>
 </view>

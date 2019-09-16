@@ -9,7 +9,7 @@
     font-size: 26rpx;
 }
 .left {
-    width: 200rpx;
+    width: 230rpx;
 }
 .right {
     font-size: 26rpx;

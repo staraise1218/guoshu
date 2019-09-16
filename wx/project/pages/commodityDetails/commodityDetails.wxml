@@ -41,8 +41,8 @@
                 <view>￥{{goodLists.shop_price}}</view>
             </view>
         </view>
-        <view class="left-r" style="font-weight: 600; font-size: 24rpx;">
-            <view style="margin-top: 6rpx;">已团</view>
+        <view class="left-r" style="font-weight: 600; font-size: 24rpx;" wx:if="{{optionState !== 'miaosha'}}">
+            <view style="margin-top: 6rpx;"> 已团</view>
             <view style="margin-top: 6rpx;">{{MSM.virtual_num}}份</view>
         </view>
     </view>
@@ -73,7 +73,7 @@
     <view class="xiaoliang" wx:if="{{goodLists.prom_type == 0}}">销量{{ goodLists.sales_sum + goodLists.virtual_num}}</view>
     <view class="goods_name">{{goodLists.goods_name}}</view>
     <view class="goods_name_">{{goodLists.subtitle}}</view>
-    <view class="price-wrap">
+    <view class="price-wrap"  wx:if="{{optionState !== 'miaosha'}}">
         <view class="left">
             <view class="price">
                 <image style="width: 22rpx; height: 28rpx;" src="https://app.zhuoyumall.com/wx/img/2/人民币.png" />
@@ -195,6 +195,9 @@
         <image style="width: 50rpx; height: 50rpx;" src="https://app.zhuoyumall.com/wx/img/2/购物车.png" />
         <view class="cartCount" wx:if="{{num > 0}}">{{num}}</view>
     </view>
+    <button open-type="contact" class="kf">
+        <image  src="https://app.zhuoyumall.com/wx/img/4/ms.png" />
+    </button>
     <view class="addCart" data-id="{{goods_id}}" catchtap="addcart">加入购物车</view>
     <view class="toPay" data-goodsid="{{goods_id}}" catchtap="{{byNowFlag == 'true' ? 'byNow' : ''}}">立即购买</view>
 </view>

@@ -81,7 +81,11 @@ Page({
     })
     console.log('**************商品详情***********************************************************************')
     wx.setStorageSync('shareMsg', '分享商品打开过')
-    console.log(options)
+    console.log("options ************> ",options)
+    that.setData({
+      optionState: options.state
+    })
+    console.log('optionState', this.data.optionState)
     // 商品不在本地城市
     if(options.shareStatus == 'Back') {
       that.setData({
@@ -447,7 +451,7 @@ Page({
   go: function (e) {
     // console.log(e.currentTarget.dataset)
     wx.navigateTo({
-      url: '/pages/commodityDetails/commodityDetails?goods_id=' + e.currentTarget.dataset.id
+      url: '/pages/commodityDetails/commodityDetails?goods_id=' + e.currentTarget.dataset.id + "&state=tuijian"
     })
   },
   toShopCart: function () {

@@ -286,7 +286,7 @@ Page({
   toCon: function (e) {
     console.log(e.currentTarget.dataset.goodsId)
     wx.navigateTo({
-      url: '/pages/commodityDetails/commodityDetails?goods_id=' + e.currentTarget.dataset.goodsId + '&msg=fenlei'
+      url: '/pages/commodityDetails/commodityDetails?goods_id=' + e.currentTarget.dataset.goodsId + '&msg=fenlei' + "&state=putong"
     })
   },
   getMore(e) {

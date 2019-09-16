@@ -7,7 +7,7 @@
   </view>
   <view class="right-center">
     <!-- <input class="search margin-right-20" placeholder="火龙果" confirm-type="search" bindconfirm="searchChange" /> -->
-    <input class="search margin-left-20 margin-right-20" placeholder="火龙果" bindtap="toSearch" />
+    <input class="search margin-left-20 margin-right-20" placeholder="" bindtap="toSearch" />
     <!-- <image bindtap="toNews" class="icon-2 news-icon" src="http://img.hb.aicdn.com/c2d15a72fb9a3341210c1773987bf341d56bd303658-3FUCl7_fw658" /> -->
     <image bindtap="toNews" class="icon-2 news-icon" src="https://hbimg.huabanimg.com/deb427e3df46fa36177cf43e28494ada7db19f72668-iwUuto_fw658" />
   </view>

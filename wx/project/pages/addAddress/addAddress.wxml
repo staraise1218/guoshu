@@ -42,7 +42,7 @@
     </view>
   </view>
   <view class="edit-item border-bottom-03 padding-20 left-center title-2 color-8">
-    <view class="left">详细地址</view>
+    <view class="left">详细地址  <text style="color: rgb(255, 78, 118)">（必填）</text></view>
     <view class="location right " bindtap="tochooseAddress">
       {{addressList.address}}
       <view class="more"></view>

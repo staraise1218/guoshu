@@ -114,13 +114,22 @@ Page({
   /**
    * 跳转商品详情
    */
-  toCon: function (e) {
+  toConGroup: function (e) {
     console.log(e.currentTarget.dataset.id)
     wx.navigateTo({
-      url: '/pages/commodityDetails/commodityDetails?goods_id=' + e.currentTarget.dataset.id + '&msg=index'
+      url: '/pages/commodityDetails/commodityDetails?goods_id=' + e.currentTarget.dataset.id + '&msg=index' + "&state=group"
     })
   },
 
+  /**
+   * 跳转商品详情
+   */
+  toConMs: function (e) {
+    console.log(e.currentTarget.dataset.id)
+    wx.navigateTo({
+      url: '/pages/commodityDetails/commodityDetails?goods_id=' + e.currentTarget.dataset.id + '&msg=index' + "&state=miaosha"
+    })
+  },
 
   getMore(e) {
     console.log(e)

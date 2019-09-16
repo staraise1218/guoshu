@@ -3,6 +3,9 @@
     <!-- <view style=" padding-top: 30rpx;">海报<text style="font-style:italic;">mart</text>仓储超市</view> -->
     <view style=" padding-top: 30rpx;">海豹城市仓储超市</view>
 </view>
-<view class="text-center" style="padding-top: 80rpx;">客服电话</view>
-<view class="text-center" style="color: #4d88ec; font-size: 52rpx; padding-top: 20rpx;">400-2356-7878</view>
-<view bindtap="callNumber" class="text-center" style="margin: 100rpx auto; background: #4d88ec; color:#fff; width: 50%; padding: 25rpx; border-radius: 100rpx;">确定</view>
+<view class="">
+    <image style="width: 50px; margin-top: 80rpx;" mode="widthFix" src="https://app.zhuoyumall.com/wx/img/4/m.png" />
+</view>
+<view class="text-center" style="padding-top: 10rpx;">联系客服</view>
+<!-- <view class="text-center" style="color: #4d88ec; font-size: 52rpx; padding-top: 20rpx;">400-2356-7878</view> -->
+<button open-type="contact" class="text-center" style="margin: 40rpx auto; background: #ff4f76; color:#fff; width: 30%; padding: 0rpx; font-size: 26rpx;line-height: 60rpx;height: 60rpx;border-radius: 100rpx;">确定</button>

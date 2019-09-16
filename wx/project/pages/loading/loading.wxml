@@ -7,6 +7,8 @@
         <image class="logo" mode="widthFix" src="https://app.zhuoyumall.com/wx/img/3/N28.png" />
     </view>
     <button type="primary" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo" class="clearbtn">登陆小程序</button>
+    <!-- <navigator target="miniProgram" open-type="exit" class="tuichu">退出小程序</navigator> -->
+    <!-- <button class="open" open-type="openSetting" bindtap="openSetting"> 修改授权 </button > -->
 </view>
 
 
@@ -14,12 +16,19 @@
 
 
 
-
-
-
-
-
-
+<view class="alert__bg" wx:if="{{alertShow}}"></view>
+<view class="alert__con" wx:if="{{alertShow}}">
+    <view class="title">微信授权</view>
+    <view class="logo">
+        <image src="https://app.zhuoyumall.com/wx/img/3/N28.png" />
+    </view>
+    <view class="con__text">海报超时 身边的仓储速达超时 申请获得以下权限</view>
+    <view class="con__text-f">获得你的公开信息（昵称、头像、地区及性别）</view>
+    <view class="btn__wrap">
+        <view class="cancel" bindtap="alertTips">拒绝</view>
+        <view class="allow" bindtap="myLogin">允许</view>
+    </view>
+</view>
 
 
 

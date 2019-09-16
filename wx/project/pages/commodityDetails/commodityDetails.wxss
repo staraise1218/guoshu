@@ -451,7 +451,7 @@ page {
   margin-right: 40rpx;
 }
 .shopCart .addCart {
-  margin-left: 100rpx;
+  margin-left: 30rpx;
   border-top-left-radius: 50rpx;
   border-bottom-left-radius: 50rpx;
   border-right: 1rpx solid #fff;
@@ -462,6 +462,7 @@ page {
 }
 .shopCart .cart {
   position: relative;
+  margin-right: 30rpx;
 }
 .shopCart .cart .cartCount {
   position: absolute;
@@ -644,3 +645,18 @@ page {
   font-size: 34rpx;
   color: #FE3B64;
 }
+.kf {
+  flex: 1;
+  background: #fff;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-size: 0;
+  padding-bottom: 6rpx;
+  box-sizing: border-box;
+} 
+.kf image {
+  height: 52rpx;
+  width: 60rpx;
+}
+.kf:after{ border: none; } 

@@ -28,7 +28,7 @@
         <!-- Miaosa -->
         <scroll-view class="miaosa-scr" scroll-x="{{true}}" wx:if="{{Active == 'MIAOSA'}}">
             <block wx:for="{{MiaosaList}}" wx:key>
-                <view class="miaosa-item" data-id="{{item.goods_id}}" bindtap="toCon">
+                <view class="miaosa-item" data-id="{{item.goods_id}}" bindtap="toConMs">
                     <image style="width: 200rpx; height: 200rpx"
                         src="https://app.zhuoyumall.com{{item.original_img}}" />
                     <view class="goods_name">{{item.goods.goods_name}}</view>
@@ -36,7 +36,7 @@
                     <view class="ctr">
                         <view class="left">
                             <image src="https://app.zhuoyumall.com/wx/img/2/人民币.png" />
-                            <view class="miaosa_price">{{item.goods.shop_price}}</view>
+                            <view class="miaosa_price">{{item.price}}</view>
                         </view>
                         <view class="right-btn">马上抢</view>
                     </view>
@@ -78,9 +78,9 @@
     </view>
     <!-- list -->
     <view class="group-list">
-        <block wx:for="{{Grouplist}}">
+        <block wx:for="{{Grouplist}}" wx:key>
           <view style='padding: 0 20rpx;'>
-            <view class="list-item" data-id="{{item.goods_id}}" bindtap="toCon">
+            <view class="list-item" data-id="{{item.goods_id}}" bindtap="toConGroup">
                 <image class="goods_pic" src="https://app.zhuoyumall.com{{item.original_img}}" />
                 <view class="right">
                     <view class="goods_name">{{item.goods_name}}</view>

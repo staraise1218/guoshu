@@ -851,7 +851,7 @@ page {
     width:338rpx;
     background:#fff;
     border-radius:15rpx;
-    height:500rpx;
+    height:510rpx;
     overflow:hidden;
     padding:20rpx;
     box-sizing:border-box;
@@ -889,14 +889,14 @@ page {
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 24rpx;
-    margin-top: 10rpx;
+    margin-top: 4rpx;
     color: rgb(100,100,100);
   }
   .bottom {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 10rpx;
+    margin-top: 18rpx;
   }
   
   

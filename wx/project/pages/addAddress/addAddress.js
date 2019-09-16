@@ -160,6 +160,21 @@ chengeMenPaiHao: function (e) {
                   latitude: that.data.addressList.latitude
                 }
             }
+              console.log('>>>>>>>> posdata >>>>>>>>>>>>', posdata)
+              if (!posdata.longitude) {
+                wx.showToast({
+                  title: '请选择详细地址',
+                  icon: 'none'
+                })
+                return;
+              }
+              if (!posdata.floor) {
+                wx.showToast({
+                  title: '请填写门牌号',
+                  icon: 'none'
+                })
+                return;
+              }
               wx.request({
                 url: Globalhost + 'api/address/add_address',
                 method: 'POST',

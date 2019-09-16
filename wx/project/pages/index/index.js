@@ -335,7 +335,27 @@ Page({
     loadingfunc(); // 加载函数
     console.log(e.currentTarget.dataset)
     wx.navigateTo({
-      url: '/pages/commodityDetails/commodityDetails?goods_id=' + e.currentTarget.dataset.id + '&msg=index'
+      url: '/pages/commodityDetails/commodityDetails?goods_id=' + e.currentTarget.dataset.id + '&msg=index' + "&state=tuijian"
+    })
+  },
+  /**
+   * 跳转商品详情
+   */
+  toConMs: function (e) {
+    loadingfunc(); // 加载函数
+    console.log(e.currentTarget.dataset)
+    wx.navigateTo({
+      url: '/pages/commodityDetails/commodityDetails?goods_id=' + e.currentTarget.dataset.id + '&msg=index' + "&state=miaosha"
+    })
+  },
+  /**
+   * 跳转商品详情
+   */
+  toConPt: function (e) {
+    loadingfunc(); // 加载函数
+    console.log(e.currentTarget.dataset)
+    wx.navigateTo({
+      url: '/pages/commodityDetails/commodityDetails?goods_id=' + e.currentTarget.dataset.id + '&msg=index' + "&state=putong"
     })
   },
   /**

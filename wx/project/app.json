@@ -1,14 +1,15 @@
 {
   "pages": [
     "pages/loading/loading",
+    "pages/mine/mine",
+    "pages/kefu/kefu",
+    "pages/message/message",
     "pages/aboutus/aboutus",
     "pages/mingxi/mingxi",
     "pages/commodityDetails/commodityDetails",
     "pages/searMsg/searMsg",
-    "pages/kefu/kefu",
     "pages/errorPay/errorPay",
     "pages/paySuccess/paySuccess",
-    "pages/mine/mine",
     "pages/tuijian/tuijian",
     "pages/shoppingCart/shoppingCart",
     "pages/group2/group2",
@@ -18,7 +19,7 @@
     "components/alert/alert",
     "pages/password/password",
     "pages/orderSuccess/orderSuccess",
-    "pages/myOrderB/myOrderB",  
+    "pages/myOrderB/myOrderB",
     "pages/peisongList/peisongList",
     "pages/peisonCon/peisonCon",
     "pages/address/address",
@@ -62,7 +63,8 @@
     "components/shopchart/cart",
     "components/commodityList/comList",
     "pages/yue/yue",
-    "pages/hongBao/hongBao"
+    "pages/hongBao/hongBao",
+    "message"
   ],
   "window": {
     "backgroundTextStyle": "dark",
