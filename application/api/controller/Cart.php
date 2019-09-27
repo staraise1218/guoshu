@@ -133,14 +133,16 @@ class Cart extends Base {
         $goods_num = I("goods_num/d");// 商品数量
         $item_id = I("item_id/d", 0); // 商品规格id
 
+        if($user_id == '') response_error('请先登录');
+
         if(empty($goods_id)){
-            response_success('请选择要购买的商品');
+            response_error('请选择要购买的商品');
         }
         if(empty($goods_num)){
-            response_success('购买商品数量不能为0');
+            response_error('购买商品数量不能为0');
         }
         if($goods_num > 200){
-            response_success('购买商品数量不能大于200');
+            response_error('购买商品数量不能大于200');
         }
 
         $cartLogic = new CartLogic();
