@@ -98,6 +98,8 @@ class Common extends Base {
         $user_id = I('user_id');
         $city_code = I('city_code');
 
+        if( ! $user_id) response_success(array('cartNum'=>0));
+
         $cartLogic = new CartLogic();
         $cartLogic->setUserId($user_id);
         $cartLogic->setCityCode($city_code);

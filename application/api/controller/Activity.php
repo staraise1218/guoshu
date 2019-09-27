@@ -25,7 +25,7 @@ class Activity extends Base {
      */
     public function index()
     {
-        $user_id = I('user_id');
+        // $user_id = I('user_id');
         $city_code = I('city_code');
         $page = I('page',1);
 
@@ -73,7 +73,7 @@ class Activity extends Base {
      */
     public function flash_sale_list()
     {
-        $user_id = I('user_id');
+        // $user_id = I('user_id');
         $city_code = I('city_code');
         $page = I('page', 1);
         // $start_time = I('start_time');

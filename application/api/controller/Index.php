@@ -95,8 +95,6 @@ class Index extends Base {
         }
 
 
-
-
         $result['bannerList'] = $bannerList;
         $result['categoryList'] = $categoryList;
         $result['grouplist'] = $grouplist;
