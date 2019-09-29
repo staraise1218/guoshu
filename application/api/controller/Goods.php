@@ -78,9 +78,13 @@ class Goods extends Base {
         $goods['goods_content'] = $goods['goods_content'] ? htmlspecialchars_decode($goods['goods_content']) : '';
 
         // 购物车商品数量
-        $cartLogic = new CartLogic();
-        $cartLogic->setUserId($user_id);
- 		$goods['cart_num'] = $cartLogic->getUserCartGoodsTypeNum();//获取用户购物车商品总数
+        if($user_id){
+            $cartLogic = new CartLogic();
+            $cartLogic->setUserId($user_id);
+            $goods['cart_num'] = $cartLogic->getUserCartGoodsTypeNum();//获取用户购物车商品总数
+        } else {
+            $goods['cart_num'] = 0;
+        }
         response_success($goods);
 	}
 
