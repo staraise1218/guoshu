@@ -11,7 +11,12 @@ Page({
     test: ''
   },
   onLoad: function (options) {
-    
+    let userInfo = wx.getStorageSync("userInfo");
+    console.log("userInfo", userInfo);
+
+    this.setData({
+      WXhead_pic: userInfo.avatarUrl
+    })
   },
   onShow: function () {
     if(wx.getStorageSync('login') == '手机号登陆') {

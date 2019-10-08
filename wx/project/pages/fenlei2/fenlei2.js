@@ -23,6 +23,13 @@ Page({
       address: wx.getStorageSync('address') || '请选择配送点'
     })
   },
+  onShow() {
+    let that = this;
+    let user_id = wx.getStorageSync("user_id") || "0"
+    that.setData({
+      user_id: user_id
+    })
+  },
 // 获取分类 -- 左侧
   getFenlei(that) {
     wx.request({ 
@@ -134,34 +141,39 @@ Page({
    */
   addCart: function (e) {
     let that = this;
-    wx.request({
-      url: Globalhost + 'Api/cart/addCart',
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      data: {
-        user_id: wx.getStorageSync('user_id'),
-        goods_id: e.currentTarget.dataset.id,
-        goods_num: 1
-      },
-      success: function (res) {
-        console.log(res)
-        if (res.data.code == 200) {
-          wx.showToast({
-            title: res.data.msg,
-            image: '../../src/img/shopcart.png',
-            duration: 2000
-          })
-          that.loadingShopcartNum(that);
-        } else {
-          wx.showToast({
-            title: res.data.msg,
-            icon: 'none'
-          })
+    let user_id = that.data.user_id;
+    if (user_id == "0") {
+      this.toLogin(that)
+    } else {
+      wx.request({
+        url: Globalhost + 'Api/cart/addCart',
+        method: 'POST',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        data: {
+          user_id: wx.getStorageSync('user_id'),
+          goods_id: e.currentTarget.dataset.id,
+          goods_num: 1
+        },
+        success: function (res) {
+          console.log(res)
+          if (res.data.code == 200) {
+            wx.showToast({
+              title: res.data.msg,
+              image: '../../src/img/shopcart.png',
+              duration: 2000
+            })
+            that.loadingShopcartNum(that);
+          } else {
+            wx.showToast({
+              title: res.data.msg,
+              icon: 'none'
+            })
+          }
         }
-      }
-    })
+      })
+    }
   },
   /**
    * 加载购物车数量
@@ -199,15 +211,28 @@ Page({
    * 搜索
    */
   toSearch: function (e) {
-    wx.navigateTo({
-      url: '/pages/search/search'
-    })
+    let that = this;
+    let user_id = that.data.user_id;
+    if (user_id == "0") {
+      this.toLogin(that)
+    } else {
+      wx.navigateTo({
+        url: '/pages/search/search'
+      })
+    }
   },
   // 显示城市弹窗
   showCity() {
-    this.setData({
-      chooseAlerShow: true
-    })
+    let that = this;
+    let user_id = that.data.user_id;
+    if (user_id == "0") {
+      this.toLogin(that)
+    } else {
+      this.setData({
+        chooseAlerShow: true
+      })
+    }
+
   },
   // 隐藏城市弹窗
   closeCity() {
@@ -276,18 +301,30 @@ Page({
    * 跳转消息页面
    */
   toNews: function () {
-    wx.navigateTo({
-      url: '/pages/news/news'
-    })
+    let that = this;
+    let user_id = that.data.user_id;
+    if (user_id == "0") {
+      this.toLogin(that)
+    } else {
+      wx.navigateTo({
+        url: '/pages/news/news'
+      })
+    }
   },
   /**
    * 跳转商品详情
    */
   toCon: function (e) {
-    console.log(e.currentTarget.dataset.goodsId)
-    wx.navigateTo({
-      url: '/pages/commodityDetails/commodityDetails?goods_id=' + e.currentTarget.dataset.goodsId + '&msg=fenlei' + "&state=putong"
-    })
+    let that = this;
+    let user_id = that.data.user_id;
+    if (user_id == "0") {
+      this.toLogin(that)
+    } else {
+      console.log(e.currentTarget.dataset.goodsId)
+      wx.navigateTo({
+        url: '/pages/commodityDetails/commodityDetails?goods_id=' + e.currentTarget.dataset.goodsId + '&msg=fenlei' + "&state=putong"
+      })
+    }
   },
   getMore(e) {
     console.log("**********加载更多****************")
@@ -303,5 +340,23 @@ Page({
         that.erji(that, subActiveID, page);
       }
     }
-  }
+  },
+  
+  // 跳转登录
+  toLogin(that) {
+    wx.showModal({
+      title: '未登录',
+      content: '是否跳转到登陆页面',
+      success(res) {
+        if (res.confirm) {
+          console.log('用户点击确定');
+          wx.navigateTo({
+            url: '/pages/loading/loading'
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消');
+        }
+      }
+    })
+},
 })

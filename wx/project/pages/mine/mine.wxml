@@ -1,7 +1,7 @@
 <!-- Header -->
 <view class="my-header">
     <view class="my-header-pic">
-        <image class="header-pic" bindtap="toUserinfo" src="https://app.zhuoyumall.com{{headPic}}" />
+        <image class="header-pic" bindtap="toUserinfo" src="{{headPic ? 'https://app.zhuoyumall.com' + headPic : WXheadPic}} " />
     </view>
     <view class="my-name" bindtap="toUserinfo">
         <view style="font-size: 36rpx;">{{NickName}}</view>
@@ -23,6 +23,7 @@
     </view>
 </view>
 <!-- Header END -->
+
 
 <!-- Seeting -->
 <view class="seeting bg">

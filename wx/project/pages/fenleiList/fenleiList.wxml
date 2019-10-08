@@ -4,7 +4,8 @@
             <image class="icon-bg" mode="widthFix" src="https://app.zhuoyumall.com{{msg.image}}" />
             <view class="lists">
                 <block wx:for="{{GOODLIST}}" wx:key>
-                    <view class="item-list-box" data-id="{{item.goods_id}}" bindtap="toCon" data-id="{{item.goods_id}}">
+                    <view class="item-list-box" data-id="{{item.goods_id}}" bindtap="{{item.store_count != 0 ? 'toCon' : ''}}" data-id="{{item.goods_id}}">
+                        <view class="beihuo" wx:if="{{item.store_count == 0}}"> 备货中 </view>
                         <view class="poster-wrapper">
                             <image class="icon-shop" mode=""
                                 src="https://app.zhuoyumall.com{{item.original_img}}" />
@@ -16,7 +17,7 @@
                             <view class="left-center">
                                 <text style="font-weight: bold; font-size: 30rpx;color: #3E79EC">￥{{item.shop_price}}</text>
                             </view>
-                            <image data-id="{{item.goods_id}}" catchtap="addCart" class="icon-2" mode="widthFix"
+                            <image data-id="{{item.goods_id}}" catchtap="{{item.store_count != 0 ? 'addCart' : ''}}" class="icon-2" mode="widthFix"
                                 style="width: 50rpx; height: 50rpx;"
                                 src="https://app.zhuoyumall.com/wx/img/2/购物车蓝色.png" />
                         </view>

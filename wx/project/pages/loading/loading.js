@@ -5,6 +5,7 @@ Page({
     alertShow: false,
     loginShow: false,
     isShouquan: '', // 是否授权了
+    user_id: ""
   },
   onLoad: function (options) {
     let that = this;
@@ -12,6 +13,21 @@ Page({
     console.log('options', options)
     console.log('goods_id', options.goods_id)
     console.log('share_userCode', options.share_userCode)
+    
+
+    // if(options.tiyanStatus !== "T") {
+    //   if (!wx.getStorageSync('user_id')) {
+    //     wx.reLaunch({
+    //       url: '/pages/tiyan/tiyan'
+    //     })
+    //   }
+    // }
+
+    that.getUserLocation(that);
+    // wx.switchTab({
+    //   url: '/pages/index/index'
+    // })
+    // return;
     wx.showLoading({
       title: '加载中',
     })
@@ -51,7 +67,6 @@ Page({
         }
       }
     });
-
   },
   onShow: function (options) {
     console.log('***********************onShow*************************');
@@ -64,6 +79,13 @@ Page({
   tiaoguo: function (e) {
     console.log('跳过')
     
+    wx.navigateBack({
+      delta: 1
+    })
+
+    // wx.reLaunch({
+    //   url: '/pages/index/index'
+    // })
   },
   openSetting() {
     console.log('openSetting')
@@ -151,12 +173,7 @@ Page({
                   })
                 },
                 complete: function () {
-                  // wx.switchTab({
-                  //   url: '/pages/index/index'
-                  // })
-                  // wx.reLaunch({
-                  //   url: '/pages/welcome/welcome'
-                  // })
+                  
                 }
               })
             }
@@ -217,7 +234,7 @@ Page({
                       wx.setStorageSync('LOCATIONSTATUS', 1)
                     } else {
                       wx.showToast({
-                        title: '授权失败',
+                        title: '授权失败', // 失败
                         icon: 'none',
                         duration: 1000
                       })
@@ -312,9 +329,16 @@ Page({
               shareMsg = JSON.stringify(shareMsg);
               console.log(shareMsg)
               wx.setStorageSync("shareMsg", shareMsg);
-              // wx.navigateTo({
-              //   url: '/pages/index/index?goods_id=' + options.goods_id + '&user_id=' + options.user_id + '&share_userCode=' + options.share_userCode
+
+              // wx.showToast({
+              //   title: 'tttt1',
+              //   icon: 'none'
               // })
+              
+              // wx.navigateBack({
+              //   delta: 1
+              // })
+
               wx.switchTab({
                 url: '/pages/index/index'
               })
@@ -328,23 +352,43 @@ Page({
               shareMsg = JSON.stringify(shareMsg);
               console.log(shareMsg)
               wx.setStorageSync("shareMsg", shareMsg);
-              // wx.navigateTo({
-              //   url: '/pages/index/index?goods_id=' + options.goods_id + '&user_id=' + options.user_id + '&share_userCode=' + options.share_userCode + '&shareStatus=Back'
-              // })
-              wx.switchTab({
-                url: '/pages/index/index'
-              })
+              var shareGoDetails = wx.getStorageSync("shareGoDetails");
+              // if(shareGoDetails == "commodityDetails") {
+              //   wx.navigateBack({
+              //     delta: 1
+              //   })
+              // } else {
+              //   // wx.showToast({
+              //   //   title: 'tttt2',
+              //   //   icon: 'none'
+              //   // })
+              //   wx.switchTab({
+              //     url: '/pages/index/index'
+              //   })
+              // }
             }
           } else {
             console.log('**************************不是分享**************************')
             console.log(options)
+            
+            // wx.navigateBack({
+            //   delta: 1
+            // })
+
             if(wx.getStorageSync('user_id')) {
-              wx.switchTab({
-                url: '/pages/index/index'
-              })
+              var shareGoDetails = wx.getStorageSync("shareGoDetails");
+              if(shareGoDetails == "commodityDetails") {
+                wx.navigateBack({
+                  delta: 1
+                })
+              } else {
+                wx.switchTab({
+                  url: '/pages/index/index'
+                })
+              }
             } else {
               wx.showToast({
-                title: '授权失败',
+                title: '位置授权成功',
                 icon: 'none'
               })
             }
@@ -353,8 +397,11 @@ Page({
     })
   },
   alertTips() {
+    this.setData({
+      alertShow: false
+    })
     wx.showToast({
-      title: '需要通过授权才能己写，请重新点击并授权',
+      title: '需要通过授权才能继续，请重新点击并授权',
       icon: "none",
       duration: 1500
     })

@@ -4,7 +4,7 @@
     <view class="title-3">头像</view>
     
     <view class="icon-1">
-        <image class="" style="width: 100%" mode="widthFix" bindtap="changHeaderPic" src="https://app.zhuoyumall.com{{head_pic}}" />
+        <image class="" style="width: 100%" mode="widthFix" bindtap="changHeaderPic" src="{{head_pic ? 'https://app.zhuoyumall.com' + head_pic : WXhead_pic }}" />
     </view>
 </view>
 

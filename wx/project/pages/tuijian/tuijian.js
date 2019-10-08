@@ -13,7 +13,10 @@ Page({
   },
   onShow: function () {
     let that = this;
-    
+    let user_id = wx.getStorageSync("user_id") || "0"
+    that.setData({
+      user_id: user_id
+    })
   },
   // 获取商品列表
   getList (that, id, page) {
@@ -55,36 +58,41 @@ Page({
    */
   addCart: function (e) {
     let that = this;
-    loadingfunc(); // 加载函数
-    wx.request({
-      url: Globalhost + 'Api/cart/addCart',
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      data: {
-        user_id: wx.getStorageSync('user_id'),
-        goods_id: e.currentTarget.dataset.id,
-        goods_num: 1
-      },
-      success: function (res) {
-        console.log(res)
-        if(res.data.code == 200) {
-          wx.showToast({
-            title: res.data.msg,
-            icon: 'none',
-            image: '../../src/img/shopcart.png',
-            duration: 2000
-          })
-          that.loadingShopcartNum(that);
-        } else {
-          wx.showToast({
-            title: res.data.msg,
-            icon: 'none'
-          })
+    let user_id = that.data.user_id;
+    if (user_id == "0") {
+      this.toLogin(that)
+    } else {
+      loadingfunc(); // 加载函数
+      wx.request({
+        url: Globalhost + 'Api/cart/addCart',
+        method: 'POST',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        data: {
+          user_id: wx.getStorageSync('user_id'),
+          goods_id: e.currentTarget.dataset.id,
+          goods_num: 1
+        },
+        success: function (res) {
+          console.log(res)
+          if(res.data.code == 200) {
+            wx.showToast({
+              title: res.data.msg,
+              icon: 'none',
+              image: '../../src/img/shopcart.png',
+              duration: 2000
+            })
+            that.loadingShopcartNum(that);
+          } else {
+            wx.showToast({
+              title: res.data.msg,
+              icon: 'none'
+            })
+          }
         }
-      }
-    })
+      })
+    }
   },
   // 加载更多
   getMore: function (e) {
@@ -105,6 +113,24 @@ Page({
     //     icon: 'none'
     //   })
     // }
+  },
+  // 跳转登录
+  toLogin(that) {
+    wx.showModal({
+      title: '未登录',
+      content: '是否跳转到登陆页面',
+      success(res) {
+        if (res.confirm) {
+          console.log('用户点击确定');
+          wx.setStorageSync("shareGoDetails", 'commodityDetails')
+          wx.navigateTo({
+            url: '/pages/loading/loading'
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消');
+        }
+      }
+    })
   },
   onShareAppMessage: function () {
 

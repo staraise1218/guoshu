@@ -3,7 +3,19 @@ Page({
 
   },
   onLoad: function (options) {
-
+    let that = this;
+    console.log('*************************onLoad************************');
+    let user_id = wx.getStorageSync("user_id") || "0"
+    that.setData({
+      user_id: user_id
+    })
+  },
+  onShow() {
+    let that = this;
+    let user_id = wx.getStorageSync("user_id") || "0"
+    that.setData({
+      user_id: user_id
+    })
   },
   toAgreement: function () {
     wx.navigateTo({
@@ -22,8 +34,8 @@ Page({
             icon: 'success',
             duration: 2000
           })
-          wx.navigateTo({
-            url: '/pages/loading/loading'
+          wx.reLaunch({
+            url: '/pages/loading/loading?tiyanStatus=T'
           })
         } else if (res.cancel) {
           console.log('用户点击取消')
@@ -42,7 +54,7 @@ Page({
         console.log(res.version)
         console.log(res.platform)
         wx.showModal({
-          content: '当前版本' + res.platform,
+          content: '当前版本 1.1.6',
           success(res) {
             if (res.confirm) {
               console.log('用户点击确定')

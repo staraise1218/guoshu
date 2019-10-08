@@ -6,11 +6,14 @@
     <view class="logo-wrap">
         <image class="logo" mode="widthFix" src="https://app.zhuoyumall.com/wx/img/3/N28.png" />
     </view>
+    <view class="text-content">
+        海豹超市是一个您身边的商品精选+区域仓储+急速配送的网络购物平台。 直接购买、超值团购、限时秒杀、分享赚现金多种组合购物模式。 销售包含新鲜水果、母婴用品、手机数码、休闲零食、美妆个护、家用清洁、乳品饮料等多种品类。提供送货上门、自提点取货配送方式，实现最快30分钟送达的完美体验。
+    </view>
     <button type="primary" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo" class="clearbtn">登陆小程序</button>
     <!-- <navigator target="miniProgram" open-type="exit" class="tuichu">退出小程序</navigator> -->
+    <view class="tiaoguo" bindtap="tiaoguo">体验</view>
     <!-- <button class="open" open-type="openSetting" bindtap="openSetting"> 修改授权 </button > -->
 </view>
-
 
 
 
@@ -22,29 +25,12 @@
     <view class="logo">
         <image src="https://app.zhuoyumall.com/wx/img/3/N28.png" />
     </view>
-    <view class="con__text">海报超时 身边的仓储速达超时 申请获得以下权限</view>
+    <view class="con__text">海豹超市 身边的仓储速达超时 申请获得以下权限</view>
     <view class="con__text-f">获得你的公开信息（昵称、头像、地区及性别）</view>
     <view class="btn__wrap">
         <view class="cancel" bindtap="alertTips">拒绝</view>
         <view class="allow" bindtap="myLogin">允许</view>
     </view>
 </view>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

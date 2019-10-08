@@ -3,7 +3,7 @@
     <image class="icon-poster block center " src="https://app.zhuoyumall.com/wx/img/3/N28.png" />
 </view>
 
-<view class="text-center title-3">版本号v8.5.0</view>
+<view class="text-center title-3">版本号v1.1.6</view>
 
 <!-- <view class="padding-30 title-2 more-20" bindtap="toPassword">
     支付密码
@@ -18,7 +18,7 @@
 <view class="margin-lr-30 padding-tb-30 border-bottom more-0 title-2" bindtap="edition">版本检测</view>
 <!-- <view class="margin-lr-30 padding-tb-30 more-0 title-2"  bindtap="toClear">清除缓存</view> -->
 
-<view class="tuichu" bindtap="toClear">退出登陆</view>
+<view class="tuichu" bindtap="toClear" wx:if="{{user_id != '0'}}"> 退出登陆 </view>
 
 <!-- <button bindtap="toClear">退出登录</button> -->
 <!-- <button bindtap="toLogin">退出登录</button> -->

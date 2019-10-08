@@ -92,7 +92,7 @@
 </view>
 
 <!-- 非团购价格区域 END -->
-<button open-type="share" class="sare share-btn flex-space_between flex-align-item margin-lr-30">
+<button open-type="{{user_id == '0' ? '' : 'share'}}" bindtap="{{user_id == '0' ? 'toLogin' : ''}}" class="sare share-btn flex-space_between flex-align-item margin-lr-30">
     <view class="share-text">
     {{shareNum}}元
     </view>
@@ -157,7 +157,7 @@
                                 <!-- {{item.shop_price}} -->
                                 <text style="font-weight: bold;">{{item.shop_price}}</text>
                             </view>
-                            <view style="text-decoration: line-through; color: rgba(0,0,0,.6); font-size: 22rpx;">￥456</view>
+                            <view style="text-decoration: line-through; color: rgba(0,0,0,.6); font-size: 22rpx;">￥{{item.market_price}}</view>
                         </view>
                         <view data-goodsid="{{item.goods_id}}" bindtap="{{item.store_count == 0 ? '' : 'addShopCart'}}">
                             <image style="width: 52rpx; height: 52rpx; margin-top: 22rpx;" src="https://app.zhuoyumall.com/wx/img/2/购物车2.png" class="shopCartIcon" />

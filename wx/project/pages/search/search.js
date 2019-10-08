@@ -88,25 +88,30 @@ Page({
       success: function (res) {
         let data = res.data.data;
         console.log(data);
-        var tuijian = [];
-        for (var i = 0; i < data.length; i++) {
-          tuijian[i] = {};
-          var Tid = 'tuijian[' + i + '].goods_id',
-            Tname = 'tuijian[' + i + '].goods_name',
-            original_img = 'tuijian[' + i + '].original_img',
-            Tprice = 'tuijian[' + i + '].shop_price',
-            Tcount = 'tuijian[' + i + '].store_count',
-            Tsub = 'tuijian[' + i + '].subtitle'
-          that.setData({
-            [Tid]: data[i].goods_id,
-            [Tname]: data[i].goods_name,
-            [original_img]: 'https://app.zhuoyumall.com' + data[i].original_img,
-            [Tprice]: data[i].shop_price,
-            [Tcount]: data[i].store_count,
-            [Tsub]: data[i].subtitle
-          })
-        }
-        console.log(that.data.tuijian)
+        // var tuijian = [];
+        that.setData({
+          tuijian: data
+        })
+        // for (var i = 0; i < data.length; i++) {
+        //   tuijian[i] = {};
+        //   var Tid = 'tuijian[' + i + '].goods_id',
+        //     Tname = 'tuijian[' + i + '].goods_name',
+        //     original_img = 'tuijian[' + i + '].original_img',
+        //     Tprice = 'tuijian[' + i + '].shop_price',
+        //     Tcount = 'tuijian[' + i + '].store_count',
+        //     Tsub = 'tuijian[' + i + '].subtitle',
+        //     price = 'tuijian[' + i + '].market_price'
+        //   that.setData({
+        //     [Tid]: data[i].goods_id,
+        //     [Tname]: data[i].goods_name,
+        //     [original_img]: 'https://app.zhuoyumall.com' + data[i].original_img,
+        //     [Tprice]: data[i].shop_price,
+        //     [Tcount]: data[i].store_count,
+        //     [Tsub]: data[i].subtitle,
+        //     [price]: data[i].price
+        //   })
+        // }
+        // console.log(that.data.tuijian)
       }
     })
   },
@@ -129,6 +134,7 @@ Page({
    * 加入购物车
    */
   addCart: function (e) {
+    console.log(e)
     wx.request({
       url: Globalhost + 'Api/cart/addCart',
       method: 'POST',
@@ -137,7 +143,7 @@ Page({
       },
       data: {
         user_id: wx.getStorageSync('user_id'),
-        goods_id: e.currentTarget.dataset.goodsid,
+        goods_id: e.currentTarget.dataset.id,
         goods_num: 1
       },
       success: function (res) {

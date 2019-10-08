@@ -65,45 +65,72 @@ Page({
     toNews: true
   },
   onLoad: function (options) {
+
+    console.log("options", options)
     let that = this;
     console.log('*****************************加载首页********************************')
-    console.log(options)
-    console.log(wx.getStorageSync('shareMsg'))
-    let shareMsg = wx.getStorageSync('shareMsg');
-    shareMsg = JSON.parse(shareMsg);
-    console.log(shareMsg)
-    if (shareMsg.shareAddressCode != '') {
-        // 判断分享
-        if (shareMsg.share_userCode) {
-          // 外地
-          if (shareMsg.shareStatus == 'Back') {
-            console.log('*******************首页 分享 外地************************')
-            wx.navigateTo({
-              url: '/pages/commodityDetails/commodityDetails?goods_id=' + shareMsg.goods_id + '&user_id=' + shareMsg.user_id + '&share_userCode=' + shareMsg.share_userCode + '&shareStatus=Back'
-            })
-          } else {
-            // 本地
-            console.log('*******************首页 分享 本地************************')
-            wx.navigateTo({
-              url: '/pages/commodityDetails/commodityDetails?goods_id=' + shareMsg.goods_id + '&user_id=' + shareMsg.user_id + '&share_userCode=' + shareMsg.share_userCode
-            })
+    
+    that.location(that); // 地址
+    let user_id = wx.getStorageSync("user_id") || "0"
+    if(user_id != "0") {
+      console.log("有 user_id 登录了 》》》 user_id ：", user_id)
+
+      // 应该是红包部分
+      if (wx.getStorageSync('readBackAlertStatus') == 0) {
+        that.coupList(that);
+        that.getNews(that); // 加载消息列表
+      }
+    } else {
+      console.log("没有 user_id 未登录")
+    }
+
+    if(!wx.getStorageSync('addressCode')) {
+        wx.setStorageSync('addressCode', "111000")
+    }
+
+
+
+
+    if(wx.getStorageSync('shareMsg')) {
+      console.log(wx.getStorageSync('shareMsg'))
+      let shareMsg = wx.getStorageSync('shareMsg');
+      shareMsg = JSON.parse(shareMsg);
+      console.log("shareMsg", shareMsg)
+      if (shareMsg.shareAddressCode != '') {
+          // 判断分享
+          if (shareMsg.share_userCode) {
+            // 外地
+            if (shareMsg.shareStatus == 'Back') {
+              console.log('*******************首页 分享 外地************************')
+              wx.navigateTo({
+                url: '/pages/commodityDetails/commodityDetails?goods_id=' + shareMsg.goods_id + '&user_id=' + shareMsg.user_id + '&share_userCode=' + shareMsg.share_userCode + '&shareStatus=Back'
+              })
+            } else {
+              // 本地
+              console.log('*******************首页 分享 本地************************')
+              wx.navigateTo({
+                url: '/pages/commodityDetails/commodityDetails?goods_id=' + shareMsg.goods_id + '&user_id=' + shareMsg.user_id + '&share_userCode=' + shareMsg.share_userCode
+              })
+            }
           }
         }
-      }
+    }
+
+
+
+    console.log("wx.getStorageSync('address')", wx.getStorageSync('address'))
     //  else {
     that.setData({
       address: wx.getStorageSync('address')
     })
-    // 应该是红包部分
-    if (wx.getStorageSync('readBackAlertStatus') == 0) {
-      that.coupList(that);
-    }
-    that.getNews(that); // 加载消息列表
-    that.location(that); // 地址
     // }
   },
   onShow: function () {
     let that = this;
+    let user_id = wx.getStorageSync("user_id") || "0"
+    that.setData({
+      user_id: user_id
+    })
     that.setData({
       address: wx.getStorageSync('address'),
       toNews: true
@@ -111,14 +138,31 @@ Page({
     that.index(that); // 首页
     that.miaosha(that); // 秒杀商品
     that.getTuijian(that);
-    if (!wx.getStorageSync('user_id')) {
-      wx.navigateTo({
-        url: '/pages/loading/loading'
-      })
-    }
+    // if (!wx.getStorageSync('user_id')) {
+    //   wx.navigateTo({
+    //     url: '/pages/loading/loading'
+    //   })
+    // }
     that.TimeDown(); // 倒计时
   },
 
+  // 跳转登录
+  toLogin(that) {
+      wx.showModal({
+        title: '未登录',
+        content: '是否跳转到登陆页面',
+        success(res) {
+          if (res.confirm) {
+            console.log('用户点击确定');
+            wx.navigateTo({
+              url: '/pages/loading/loading'
+            })
+          } else if (res.cancel) {
+            console.log('用户点击取消');
+          }
+        }
+      })
+  },
   getTuijian(that) {
     wx.request({
       url: Globalhost + 'Api/goods/recommendgoodslist',
@@ -258,34 +302,37 @@ Page({
    * 点击更多
    */
   more: function () {
-    loadingfunc(); // 加载函数
-    if (this.data.showMore) {
-      this.setData({
-        showMore: !this.data.showMore,
-        'navBtn[9].title': '更多',
-        'navBtn[9].url': 'http://img.hb.aicdn.com/6fa8d18ec18d9eea5231622d1a7808dbb085c1b5c72-CsPSeI_fw658',
-        'navBtn[9].func': 'more'
-      })
+    let that = this;
+    let user_id = that.data.user_id;
+    if (user_id == "0") {
+      this.toLogin(that)
     } else {
-      this.setData({
-        showMore: !this.data.showMore,
-        'navBtn[9].title': '水产',
-        'navBtn[9].url': 'http://img.hb.aicdn.com/ea77f389f9db130a375d1f18d52679658f9f0cb52a18-vn6IjL_fw658',
-        'navBtn[9].func': 'toShuiCan'
-      })
+      loadingfunc(); // 加载函数
+      if (this.data.showMore) {
+        this.setData({
+          showMore: !this.data.showMore,
+          'navBtn[9].title': '更多',
+          'navBtn[9].url': 'http://img.hb.aicdn.com/6fa8d18ec18d9eea5231622d1a7808dbb085c1b5c72-CsPSeI_fw658',
+          'navBtn[9].func': 'more'
+        })
+      } else {
+        this.setData({
+          showMore: !this.data.showMore,
+          'navBtn[9].title': '水产',
+          'navBtn[9].url': 'http://img.hb.aicdn.com/ea77f389f9db130a375d1f18d52679658f9f0cb52a18-vn6IjL_fw658',
+          'navBtn[9].func': 'toShuiCan'
+        })
+      }
     }
   },
   /**
    * NAV 点击
    */
   tapchange: function (e) {
-    console.log(e.currentTarget.dataset.id)
-    // this.setData({
-    //   currentTab: e.currentTarget.dataset.currenttab
-    // })
-    wx.navigateTo({
-      url: '/pages/fenleiList/fenleiList?id=' + e.currentTarget.dataset.id
-    })
+    let that = this;
+      wx.navigateTo({
+        url: '/pages/fenleiList/fenleiList?id=' + e.currentTarget.dataset.id
+      })
   },
   toShuiCan: function () { // 水产
     this.setData({
@@ -332,26 +379,36 @@ Page({
    * 跳转商品详情
    */
   toCon: function (e) {
-    loadingfunc(); // 加载函数
-    console.log(e.currentTarget.dataset)
-    wx.navigateTo({
-      url: '/pages/commodityDetails/commodityDetails?goods_id=' + e.currentTarget.dataset.id + '&msg=index' + "&state=tuijian"
-    })
+    let that = this;
+    let user_id = that.data.user_id;
+    console.log("user_id", user_id)
+      loadingfunc(); // 加载函数
+      console.log(e.currentTarget.dataset)
+      wx.navigateTo({
+        url: '/pages/commodityDetails/commodityDetails?goods_id=' + e.currentTarget.dataset.id + '&msg=index' + "&state=tuijian"
+      })
   },
   /**
    * 跳转商品详情
    */
   toConMs: function (e) {
-    loadingfunc(); // 加载函数
-    console.log(e.currentTarget.dataset)
-    wx.navigateTo({
-      url: '/pages/commodityDetails/commodityDetails?goods_id=' + e.currentTarget.dataset.id + '&msg=index' + "&state=miaosha"
-    })
+    let that = this;
+    let user_id = that.data.user_id;
+    if (user_id == "0") {
+      this.toLogin(that)
+    } else {
+      loadingfunc(); // 加载函数
+      console.log(e.currentTarget.dataset)
+      wx.navigateTo({
+        url: '/pages/commodityDetails/commodityDetails?goods_id=' + e.currentTarget.dataset.id + '&msg=index' + "&state=miaosha"
+      })
+    }
   },
   /**
    * 跳转商品详情
    */
   toConPt: function (e) {
+    let that = this;
     loadingfunc(); // 加载函数
     console.log(e.currentTarget.dataset)
     wx.navigateTo({
@@ -362,30 +419,44 @@ Page({
    * 跳转搜索
    */
   toSearch: function () {
-    loadingfunc(); // 加载函数
-    wx.navigateTo({
-      url: '/pages/search/search'
-    })
+    let that = this;
+    let user_id = that.data.user_id;
+    if (user_id == "0") {
+      this.toLogin(that)
+    } else {
+      loadingfunc(); // 加载函数
+      wx.navigateTo({
+        url: '/pages/search/search'
+      })
+    }
   },
   /**
    * 跳转团购
    */
   toNext: function () { // 下期预告
-    loadingfunc(); // 加载函数
-    wx.setStorageSync('nextStatus', 1)
-    wx.switchTab({
-      url: '/pages/group2/group2'
-    })
+    let that = this;
+    let user_id = that.data.user_id;
+    if (user_id == "0") {
+      this.toLogin(that)
+    } else {
+      loadingfunc(); // 加载函数
+      wx.setStorageSync('nextStatus', 1)
+      wx.switchTab({
+        url: '/pages/group2/group2'
+      })
+    }
   },
   /**
    * 跳转团购
    */
   toGroup: function () { // 下期预告
-    loadingfunc(); // 加载函数
-    wx.setStorageSync('nextStatus', false)
-    wx.switchTab({
-      url: '/pages/group2/group2'
-    })
+    let that = this;
+    let user_id = that.data.user_id;
+      loadingfunc(); // 加载函数
+      wx.setStorageSync('nextStatus', false)
+      wx.switchTab({
+        url: '/pages/group2/group2'
+      })
   },
   /**
    * 跳转详情
@@ -482,7 +553,7 @@ Page({
         'content-type': 'application/x-www-form-urlencoded'
       },
       success: function (res) {
-        // console.log(res.data.data)
+        console.log("res 》》》》》》》》》》》》》》》", res)
         var arr = [];
         for (var i = 0; i < res.data.data.length; i++) {
           arr[i] = res.data.data[i].name
@@ -500,12 +571,16 @@ Page({
    * 点击banner跳转
    */
   toLink: function (e) {
-    loadingfunc(); // 加载函数
-    console.log(e.currentTarget.dataset.link)
-    if (e.currentTarget.dataset.link) {
-      wx.navigateTo({
-        url: e.currentTarget.dataset.link
-      })
+    let that = this;
+    let user_id = that.data.user_id;
+    if (user_id == "0") {
+      this.toLogin(that)
+    } else {
+      loadingfunc(); // 加载函数
+      console.log("link", e.currentTarget.dataset.link)
+      // wx.navigateTo({
+      //   url: "/pages/article/article"
+      // })
     }
   },
   /**
@@ -539,33 +614,51 @@ Page({
    * 跳转到站点申请
    */
   toMaster: function () {
-    wx.navigateTo({
-      url: '/pages/stationmaster/stationmaster'
-    })
+    let that = this;
+    let user_id = that.data.user_id;
+    if (user_id == "0") {
+      this.toLogin(that)
+    } else {
+      wx.navigateTo({
+        url: '/pages/stationmaster/stationmaster'
+      })
+    }
   },
   /**
    * 跳转消息页面
    */
   toNews: function () {
-    this.setData({
-      newShow: false,
-      toNews: false
-    })
-    wx.navigateTo({
-      url: '/pages/news/news'
-    })
+    let that = this;
+    let user_id = that.data.user_id;
+    if (user_id == "0") {
+      this.toLogin(that)
+    } else {
+      this.setData({
+        newShow: false,
+        toNews: false
+      })
+      wx.navigateTo({
+        url: '/pages/news/news'
+      })
+    }
   },
   /**
    * 跳转到领取优惠券页面
    */
   toCoup: function () {
-    this.setData({
-      'coup.status': 1,
-      redBagNum: 0
-    })
-    wx.navigateTo({
-      url: '/pages/couponlist/couponlist'
-    })
+    let that = this;
+    let user_id = that.data.user_id;
+    if (user_id == "0") {
+      this.toLogin(that)
+    } else {
+      this.setData({
+        'coup.status': 1,
+        redBagNum: 0
+      })
+      wx.navigateTo({
+        url: '/pages/couponlist/couponlist'
+      })
+    }
   },
 
   /**
@@ -595,6 +688,11 @@ Page({
           }
         }
         console.log(wx.getStorageSync('readBackAlertStatus'))
+
+        if (user_id == "0") {
+          redBagNum = 0;
+        }
+
         that.setData({
           redBagNum: redBagNum,
           redBagTitle: redBagTitle
@@ -623,6 +721,11 @@ Page({
    * 加载购物车数量
    */
   loadingShopcartNum: function (that) {
+    // let user_id = that.data.user_id;
+    console.log("that.data.user_id", that.data.user_id)
+    if(that.data.user_id == 0) {
+      return;
+    }
     wx.request({
       url: Globalhost + 'Api/common/getCartNum',
       method: 'POST',
@@ -663,59 +766,87 @@ Page({
    */
   addCart: function (e) {
     let that = this;
-    var event = e;
-    console.log(e)
-    // loadingfunc(); // 加载函数
-    wx.request({
-      url: Globalhost + 'Api/cart/addCart',
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      data: {
-        user_id: wx.getStorageSync('user_id'),
-        goods_id: e.currentTarget.dataset.id,
-        goods_num: 1
-      },
-      success: function (res) {
-        console.log(res)
-        if (res.data.code == 200) {
-          wx.showToast({
-            title: res.data.msg,
-            image: '../../src/img/shopcart.png',
-            duration: 2000
-          })
-          that.loadingShopcartNum(that)
-          wx.setTabBarBadge({
-            index: 3,
-            text: '' + res.data.data.total_num
-          })
-        } else {
-          wx.showToast({
-            title: res.data.msg,
-            icon: 'none'
-          })
+    let user_id = that.data.user_id;
+    if (user_id == "0") {
+      this.toLogin(that)
+    } else {
+      var event = e;
+      console.log(e)
+      // loadingfunc(); // 加载函数
+      wx.request({
+        url: Globalhost + 'Api/cart/addCart',
+        method: 'POST',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        data: {
+          user_id: wx.getStorageSync('user_id'),
+          goods_id: e.currentTarget.dataset.id,
+          goods_num: 1
+        },
+        success: function (res) {
+          console.log(res)
+          if (res.data.code == 200) {
+            wx.showToast({
+              title: res.data.msg,
+              image: '../../src/img/shopcart.png',
+              duration: 2000
+            })
+            that.loadingShopcartNum(that)
+            wx.setTabBarBadge({
+              index: 3,
+              text: '' + res.data.data.total_num
+            })
+          } else {
+            wx.showToast({
+              title: res.data.msg,
+              icon: 'none'
+            })
+          }
         }
-      }
-    })
+      })
+    }
   },
   toReadBag: function () {
-    loadingfunc();
-    wx.navigateTo({
-      url: '/pages/couponlist/couponlist'
-    })
+    let that = this;
+    let user_id = that.data.user_id;
+    if (user_id == "0") {
+      this.toLogin(that)
+    } else {
+      loadingfunc();
+      wx.navigateTo({
+        url: '/pages/couponlist/couponlist'
+      })
+    }
   },
   toSearMsg: function () {
-    loadingfunc();
-    wx.navigateTo({
-      url: '/pages/searMsg/searMsg'
-    })
+    let that = this;
+    let user_id = that.data.user_id;
+    if (user_id == "0") {
+      this.toLogin(that)
+    } else {
+      let user_id = that.data.user_id;
+      if (user_id == "0") {
+        this.toLogin(that)
+      } else {
+        loadingfunc();
+        wx.navigateTo({
+          url: '/pages/searMsg/searMsg'
+        })
+      }
+    }
   },
   toSiteMsg: function () {
-    loadingfunc();
-    wx.navigateTo({
-      url: '/pages/siteMsg/siteMsg'
-    })
+    let that = this;
+    let user_id = that.data.user_id;
+    if (user_id == "0") {
+      this.toLogin(that)
+    } else {
+      loadingfunc();
+      wx.navigateTo({
+        url: '/pages/siteMsg/siteMsg'
+      })
+    }
   },
 
 
@@ -723,9 +854,15 @@ Page({
 
   // 数据 [code, code, code]
   chooseAddressShow: function () {
-    this.setData({
-      chooseAlerShow: true
-    })
+    let that = this;
+    let user_id = that.data.user_id;
+    if (user_id == "0") {
+      this.toLogin(that)
+    } else {
+      this.setData({
+        chooseAlerShow: true
+      })
+    }
   },
   // 选择省
   changeProvince: function (e) {
@@ -799,16 +936,36 @@ Page({
     })
   },
   toTuijian() {
-    wx.navigateTo({
-      url: '/pages/tuijian/tuijian'
-    })
+    let that = this;
+    let user_id = that.data.user_id;
+      wx.navigateTo({
+        url: '/pages/tuijian/tuijian'
+      })
   },
   toMingxi() {
-    wx.navigateTo({
-      url: '/pages/mingxi/mingxi'
+    let that = this;
+    let user_id = that.data.user_id;
+    if (user_id == "0") {
+      this.toLogin(that)
+    } else {
+      wx.navigateTo({
+        url: '/pages/mingxi/mingxi'
+      })
+    }
+  },
+  toLoading() {
+
+
+    wx.showModal({
+      title: '您未登录',
+      content: '是否前往登录界面',
+
     })
+    // if (!wx.getStorageSync('user_id')) {
+    //   wx.navigateTo({
+    //     url: '/pages/loading/loading'
+    //   })
+    // }
   }
-
-
 
 })

@@ -1,6 +1,8 @@
 {
   "pages": [
+    "pages/index/index",
     "pages/loading/loading",
+    "pages/tiyan/tiyan",
     "pages/mine/mine",
     "pages/kefu/kefu",
     "pages/message/message",
@@ -24,7 +26,6 @@
     "pages/peisonCon/peisonCon",
     "pages/address/address",
     "pages/search/search",
-    "pages/index/index",
     "pages/test/test",
     "pages/siteMsg/siteMsg",
     "pages/index2/index2",
@@ -64,7 +65,9 @@
     "components/commodityList/comList",
     "pages/yue/yue",
     "pages/hongBao/hongBao",
-    "message"
+    "message",
+    "pages/test2/test2",
+    "pages/article/article"
   ],
   "window": {
     "backgroundTextStyle": "dark",
