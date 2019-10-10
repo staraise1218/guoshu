@@ -20,7 +20,7 @@ class Pay extends Base {
 	public function topay(){
 		$order_sn = I('order_sn');
 		$paymentMethod = I('paymentMethod');
-		$payPwd = I('payPwd');
+		// $payPwd = I('payPwd');
 
 		/********* 判断订单信息 **************/
 		$order = Db::name('order')->where('order_sn', $order_sn)->find();
@@ -54,9 +54,10 @@ class Pay extends Base {
 				->where('user_id', $order['user_id'])
 				->where('user_money', '<>', 0)
 				->sum('user_money');
+
 			if($sum_money != $user['user_money']) response_error('', '余额异常');
 			// 判断余额日志是否异常 单笔 不能大于5元
-			$count = Db::name('account_log')->where('user_money', 'gt', 5)->count();
+			$count = Db::name('account_log')->where('user_money', 'gt', 5)->where('user_id', $order['user_id'])->count();
 			if($count) response_error('', '余额异常');
 
 			// 启动事务
@@ -74,7 +75,20 @@ class Pay extends Base {
 				// file_put_contents('runtime/log/request.log', '23----'.var_export($resut, true), FILE_APPEND);
 				// 支付成功减库存
 				$order = Db::name('order')->where('order_sn', $order_sn)->find();
-				minus_stock($order);//下单减库存
+				minus_stock($order);//减库存
+				// 扣除使用零钱
+				Db::name('users')->where('user_id', $order['user_id'])->setDec('user_money', $order_amount);
+				// 记录零钱日志
+				$accountLogData = [
+	                'user_id' => $order['user_id'],
+	                'user_money' => -$order_amount,
+	                'pay_points' => 0,
+	                'change_time' => time(),
+	                'desc' => '下单消费',
+	                'order_sn'=>$order['order_sn'],
+	                'order_id'=>$order['order_id'],
+	            ];
+	            Db::name('account_log')->insert($accountLogData);
 				// 分享商品得佣金
 				$ShareGoodsLogic = new ShareGoodsLogic();
 				$ShareGoodsLogic->shareMoney($order_sn);
