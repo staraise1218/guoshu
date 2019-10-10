@@ -10,7 +10,7 @@
             src="https://app.zhuoyumall.com/wx/img/search.png" />
         <!-- 火龙果 -->
     </view>
-    <view class="news" bindtap="toNews">
+    <view class="news">
         <image bindtap="toNews" class="icon-2 news-icon"
             src="https://hbimg.huabanimg.com/deb427e3df46fa36177cf43e28494ada7db19f72668-iwUuto_fw658" />
     </view>

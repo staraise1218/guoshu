@@ -4,7 +4,7 @@
     <view style=" padding-top: 30rpx;">海豹城市仓储超市</view>
 </view>
 <view class="">
-    <image style="width: 50px; margin-top: 80rpx;" mode="widthFix" src="https://app.zhuoyumall.com/wx/img/4/m.png" />
+    <image style="width: 50px; height: 50px; margin-top: 80rpx;" src="https://app.zhuoyumall.com/wx/img/4/m.png" />
 </view>
 <view class="text-center" style="padding-top: 10rpx;">联系客服</view>
 <!-- <view class="text-center" style="color: #4d88ec; font-size: 52rpx; padding-top: 20rpx;">400-2356-7878</view> -->

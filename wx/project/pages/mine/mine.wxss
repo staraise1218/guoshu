@@ -168,14 +168,16 @@
 .shenqing .shenqing_btn {
     text-align: center;
     padding: 20rpx 0;
-    font-size: 34rpx;
+    font-size: 30rpx;
     /* color: #FE3B64; */
 }
 .bb {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: 1rpx solid #222;
+    /* border-top: 1rpx solid #222; */
+    
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
 }
 .bb view {
     flex: 1;
@@ -183,9 +185,16 @@
 .bb button {
     flex: 1;
     border-radius: 0;
-    border-left: 1rpx solid rgba(0,0,0,.9);
+    /* border-left: 1rpx solid rgba(0,0,0,.9); */
     background: #fff;
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+    color: #FC3B65;
+    font-size: 30rpx;
+}
+.bb button::after {
+  border-radius: 0;
+  border-top: none;
+  border-bottom: none;
 }

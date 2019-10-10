@@ -849,6 +849,7 @@ page {
   padding-left: 20rpx !important;
 }
   .item-list-box {
+    position: relative;
     width:338rpx;
     background:#fff;
     /* border-radius:15rpx; */
@@ -1052,3 +1053,18 @@ page {
     padding: 20rpx;
     box-sizing: border-box;
   }
+
+
+.beihuo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0,0,0,.5);
+  color: #FFF;
+  z-index: 1;
+  padding: 26rpx;
+  border-radius: 22rpx;
+  white-space: nowrap;
+  font-size: 28rpx;
+}

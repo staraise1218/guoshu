@@ -32,6 +32,10 @@ Page({
         Active: 'MIAOSA'
       })
     }
+    let user_id = wx.getStorageSync("user_id") || "0"
+    that.setData({
+      user_id: user_id
+    })
   },
 
   /**
@@ -115,20 +119,32 @@ Page({
    * 跳转商品详情
    */
   toConGroup: function (e) {
-    console.log(e.currentTarget.dataset.id)
-    wx.navigateTo({
-      url: '/pages/commodityDetails/commodityDetails?goods_id=' + e.currentTarget.dataset.id + '&msg=index' + "&state=group"
-    })
+    let that = this;
+    let user_id = that.data.user_id;
+    if (user_id == "0") {
+      this.toLogin(that)
+    } else {
+      console.log(e.currentTarget.dataset.id)
+      wx.navigateTo({
+        url: '/pages/commodityDetails/commodityDetails?goods_id=' + e.currentTarget.dataset.id + '&msg=index' + "&state=group"
+      })
+    }
   },
 
   /**
    * 跳转商品详情
    */
   toConMs: function (e) {
-    console.log(e.currentTarget.dataset.id)
-    wx.navigateTo({
-      url: '/pages/commodityDetails/commodityDetails?goods_id=' + e.currentTarget.dataset.id + '&msg=index' + "&state=miaosha"
-    })
+    let that = this;
+    let user_id = that.data.user_id;
+    // if (user_id == "0") {
+    //   this.toLogin(that)
+    // } else {
+      console.log(e.currentTarget.dataset.id)
+      wx.navigateTo({
+        url: '/pages/commodityDetails/commodityDetails?goods_id=' + e.currentTarget.dataset.id + '&msg=index' + "&state=miaosha"
+      })
+    // }
   },
 
   getMore(e) {
@@ -145,5 +161,22 @@ Page({
   },
   onShareAppMessage: function () {
 
-  }
+  },
+  // 跳转登录
+  toLogin(that) {
+    wx.showModal({
+      title: '未登录',
+      content: '是否跳转到登陆页面',
+      success(res) {
+        if (res.confirm) {
+          console.log('用户点击确定');
+          wx.navigateTo({
+            url: '/pages/loading/loading'
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消');
+        }
+      }
+    })
+},
 })
