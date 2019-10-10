@@ -179,6 +179,17 @@ class PlaceOrder
             if($user['user_money'] < $orderAmount){
                 throw new TpshopException('提交订单', 0, ['status'=>-9,'msg'=>"余额不足",'result'=>'']);
             }
+
+            $sum_money = Db::name('account_log')
+                ->where('user_id', $user['user_id'])
+                ->where('user_money', '<>', 0)
+                ->sum('user_money');
+
+            if($sum_money != $user['user_money']) throw new TpshopException('提交订单', 0, ['status'=>-10,'msg'=>"余额异常",'result'=>'']);
+            // 判断余额日志是否异常 单笔 不能大于5元
+            $count = Db::name('account_log')->where('user_money', 'gt', 5)->where('user_id', $user['user_id'])->count();
+            if($count) throw new TpshopException('提交订单', 0, ['status'=>-10,'msg'=>"余额异常",'result'=>'']);
+
         }
 
     }
