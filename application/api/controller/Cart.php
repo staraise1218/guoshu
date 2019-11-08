@@ -393,7 +393,7 @@ class Cart extends Base {
                     if($distance > $region['delivery_range']) response_error('', '您的收货地址已超出配送范围！请调整收货地址、或选择合适的配送中心或以自提点提货完成购物');
                     // 判断购买限额是否达到
                     $order_amount = $pay->getOrderAmount();
-                    if($order_amount < $region['limit_money']) response_error('', '订单总额不能少于'.$region['limit_money']);
+                    if($order_amount < $region['limit_money']) response_error('', '送货上门的起送金额为'.$region['limit_money'].'元！您的订单未达到起送金额，请继续购物或选择自提点取货方式完成购物');
 
                 }
                 $placeOrder = new PlaceOrder($pay);
