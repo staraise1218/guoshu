@@ -390,7 +390,7 @@ class Cart extends Base {
                     if($delivery_longitude == '' || $delivery_latitude == '') response_error('', '未设置配送点坐标');
                     $GeographyLogic = new GeographyLogic();
                     $distance = $GeographyLogic->getDistance($user_longitude, $user_latitude, $delivery_longitude, $delivery_latitude);
-                    if($distance > $region['delivery_range']) response_error('', '请回首页选择合适的配送中心或调整收货地址、或放弃本次购买');
+                    if($distance > $region['delivery_range']) response_error('', '您的收货地址已超出配送范围！请调整收货地址、或选择合适的配送中心或以自提点提货完成购物');
                     // 判断购买限额是否达到
                     $order_amount = $pay->getOrderAmount();
                     if($order_amount < $region['limit_money']) response_error('', '订单总额不能少于'.$region['limit_money']);
