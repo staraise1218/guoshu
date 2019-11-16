@@ -164,6 +164,7 @@ class Goods extends Base {
 	public function recommendgoodslist(){
 		// $cat_id = I('cat_id');
 		$city_code = I('city_code');
+        $page = I('page/d', 1);
 
 		$where = array(
 			'city_code' => $city_code, // 城市
