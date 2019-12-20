@@ -376,11 +376,16 @@ class Cart extends Base {
                 // 检测下单时间是否在 23:30 之前
                 if(time() > strtotime(date('Y-m-d').' 23:30:00')) response_error('', '请在每日23:30点之前下单'); 
                 // 检测是否在配送范围
-                if($send_method == 1){
+                if($ZZ == 1){
 
                     // 获取用户地址经纬度
                     $user_longitude = $address['longitude'];
                     $user_latitude = $address['latitude'];
+                    // 设印尼默认经纬度
+                    if($address['province'] == '900000'){
+                        $user_longitude = '106.848902';
+                        $user_latitude = '-6.19534';
+                    }
                     if(empty($user_longitude) || empty($user_latitude)) response_error('', '该地址缺少经纬度坐标'.$user_longitude.'---'.$user_latitude);
                     // 配送站点经纬度、配送范围
                     $region = Db::name('region')->where('code', $delivery_code)->find();
@@ -393,7 +398,7 @@ class Cart extends Base {
                     if($distance > $region['delivery_range']) response_error('', '您的收货地址已超出配送范围！请调整收货地址、或选择合适的配送中心或以自提点提货完成购物');
                     // 判断购买限额是否达到
                     $order_amount = $pay->getOrderAmount();
-                    if($order_amount < $region['limit_money']) response_error('', '送货上门的起送金额为'.$region['limit_money'].'元！您的订单未达到起送金额，请继续购物或选择自提点取货方式完成购物');
+                    if($order_amount < $region['limit_money'] && $address['province']!='900000') response_error('', '送货上门的起送金额为'.$region['limit_money'].'元！您的订单未达到起送金额，请继续购物或选择自提点取货方式完成购物');
 
                 }
                 $placeOrder = new PlaceOrder($pay);
